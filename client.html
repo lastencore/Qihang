@@ -281,7 +281,7 @@
                                     <textarea class="form-textarea" placeholder="请具体写下您在使用此系统功能时的痛点、吐槽或优化建议，以便我们持续打磨系统体验..."></textarea>
                                 </div>
                             </div>
-                            <button class="btn-submit" onclick="alert('建议已成功提交至聆听平台！感谢您对新一代核心系统建设支持。')">提交建议</button>
+                            <button class="btn-submit" onclick="alert('已提交')">提交建议</button>
                         </div>
                     </div>
                 </div>
@@ -467,7 +467,7 @@
                     </div>
                     <div class="app-actions">
                         <a href="javascript:void(0)" class="btn-secondary" onclick="loadAppDetail('${app.id}', 0); event.stopPropagation();">查看详情</a>
-                        <a href="javascript:void(0)" class="btn-primary" onclick="alert('正在为您跳转至新一代核心系统【${app.name}】生产环境...'); event.stopPropagation();">进入系统</a>
+                        <a href="javascript:void(0)" class="btn-primary" onclick="alert('已进入系统'); event.stopPropagation();">进入系统</a>
                     </div>
                 `;
                 gridContainer.appendChild(card);
@@ -521,7 +521,7 @@
             document.getElementById("det_appName").innerText = targetApp.name;
             document.getElementById("det_catName").innerText = foundCategory;
             document.getElementById("det_appDesc").innerText = targetApp.desc;
-            document.getElementById("det_launchBtn").onclick = () => alert(`正在为您跳转至新一代核心系统【${targetApp.name}】生产环境...`);
+            document.getElementById("det_launchBtn").onclick = () => alert('已进入系统');
 
             // 2. 装载操作手册左树
             const treeContainer = document.getElementById("det_manualTree");
@@ -577,7 +577,7 @@
                     </div>
                     <div class="course-info">
                         <div class="course-meta">学习时长：${c.duration}</div>
-                        <a href="javascript:void(0)" class="btn-course" onclick="alert('即将引导进入对应的数字化通关在线研习课件...')">开始研习</a>
+                        <a href="javascript:void(0)" class="btn-course" onclick="alert('已开始学习')">开始研习</a>
                     </div>
                 `;
                 courseContainer.appendChild(div);

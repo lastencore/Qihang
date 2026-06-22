@@ -35,7 +35,7 @@
         <ul class="ant-menu ant-menu-root ant-menu-inline ant-menu-light ant-pro-sider-menu" data-menu-list="true" dir="ltr" role="menu" style="width: 100%;" tabindex="0">
          <li class="ant-menu-item ant-menu-item-only-child" data-menu-id="rc-menu-uuid-85005-3-/workbench" role="menuitem" style="padding-left: 16px;" tabindex="-1" title="工作台管理">
           <span class="ant-menu-title-content">
-           <a href="/support-operation/workbench">
+           <a href="javascript:void(0)">
             <span class="ant-pro-menu-item">
              <span aria-label="desktop" class="anticon anticon-desktop" role="img">
               <svg aria-hidden="true" data-icon="desktop" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
@@ -126,7 +126,7 @@
          </li>
          <li class="ant-menu-item ant-menu-item-only-child" data-menu-id="rc-menu-uuid-85005-3-/audit" role="menuitem" style="padding-left: 16px;" tabindex="-1" title="操作日志">
           <span class="ant-menu-title-content">
-           <a href="/support-operation/audit">
+           <a href="javascript:void(0)">
             <span class="ant-pro-menu-item">
              <span aria-label="audit" class="anticon anticon-audit" role="img">
               <svg aria-hidden="true" data-icon="audit" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
@@ -272,12 +272,12 @@
               </button>
              </div>
              <div class="ant-space-item">
-              <button class="ant-btn ant-btn-default" onclick="alert('草稿暂存成功！')" type="button" style="height: 32px; padding: 0 15px; border-radius: 4px; border: 1px solid #d9d9d9; background: #fff; cursor: pointer;">
+              <button class="ant-btn ant-btn-default" onclick="alert('已暂存')" type="button" style="height: 32px; padding: 0 15px; border-radius: 4px; border: 1px solid #d9d9d9; background: #fff; cursor: pointer;">
                <span>暂存草稿</span>
               </button>
              </div>
              <div class="ant-space-item">
-              <button class="ant-btn ant-btn-primary" onclick="alert('生产环境数据已同步发布上线！')" type="button" style="height: 32px; padding: 0 15px; border-radius: 4px; background: #cc0000; border: 1px solid #cc0000; color: #fff; font-weight: bold; cursor: pointer;">
+              <button class="ant-btn ant-btn-primary" onclick="alert('已发布')" type="button" style="height: 32px; padding: 0 15px; border-radius: 4px; background: #cc0000; border: 1px solid #cc0000; color: #fff; font-weight: bold; cursor: pointer;">
                <span>保存发布</span>
               </button>
              </div>
@@ -317,8 +317,8 @@
                   <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #1e293b;">
                     <span style="cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 9px; margin-right: 4px; color: #94a3b8;">▼</span> 前置准备与系统鉴权</span>
                     <div style="display: flex; gap: 6px; font-size: 11px; font-weight: normal; color: #94a3b8;">
-                      <span class="anticon" onclick="alert('目录节点已上移')" style="cursor: pointer;">▲</span>
-                      <span class="anticon" onclick="alert('目录节点已下移')" style="cursor: pointer;">▼</span>
+                      <span class="anticon" onclick="alert('已上移')" style="cursor: pointer;">▲</span>
+                      <span class="anticon" onclick="alert('已下移')" style="cursor: pointer;">▼</span>
                       <span onclick="triggerDeleteValidation('前置准备与系统鉴权')" style="color: #64748b; cursor: pointer; margin-left: 2px;">删除</span>
                     </div>
                   </div>
@@ -514,7 +514,7 @@
         // 执行一键无损强行写进系统剪贴板
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(finalMarkdown).then(() => {
-                alert('操作成功：当前章节的 Markdown 源码已成功复制到系统剪贴板！');
+                alert('已复制到剪贴板');
             }).catch(err => {
                 fallbackCopyAction(finalMarkdown);
             });
@@ -534,7 +534,7 @@
             document.execCommand('copy');
             alert('操作成功：当前章节的 Markdown 源码已成功复制到系统剪贴板！');
         } catch (err) {
-            alert('复制失败，请手动选中内容复制。');
+            alert('复制失败，请重试');
         }
         document.body.removeChild(textArea);
     }
@@ -545,10 +545,10 @@
 
     // 优化 2：严密执行 2 层级目录拦截校验（1层文件夹目录，2层文档）
     function addNewNodePrompt(type) {
-        const alertLabel = type === 'dir' ? '1层文件夹目录' : '2层直属文档';
-        const text = prompt(`目前系统已被硬锁定为【2层操作手册结构】\n您正在尝试新建：[${alertLabel}]\n\n请输入新节点名称：`, "未命名节点");
+        const alertLabel = type === 'dir' ? '目录' : '文档';
+        const text = prompt(`新建${alertLabel}，请输入名称：`, "未命名");
         if (text) {
-            alert(`校验通过：[${alertLabel}]「${text}」已成功安全挂载到当前系统树底座。`);
+            alert(`已添加：${text}`);
         }
     }
   </script>
