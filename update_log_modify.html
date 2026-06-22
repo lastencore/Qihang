@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport"/>
+  <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/favicon.ico" rel="shortcut icon"/>
+  <title>
+    日志新增 - 中华财险-基础运营
+  </title>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/umi.cabe1862.css" rel="stylesheet"/>
+  <link as="style" data-rspack="cic-pc-support-operation:2354" href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/t__plugin-layout__Layout.30bb7fb0.async.css" rel="preload"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/t__plugin-layout__Layout.30bb7fb0.async.css" rel="stylesheet" type="text/css"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/3898.77564be6.async.css" rel="stylesheet" type="text/css"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/p__updateLog__Query__index.3a37eae1.async.css" rel="stylesheet" type="text/css"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/p__updateLog__Modify__index.c5460722.async.css" rel="stylesheet" type="text/css"/>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link href="common.css" rel="stylesheet"/>
+  <style>
+    /* 注入 Tiptap 核心标记在日志编辑模块下的对齐补丁 */
+    .cic-richtext-editor .editor-editable-area ul[data-type="taskList"] { list-style: none; padding: 0; }
+    .cic-richtext-editor .editor-editable-area ul[data-type="taskList"] li { display: flex; align-items: flex-start; margin-bottom: 4px; }
+    .cic-richtext-editor .editor-editable-area ul[data-type="taskList"] input[type="checkbox"] { margin-right: 8px; margin-top: 4px; cursor: pointer; }
+    .cic-richtext-editor .editor-editable-area table { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 1em 0; overflow: hidden; border: 1px solid #cbd5e1; }
+    .cic-richtext-editor .editor-editable-area table td, .cic-richtext-editor .editor-editable-area table th { min-width: 1em; border: 1px solid #cbd5e1; padding: 6px 10px; vertical-align: top; box-sizing: border-box; }
+    .cic-richtext-editor .editor-editable-area table th { font-weight: bold; text-align: left; background-color: #f8fafc; }
+  </style>
+ </head>
+ <body>
+  <div id="root">
+   <div class="ant-design-pro ant-pro-basicLayout screen-xxl ant-pro-basicLayout-fix-siderbar ant-pro-basicLayout-mix">
+    <section class="ant-layout ant-layout-has-sider" style="min-height: 100%;">
+     <div style="width: 208px; overflow: hidden; flex: 0 0 208px; max-width: 208px; min-width: 208px; transition: background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);">
+     </div>
+     
+     <aside class="ant-layout-sider ant-layout-sider-light ant-pro-sider ant-pro-sider-fixed ant-pro-sider-layout-mix ant-pro-sider-light" style="overflow: hidden; padding-top: 48px; flex: 0 0 208px; max-width: 208px; min-width: 208px; width: 208px;">
+      <div class="ant-layout-sider-children">
+       <div style="flex: 1 1 0%; overflow: hidden auto;">
+        <ul class="ant-menu ant-menu-root ant-menu-inline ant-menu-light ant-pro-sider-menu" data-menu-list="true" dir="ltr" role="menu" style="width: 100%;" tabindex="0">
+         <li class="ant-menu-item ant-menu-item-only-child" data-menu-id="rc-menu-uuid-85005-3-/workbench" role="menuitem" style="padding-left: 16px;" tabindex="-1" title="工作台管理">
+          <span class="ant-menu-title-content">
+           <a href="/support-operation/workbench">
+            <span class="ant-pro-menu-item">
+             <span aria-label="desktop" class="anticon anticon-desktop" role="img">
+              <svg aria-hidden="true" data-icon="desktop" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+               <path d="M928 140H96c-17.7 0-32 14.3-32 32v496c0 17.7 14.3 32 32 32h380v112H304c-8.8 0-16 7.2-16 16v48c0 4.4 3.6 8 8 8h432c4.4 0 8-3.6 8-8v-48c0-8.8-7.2-16-16-16H548V700h380c17.7 0 32-14.3 32-32V172c0-17.7-14.3-32-32-32zm-40 488H136V212h752v416z"></path>
+              </svg>
+             </span>
+             <span class="ant-pro-menu-item-title">工作台管理</span>
+            </span>
+           </a>
+          </span>
+         </li>
+         <li class="ant-menu-item ant-menu-item-only-child" data-menu-id="rc-menu-uuid-85005-3-/manual" role="menuitem" style="padding-left: 16px;" tabindex="-1" title="操作手册管理">
+          <span class="ant-menu-title-content">
+           <a href="manual_query.html">
+            <span class="ant-pro-menu-item">
+             <span aria-label="book" class="anticon anticon-book" role="img">
+              <svg aria-hidden="true" data-icon="book" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+               <path d="M832 64H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V96c0-17.7-14.3-32-32-32zm-260 72h96v209.9L621.5 312 572 347.4V136zm220 752H232V136h280v296.9c0 3.3 1 6.6 3 9.3a15.9 15.9 0 0022.3 3.7l83.8-59.9 81.4 59.4c2.7 2 6 3.1 9.4 3.1 8.8 0 16-7.2 16-16V136h64v752z"></path>
+              </svg>
+             </span>
+             <span class="ant-pro-menu-item-title">操作手册管理</span>
+            </span>
+           </a>
+          </span>
+         </li>
+         <li class="ant-menu-item ant-menu-item-selected ant-menu-item-only-child" data-menu-id="rc-menu-uuid-85005-3-/updateLog" role="menuitem" style="padding-left: 16px;" tabindex="-1" title="更新日志管理">
+          <span class="ant-menu-title-content">
+           <a href="update_log_query.html">
+            <span class="ant-pro-menu-item">
+             <span aria-label="rocket" class="anticon anticon-rocket" role="img">
+              <svg aria-hidden="true" data-icon="rocket" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+               <path d="M864 736c0-111.6-65.4-208-160-252.9V317.3c0-15.1-5.3-29.7-15.1-41.2L536.5 95.4C530.1 87.8 521 84 512 84s-18.1 3.8-24.5 11.4L335.1 276.1a63.97 63.97 0 00-15.1 41.2v165.8C225.4 528 160 624.4 160 736h156.5c-2.3 7.2-3.5 15-3.5 23.8 0 22.1 7.6 43.7 21.4 60.8a97.2 97.2 0 0043.1 30.6c23.1 54 75.6 88.8 134.5 88.8 29.1 0 57.3-8.6 81.4-24.8 23.6-15.8 41.9-37.9 53-64a97 97 0 0043.1-30.5 97.52 97.52 0 0021.4-60.8c0-8.4-1.1-16.4-3.1-23.8H864zM762.3 621.4c9.4 14.6 17 30.3 22.5 46.6H700V558.7a211.6 211.6 0 0162.3 62.7zM388 483.1V318.8l124-147 124 147V668H388V483.1zM239.2 668c5.5-16.3 13.1-32 22.5-46.6 16.3-25.2 37.5-46.5 62.3-62.7V668h-84.8zm388.9 116.2c-5.2 3-11.2 4.2-17.1 3.4l-19.5-2.4-2.8 19.4c-5.4 37.9-38.4 66.5-76.7 66.5-38.3 0-71.3-28.6-76.7-66.5l-2.8-19.5-19.5 2.5a27.7 27.7 0 01-17.1-3.5c-8.7-5-14.1-14.3-14.1-24.4 0-10.6 5.9-19.4 14.6-23.8h231.3c8.8 4.5 14.6 13.3 14.6 23.8-.1 10.2-5.5 19.6-14.2 24.5zM464 400a48 48 0 1096 0 48 48 0 10-96 0z"></path>
+              </svg>
+             </span>
+             <span class="ant-pro-menu-item-title">更新日志管理</span>
+            </span>
+           </a>
+          </span>
+         </li>
+         <li class="ant-menu-submenu ant-menu-submenu-inline" role="none">
+          <div aria-controls="rc-menu-uuid-85005-3-/feedback-popup" aria-expanded="false" aria-haspopup="true" class="ant-menu-submenu-title" data-menu-id="rc-menu-uuid-85005-3-/feedback" role="menuitem" style="padding-left: 16px;" tabindex="-1">
+           <span class="ant-menu-title-content">
+            <span class="ant-pro-menu-item" title="聆听平台管理">
+             <span aria-label="alert" class="anticon anticon-alert" role="img">
+              <svg aria-hidden="true" data-icon="alert" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+               <path d="M193 796c0 17.7 14.3 32 32 32h574c17.7 0 32-14.3 32-32V563c0-176.2-142.8-319-319-319S193 386.8 193 563v233zm72-233c0-136.4 110.6-247 247-247s247 110.6 247 247v193H404V585c0-5.5-4.5-10-10-10h-44c-5.5 0-10 4.5-10 10v171h-75V563zm-48.1-252.5l39.6-39.6c3.1-3.1 3.1-8.2 0-11.3l-67.9-67.9a8.03 8.03 0 00-11.3 0l-39.6 39.6a8.03 8.03 0 000 11.3l67.9 67.9c3.1 3.1 8.2 3.1 11.3 0zm669.6-79.2l-39.6-39.6a8.03 8.03 0 00-11.3 0l-67.9 67.9a8.03 8.03 0 000 11.3l39.6 39.6c3.1 3.1 8.2 3.1 11.3 0l67.9-67.9c3.1-3.2 3.1-8.2 0-11.3zM832 892H192c-17.7 0-32 14.3-32 32v24c0 4.4 3.6 8 8 8h688c4.4 0 8-3.6 8-8v-24c0-17.7-14.3-32-32-32zM484 180h56c4.4 0 8-3.6 8-8V76c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v96c0 4.4 3.6 8 8 8z"></path>
+              </svg>
+             </span>
+             <span class="ant-pro-menu-item-title">聆听平台管理</span>
+            </span>
+           </span>
+           <i class="ant-menu-submenu-arrow"></i>
+          </div>
+         </li>
+         <li class="ant-menu-submenu ant-menu-submenu-inline" role="none">
+          <div aria-controls="rc-menu-uuid-85005-3-/learn-platform-popup" aria-expanded="false" aria-haspopup="true" class="ant-menu-submenu-title" data-menu-id="rc-menu-uuid-85005-3-/learn-platform" role="menuitem" style="padding-left: 16px;" tabindex="-1">
+           <span class="ant-menu-title-content">
+            <span class="ant-pro-menu-item" title="学习平台管理">
+             <span aria-label="book" class="anticon anticon-book" role="img">
+              <svg aria-hidden="true" data-icon="book" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+               <path d="M832 64H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V96c0-17.7-14.3-32-32-32zm-260 72h96v209.9L621.5 312 572 347.4V136zm220 752H232V136h280v296.9c0 3.3 1 6.6 3 9.3a15.9 15.9 0 0022.3 3.7l83.8-59.9 81.4 59.4c2.7 2 6 3.1 9.4 3.1 8.8 0 16-7.2 16-16V136h64v752z"></path>
+              </svg>
+             </span>
+             <span class="ant-pro-menu-item-title">学习平台管理</span>
+            </span>
+           </span>
+           <i class="ant-menu-submenu-arrow"></i>
+          </div>
+         </li>
+         <li class="ant-menu-submenu ant-menu-submenu-inline" role="none">
+          <div aria-controls="rc-menu-uuid-85005-3-/sail-platform-popup" aria-expanded="false" aria-haspopup="true" class="ant-menu-submenu-title" data-menu-id="rc-menu-uuid-85005-3-/sail-platform" role="menuitem" style="padding-left: 16px;" tabindex="-1">
+           <span class="ant-menu-title-content">
+            <span class="ant-pro-menu-item" title="启航平台管理">
+             <span aria-label="global" class="anticon anticon-global" role="img">
+              <svg aria-hidden="true" data-icon="global" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+               <path d="M854.4 800.9c.2-.3.5-.6.7-.9C920.6 722.1 960 621.7 960 512s-39.4-210.1-104.8-288c-.2-.3-.5-.5-.7-.8-1.1-1.3-2.1-2.5-3.2-3.7-.4-.5-.8-.9-1.2-1.4l-4.1-4.7-.1-.1c-1.5-1.7-3.1-3.4-4.6-5.1l-.1-.1c-3.2-3.4-6.4-6.8-9.7-10.1l-.1-.1-4.8-4.8-.3-.3c-1.5-1.5-3-2.9-4.5-4.3-.5-.5-1-1-1.6-1.5-1-1-2-1.9-3-2.8-.3-.3-.7-.6-1-1C736.4 109.2 629.5 64 512 64s-224.4 45.2-304.3 119.2c-.3.3-.7.6-1 1-1 .9-2 1.9-3 2.9-.5.5-1 1-1.6 1.5-1.5 1.4-3 2.9-4.5 4.3l-.3.3-4.8 4.8-.1.1c-3.3 3.3-6.5 6.7-9.7 10.1l-.1.1c-1.6 1.7-3.1-3.4-4.6 5.1l-.1.1c-1.4 1.5-2.8 3.1-4.1 4.7-.4.5-.8.9-1.2 1.4-1.1 1.2-2.1 2.5-3.2 3.7-.2.3-.5.5-.7.8C103.4 301.9 64 402.3 64 512s39.4 210.1 104.8 288c.2.3.5.6.7.9l3.1 3.7c.4.5.8.9 1.2 1.4l4.1 4.7c0 .1.1.1.1.2 1.5 1.7 3 3.4 4.6 5l.1.1c3.2 3.4 6.4 6.8 9.6 10.1l.1.1c1.6 1.6 3.1 3.2 4.7 4.7l.3.3c3.3 3.3 6.7 6.5 10.1 9.6 80.1 74 187 119.2 304.5 119.2s224.4-45.2 304.3-119.2a300 300 0 0010-9.6l.3-.3c1.6-1.6 3.2-3.1 4.7-4.7l.1-.1c3.3-3.3 6.5-6.7 9.6-10.1l.1-.1c1.5-1.7 3.1-3.3 4.6-5 0-.1.1-.1.1-.2 1.4-1.5 2.8-3.1 4.1-4.7.4-.5.8-.9 1.2-1.4a99 99 0 003.3-3.7zm4.1-142.6c-13.8 32.6-32 62.8-54.2 90.2a444.07 444.07 0 00-81.5-55.9c11.6-46.9 18.8-98.4 20.7-152.6H887c-3 40.9-12.6 80.6-28.5 118.3zM887 484H743.5c-1.9-54.2-9.1-105.7-20.7-152.6 29.3-15.6 56.6-34.4 81.5-55.9A373.86 373.86 0 01887 484zM658.3 165.5c39.7 16.8 75.8 40 107.6 69.2a394.72 394.72 0 01-59.4 41.8c-15.7-45-35.8-84.1-59.2-115.4 3.7 1.4 7.4 2.9 11 4.4zm-90.6 700.6c-9.2 7.2-18.4 12.7-27.7 16.4V697a389.1 389.1 0 01115.7 26.2c-8.3 24.6-17.9 47.3-29 67.8-17.4 32.4-37.8 58.3-59 75.1zm59-633.1c11 20.6 20.7 43.3 29 67.8A389.1 389.1 0 01540 327V141.6c9.2 3.7 18.5 9.1 27.7 16.4 21.2 16.7 41.6 42.6 59 75zM540 640.9V540h147.5c-1.6 44.2-7.1 87.1-16.3 127.8l-.3 1.2A445.02 445.02 0 00540 640.9zm0-156.9V383.1c45.8-2.8 89.8-12.5 130.9-28.1l.3 1.2c9.2 40.7 14.7 83.5 16.3 127.8H540zm-56 56v100.9c-45.8 2.8-89.8 12.5-130.9 28.1l-.3-1.2c-9.2-40.7-14.7-83.5-16.3-127.8H484zm-147.5-56c1.6-44.2 7.1-87.1 16.3-127.8l.3-1.2c41.1 15.6 85 25.3 130.9 28.1V484H336.5zM484 697v185.4c-9.2-3.7-18.5-9.1-27.7-16.4-21.2-16.7-41.7-42.7-59.1-75.1-11-20.6-20.7-43.3-29-67.8 37.2-14.6 75.9-23.3 115.8-26.1zm0-370a389.1 389.1 0 01-115.7-26.2c8.3-24.6 17.9-47.3 29-67.8 17.4-32.4 37.8-58.4 59.1-75.1 9.2-7.2 18.4-12.7 27.7-16.4V327zM365.7 165.5c3.7-1.5 7.3-3 11-4.4-23.4 31.3-43.5 70.4-59.2 115.4-21-12-40.9-26-59.4-41.8 31.8-29.2 67.9-52.4 107.6-69.2zM165.5 365.7c13.8-32.6 32-62.8 54.2-90.2 24.9 21.5 52.2 40.3 81.5 55.9-11.6 46.9-18.8 98.4-20.7 152.6H137c3-40.9 12.6-80.6 28.5-118.3zM137 540h143.5c1.9 54.2 9.1 105.7 20.7 152.6a444.07 444.07 0 00-81.5 55.9A373.86 373.86 0 01137 540zm228.7 318.5c-39.7-16.8-75.8-40-107.6-69.2 18.5-15.8 38.4-29.7 59.4-41.8 15.7 45 35.8 84.1 59.2 115.4-3.7-1.4-7.4-2.9-11-4.4zm292.6 0c-3.7 1.5-7.3 3-11 4.4 23.4-31.3 43.5-70.4 59.2-115.4 21 12 40.9 26 59.4 41.8a373.81 373.81 0 01-107.6 69.2z"></path>
+             </svg>
+            </span>
+            <span class="ant-pro-menu-item-title">启航平台管理</span>
+           </a>
+          </span>
+         </li>
+         <li class="ant-menu-item ant-menu-item-only-child" data-menu-id="rc-menu-uuid-85005-3-/audit" role="menuitem" style="padding-left: 16px;" tabindex="-1" title="操作日志">
+          <span class="ant-menu-title-content">
+           <a href="/support-operation/audit">
+            <span class="ant-pro-menu-item">
+             <span aria-label="audit" class="anticon anticon-audit" role="img">
+              <svg aria-hidden="true" data-icon="audit" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+               <path d="M296 250c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h384c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H296zm184 144H296c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm-48 458H208V148h560v320c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V108c0-17.7-14.3-32-32-32H168c-17.7 0-32 14.3-32 32v784c0 17.7 14.3 32 32 32h264c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm440-88H728v-36.6c46.3-13.8 80-56.6 80-107.4 0-61.9-50.1-112-112-112s-112 50.1-112 112c0 50.7 33.7 93.6 80 107.4V764H520c-8.8 0-16 7.2-16 16v152c0 8.8 7.2 16 16 16h352c8.8 0 16-7.2 16-16V780c0-8.8-7.2-16-16-16zM646 620c0-27.6 22.4-50 50-50s50 22.4 50 50-22.4 50-50 50-50-22.4-50-50zm180 266H566v-60h260v60z"></path>
+              </svg>
+             </span>
+             <span class="ant-pro-menu-item-title">操作日志</span>
+            </span>
+           </a>
+          </span>
+         </li>
+        </ul>
+        <div aria-hidden="true" style="display: none;"></div>
+       </div>
+       <div class="ant-pro-sider-links">
+        <ul class="ant-menu ant-menu-root ant-menu-inline ant-menu-light ant-pro-sider-link-menu" data-menu-list="true" dir="ltr" role="menu" tabindex="0">
+         <li class="ant-menu-item ant-menu-item-only-child ant-pro-sider-collapsed-button" data-menu-id="rc-menu-uuid-85005-2-collapsed" role="menuitem" style="padding-left: 16px;" tabindex="-1">
+          <span class="ant-menu-title-content">
+           <span aria-label="menu-fold" class="anticon anticon-menu-fold" role="img">
+            <svg aria-hidden="true" data-icon="menu-fold" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+             <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 000 13.8z"></path>
+            </svg>
+           </span>
+          </span>
+         </li>
+        </ul>
+        <div aria-hidden="true" style="display: none;"></div>
+       </div>
+      </div>
+     </aside>
+     <div class="ant-layout" style="position: relative;">
+      <header class="ant-layout-header" style="height: 48px; line-height: 48px; background: transparent; flex-shrink: 0;"></header>
+      <header class="ant-layout-header ant-pro-fixed-header ant-pro-fixed-header-action" style="padding: 0px; height: 48px; line-height: 48px; width: 100%; z-index: 100; right: 0px;">
+       <div class="cic-layout-header-nav-header light">
+        <div class="cic-layout-header-nav-header-main">
+         <div class="cic-layout-header-nav-header-left">
+          <div class="cic-layout-header-nav-header-logo">
+           <a href="/">
+            <img alt="logo" height="24" src="https://static.property.cic.cn/prod-platform-lamp/common/image/cic-logo.svg" width="auto"/>
+           </a>
+          </div>
+         </div>
+         <div class="cic-layout-header-nav-header-middle">
+          <ul class="ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-light" data-menu-list="true" dir="ltr" role="menu" tabindex="0">
+           <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 0;">
+            <div class="ant-menu-submenu-title" role="menuitem" tabindex="-1">
+             <span class="ant-menu-title-content">运营支撑</span><i class="ant-menu-submenu-arrow"></i>
+            </div>
+           </li>
+           <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 1;">
+            <div class="ant-menu-submenu-title" role="menuitem" tabindex="-1">
+             <span class="ant-menu-title-content">资金财务</span><i class="ant-menu-submenu-arrow"></i>
+            </div>
+           </li>
+           <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 2;">
+            <div class="ant-menu-submenu-title" role="menuitem" tabindex="-1">
+             <span class="ant-menu-title-content">业务管理</span><i class="ant-menu-submenu-arrow"></i>
+            </div>
+           </li>
+           <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 3;">
+            <div class="ant-menu-submenu-title" role="menuitem" tabindex="-1">
+             <span class="ant-menu-title-content">数据门户</span><i class="ant-menu-submenu-arrow"></i>
+            </span>
+           </li>
+           <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 4;">
+             <div class="ant-menu-submenu-title" role="menuitem" tabindex="-1">
+              <span class="ant-menu-title-content">个人中心</span><i class="ant-menu-submenu-arrow"></i>
+             </div>
+           </li>
+          </ul>
+         </div>
+         <div class="cic-layout-header-nav-header-right">
+          <div class="cic-layout-header-nav-header-actions light">
+           <div class="cic-layout-header-nav-header-actions-wrapper">
+            <div class="cic-layout-header-nav-header-actions-item">
+             <div class="ant-dropdown-trigger">
+              <span class="ant-tag ant-tag-red" style="margin: 0px;">
+               <span aria-label="environment" class="anticon anticon-environment" role="img">
+                <svg aria-hidden="true" data-icon="environment" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+                 <path d="M854.6 289.1a362.49 362.49 0 00-79.9-115.7 370.83 370.83 0 00-118.2-77.8C610.7 76.6 562.1 67 512 67c-50.1 0-98.7 9.6-144.5 28.5-44.3 18.3-84 44.5-118.2 77.8A363.6 363.6 0 00169.4 289c-19.5 45-29.4 92.8-29.4 142 0 70.6 16.9 140.9 50.1 208.7 26.7 54.5 64 107.6 111 158.1 80.3 86.2 164.5 138.9 188.4 153a43.9 43.9 0 0022.4 6.1c7.8 0 15.5-2 22.4-6.1 23.9-14.1 108.1-66.8 188.4-153 47-50.4 84.3-103.6 111-158.1C867.1 572 884 501.8 884 431.1c0-49.2-9.9-97-29.4-142zM512 880.2c-65.9-41.9-300-207.8-300-449.1 0-77.9 31.1-151.1 87.6-206.3C356.3 169.5 431.7 139 512 139s155.7 30.5 212.4 85.9C780.9 280 812 353.2 812 431.1c0 241.3-234.1 407.2-300 449.1zm0-617.2c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm79.2 255.2A111.6 111.6 0 01512 551c-29.9 0-58-11.7-79.2-32.8A111.6 111.6 0 01400 439c0-29.9 11.7-58 32.8-79.2C454 338.6 482.1 327 512 327c29.9 0 58 11.6 79.2 32.8C612.4 381 624 409.1 624 439c0 29.9-11.6 58-32.8 79.2z"></path>
+                </svg>
+               </span>
+               <span>产品原型</span>
+              </span>
+             </div>
+            </div>
+            <div class="cic-layout-header-nav-header-actions-item">
+             <span class="cic-layout-header-apps-icon">
+              <span aria-label="appstore" class="anticon anticon-appstore" role="img">
+               <svg aria-hidden="true" data-icon="appstore" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+                <path d="M464 144H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H212V212h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H612V212h200v200zM464 544H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H212V612h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H612V612h200v200z"></path>
+               </svg>
+              </span>
+             </span>
+            </div>
+            <div class="cic-layout-header-nav-header-actions-avatar">
+             <div>
+              <span class="ant-avatar ant-avatar-circle ant-avatar-image" style="width: 28px; height: 28px; line-height: 28px; font-size: 18px;">
+               <img src="https://static.property.cic.cn/prod-platform-lamp/common/image/default-avatar.png"/>
+              </span>
+              <span style="margin-left: 8px;"><span class="anticon">员工甲</span></span>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </header>
+      
+      <main class="ant-layout-content ant-pro-basicLayout-content ant-pro-basicLayout-has-header ant-pro-basicLayout-content-disable-margin">
+       <div class="ant-pro-page-container">
+        <div class="ant-pro-page-container-warp">
+         <div class="ant-page-header has-breadcrumb">
+          <nav class="ant-breadcrumb">
+           <ol>
+            <li>
+             <span class="ant-breadcrumb-link">
+              <a href="update_log_query.html">更新日志管理</a>
+             </span>
+             <span class="ant-breadcrumb-separator">/</span>
+            </li>
+            <li>
+             <span class="ant-breadcrumb-link"><span>日志新增</span></span>
+             <span class="ant-breadcrumb-separator">/</span>
+            </li>
+           </ol>
+          </nav>
+          <div class="ant-page-header-heading">
+           <div class="ant-page-header-heading-left">
+            <span class="ant-page-header-heading-title" title="日志新增">日志新增</span>
+           </div>
+          </div>
+         </div>
+        </div>
+        
+        <div class="ant-pro-grid-content">
+         <div class="ant-pro-grid-content-children">
+          <div class="ant-pro-page-container-children-content">
+           <div class="ant-pro-card">
+            <div class="ant-pro-card-body">
+             <form autocomplete="off" class="ant-form ant-form-vertical">
+              <div class="ant-row" style="margin-left: -12px; margin-right: -12px;">
+               
+               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px;">
+                <div class="ant-form-item">
+                 <div class="ant-row ant-form-item-row">
+                  <div class="ant-col ant-form-item-label">
+                   <label class="ant-form-item-required" for="title" title="标题">标题</label>
+                  </div>
+                  <div class="ant-col ant-form-item-control">
+                   <div class="ant-form-item-control-input">
+                    <div class="ant-form-item-control-input-content">
+                     <span class="ant-input-affix-wrapper">
+                      <input class="ant-input" id="title" maxlength="50" placeholder="请输入投产公告标题" type="text" value=""/>
+                      <span class="ant-input-suffix">
+                       <span class="ant-input-show-count-suffix">0 / 50</span>
+                      </span>
+                     </span>
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+               
+               <div class="ant-col ant-col-12" style="padding-left: 12px; padding-right: 12px;">
+                <div class="ant-form-item">
+                 <div class="ant-row ant-form-item-row">
+                  <div class="ant-col ant-form-item-label">
+                   <label class="ant-form-item-required" for="appId" title="应用名称">应用名称</label>
+                  </div>
+                  <div class="ant-col ant-form-item-control">
+                   <div class="ant-form-item-control-input">
+                    <div class="ant-form-item-control-input-content">
+                     <div class="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow" style="width: 100%;">
+                      <div class="ant-select-selector" style="border: 1px solid #dcdfe6; border-radius: 4px; height: 32px; padding: 0 11px; background: #fff; display: flex; align-items: center;">
+                       <select class="ant-select-selection-search-input" id="appId" style="width: 100%; border: none; background: transparent; font-size: 14px; outline: none; cursor: pointer; color: rgba(0,0,0,0.88);">
+                        <option value="">请选择系统范围</option>
+                        <option value="CB001">车险承保平台 [CB001]</option>
+                        <option value="CB002">意健险承保平台 [CB002]</option>
+                        <option value="CB003">财责险承保平台 [CB003]</option>
+                        <option value="LY002">送修平台 [LY002]</option>
+                        <option value="ZJ001">资金系统 [ZJ001]</option>
+                        <option value="SJ003">自助分析平台 [SJ003]</option>
+                        <option value="YY004">产品运营平台 [YY004]</option>
+                       </select>
+                      </div>
+                     </div>
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+               
+               <div class="ant-col ant-col-12" style="padding-left: 12px; padding-right: 12px;">
+                <div class="ant-form-item">
+                 <div class="ant-row ant-form-item-row">
+                  <div class="ant-col ant-form-item-label">
+                   <label class="ant-form-item-required" for="publishDate" title="发布日期">发布日期</label>
+                  </div>
+                  <div class="ant-col ant-form-item-control">
+                   <div class="ant-form-item-control-input">
+                    <div class="ant-form-item-control-input-content">
+                     <div class="ant-picker" style="width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; height: 32px; display: inline-flex; align-items: center; padding: 4px 11px;">
+                      <input autocomplete="off" id="publishDate" placeholder="请选择投产上线日期" style="border: none; outline: none; width: 100%; font-size: 14px;" type="date" value="2026-06-18"/>
+                     </div>
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+               
+               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px;">
+                <div class="ant-form-item">
+                 <div class="ant-row ant-form-item-row">
+                  <div class="ant-col ant-form-item-label">
+                   <label class="ant-form-item-required" for="summary" title="日志摘要">日志摘要</label>
+                  </div>
+                  <div class="ant-col ant-form-item-control">
+                   <div class="ant-form-item-control-input">
+                    <div class="ant-form-item-control-input-content">
+                     <div class="ant-input-textarea" style="position: relative;">
+                      <textarea class="ant-input" id="summary" maxlength="100" placeholder="一句话提炼核心功能变更摘要，限100字" rows="2" style="width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; padding: 4px 11px; outline: none;"></textarea>
+                     </div>
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+               
+               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px;">
+                <div class="ant-form-item">
+                 <div class="ant-row ant-form-item-row">
+                  <div class="ant-col ant-form-item-label">
+                   <label class="ant-form-item-required" title="正文格式">正文内容</label>
+                  </div>
+                  <div class="ant-col ant-form-item-control">
+                   <div class="ant-form-item-control-input">
+                    <div class="ant-form-item-control-input-content" style="color: #64748b; font-size: 13px; margin-bottom: 8px;">
+                     <span class="ant-tag ant-tag-blue" style="background-color: #e0f2fe; border-color: #bae6fd; color: #0369a1; font-weight: 600; padding: 2px 8px; border-radius: 4px;">
+                       Tiptap 混合多模视口 (支持富文本编写或直接粘贴 Markdown 源码智能转译)
+                     </span>
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+               
+               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px;">
+                <div class="ant-form-item">
+                 <div class="ant-row ant-form-item-row">
+                  <div class="ant-col ant-form-item-control">
+                   <div class="ant-form-item-control-input">
+                    <div class="ant-form-item-control-input-content">
+                     
+                     <div class="cic-richtext-editor" style="border: 1px solid #dcdfe6; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; background: #fff;">
+                      <div class="cic-richtext-editor-toolbar" style="border-bottom: 1px solid #dcdfe6; background: #f8fafc; padding: 6px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;">
+                       <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 6px;">
+                        <button onclick="execLocalStyle('h1')" class="ant-btn ant-btn-sm" style="font-weight: bold; padding: 0 8px; height: 24px; min-width: 32px; font-size: 11px;" type="button">H1</button>
+                        <button onclick="execLocalStyle('h2')" class="ant-btn ant-btn-sm" style="font-weight: bold; padding: 0 8px; height: 24px; min-width: 32px; font-size: 11px;" type="button">H2</button>
+                        <button onclick="execLocalStyle('h3')" class="ant-btn ant-btn-sm" style="font-weight: bold; padding: 0 8px; height: 24px; min-width: 32px; font-size: 11px;" type="button">H3</button>
+                        <div style="width: 1px; height: 14px; background: #cbd5e1; margin: 0 4px;"></div>
+                        <button onclick="execLocalStyle('bold')" class="ant-btn ant-btn-sm" style="font-weight: bold; padding: 0 8px; height: 24px; min-width: 28px;" type="button">B</button>
+                        <button onclick="execLocalStyle('italic')" class="ant-btn ant-btn-sm" style="font-style: italic; padding: 0 8px; height: 24px; min-width: 28px;" type="button">I</button>
+                        <button onclick="execLocalStyle('underline')" class="ant-btn ant-btn-sm" style="text-decoration: underline; padding: 0 8px; height: 24px; min-width: 28px;" type="button">U</button>
+                        <div style="width: 1px; height: 14px; background: #cbd5e1; margin: 0 4px;"></div>
+                        <button onclick="execLocalStyle('code')" class="ant-btn ant-btn-sm" style="font-family: monospace; padding: 0 6px; height: 24px; font-size: 11px; color: #475569;" type="button">行内代码</button>
+                        <div style="width: 1px; height: 14px; background: #cbd5e1; margin: 0 4px;"></div>
+                        <button onclick="execLocalStyle('blockquote')" class="ant-btn ant-btn-sm" style="padding: 0 6px; height: 24px; font-weight: bold; color: #475569;" type="button">引用块</button>
+                        <button onclick="execLocalStyle('table')" class="ant-btn ant-btn-sm" style="padding: 0 6px; height: 24px; display: inline-flex; align-items: center;" type="button">
+                          <svg viewBox="0 0 1024 1024" width="12" style="margin-right: 3px;"><path d="M0 64v896h1024V64H0z m384 576v-192h256v192h-256z m256 64v192h-256v-192h256z m0-512v192h-256V192h256zM320 192v192H64V192h256z m-256 256h256v192H64v-192z m640 0h256v192h-256v-192z m0-64V192h256v192h-256zM64 704h256v192H64v-192z m640 192v-192h256v192h-256z" fill="currentColor"></path></svg>插入表格
+                        </button>
+                       </div>
+                      </div>
+                      <div class="custom-scrollbar editor-editable-area" style="flex: 1; min-height: 320px; overflow-y: auto; padding: 16px; outline: none;" contenteditable="true" id="tiptap-local-poly-mount">
+                        <h3>一、 本期投产投产升级大盘明细</h3>
+                        <p>本次车险承保迭代主要升级了前线人员的流转校验接口，全面打通了核保域的异步反显动线。</p>
+                        <blockquote>📌 <strong>安全升级警示红线</strong><br>所有风控拦截码（例如 <code>E-99002</code>）均已在后台实施了物理加固锁死，禁止任何无网关授信的非合规人员跨岗位查阅！</blockquote>
+                      </div>
+                     </div>
+                     
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+               
+               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px; margin-top: 12px;">
+                <div class="ant-form-item">
+                 <div class="ant-row ant-form-item-row">
+                  <div class="ant-col ant-form-item-label">
+                   <label for="attachmentDTOList" title="上传附件">上传附件</label>
+                  </div>
+                  <div class="ant-col ant-form-item-control">
+                   <div class="ant-form-item-control-input">
+                    <div class="ant-form-item-control-input-content">
+                     <span id="attachmentDTOList">
+                      <div class="ant-upload ant-upload-select ant-upload-select-text">
+                       <span class="ant-upload" role="button" tabindex="0">
+                        <input accept=".pptx,.xlsx,.pdf,.docx" multiple="" style="display: none;" type="file"/>
+                        <button class="ant-btn ant-btn-default" type="button" onclick="alert('本地安全模拟：附件二进制对象已成功载入临时缓冲区，将随提报单异步推送到运营支撑域OSS存储桶。')">
+                         <span aria-label="upload" class="anticon anticon-upload" role="img">
+                          <svg aria-hidden="true" data-icon="upload" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+                           <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 00-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
+                          </svg>
+                         </span>
+                         <span>上传文件</span>
+                        </button>
+                       </span>
+                      </div>
+                     </span>
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+
+              </div>
+              
+              <div class="ant-pro-footer-bar" style="width: calc(100% - 208px); flex-shrink: 0;">
+               <div class="ant-pro-footer-bar-left"></div>
+               <div class="ant-pro-footer-bar-right">
+                <button class="ant-btn ant-btn-default" type="button" onclick="location.href='update_log_query.html'" style="cursor:pointer;">
+                 <span>返 回</span>
+                </button>
+                <button class="ant-btn ant-btn-primary" type="button" onclick="alert('更新日志保存发布成功，前台门户时间轴秒级对齐就绪！'); location.href='update_log_query.html'" style="cursor:pointer; background:#cc0000; border-color:#cc0000;">
+                 <span>提 交</span>
+                </button>
+               </div>
+              </div>
+              
+             </form>
+            </div>
+           </div>
+          </div>
+          <div style="height: 48px; margin-top: 24px;"></div>
+         </div>
+        </div>
+       </div>
+      </main>
+      
+      <footer class="ant-layout-footer" style="padding: 0px;">
+       <div class="ant-pro-global-footer">
+        <div class="ant-pro-global-footer-links"></div>
+        <div class="ant-pro-global-footer-copyright">
+         <span aria-label="copyright" class="anticon anticon-copyright" role="img">
+          <svg aria-hidden="true" data-icon="copyright" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+           <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372zm5.6-532.7c53 0 89 33.8 93 83.4.3 4.2 3.8 7.4 8 7.4h56.7c2.6 0 4.7-2.1 4.7-4.7 0-86.7-68.4-147.4-162.7-147.4C407.4 290 344 364.2 344 486.8v52.3C344 660.8 407.4 734 517.3 734c94 0 162.7-58.8 162.7-141.4 0-2.6-2.1-4.7-4.7-4.7h-56.8c-4.2 0-7.6 3.2-8 7.3-4.2 46.1-40.1 77.8-93 77.8-65.3 0-102.1-47.9-102.1-133.6v-52.6c.1-87 37-135.5 102.2-135.5z"></path>
+          </svg>
+         </span>
+         2026 创新研发中心技术部出品
+        </div>
+       </div>
+      </footer>
+     </div>
+    </section>
+   </div>
+  </div>
+
+  <script>
+    const mountNode = document.getElementById('tiptap-local-poly-mount');
+
+    // 级联拦截剪贴板上的纯 Markdown 并实时渲染为严正的结构HTML样式
+    mountNode.addEventListener('paste', (event) => {
+        const text = event.clipboardData.getData('text/plain');
+        if (/^\s*#|\[.*\]\(.*\)|^\s*-\s|^\s*\*\s|^\s*\d+\.\s|\*\*|__|> /m.test(text) || text.includes('\n- ') || text.includes('\n1. ')) {
+            event.preventDefault();
+            if (typeof marked !== 'undefined') {
+                const htmlHtml = marked.parse(text);
+                document.execCommand('insertHTML', false, htmlHtml);
+            } else {
+                document.execCommand('insertText', false, text);
+            }
+        }
+    });
+
+    // 扁平化简易工具条动作状态指引
+    function toggleStyle(cmd, value = null) {
+        document.execCommand(cmd, false, value);
+        mountNode.focus();
+    }
+
+    window.execLocalStyle = (type) => {
+        if (type === 'bold') toggleStyle('bold');
+        if (type === 'italic') toggleStyle('italic');
+        if (type === 'underline') toggleStyle('underline');
+        if (type === 'blockquote') toggleStyle('formatBlock', '<blockquote>');
+        if (type === 'h1') toggleStyle('formatBlock', '<h1>');
+        if (type === 'h2') toggleStyle('formatBlock', '<h2>');
+        if (type === 'h3') toggleStyle('formatBlock', '<h3>');
+        if (type === 'code') {
+            const selection = window.getSelection();
+            if (!selection.isCollapsed) {
+                const text = selection.toString();
+                toggleStyle('insertHTML', `<code>${text}</code>`);
+            }
+        }
+        if (type === 'table') {
+            const tableHtml = `<table><thead><tr><th>修复模块</th><th>更新点摘要</th><th>验证状态</th></tr></thead><tbody><tr><td>承保核心舱</td><td>网关证书授权链路链路优化完成</td><td>已就绪</td></tr><tr><td>技术风控域</td><td>安全沙箱物理特征防泄拦截硬编码挂载</td><td>通过</td></tr></tbody></table>`;
+            toggleStyle('insertHTML', tableHtml);
+        }
+    };
+  </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.addEventListener('click', function(event) {
+      var anchor = event.target.closest('a');
+      if (anchor) {
+        var href = anchor.getAttribute('href');
+        if (href) {
+          var internalPages = ["manual_query.html", "manual_workspace.html", "update_log_query.html", "update_log_modify.html"];
+          var isInternal = false;
+          for (var i = 0; i < internalPages.length; i++) {
+            if (href.indexOf(internalPages[i]) !== -1) { isInternal = true; break; }
+          }
+          if (href.indexOf('#') === 0 || href.indexOf('javascript:') === 0) { return; }
+          if (!isInternal) {
+            event.preventDefault();
+            var btnLabel = anchor.innerText.trim() || anchor.getAttribute('title') || href;
+            btnLabel = btnLabel.replace(/\s+/g, ' ').trim();
+            if (btnLabel.length > 30) { btnLabel = btnLabel.substring(0, 27) + '...'; }
+            alert(
+              '【系统提示】\n' +
+              '当前管理端原型正在尝试跳转至外部模块：\n' +
+              '👉「 ' + btnLabel + ' 」\n\n' +
+              '由于该页面非本期核心评审主线（涉及跨域及外部数据对接），系统已自动为您拦截激活，防止产生 404 错误。'
+            );
+          }
+        }
+      }
+    }, true);
+  });
+  </script>
+  </body>
+</html>
