@@ -140,7 +140,69 @@
   </div>
 </div>
 
-<!-- ===== SLIDE 3: 方案二 ===== -->
+<!-- ===== SLIDE 3: 典型案例 ===== -->
+<div class="slide">
+  <div class="slide-header">
+    <h1>典型案例：PMS 单系统 → 用户端多场景</h1>
+    <div class="sub">PMS 中只有一个系统，但用户端功能有细微差别，且不同功能由不同部门负责</div>
+  </div>
+  <div class="slide-body">
+    <h3>案例一：综合履约系统</h3>
+    <table>
+      <tr><th style="width:12%">PMS 系统</th><th style="width:25%">用户端场景</th><th style="width:18%">功能差异</th><th style="width:18%">负责部门</th><th style="width:27%">问题</th></tr>
+      <tr>
+        <td rowspan="3" style="vertical-align:middle; text-align:center;"><strong>综合履约系统</strong></td>
+        <td>车意财履约</td>
+        <td>车险、意健险、财责险理赔履约流程</td>
+        <td>理赔部</td>
+        <td rowspan="3" style="vertical-align:middle;">PMS 中只有 1 个系统，直接展示时用户无法区分三个场景，也无法按负责部门分流</td>
+      </tr>
+      <tr>
+        <td>农险履约</td>
+        <td>农险查勘时效监控、大灾快速赔付</td>
+        <td>农险部</td>
+      </tr>
+      <tr>
+        <td>政健履约</td>
+        <td>政策性健康险理赔结算</td>
+        <td>政健部</td>
+      </tr>
+    </table>
+
+    <h3 style="margin-top:24px;">案例二：核保平台</h3>
+    <table>
+      <tr><th style="width:12%">PMS 系统</th><th style="width:25%">用户端场景</th><th style="width:18%">功能差异</th><th style="width:18%">负责部门</th><th style="width:27%">问题</th></tr>
+      <tr>
+        <td rowspan="4" style="vertical-align:middle; text-align:center;"><strong>核保平台</strong></td>
+        <td>车险核保</td>
+        <td>车险规则自动校验 + 人工核保作业</td>
+        <td>车险部</td>
+        <td rowspan="4" style="vertical-align:middle;">PMS 中只有 1 个系统，直接展示时用户无法区分四个险种，也无法按负责部门分流</td>
+      </tr>
+      <tr>
+        <td>个非核保</td>
+        <td>个人非车险多级核保流转</td>
+        <td>个非部</td>
+      </tr>
+      <tr>
+        <td>团非核保</td>
+        <td>团体非车险专家会审、特批授权</td>
+        <td>团非部</td>
+      </tr>
+      <tr>
+        <td>农险核保</td>
+        <td>农险核保规则校验</td>
+        <td>农险部</td>
+      </tr>
+    </table>
+
+    <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:12px 16px; margin-top:16px; font-size:13px;">
+      <strong>💡 结论：</strong>两个案例均表明，PMS 的 1:1 系统清单无法满足用户端的展示需求。需要运营支撑域支持"1个 PMS 系统 → 多个用户视角应用"的映射能力。
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 4: 方案二 ===== -->
 <div class="slide">
   <div class="slide-header">
     <h1>方案二：运营支撑域管理映射</h1>
