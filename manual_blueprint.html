@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f8fafc; padding: 40px; }
+  
+  .blueprint { max-width: 960px; margin: 0 auto; }
+  
+  .layer { border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; position: relative; }
+  .layer-top { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: #fff; text-align: center; }
+  .layer-top h1 { font-size: 20px; font-weight: 700; }
+  .layer-top p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  
+  .layer-client { background: #fff; border: 2px solid #e2e8f0; }
+  .layer-admin { background: #fff; border: 2px solid #e2e8f0; }
+  .layer-data { background: #f1f5f9; border: 2px dashed #cbd5e1; }
+  
+  .section-title { font-size: 13px; font-weight: 700; color: #64748b; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+  
+  .module-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .module { flex: 1; min-width: 180px; border-radius: 8px; padding: 14px 16px; }
+  .module h3 { font-size: 14px; margin-bottom: 6px; }
+  .module ul { list-style: none; font-size: 12px; color: #475569; line-height: 1.7; }
+  .module ul li::before { content: "· "; color: #94a3b8; }
+  
+  .mod-blue { background: #eff6ff; border: 1px solid #bfdbfe; }
+  .mod-blue h3 { color: #1e40af; }
+  .mod-green { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .mod-green h3 { color: #166534; }
+  .mod-purple { background: #faf5ff; border: 1px solid #d8b4fe; }
+  .mod-purple h3 { color: #7c3aed; }
+  .mod-amber { background: #fffbeb; border: 1px solid #fcd34d; }
+  .mod-amber h3 { color: #92400e; }
+  
+  .connector { display: flex; justify-content: center; align-items: center; padding: 4px 0; }
+  .connector-line { width: 2px; height: 20px; background: #cbd5e1; }
+  .connector-arrow { color: #94a3b8; font-size: 14px; margin: 0 8px; }
+  
+  .data-row { display: flex; gap: 16px; }
+  .data-item { flex: 1; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; font-size: 12px; }
+  .data-item strong { display: block; color: #1e293b; margin-bottom: 4px; }
+  .data-item span { color: #64748b; }
+</style>
+</head>
+<body>
+
+<div class="blueprint">
+
+  <!-- 顶部 -->
+  <div class="layer layer-top">
+    <h1>启航平台 — 操作手册模块 产品蓝图</h1>
+    <p>员工作业统一门户 · 管理端与客户端闭环</p>
+  </div>
+
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- 客户端层 -->
+  <div class="layer layer-client">
+    <div class="section-title">🖥️ 客户端（员工侧）</div>
+    <div class="module-row">
+      <div class="module mod-blue">
+        <h3>应用大厅</h3>
+        <ul>
+          <li>10大分类侧边栏导航</li>
+          <li>53个应用卡片网格展示</li>
+          <li>全局搜索（名称/关键字）</li>
+          <li>更新 Badge 提示</li>
+        </ul>
+      </div>
+      <div class="module mod-green">
+        <h3>应用详情页</h3>
+        <ul>
+          <li>操作手册 Tab（默认）</li>
+          <li>更新日志 Tab（风琴时间轴）</li>
+          <li>相关课程 Tab（知行平台联动）</li>
+          <li>我有建议 Tab（聆听平台联动）</li>
+        </ul>
+      </div>
+      <div class="module mod-green">
+        <h3>操作手册查看</h3>
+        <ul>
+          <li>左树右文主从结构</li>
+          <li>多级目录树导航</li>
+          <li>纯净正文展示（无标题重复）</li>
+          <li>目录-正文联动切换</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"><div class="connector-line"></div><span class="connector-arrow">↕ 接口调用</span><div class="connector-line"></div></div>
+
+  <!-- 数据层 -->
+  <div class="layer layer-data">
+    <div class="section-title">🗄️ 数据与接口层</div>
+    <div class="data-row">
+      <div class="data-item"><strong>运营支撑域</strong><span>操作手册目录/正文存储<br>应用清单 & 映射关系<br>更新日志内容管理</span></div>
+      <div class="data-item"><strong>PMS 系统</strong><span>应用基础数据<br>（系统编码/名称）</span></div>
+      <div class="data-item"><strong>知行平台</strong><span>课程数据接口</span></div>
+      <div class="data-item"><strong>聆听平台</strong><span>建议提交接口</span></div>
+    </div>
+  </div>
+
+  <div class="connector"><div class="connector-line"></div><span class="connector-arrow">↕ 接口调用</span><div class="connector-line"></div></div>
+
+  <!-- 管理端层 -->
+  <div class="layer layer-admin">
+    <div class="section-title">⚙️ 管理端（应用负责人侧）</div>
+    <div class="module-row">
+      <div class="module mod-purple">
+        <h3>手册大盘列表</h3>
+        <ul>
+          <li>53个应用操作手册概况</li>
+          <li>按大类/名称筛选</li>
+          <li>章节数量/更新时间/维护人</li>
+          <li>一键进入配置工作台</li>
+        </ul>
+      </div>
+      <div class="module mod-amber">
+        <h3>配置工作台</h3>
+        <ul>
+          <li>左树右文编辑界面</li>
+          <li>目录增删改排序（2层）</li>
+          <li>富文本编辑器 + Markdown粘贴</li>
+          <li>暂存草稿 / 保存发布</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
