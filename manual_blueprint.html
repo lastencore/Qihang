@@ -6,130 +6,198 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f8fafc; padding: 40px; }
   
-  .blueprint { max-width: 960px; margin: 0 auto; }
-  
-  .layer { border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; position: relative; }
-  .layer-top { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: #fff; text-align: center; }
-  .layer-top h1 { font-size: 20px; font-weight: 700; }
-  .layer-top p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
-  
+  .blueprint { max-width: 1000px; margin: 0 auto 60px; }
+
+  .bp-title { text-align: center; margin-bottom: 24px; }
+  .bp-title h1 { font-size: 22px; color: #1e3a8a; }
+  .bp-title p { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+  .layer { border-radius: 12px; padding: 20px 24px; margin-bottom: 14px; }
   .layer-client { background: #fff; border: 2px solid #e2e8f0; }
-  .layer-admin { background: #fff; border: 2px solid #e2e8f0; }
   .layer-data { background: #f1f5f9; border: 2px dashed #cbd5e1; }
-  
-  .section-title { font-size: 13px; font-weight: 700; color: #64748b; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
-  
-  .module-row { display: flex; gap: 16px; flex-wrap: wrap; }
-  .module { flex: 1; min-width: 180px; border-radius: 8px; padding: 14px 16px; }
+
+  .section-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+
+  .module-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .module { flex: 1; min-width: 160px; border-radius: 8px; padding: 16px; position: relative; }
   .module h3 { font-size: 14px; margin-bottom: 6px; }
-  .module ul { list-style: none; font-size: 12px; color: #475569; line-height: 1.7; }
+  .module p { font-size: 12px; color: #64748b; line-height: 1.6; }
+  .module ul { list-style: none; font-size: 12px; color: #475569; line-height: 1.7; margin-top: 6px; }
   .module ul li::before { content: "· "; color: #94a3b8; }
-  
-  .mod-blue { background: #eff6ff; border: 1px solid #bfdbfe; }
-  .mod-blue h3 { color: #1e40af; }
-  .mod-green { background: #f0fdf4; border: 1px solid #bbf7d0; }
-  .mod-green h3 { color: #166534; }
-  .mod-purple { background: #faf5ff; border: 1px solid #d8b4fe; }
-  .mod-purple h3 { color: #7c3aed; }
-  .mod-amber { background: #fffbeb; border: 1px solid #fcd34d; }
-  .mod-amber h3 { color: #92400e; }
-  
-  .connector { display: flex; justify-content: center; align-items: center; padding: 4px 0; }
-  .connector-line { width: 2px; height: 20px; background: #cbd5e1; }
-  .connector-arrow { color: #94a3b8; font-size: 14px; margin: 0 8px; }
-  
-  .data-row { display: flex; gap: 16px; }
+
+  .mod-blue { background: #eff6ff; border: 1px solid #bfdbfe; }  .mod-blue h3 { color: #1e40af; }
+  .mod-green { background: #f0fdf4; border: 1px solid #bbf7d0; } .mod-green h3 { color: #166534; }
+  .mod-purple { background: #faf5ff; border: 1px solid #d8b4fe; } .mod-purple h3 { color: #7c3aed; }
+  .mod-amber { background: #fffbeb; border: 1px solid #fcd34d; }  .mod-amber h3 { color: #92400e; }
+  .mod-rose { background: #fff1f2; border: 1px solid #fecdd3; }   .mod-rose h3 { color: #be123c; }
+  .mod-sky { background: #f0f9ff; border: 1px solid #bae6fd; }   .mod-sky h3 { color: #0369a1; }
+  .mod-slate { background: #f8fafc; border: 1px solid #e2e8f0; } .mod-slate h3 { color: #475569; }
+
+  .connector { display: flex; justify-content: center; align-items: center; padding: 2px 0; }
+  .connector-v { width: 2px; height: 18px; background: #cbd5e1; }
+
+  /* 整体蓝图 场景 → 模块 流 */
+  .flow-h { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .flow-arrow { color: #94a3b8; font-size: 18px; font-weight: bold; }
+
+  /* 展开模块 */
+  .expanded { border-left: 3px solid #2563eb; padding-left: 14px; margin-left: 6px; }
+  .expanded h3 { font-size: 13px; color: #2563eb; margin-bottom: 8px; }
+  .collapsed-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .collapsed-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px 14px; font-size: 12px; color: #64748b; }
+  .collapsed-item strong { color: #475569; }
+
+  .data-row { display: flex; gap: 12px; }
   .data-item { flex: 1; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; font-size: 12px; }
   .data-item strong { display: block; color: #1e293b; margin-bottom: 4px; }
   .data-item span { color: #64748b; }
+
+  .badge-new { background: #2563eb; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: 6px; font-weight: 600; }
 </style>
 </head>
 <body>
 
+<!-- ===== 蓝图一：启航整体产品蓝图 ===== -->
 <div class="blueprint">
-
-  <!-- 顶部 -->
-  <div class="layer layer-top">
-    <h1>启航平台 — 操作手册模块 产品蓝图</h1>
-    <p>员工作业统一门户 · 管理端与客户端闭环</p>
+  <div class="bp-title">
+    <h1>启航平台 — 整体产品蓝图</h1>
+    <p>员工作业统一门户：从业务场景出发，到系统功能 → 能力培训 → 建议反馈 的完整闭环</p>
   </div>
 
-  <div class="connector"><div class="connector-line"></div></div>
+  <!-- 场景入口层 -->
+  <div class="layer layer-client">
+    <div class="section-label">① 场景入口 — 以业务场景为导航起点</div>
+    <div class="module-row">
+      <div class="module mod-rose" style="flex:2;">
+        <h3>岗位场景地图</h3>
+        <p>覆盖全部业务场景，让用户从实际工作出发（如"我要出单""我要理赔"），按岗位和业务流程导航，而不是按系统名称查找</p>
+      </div>
+      <div class="module mod-blue" style="flex:1;">
+        <h3>应用大厅</h3>
+        <p>53个应用卡片，按10大业务分类平铺展示。先把"有什么"完整呈现，支持搜索和分类筛选</p>
+      </div>
+    </div>
+    <div style="text-align:center; padding:8px 0 0; font-size:12px; color:#94a3b8;">两种路径互补：知道要干什么 → 岗位场景地图；知道系统叫什么 → 应用大厅</div>
+  </div>
+
+  <div class="connector"><div class="connector-v"></div></div>
+
+  <!-- 功能层 -->
+  <div class="layer layer-client">
+    <div class="section-label">② 功能入口 — 具体应用详情与内容</div>
+    <div class="module-row">
+      <div class="module mod-green"><h3>操作手册</h3><p>左树右文结构，按目录查看操作指引</p></div>
+      <div class="module mod-amber"><h3>更新日志</h3><p>风琴式时间轴，近7天变更 Badge 提示</p></div>
+      <div class="module mod-purple"><h3>相关课程</h3><p>关联知行平台课程，从「会用」到「精通」</p></div>
+      <div class="module mod-sky"><h3>我有建议</h3><p>功能缺陷/产品建议/我有想法，直达聆听平台</p></div>
+    </div>
+  </div>
+
+  <div class="connector"><div class="connector-v"></div></div>
+
+  <!-- 闭环层 -->
+  <div class="layer layer-data">
+    <div class="section-label">③ 能力闭环 — 学习赋能 & 反馈驱动</div>
+    <div class="data-row">
+      <div class="data-item" style="background:#faf5ff;"><strong>知行平台</strong><span>课程 / 考试 / 培训<br>从「会用」到「精通」的学习路径</span></div>
+      <div class="data-item" style="background:#fff1f2;"><strong>聆听平台</strong><span>建议提交 / 处理进度看板<br>功能缺陷 → 产品建议 → 我有想法<br>用户反馈驱动产品迭代</span></div>
+    </div>
+    <div style="text-align:center; padding:10px 0 0; font-size:12px; color:#64748b;">启航「分发」→ 知行「赋能」→ 聆听「反馈」→ 启航「迭代」，三维一体闭环</div>
+  </div>
+</div>
+
+<!-- ===== 蓝图二：操作手册模块展开 ===== -->
+<div class="blueprint">
+  <div class="bp-title">
+    <h1>操作手册模块 — 本期需求展开</h1>
+    <p>管理端编辑 · 客户端查看 · 运营支撑域存储</p>
+  </div>
 
   <!-- 客户端层 -->
   <div class="layer layer-client">
-    <div class="section-title">🖥️ 客户端（员工侧）</div>
-    <div class="module-row">
-      <div class="module mod-blue">
-        <h3>应用大厅</h3>
-        <ul>
-          <li>10大分类侧边栏导航</li>
-          <li>53个应用卡片网格展示</li>
-          <li>全局搜索（名称/关键字）</li>
-          <li>更新 Badge 提示</li>
-        </ul>
+    <div class="section-label">🖥️ 客户端（员工查看）</div>
+    <div class="expanded">
+      <h3>📖 操作手册查看（应用详情页 — 默认 Tab）</h3>
+      <div class="module-row">
+        <div class="module mod-green" style="flex:1;">
+          <h3>左侧目录树</h3>
+          <ul>
+            <li>多级可折叠目录（最多2层）</li>
+            <li>默认展开第一个目录节点</li>
+            <li>点击文档节点切换正文</li>
+            <li>空状态提示文案</li>
+          </ul>
+        </div>
+        <div class="module mod-green" style="flex:2;">
+          <h3>右侧正文区</h3>
+          <ul>
+            <li>纯净正文展示，不重复标题</li>
+            <li>保留富文本格式（标题层级/加粗/列表/引用块/表格/行内代码）</li>
+            <li>标题颜色 #1e293b，正文 #334155</li>
+            <li>引用块左侧灰边 + 浅灰背景</li>
+          </ul>
+        </div>
       </div>
-      <div class="module mod-green">
-        <h3>应用详情页</h3>
-        <ul>
-          <li>操作手册 Tab（默认）</li>
-          <li>更新日志 Tab（风琴时间轴）</li>
-          <li>相关课程 Tab（知行平台联动）</li>
-          <li>我有建议 Tab（聆听平台联动）</li>
-        </ul>
-      </div>
-      <div class="module mod-green">
-        <h3>操作手册查看</h3>
-        <ul>
-          <li>左树右文主从结构</li>
-          <li>多级目录树导航</li>
-          <li>纯净正文展示（无标题重复）</li>
-          <li>目录-正文联动切换</li>
-        </ul>
-      </div>
+    </div>
+    <div class="collapsed-row" style="margin-top:12px;">
+      <div class="collapsed-item"><strong>更新日志</strong> · 风琴式时间轴</div>
+      <div class="collapsed-item"><strong>相关课程</strong> · 知行平台联动</div>
+      <div class="collapsed-item"><strong>我有建议</strong> · 聆听平台联动</div>
     </div>
   </div>
 
-  <div class="connector"><div class="connector-line"></div><span class="connector-arrow">↕ 接口调用</span><div class="connector-line"></div></div>
+  <div class="connector"><div class="connector-v"></div></div>
 
   <!-- 数据层 -->
   <div class="layer layer-data">
-    <div class="section-title">🗄️ 数据与接口层</div>
+    <div class="section-label">🗄️ 运营支撑域（存储 & 接口）</div>
     <div class="data-row">
-      <div class="data-item"><strong>运营支撑域</strong><span>操作手册目录/正文存储<br>应用清单 & 映射关系<br>更新日志内容管理</span></div>
-      <div class="data-item"><strong>PMS 系统</strong><span>应用基础数据<br>（系统编码/名称）</span></div>
-      <div class="data-item"><strong>知行平台</strong><span>课程数据接口</span></div>
-      <div class="data-item"><strong>聆听平台</strong><span>建议提交接口</span></div>
+      <div class="data-item"><strong>操作手册目录结构</strong><span>目录节点 + 文档节点<br>层级关系 + 排序</span></div>
+      <div class="data-item"><strong>操作手册正文内容</strong><span>HTML 富文本存储<br>Markdown 粘贴自动转换</span></div>
+      <div class="data-item"><strong>应用负责人映射</strong><span>按应用维度控制<br>编辑权限</span></div>
     </div>
   </div>
 
-  <div class="connector"><div class="connector-line"></div><span class="connector-arrow">↕ 接口调用</span><div class="connector-line"></div></div>
+  <div class="connector"><div class="connector-v"></div></div>
 
   <!-- 管理端层 -->
-  <div class="layer layer-admin">
-    <div class="section-title">⚙️ 管理端（应用负责人侧）</div>
+  <div class="layer layer-client">
+    <div class="section-label">⚙️ 管理端（应用负责人编辑）</div>
     <div class="module-row">
-      <div class="module mod-purple">
+      <div class="module mod-purple" style="flex:1;">
         <h3>手册大盘列表</h3>
         <ul>
-          <li>53个应用操作手册概况</li>
+          <li>53个应用概况一览</li>
           <li>按大类/名称筛选</li>
-          <li>章节数量/更新时间/维护人</li>
+          <li>章节数量、更新时间、维护人</li>
           <li>一键进入配置工作台</li>
         </ul>
       </div>
-      <div class="module mod-amber">
-        <h3>配置工作台</h3>
-        <ul>
-          <li>左树右文编辑界面</li>
-          <li>目录增删改排序（2层）</li>
-          <li>富文本编辑器 + Markdown粘贴</li>
-          <li>暂存草稿 / 保存发布</li>
-        </ul>
+      <div class="module mod-amber" style="flex:2;">
+        <h3>配置工作台（左树右文编辑）</h3>
+        <div class="module-row" style="margin-top:6px;">
+          <div style="flex:1; font-size:12px; color:#475569;">
+            <strong style="color:#92400e;">左侧：目录树管理</strong>
+            <ul>
+              <li>最多2层：目录 → 文档</li>
+              <li>新建/删除/上移/下移</li>
+              <li>文档节点选中联动编辑区</li>
+            </ul>
+          </div>
+          <div style="flex:2; font-size:12px; color:#475569;">
+            <strong style="color:#92400e;">右侧：正文编辑器</strong>
+            <ul>
+              <li>章节标题输入（同步目录树）</li>
+              <li>富文本工具栏（H1-H3/B/I/U/代码/引用/表格）</li>
+              <li>Markdown 粘贴自动转换</li>
+              <li>复制为 md 格式</li>
+              <li>暂存草稿 / 保存发布</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </div>
 
 </body>
