@@ -59,15 +59,6 @@
 
   .footer { text-align: center; color: #94a3b8; font-size: 11px; padding: 16px; }
 
-  .metric-row { display: flex; align-items: center; margin: 8px 0; font-size: 13px; }
-  .metric-label { width: 180px; font-weight: 600; color: #475569; flex-shrink: 0; }
-  .metric-bar { flex: 1; height: 22px; background: #f1f5f9; border-radius: 4px; overflow: hidden; display: flex; }
-  .metric-bar .fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
-  .metric-bar .fill.good { background: #22c55e; }
-  .metric-bar .fill.warn { background: #f59e0b; }
-  .metric-bar .fill.bad { background: #ef4444; }
-  .metric-value { width: 50px; text-align: right; font-size: 12px; font-weight: 600; margin-left: 8px; flex-shrink: 0; }
-
   @media print {
     body { background: #fff; }
     .slide { box-shadow: none; margin: 0; border-radius: 0; page-break-after: always; }
@@ -147,20 +138,11 @@
       </div>
       <div class="cons"><h4>❌ 问题</h4>
         <ul style="padding-left:16px; font-size:13px;">
-          <li>284个系统，普通用户看不懂</li>
-          <li>已下线系统会污染列表</li>
-          <li>没有"应用大类"概念，无法做分类导航和色彩隐喻</li>
-          <li>聆听/知行/新一代首页无法直接复用 PMS 名称</li>
+          <li>284个系统，命名偏技术视角，非技术背景用户难以快速定位</li>
+          <li>PMS 的系统类别无法为业务视角的快速导航提供支撑</li>
+          <li>聆听/知行/新一代首页无法直接复用 PMS 技术名称</li>
         </ul>
       </div>
-    </div>
-
-    <div style="margin-top:20px;">
-      <h3>用户体验评估</h3>
-      <div class="metric-row"><span class="metric-label">普通用户可理解性</span><div class="metric-bar"><div class="fill bad" style="width:20%"></div></div><span class="metric-value" style="color:#ef4444">差</span></div>
-      <div class="metric-row"><span class="metric-label">应用分类支持</span><div class="metric-bar"><div class="fill bad" style="width:10%"></div></div><span class="metric-value" style="color:#ef4444">不支持</span></div>
-      <div class="metric-row"><span class="metric-label">跨平台复用</span><div class="metric-bar"><div class="fill bad" style="width:15%"></div></div><span class="metric-value" style="color:#ef4444">差</span></div>
-      <div class="metric-row"><span class="metric-label">维护成本</span><div class="metric-bar"><div class="fill good" style="width:95%"></div></div><span class="metric-value" style="color:#22c55e">零</span></div>
     </div>
 
     <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:12px 16px; margin-top:16px; font-size:13px;">
@@ -195,9 +177,8 @@
     <div class="grid-2" style="margin-top:20px;">
       <div class="pros"><h4>✅ 优势</h4>
         <ul style="padding-left:16px; font-size:13px;">
-          <li>53个卡片，命名易懂，分类清晰</li>
-          <li>支持10大应用分类 + 色彩隐喻降噪</li>
-          <li>一次维护，四个平台同时受益</li>
+          <li>53个卡片，命名易懂，支持业务视角快速导航</li>
+          <li>支持10大应用分类，一次维护，四个平台同时受益</li>
           <li>可独立控制展示顺序、隐藏/显示</li>
         </ul>
       </div>
@@ -210,13 +191,6 @@
       </div>
     </div>
 
-    <div style="margin-top:20px;">
-      <h3>用户体验评估</h3>
-      <div class="metric-row"><span class="metric-label">普通用户可理解性</span><div class="metric-bar"><div class="fill good" style="width:90%"></div></div><span class="metric-value" style="color:#22c55e">好</span></div>
-      <div class="metric-row"><span class="metric-label">应用分类支持</span><div class="metric-bar"><div class="fill good" style="width:95%"></div></div><span class="metric-value" style="color:#22c55e">支持</span></div>
-      <div class="metric-row"><span class="metric-label">跨平台复用</span><div class="metric-bar"><div class="fill good" style="width:90%"></div></div><span class="metric-value" style="color:#22c55e">好</span></div>
-      <div class="metric-row"><span class="metric-label">维护成本</span><div class="metric-bar"><div class="fill warn" style="width:35%"></div></div><span class="metric-value" style="color:#f59e0b">低</span></div>
-    </div>
   </div>
 </div>
 
@@ -230,7 +204,8 @@
     <h3>映射表结构</h3>
     <table>
       <tr><th>字段</th><th>说明</th><th>示例</th></tr>
-      <tr><td>PMS 系统编码</td><td>PMS 侧唯一标识</td><td><code>CB001</code></td></tr>
+      <tr><td>运营支撑域应用编号</td><td>运营支撑域内部唯一标识</td><td><code>APP_001</code></td></tr>
+      <tr><td>PMS 系统编码</td><td>PMS 侧唯一标识，用于关联</td><td><code>SYS_AUTO_20210115_08832</code></td></tr>
       <tr><td>PMS 系统名称</td><td>PMS 侧技术名称</td><td>车险报价微服务</td></tr>
       <tr><td>应用名称（用户视角）</td><td>前台展示名称</td><td>车险承保平台</td></tr>
       <tr><td>应用大类</td><td>10大分类之一</td><td>承保业务</td></tr>
@@ -256,7 +231,7 @@
       <tr><th style="width:35%">异常场景</th><th>处理方式</th></tr>
       <tr><td>PMS 新增系统但映射表未更新</td><td>前台不展示（不污染用户列表）</td></tr>
       <tr><td>映射表中系统在 PMS 已下线</td><td>前台自动隐藏，后台标记"待清理"</td></tr>
-      <tr><td>映射表名称与 PMS 不一致</td><td>以映射表为准展示，运营支撑域提供对比视图</td></tr>
+      <tr><td>映射表缺失或配置错误</td><td>该应用在前台不展示，运营支撑域提供未映射系统清单供运维核查</td></tr>
     </table>
   </div>
 </div>
@@ -280,9 +255,9 @@
         <td><span class="tag tag-green">好</span></td>
       </tr>
       <tr>
-        <td>支持应用分类</td>
-        <td><span class="tag tag-red">不支持</span></td>
-        <td><span class="tag tag-green">10大分类 + 色彩隐喻</span></td>
+        <td>业务视角快速导航能力</td>
+        <td><span class="tag tag-red">无法支持（技术分类）</span></td>
+        <td><span class="tag tag-green">10大应用分类，业务视角导航</span></td>
       </tr>
       <tr>
         <td>跨平台复用</td>
@@ -301,8 +276,8 @@
       </tr>
       <tr>
         <td>扩展性</td>
-        <td><span class="tag tag-red">受 PMS 字段限制</span></td>
-        <td><span class="tag tag-green">可灵活扩展字段</span></td>
+        <td><span class="tag tag-red">受 PMS 字段限制，新增字段需 PMS 改造</span></td>
+        <td><span class="tag tag-green">映射表可独立扩展字段，不依赖 PMS</span><br><small style="color:#64748b;">例：应用图标、应用负责人、运营标签、临时上下架</small></td>
       </tr>
     </table>
 
