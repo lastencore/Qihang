@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>启航平台 — 更新日志管理方案流程图</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1e293b; line-height: 1.6; }
+  
+  .slide { max-width: 1100px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; page-break-after: always; }
+  .slide-header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; padding: 24px 36px; }
+  .slide-header h1 { font-size: 20px; font-weight: 700; }
+  .slide-header .sub { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+  .slide-body { padding: 28px 36px; }
+  h2 { font-size: 17px; color: #1e3a8a; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; }
+
+  .flow-container { padding: 10px 0 20px; }
+  
+  /* Flow nodes */
+  .flow-row { display: flex; align-items: center; justify-content: center; gap: 0; margin: 16px 0; flex-wrap: wrap; }
+  .node { padding: 12px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; text-align: center; min-width: 100px; max-width: 180px; position: relative; }
+  .node.actor { background: #dbeafe; border: 2px solid #93c5fd; color: #1e40af; }
+  .node.system { background: #fef3c7; border: 2px solid #fcd34d; color: #92400e; }
+  .node.platform { background: #dcfce7; border: 2px solid #86efac; color: #166534; }
+  .node.external { background: #f3e8ff; border: 2px solid #c4b5fd; color: #6d28d9; }
+  .node.user { background: #e0e7ff; border: 2px solid #a5b4fc; color: #3730a3; }
+
+  .arrow-h { display: flex; align-items: center; color: #94a3b8; font-size: 20px; padding: 0 4px; font-weight: bold; }
+  .arrow-v { text-align: center; color: #94a3b8; font-size: 18px; font-weight: bold; padding: 2px 0; }
+
+  .swimlane { margin: 24px 0; }
+  .swimlane-title { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; padding: 4px 10px; background: #f8fafc; border-radius: 4px; display: inline-block; }
+  .swimlane-row { display: flex; align-items: flex-start; gap: 16px; margin: 8px 0; flex-wrap: wrap; justify-content: center; }
+
+  .branch { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .branch-row { display: flex; align-items: center; gap: 0; }
+
+  .step-num { display: inline-block; width: 20px; height: 20px; border-radius: 50%; background: #2563eb; color: #fff; font-size: 11px; line-height: 20px; text-align: center; margin-right: 6px; }
+
+  .note { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #92400e; margin: 12px 0; }
+
+  .compare-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  .compare-table th { background: #f1f5f9; padding: 8px 12px; text-align: left; font-weight: 600; color: #475569; border-bottom: 2px solid #cbd5e1; }
+  .compare-table td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0; font-size: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  .footer { text-align: center; color: #94a3b8; font-size: 11px; padding: 16px; }
+
+  @media print {
+    body { background: #fff; }
+    .slide { box-shadow: none; margin: 0; border-radius: 0; page-break-after: always; }
+    .slide:last-child { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== SLIDE 1: 方案一 ===== -->
+<div class="slide">
+  <div class="slide-header">
+    <h1>更新日志管理 — 方案一：运营支撑域主导</h1>
+    <div class="sub">运营人员在运营支撑域后台编写日志，PMS 侧仅做关联引用，不强绑定</div>
+  </div>
+  <div class="slide-body">
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#dbeafe"></div> 操作角色</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#fef3c7"></div> 运营支撑域系统</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#dcfce7"></div> 启航/前台平台</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f3e8ff"></div> PMS 系统</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e0e7ff"></div> 终端用户</div>
+    </div>
+
+    <div class="flow-container">
+
+      <!-- 日志编写阶段 -->
+      <div class="swimlane">
+        <div class="swimlane-title">① 日志编写与发布</div>
+        <div class="flow-row">
+          <div class="node actor"><span class="step-num">1</span>运营人员</div>
+          <div class="arrow-h">→</div>
+          <div class="node system">登录运营支撑域<br><small>更新日志管理</small></div>
+          <div class="arrow-h">→</div>
+          <div class="node system">编写日志内容<br><small>富文本 / Markdown</small></div>
+          <div class="arrow-h">→</div>
+          <div class="node system">选择关联系统<br>设定发布时间</div>
+          <div class="arrow-h">→</div>
+          <div class="node system" style="background:#bbf7d0; border-color:#4ade80;">提交发布</div>
+        </div>
+      </div>
+
+      <div class="arrow-v">↓</div>
+
+      <!-- PMS 关联阶段 -->
+      <div class="swimlane">
+        <div class="swimlane-title">② PMS 上线流程关联（弱绑定）</div>
+        <div class="flow-row">
+          <div class="node external">PMS 产品上线流程<br><small>需选择并绑定更新日志</small></div>
+          <div class="arrow-h">⇢</div>
+          <div class="node system">运营支撑域<br><small>提供查询接口</small></div>
+          <div class="arrow-h">⇢</div>
+          <div class="node external">PMS 获取日志列表<br><small>选择已有日志关联</small></div>
+        </div>
+      </div>
+
+      <div class="note">
+        ⚠️ PMS 侧不强绑定：日志可以先于 PMS 发布流程独立存在。运维团队兜底解决日志与发布单的同步/一致性异常。
+      </div>
+
+      <div class="arrow-v">↓</div>
+
+      <!-- 用户端展示 -->
+      <div class="swimlane">
+        <div class="swimlane-title">③ 用户端展示</div>
+        <div class="flow-row">
+          <div class="node platform">新一代个人中心</div>
+          <div class="node platform">新一代首页</div>
+          <div class="node platform">应用内嵌入口</div>
+          <div class="node platform">启航平台应用地图<br><small>需做PMS名称映射</small></div>
+        </div>
+        <div style="text-align:center; margin-top:8px; font-size:12px; color:#64748b;">↑ 均通过运营支撑域接口获取日志内容 ↑</div>
+        <div class="flow-row" style="margin-top:8px;">
+          <div class="node user">员工查看更新日志<br><small>风琴式时间轴 / Badge 提示</small></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2: 方案二 ===== -->
+<div class="slide">
+  <div class="slide-header">
+    <h1>更新日志管理 — 方案二：PMS 全链路主导</h1>
+    <div class="sub">PMS 发布流程自动生成日志，内容同步至运营支撑域，区分发布日志与内容更新</div>
+  </div>
+  <div class="slide-body">
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#dbeafe"></div> 操作角色</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#fef3c7"></div> 运营支撑域系统</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#dcfce7"></div> 启航/前台平台</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f3e8ff"></div> PMS 系统</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e0e7ff"></div> 终端用户</div>
+    </div>
+
+    <div class="flow-container">
+
+      <!-- PMS 发布生成日志 -->
+      <div class="swimlane">
+        <div class="swimlane-title">① PMS 发布 → 自动生成日志</div>
+        <div class="flow-row">
+          <div class="node actor"><span class="step-num">1</span>研发人员</div>
+          <div class="arrow-h">→</div>
+          <div class="node external">PMS 发起产品上线<br><small>填写发布内容、版本号</small></div>
+          <div class="arrow-h">→</div>
+          <div class="node external" style="background:#ede9fe; border-color:#a78bfa;">PMS 自动生成<br>发布日志</div>
+          <div class="arrow-h">→</div>
+          <div class="node system">同步至运营支撑域<br><small>日志内容 + 系统信息</small></div>
+        </div>
+      </div>
+
+      <div class="note">
+        📌 PMS 为唯一信源：日志内容由 PMS 发布流程自动产生，运营支撑域被动接收。发布日志与内容更新（如操作手册变更）在运营支撑域侧区分管理。
+      </div>
+
+      <div class="arrow-v">↓</div>
+
+      <!-- 非发布类更新 -->
+      <div class="swimlane">
+        <div class="swimlane-title">② 非发布类更新（补充通道）</div>
+        <div class="flow-row">
+          <div class="node actor"><span class="step-num">2</span>运营人员</div>
+          <div class="arrow-h">→</div>
+          <div class="node system">运营支撑域<br><small>编写内容更新日志</small></div>
+          <div class="arrow-h">→</div>
+          <div class="node system" style="background:#fef3c7; border-color:#fcd34d;">标记为"内容更新"<br><small>与PMS发布日志区分</small></div>
+        </div>
+      </div>
+
+      <div class="arrow-v">↓</div>
+
+      <!-- 用户端展示 -->
+      <div class="swimlane">
+        <div class="swimlane-title">③ 用户端展示（同方案一）</div>
+        <div class="flow-row">
+          <div class="node platform">新一代个人中心</div>
+          <div class="node platform">新一代首页</div>
+          <div class="node platform">应用内嵌入口</div>
+          <div class="node platform">启航平台应用地图<br><small>需做PMS名称映射</small></div>
+        </div>
+        <div style="text-align:center; margin-top:8px; font-size:12px; color:#64748b;">↑ 均通过运营支撑域接口获取日志内容 ↑</div>
+        <div class="flow-row" style="margin-top:8px;">
+          <div class="node user">员工查看更新日志<br><small>风琴式时间轴 / Badge 提示</small></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3: 方案对比 ===== -->
+<div class="slide">
+  <div class="slide-header">
+    <h1>方案对比：更新日志管理</h1>
+  </div>
+  <div class="slide-body">
+    <table class="compare-table">
+      <tr><th style="width:22%">对比维度</th><th style="width:39%">方案一：运营支撑域主导</th><th style="width:39%">方案二：PMS 全链路主导</th></tr>
+      <tr>
+        <td><strong>日志内容生产者</strong></td>
+        <td>运营人员在运营支撑域后台手动编写</td>
+        <td>PMS 发布流程自动生成；非发布类更新由运营人员补充</td>
+      </tr>
+      <tr>
+        <td><strong>内容所有权</strong></td>
+        <td>运营团队自主管理，PMS 仅做关联参考</td>
+        <td>PMS 为发布日志唯一信源，运营支撑域被动接收</td>
+      </tr>
+      <tr>
+        <td><strong>耦合程度</strong></td>
+        <td>松耦合：两边独立运作，不强绑定</td>
+        <td>紧耦合：PMS 发布即同步，需保证通道稳定</td>
+      </tr>
+      <tr>
+        <td><strong>覆盖范围</strong></td>
+        <td>灵活，可包含非 PMS 来源的运营类更新</td>
+        <td>发布日志受限于 PMS 数据结构；内容更新需额外通道</td>
+      </tr>
+      <tr>
+        <td><strong>人工成本</strong></td>
+        <td>运营需手动编写和上传每条日志</td>
+        <td>自动化程度高，研发填写发布内容即可自动生成</td>
+      </tr>
+      <tr>
+        <td><strong>运维兜底</strong></td>
+        <td>运维团队解决同步/一致性异常</td>
+        <td>需保证 PMS → 运营支撑域同步通道高可用</td>
+      </tr>
+      <tr>
+        <td><strong>前置依赖</strong></td>
+        <td>运营人员需在 PMS 上线前提前提交日志</td>
+        <td>PMS 流程需改造以支持日志内容的结构化录入</td>
+      </tr>
+    </table>
+
+    <div class="note" style="margin-top:20px;">
+      <strong>💡 两方案的共同点：</strong>无论哪种方案，用户端展示均通过运营支撑域接口获取日志，启航/聆听/新一代首页/个人中心统一对接。PMS 系统名称映射同样需要。
+    </div>
+  </div>
+  <div class="footer">中华财险 · 新一代核心系统 · 创新研发中心业务中台部</div>
+</div>
+
+</body>
+</html>
