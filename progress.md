@@ -133,10 +133,12 @@ prototype/
 
 ## 5. 核心上下文
 
-### 5.1 关键路径
+### 5.1 关键路径与认证
 - 原型根目录：`/workspace/prototype/`
 - 预览：`python3 -m http.server 8080` + notify
-- GitHub：`https://github.com/lastencore/Qihang.git`
+- GitHub 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
+- GitHub Token：需用户在新对话中提供（或使用 SSH key 方式 clone）
+- Clone 命令模板：`git clone https://lastencore:<TOKEN>@github.com/lastencore/Qihang.git /workspace/prototype`
 - tdrive 根 ID：`SrgvhjiFWppt`
 
 ### 5.2 关键数据
@@ -155,7 +157,20 @@ prototype/
 ## 6. 下一步行动
 
 ### 新对话启动指令
-> 先 `cd /workspace/prototype && git pull origin main` 同步最新代码，然后读取 `progress.md` 了解当前进度。
+
+> **第一步（初始化仓库）**：
+> 新对话 workspace 为空，需要从 GitHub clone。用户提供 Token 后执行：
+> ```bash
+> git clone https://lastencore:<TOKEN>@github.com/lastencore/Qihang.git /workspace/prototype
+> ```
+> 如果 `/workspace/prototype/` 已存在旧数据，先 `rm -rf /workspace/prototype`。
+>
+> **第二步（读取进度）**：
+> ```bash
+> cat /workspace/prototype/progress.md
+> ```
+>
+> **说明**：用户只需上传 `progress.md` 并告知 Token，clone 后所有原型文件、Git 历史都在。
 
 ### 当前可执行任务
 1. **PRD 修改**：用户审阅 `启航平台_操作手册_PRD.md`（tdrive）后反馈修改点
