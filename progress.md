@@ -7,7 +7,7 @@
 
 ## 1. 任务概览
 
-**当前目标**：完成启航平台操作手册模块的 PRD 定稿、产品蓝图定稿、原型修复，以及更新日志方案的原型扩展。
+**当前目标**：完成操作手册 PRD 修改、更新日志方案原型扩展。产品蓝图由用户自行修改。
 
 **项目背景**：
 - 中华财险创新研发中心业务中台部，负责三平台产品工作
@@ -15,12 +15,11 @@
 - **知行平台**（学习赋能）：课程、考试、培训管理
 - **聆听平台**（建议反馈）：三类建议（功能缺陷/产品建议/我有想法）、处理看板
 - 三平台关系：启航「分发」→ 知行「赋能」→ 聆听「反馈」→ 启航「迭代」
-- 底层 PMS 系统：284 个技术系统（198 已上线），10 个技术类别
 
 **当前优先级**：
-1. 🔄 产品蓝图（manual_blueprint.html）样式定稿
-2. 🔄 操作手册 PRD 完善
-3. ⏳ 更新日志两种管理方案的原型扩展
+1. 🔄 操作手册 PRD 完善（待用户审阅反馈）
+2. ⏳ 更新日志两种管理方案的原型扩展
+3. 🟡 产品蓝图：用户自行修改中，AI 不再迭代
 
 ---
 
@@ -28,143 +27,139 @@
 
 ### ✅ 已完成
 
-- [x] 三平台协同关系梳理文档 → tdrive: `新一代核心系统_三平台协同设计.md`
-- [x] 应用分类梳理 → tdrive: `启航平台_应用分类.md`
-- [x] 应用目录来源方案会议材料 → `app_catalog_proposal.html`（6 页幻灯片，含方案对比、典型案例、PMS 真实数据）
-- [x] 更新日志两种方案泳道图（Mermaid）→ `update_log_flow.html`
-- [x] 管理端原型修复：去掉外链 404、去掉 AI 化 alert 文案、去掉"工作台管理"入口
-- [x] 操作手册 PRD 初稿 → tdrive: `启航平台_操作手册_PRD.md`（466 行，含客户端 3.3 章节）
-- [x] 产品蓝图初版 → `manual_blueprint.html`（Tailwind CSS 重做，红色系配色）
+- [x] 三平台协同关系梳理文档
+- [x] 应用分类梳理（53 应用、10 大类）
+- [x] 应用目录来源方案会议材料（`slides/app_catalog_proposal.html`）
+- [x] 更新日志两种方案泳道图（`slides/update_log_flow.html`）
+- [x] 管理端原型修复：去外链 404、去 AI 文案、去工作台管理入口
+- [x] 操作手册 PRD 初稿 → tdrive
 - [x] 6 个文档日期修正（2025→2026）
-- [x] 原型导航索引页 → `index.html`
-- [x] 原型打包 → tdrive: `启航平台_原型_20260624.zip`
-- [x] Git 仓库同步：本地 master → main，remote 指向 `https://github.com/lastencore/Qihang.git`，已 push
-- [x] progress-doc skill 创建（用于跨项目维护交接文档）
+- [x] 原型导航索引页（`index.html`）
+- [x] Git 仓库打通：GitHub `lastencore/Qihang`，main 分支，三端同步
+- [x] 原型目录重组：`client/` `admin/` `slides/` `blueprint/` `assets/`
+- [x] Logo 跳转 BUG 修复：管理端页面 logo `href="/"` → `href="../index.html"`
+- [x] progress-doc skill 创建
+- [x] 产品蓝图（Tailwind CSS 版）：用户决定自行修改，AI 不再迭代
 
 ### 🔄 进行中
 
-- [ ] **产品蓝图样式迭代**：Tailwind CSS 版已生成，待用户确认
-- [ ] **操作手册 PRD**：待用户反馈修改点
+- [ ] **操作手册 PRD**：待用户审阅后反馈修改点
 
 ### ⏳ 待办
 
 - [ ] 更新日志两种方案的原型页面扩展
+- [ ] 应用目录方案 vs 更新日志方案待用户决策
 - [ ] 产品蓝图二（操作手册模块展开）暂缓
-- [ ] progress.md 同步到 tdrive
 
 ---
 
 ## 3. 交付物清单
 
-### 3.1 workspace 原型文件（`/workspace/prototype/`，已同步 GitHub）
+### 3.1 workspace 原型（`/workspace/prototype/`，已同步 GitHub）
 
-| 文件 | 用途 | 状态 |
-|------|------|------|
-| `index.html` | 原型导航索引页（面向团队共享） | ✅ |
-| `client.html` | 启航客户端首页 | ✅ |
-| `common.css` | 全局样式表 | ✅ |
-| `manual_query.html` | 管理端-手册大盘列表 | ✅ |
-| `manual_workspace.html` | 管理端-配置工作台 | ✅ |
-| `update_log_query.html` | 管理端-日志查询列表 | ✅ |
-| `update_log_modify.html` | 管理端-日志新增/编辑 | ✅ |
-| `app_catalog_proposal.html` | 应用目录来源方案会议材料 | ✅ |
-| `update_log_flow.html` | 更新日志两种方案泳道图（Mermaid） | ✅ |
-| `manual_blueprint.html` | 产品蓝图（蓝图一+蓝图二，自用不外发） | 🔄 |
-| `progress.md` | 本文档，任务交接 | ✅ |
+```
+prototype/
+├── index.html                    # 原型导航索引（面向团队共享）
+├── progress.md                   # 本文档
+├── client/
+│   └── client.html               # 启航客户端首页
+├── admin/
+│   ├── manual_query.html         # 管理端-手册大盘列表
+│   ├── manual_workspace.html     # 管理端-配置工作台
+│   ├── update_log_query.html     # 管理端-日志查询列表
+│   └── update_log_modify.html    # 管理端-日志新增/编辑
+├── slides/
+│   ├── app_catalog_proposal.html # 应用目录来源方案（HTML PPT）
+│   └── update_log_flow.html      # 更新日志方案泳道图（Mermaid）
+├── blueprint/
+│   └── manual_blueprint.html     # 产品蓝图（自用，用户自行修改）
+└── assets/
+    └── common.css                # 全局样式表
+```
+
+全部状态：✅
 
 ### 3.2 tdrive 资产库文档
 
-| 文档 | 主要内容 | 状态 |
-|------|---------|------|
-| `新一代核心系统_三平台协同设计.md` | 三平台定位、协同关系、PMS 背景 | ✅ |
-| `启航平台_应用分类.md` | 53 应用、10 大业务分类 | ✅ |
-| `启航平台_应用目录来源方案.md` | 两种方案对比、案例、分类维度差异 | ✅ |
+| 文档 | 内容 | 状态 |
+|------|------|------|
+| `新一代核心系统_三平台协同设计.md` | 三平台定位、协同关系 | ✅ |
+| `启航平台_应用分类.md` | 53 应用、10 大分类 | ✅ |
+| `启航平台_应用目录来源方案.md` | 两方案对比、案例 | ✅ |
 | `启航平台_操作手册_PRD.md` | 操作手册 PRD（466行） | ✅ |
 | `知行社_产品需求说明书2026.05.md` | 知行平台历史 PRD | ✅ |
 | `聆听平台-状态增加_列表导出_数据看板.md` | 聆听平台历史 PRD | ✅ |
 
-### 3.3 workspace 参考文档（非交付物）
+### 3.3 workspace 参考文档（非交付物，仅本地）
 
 | 文件 | 说明 |
 |------|------|
-| `启航平台_技术边界与决策记录.md` | 技术约束记录 |
+| `启航平台_技术边界与决策记录.md` | 技术约束 |
 | `启航平台_交互降噪规范.md` | 交互规范 |
-| `启航平台_视觉规范_个人草稿.md` | 视觉规范草稿 |
-| `启航平台_应用目录来源方案.md` | 方案文档本地副本 |
-| `启航平台_应用分类.md` | 应用分类本地副本 |
+| `启航平台_视觉规范_个人草稿.md` | 视觉草稿 |
+| `启航平台_应用目录来源方案.md` | 方案本地副本 |
+| `启航平台_应用分类.md` | 分类本地副本 |
 
 ---
 
 ## 4. 关键决策
 
 ### 4.1 应用目录方案
-- **方案一**：项目管理部建议——直接使用 PMS 系统清单
-- **方案二**：基于现有 10 大业务分类做映射（当前启航实际做法）
-- **尚未做出最终决策**
+- 方案一：直接用 PMS 系统清单 / 方案二：基于业务分类做映射
+- **尚未决策**
 
 ### 4.2 更新日志方案
-- **方案一**：运营支撑域主导
-- **方案二**：PMS 全链路主导
-- **尚未做出最终决策**，已有 Mermaid 泳道图
+- 方案一：运营支撑域主导 / 方案二：PMS 全链路主导
+- **尚未决策**，已有 Mermaid 泳道图
 
 ### 4.3 操作手册
-- V1 不做版本控制
-- 左树右文结构，最多 2 层（目录→文档）
-- 富文本编辑 + Markdown 粘贴自动转换
-- 权限：按应用负责人控制编辑权限
-- 客户端：应用详情页中操作手册作为默认 Tab
+- V1 不做版本控制；左树右文，最多 2 层
+- 富文本 + Markdown；按应用负责人控制权限
 
 ### 4.4 产品蓝图
-- 配色：弃用蓝绿紫，统一红色系（呼应三平台 logo），白色主底色，红色仅作点缀
-- 蓝图二暂缓
+- 用户自行修改，AI 不再迭代
 
-### 4.5 流程图规范
-- 统一用 Mermaid，不用 HTML 手绘
+### 4.5 流程图 → 统一用 Mermaid
 
-### 4.6 Git 与文件共享
-- GitHub 仓库：`https://github.com/lastencore/Qihang.git`（HTTPS + Token 认证）
-- 分支统一为 `main`
-- 原型分享：打包 zip → tdrive 下载分发（预览链接仅本人可用）
+### 4.6 Git 工作流
+- 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
+- 提交前必须先 `git pull`，再 `commit` + `push`
+- 原型分发走 GitHub，不再用 tdrive zip
 
 ### 4.7 任务交接
-- 维护 `progress.md`，用 progress-doc skill 管理
-- 更新时机：手动触发 / 阶段性产出后主动提议
+- 维护 `progress.md`，用 progress-doc skill
 
 ---
 
 ## 5. 核心上下文
 
 ### 5.1 关键路径
-- 原型目录：`/workspace/prototype/`
-- 预览：`python3 -m http.server 8080` + `/root/.codebuddy/skills/preview/notify 8080`
+- 原型根目录：`/workspace/prototype/`
+- 预览：`python3 -m http.server 8080` + notify
+- GitHub：`https://github.com/lastencore/Qihang.git`
 - tdrive 根 ID：`SrgvhjiFWppt`
-- GitHub 仓库：`https://github.com/lastencore/Qihang.git`
 
 ### 5.2 关键数据
-- 启航用户视角应用：53 个，10 大业务分类
-- PMS 技术系统：284 个（198 已上线），10 个技术类别
-- 操作手册目录层级：最多 2 层
+- 启航：53 应用、10 大分类
+- PMS：284 系统（198 上线）、10 技术类别
+- 操作手册目录：最多 2 层
 
 ### 5.3 三平台角色
-- 启航：高效分发 → 让员工找到、会用
-- 知行：学习赋能 → 从「会用」到「精通」
-- 聆听：反馈驱动 → 用户声音回流到产品迭代
+- 启航 → 分发、知行 → 赋能、聆听 → 反馈
 
 ### 5.4 用户身份
 - 产品经理：中华财险创新研发中心业务中台部
-- 终端用户：中华财险内部员工
 
 ---
 
 ## 6. 下一步行动
 
 ### 新对话启动指令
-> 读取 `/workspace/prototype/progress.md` 了解当前进度。项目 Git 已同步 GitHub（`lastencore/Qihang`，main 分支），先 `git pull` 确保最新。
+> 先 `cd /workspace/prototype && git pull origin main` 同步最新代码，然后读取 `progress.md` 了解当前进度。
 
 ### 当前可执行任务
-1. **确认蓝图样式**：预览 `manual_blueprint.html`，反馈修改意见
-2. **反馈 PRD 修改点**：阅读 tdrive 上的 `启航平台_操作手册_PRD.md`
-3. **更新日志原型**：确定方案后扩展原型
+1. **PRD 修改**：用户审阅 `启航平台_操作手册_PRD.md`（tdrive）后反馈修改点
+2. **更新日志原型**：用户确定方案后扩展 `admin/update_log_*` 原型
 
 ### 待用户决策
 - 应用目录方案一 vs 方案二
