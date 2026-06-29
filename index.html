@@ -1,97 +1,304 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>启航平台 — 原型索引</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f9fafb; padding: 48px 24px; color: #111827; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>启航·聆听·知行 需求文档索引</title>
+    <style>
+        :root {
+            --primary-color: #1677ff;
+            --bg-layout: #f5f7fa;
+            --bg-container: #ffffff;
+            --text-main: #1f2329;
+            --text-secondary: #646a73;
+            --text-disabled: #8f959e;
+            --border-color: #dee1e6;
+            --radius-main: 8px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+            background-color: var(--bg-layout);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 顶部导航 */
+        .global-header {
+            background-color: #001529;
+            color: #ffffff;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .brand-zone { display: flex; align-items: center; gap: 16px; }
+        .brand-title { font-size: 16px; font-weight: 600; letter-spacing: 0.5px; }
+        .brand-pm { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 400; }
+
+        .platform-tabs { display: flex; height: 100%; align-items: flex-end; padding-left: 40px; flex-grow: 1; }
+
+        .platform-tab {
+            padding: 0 24px; height: 50px; display: flex; align-items: center;
+            color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; font-weight: 500;
+            border-bottom: 3px solid transparent; transition: all 0.3s; cursor: pointer;
+        }
+        .platform-tab:hover { color: #ffffff; }
+        .platform-tab.active {
+            color: #ffffff; font-weight: 600; border-bottom-color: var(--primary-color);
+            background: linear-gradient(to bottom, transparent, rgba(22,119,255,0.1));
+        }
+        .platform-tab.disabled { color: rgba(255,255,255,0.25); cursor: not-allowed; }
+        .platform-tab.disabled .badge-coming {
+            font-size: 10px; background: rgba(255,255,255,0.1); color: var(--text-disabled);
+            padding: 1px 4px; border-radius: 3px; margin-left: 6px;
+        }
+
+        /* 主体布局 */
+        .main-workspace { display: flex; flex-grow: 1; overflow: hidden; }
+
+        /* 侧边栏 */
+        .sidebar-timeline {
+            width: 240px; background-color: var(--bg-container); border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; padding: 24px 0; flex-shrink: 0;
+        }
+        .version-menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; padding: 0 12px; }
+        .version-item {
+            padding: 12px 16px; border-radius: var(--radius-main); cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 14px; font-weight: 500; color: var(--text-main); transition: all 0.2s;
+        }
+        .version-item:hover { background-color: #f5f7fa; color: var(--primary-color); }
+        .version-item.active { background-color: #e6f4ff; color: var(--primary-color); font-weight: 600; }
+
+        /* 右侧内容 */
+        .content-display-pane {
+            flex-grow: 1; padding: 24px 32px 16px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .pane-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            border-bottom: 1px solid var(--border-color); padding-bottom: 16px;
+        }
+        .breadcrumb-area h2 { font-size: 20px; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
+        .breadcrumb-sub { font-size: 13px; color: var(--text-secondary); }
+
+        /* 资产卡片网格 */
+        .asset-grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        @media (max-width: 1000px) { .asset-grid-container { grid-template-columns: 1fr; } }
+
+        .asset-category-card {
+            background-color: var(--bg-container); border: 1px solid var(--border-color);
+            border-radius: var(--radius-main); box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column; transition: all 0.3s;
+        }
+        .asset-category-card:hover {
+            transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: #b3d8ff;
+        }
+        .card-header-zone {
+            padding: 16px 20px; border-bottom: 1px solid #f0f2f5;
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: #fafbfc; border-top-left-radius: var(--radius-main); border-top-right-radius: var(--radius-main);
+        }
+        .category-title { font-size: 15px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .category-icon-wrapper { width: 8px; height: 14px; background-color: var(--primary-color); border-radius: 2px; }
+        .card-body-list { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; }
+
+        /* 文档链接 */
+        .document-link-item {
+            border: 1px solid #f0f0f0; border-radius: 6px; padding: 12px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; color: var(--text-main); background-color: #ffffff; transition: all 0.2s;
+        }
+        .document-link-item:hover { border-color: var(--primary-color); background-color: #fcfdfe; }
+        .doc-meta-left { display: flex; flex-direction: column; gap: 4px; }
+        .doc-title-text { font-size: 14px; font-weight: 600; color: #262626; transition: color 0.2s; }
+        .document-link-item:hover .doc-title-text { color: var(--primary-color); }
+        .doc-desc-sub { font-size: 12px; color: var(--text-secondary); }
+        .action-arrow { color: var(--text-disabled); font-size: 14px; transition: transform 0.2s; margin-left: 8px; }
+        .document-link-item:hover .action-arrow { color: var(--primary-color); transform: translateX(3px); }
+
+        /* 子分类标题 */
+        .subcategory-label {
+            font-size: 11px; font-weight: 700; color: #8f959e; text-transform: uppercase;
+            letter-spacing: 1px; padding: 4px 0 0; margin-bottom: -4px;
+        }
+
+        /* Tag 标签 */
+        .doc-tag {
+            display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px;
+            border-radius: 3px; margin-right: 4px; vertical-align: middle;
+        }
+        .tag-manual { background: #f0e6ff; color: #722ed1; }
+        .tag-log { background: #fff1f0; color: #cf1322; }
+        .tag-client { background: #e6f4ff; color: #1677ff; }
+
+        /* 底部 */
+        .pane-footer {
+            text-align: center; padding: 8px 0 4px; font-size: 12px; color: #8f959e; flex-shrink: 0;
+        }
+
+        .empty-holder { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 0; color: var(--text-disabled); font-size: 14px; gap: 12px; }
+        .empty-icon { font-size: 40px; }
+    </style>
 </head>
 <body>
 
-<div style="max-width: 720px; margin: 0 auto;">
-
-  <div style="text-align:center; margin-bottom: 40px;">
-    <h1 style="font-size: 24px; font-weight: 800; color: #991b1b; margin-bottom: 6px;">启航平台 · 原型索引</h1>
-    <p style="font-size: 14px; color: #6b7280;">面向团队内部评审，点击链接即可预览</p>
-  </div>
-
-  <!-- 客户端 -->
-  <div style="background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:24px; margin-bottom:20px; box-shadow:0 1px 2px rgba(0,0,0,.03);">
-    <div style="font-size:11px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:14px;">🖥️ 客户端原型</div>
-    <a href="client/client.html" style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:#fef2f2; border-radius:10px; text-decoration:none; border-left:3px solid #dc2626;">
-      <div>
-        <div style="font-size:15px; font-weight:700; color:#991b1b;">启航客户端首页</div>
-        <div style="font-size:12px; color:#6b7280; margin-top:2px;">应用大厅 · 岗位场景地图 · 搜索</div>
-      </div>
-      <span style="color:#dc2626; font-weight:700;">→</span>
-    </a>
-  </div>
-
-  <!-- 管理端 -->
-  <div style="background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:24px; margin-bottom:20px; box-shadow:0 1px 2px rgba(0,0,0,.03);">
-    <div style="font-size:11px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:14px;">⚙️ 管理端原型</div>
-
-    <div style="display:flex; flex-direction:column; gap:10px;">
-
-      <a href="admin/manual_query.html" style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:#fff1f2; border-radius:10px; text-decoration:none; border-left:3px solid #e11d48;">
-        <div>
-          <div style="font-size:15px; font-weight:700; color:#9f1239;">手册大盘列表</div>
-          <div style="font-size:12px; color:#6b7280; margin-top:2px;">53 个应用概况一览 · 筛选 · 进入配置工作台</div>
+    <!-- 顶部导航 -->
+    <header class="global-header">
+        <div class="brand-zone">
+            <div class="brand-title">启航 · 聆听 · 知行 需求文档索引</div>
+            <div class="brand-pm">PM：陈俊帆</div>
         </div>
-        <span style="color:#e11d48; font-weight:700;">→</span>
-      </a>
+        <nav class="platform-tabs">
+            <div class="platform-tab active">启航平台</div>
+            <div class="platform-tab disabled">知行平台<span class="badge-coming">规划中</span></div>
+            <div class="platform-tab disabled">聆听平台<span class="badge-coming">规划中</span></div>
+        </nav>
+    </header>
 
-      <a href="admin/manual_workspace.html" style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:#fff1f2; border-radius:10px; text-decoration:none; border-left:3px solid #e11d48;">
-        <div>
-          <div style="font-size:15px; font-weight:700; color:#9f1239;">配置工作台</div>
-          <div style="font-size:12px; color:#6b7280; margin-top:2px;">左树右文编辑 · 富文本 · Markdown</div>
-        </div>
-        <span style="color:#e11d48; font-weight:700;">→</span>
-      </a>
+    <!-- 主体 -->
+    <main class="main-workspace">
 
-      <a href="admin/update_log_query.html" style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:#fff7ed; border-radius:10px; text-decoration:none; border-left:3px solid #ea580c;">
-        <div>
-          <div style="font-size:15px; font-weight:700; color:#9a3412;">更新日志查询</div>
-          <div style="font-size:12px; color:#6b7280; margin-top:2px;">日志列表 · 筛选 · 详情查看</div>
-        </div>
-        <span style="color:#ea580c; font-weight:700;">→</span>
-      </a>
+        <!-- 侧边栏 -->
+        <aside class="sidebar-timeline">
+            <ul class="version-menu-list">
+                <li class="version-item active" onclick="switchVersion('202606', this)">
+                    <span>202606 需求批次</span>
+                </li>
+                <li class="version-item" onclick="switchVersion('202607', this)">
+                    <span>202607 需求批次</span>
+                </li>
+            </ul>
+        </aside>
 
-      <a href="admin/update_log_modify.html" style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:#fff7ed; border-radius:10px; text-decoration:none; border-left:3px solid #ea580c;">
-        <div>
-          <div style="font-size:15px; font-weight:700; color:#9a3412;">更新日志新增/编辑</div>
-          <div style="font-size:12px; color:#6b7280; margin-top:2px;">富文本编辑 · 发布</div>
-        </div>
-        <span style="color:#ea580c; font-weight:700;">→</span>
-      </a>
+        <!-- 右侧内容 -->
+        <section class="content-display-pane" id="dynamic-pane">
+            <div class="pane-header">
+                <div class="breadcrumb-area">
+                    <h2 id="pane-main-title">启航平台 · 202606需求批次</h2>
+                    <div class="breadcrumb-sub">面向团队内部评审，点击链接即可预览</div>
+                </div>
+            </div>
 
-    </div>
-  </div>
+            <div class="asset-grid-container" id="asset-container">
 
-  <!-- 会议材料 -->
-  <div style="background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:24px; margin-bottom:20px; box-shadow:0 1px 2px rgba(0,0,0,.03);">
-    <div style="font-size:11px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:14px;">📊 方案材料</div>
-    <div style="display:flex; flex-direction:column; gap:10px;">
+                <!-- 卡片 1: 产品原型（客户端+管理端合并） -->
+                <div class="asset-category-card">
+                    <div class="card-header-zone">
+                        <div class="category-title"><div class="category-icon-wrapper"></div>产品原型</div>
+                    </div>
+                    <div class="card-body-list">
 
-      <a href="slides/app_catalog_proposal.html" style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:#fef2f2; border-radius:10px; text-decoration:none; border-left:3px solid #dc2626;">
-        <div>
-          <div style="font-size:15px; font-weight:700; color:#991b1b;">新一代应用系统目录来源方案</div>
-          <div style="font-size:12px; color:#6b7280; margin-top:2px;">两方案对比 · 典型案例 · 分类维度差异</div>
-        </div>
-        <span style="color:#dc2626; font-weight:700;">→</span>
-      </a>
+                        <!-- 客户端 -->
+                        <div class="subcategory-label">客户端</div>
+                        <a href="client/client.html" target="_blank" class="document-link-item">
+                            <div class="doc-meta-left">
+                                <span class="doc-title-text"><span class="doc-tag tag-client">客户端</span> 启航客户端首页</span>
+                                <span class="doc-desc-sub">应用大厅 · 岗位场景地图 · 搜索</span>
+                            </div>
+                            <span class="action-arrow">➔</span>
+                        </a>
 
-    </div>
-  </div>
+                        <!-- 管理端 - 操作手册 -->
+                        <div class="subcategory-label">管理端 · 操作手册</div>
+                        <a href="admin/manual_query.html" target="_blank" class="document-link-item">
+                            <div class="doc-meta-left">
+                                <span class="doc-title-text"><span class="doc-tag tag-manual">操作手册</span> 手册大盘列表</span>
+                                <span class="doc-desc-sub">53 个应用概况一览 · 筛选 · 进入配置工作台</span>
+                            </div>
+                            <span class="action-arrow">➔</span>
+                        </a>
+                        <a href="admin/manual_workspace.html" target="_blank" class="document-link-item">
+                            <div class="doc-meta-left">
+                                <span class="doc-title-text"><span class="doc-tag tag-manual">操作手册</span> 配置工作台</span>
+                                <span class="doc-desc-sub">左树右文编辑 · 富文本 · Markdown</span>
+                            </div>
+                            <span class="action-arrow">➔</span>
+                        </a>
 
-  <div style="text-align:center; padding:16px; font-size:12px; color:#9ca3af;">
-    仅供内部评审使用 · 链接有时效性 · 失效请联系 PM 刷新
-  </div>
+                        <!-- 管理端 - 更新日志 -->
+                        <div class="subcategory-label">管理端 · 更新日志</div>
+                        <a href="admin/update_log_query.html" target="_blank" class="document-link-item">
+                            <div class="doc-meta-left">
+                                <span class="doc-title-text"><span class="doc-tag tag-log">更新日志</span> 更新日志查询</span>
+                                <span class="doc-desc-sub">日志列表 · 筛选 · 详情查看</span>
+                            </div>
+                            <span class="action-arrow">➔</span>
+                        </a>
+                        <a href="admin/update_log_modify.html" target="_blank" class="document-link-item">
+                            <div class="doc-meta-left">
+                                <span class="doc-title-text"><span class="doc-tag tag-log">更新日志</span> 更新日志新增/编辑</span>
+                                <span class="doc-desc-sub">富文本编辑 · 发布</span>
+                            </div>
+                            <span class="action-arrow">➔</span>
+                        </a>
+                    </div>
+                </div>
 
-</div>
+                <!-- 卡片 2: 方案材料 -->
+                <div class="asset-category-card">
+                    <div class="card-header-zone">
+                        <div class="category-title"><div class="category-icon-wrapper" style="background-color: #13c2c2;"></div>方案材料</div>
+                    </div>
+                    <div class="card-body-list">
+                        <a href="slides/app_catalog_proposal.html" target="_blank" class="document-link-item">
+                            <div class="doc-meta-left">
+                                <span class="doc-title-text">新一代应用系统目录来源方案</span>
+                                <span class="doc-desc-sub">两方案对比 · 典型案例 · 分类维度差异</span>
+                            </div>
+                            <span class="action-arrow">➔</span>
+                        </a>
+                        <a href="slides/update_log_flow.html" target="_blank" class="document-link-item">
+                            <div class="doc-meta-left">
+                                <span class="doc-title-text">更新日志管理方案流程图</span>
+                                <span class="doc-desc-sub">方案一 vs 方案二 · Mermaid 泳道图</span>
+                            </div>
+                            <span class="action-arrow">➔</span>
+                        </a>
+                    </div>
+                </div>
 
+            </div>
+
+            <!-- 底部 -->
+            <div class="pane-footer">仅供内部评审使用 · 链接有时效性 · 失效请联系 PM 刷新</div>
+        </section>
+    </main>
+
+    <script>
+        function switchVersion(version, element) {
+            document.querySelectorAll('.version-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            const titleNode = document.getElementById('pane-main-title');
+            const containerNode = document.getElementById('asset-container');
+            if (version === '202606') {
+                titleNode.innerText = '启航平台 · 202606需求批次';
+                containerNode.style.display = 'grid';
+                const eh = document.getElementById('empty-state-holder');
+                if (eh) eh.remove();
+            } else if (version === '202607') {
+                titleNode.innerText = '启航平台 · 202607需求批次';
+                containerNode.style.display = 'none';
+                if (!document.getElementById('empty-state-holder')) {
+                    const emptyHtml = document.createElement('div');
+                    emptyHtml.id = 'empty-state-holder';
+                    emptyHtml.className = 'empty-holder';
+                    emptyHtml.innerHTML = '<div class="empty-icon">📂</div><div>该批次暂无归档资产文档。未来需求上线后将自动同步至此。</div>';
+                    document.getElementById('dynamic-pane').appendChild(emptyHtml);
+                }
+            }
+        }
+    </script>
 </body>
 </html>
