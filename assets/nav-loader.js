@@ -23,12 +23,13 @@ function loadSidebar(){
     var s=d.querySelector('aside');
     if(!s)return;
     fixLinks(s);
-    // 删除空占位 div
-    var prev=sp.previousElementSibling;
-    if(prev&&prev.style&&prev.style.width==='208px'&&!prev.querySelector('aside,ul,nav'))prev.remove();
-    // 去掉 fixed，但保留 padding-top 48px 给 header 留空间
-    s.classList.remove('ant-pro-sider-fixed');
-    s.setAttribute('style','position:relative!important;top:0!important;left:0!important;margin:0!important;padding-top:48px!important;height:100vh!important;overflow:hidden auto!important;flex:0 0 208px!important;max-width:208px!important;min-width:208px!important;width:208px!important;');
+    // 保留空占位div：fixed定位下防止右侧内容左移被遮挡
+    // 保留 sidebar.tpl 原生 Ant Design 样式，只修正宽度（确保 flex 布局正常）
+    s.style.flex = '0 0 208px';
+    s.style.maxWidth = '208px';
+    s.style.minWidth = '208px';
+    s.style.width = '208px';
+    s.style.transition = 'background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)';
     if(sel) s.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel)li.classList.add('ant-menu-item-selected');
     });
