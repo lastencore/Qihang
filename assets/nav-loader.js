@@ -5,6 +5,8 @@ var page=window.location.pathname.split('/').pop().replace('.html','');
 var sel=PM[page]||'';
 var pre='../';
 
+console.log('[nav-loader] v=3, page='+page+', sel='+(sel||'(none)'));
+
 function fixLinks(el){
   el.querySelectorAll('a[href]').forEach(function(a){
     var h=a.getAttribute('href');
@@ -15,42 +17,34 @@ function fixLinks(el){
 
 function loadSidebar(){
   var sp=document.getElementById('nav-sidebar-placeholder');
-  if(!sp){console.warn('[nav-loader] placeholder #nav-sidebar-placeholder not found');return;}
+  if(!sp){console.warn('[nav-loader] sidebar placeholder not found');return;}
+  console.log('[nav-loader] sidebar placeholder found, fetching...');
   var url=pre+'assets/sidebar.html';
   fetch(url).then(function(r){
+    console.log('[nav-loader] sidebar fetch status='+r.status);
     if(!r.ok)throw new Error('HTTP '+r.status);
     return r.text();
   }).then(function(html){
+    console.log('[nav-loader] sidebar html length='+html.length);
     var d=document.createElement('div');d.innerHTML=html;
     var s=d.querySelector('aside');
-    if(!s){console.warn('[nav-loader] no <aside> in sidebar.html');return;}
+    if(!s){console.warn('[nav-loader] no <aside>, first child:',d.firstElementChild?d.firstElementChild.tagName:'none');return;}
+    console.log('[nav-loader] <aside> found, replacing placeholder...');
     fixLinks(s);
     if(sel) s.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel) li.classList.add('ant-menu-item-selected');
     });
     sp.parentNode.replaceChild(s,sp);
+    console.log('[nav-loader] sidebar replaced OK');
   }).catch(function(err){
-    console.error('[nav-loader] sidebar load failed:',err.message,'retrying with XHR...');
-    var x=new XMLHttpRequest();
-    x.open('GET',url);
-    x.onload=function(){
-      var d=document.createElement('div');d.innerHTML=x.responseText;
-      var s=d.querySelector('aside');
-      if(!s)return;
-      fixLinks(s);
-      if(sel) s.querySelectorAll('li[title]').forEach(function(li){
-        if(li.getAttribute('title')===sel) li.classList.add('ant-menu-item-selected');
-      });
-      sp.parentNode.replaceChild(s,sp);
-    };
-    x.onerror=function(){console.error('[nav-loader] XHR sidebar load also failed');};
-    x.send();
+    console.error('[nav-loader] sidebar fetch failed: '+err.message);
   });
 }
 
 function loadHeader(){
   var hp=document.getElementById('nav-header-placeholder');
-  if(!hp){console.warn('[nav-loader] placeholder #nav-header-placeholder not found');return;}
+  if(!hp){console.warn('[nav-loader] header placeholder not found');return;}
+  console.log('[nav-loader] header placeholder found, fetching...');
   var url=pre+'assets/top_nav.html';
   fetch(url).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status);
@@ -58,22 +52,12 @@ function loadHeader(){
   }).then(function(html){
     var d=document.createElement('div');d.innerHTML=html;
     var h=d.querySelector('header');
-    if(h) hp.parentNode.replaceChild(h,hp);
+    if(h) {hp.parentNode.replaceChild(h,hp);console.log('[nav-loader] header replaced OK');}
+    else console.warn('[nav-loader] no <header> in top_nav.html');
   }).catch(function(err){
-    console.error('[nav-loader] header load failed:',err.message,'retrying with XHR...');
-    var x=new XMLHttpRequest();
-    x.open('GET',url);
-    x.onload=function(){
-      var d=document.createElement('div');d.innerHTML=x.responseText;
-      var h=d.querySelector('header');
-      if(h) hp.parentNode.replaceChild(h,hp);
-    };
-    x.onerror=function(){console.error('[nav-loader] XHR header load also failed');};
-    x.send();
+    console.error('[nav-loader] header fetch failed: '+err.message);
   });
 }
 
-console.log('[nav-loader] script loaded, v=2');
-// 用 setTimeout 0 确保 DOM 已解析，不依赖 DOMContentLoaded（Live Server 外部浏览器可能抢注事件）
 setTimeout(function(){loadSidebar();loadHeader();},0);
 })();
