@@ -16,41 +16,36 @@ function fixLinks(el){
 function loadSidebar(){
   var sp=document.getElementById('nav-sidebar-placeholder');
   if(!sp)return;
-  var url=pre+'assets/sidebar.tpl';
-  fetch(url).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
-    // 用 DOMParser 替代 innerHTML，避免内嵌 <style> 破坏解析
-    var parser=new DOMParser();
-    var doc=parser.parseFromString(html,'text/html');
-    var s=doc.querySelector('aside');
+  fetch(pre+'assets/sidebar.tpl').then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
+    // 移除内嵌 <style> 避免干扰 HTML 解析
+    html=html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi,'');
+    var d=document.createElement('div');d.innerHTML=html;
+    var s=d.querySelector('aside');
     if(!s)return;
     fixLinks(s);
     // 删除空占位 div
     var prev=sp.previousElementSibling;
     if(prev&&prev.style&&prev.style.width==='208px'&&!prev.querySelector('aside,ul,nav'))prev.remove();
-    // 导入到主文档
-    var imported=document.adoptNode(s);
-    // 去掉 fixed 定位，让 sidebar 正常参与父容器布局
-    imported.classList.remove('ant-pro-sider-fixed');
-    imported.style.position='';
-    imported.style.paddingTop='';
-    if(sel) imported.querySelectorAll('li[title]').forEach(function(li){
+    // 去掉 fixed 定位
+    s.classList.remove('ant-pro-sider-fixed');
+    s.style.position='';
+    s.style.paddingTop='';
+    if(sel) s.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel)li.classList.add('ant-menu-item-selected');
     });
-    sp.parentNode.replaceChild(imported,sp);
+    sp.parentNode.replaceChild(s,sp);
   }).catch(function(){});
 }
 
 function loadHeader(){
   var hp=document.getElementById('nav-header-placeholder');
   if(!hp)return;
-  var url=pre+'assets/top_nav.tpl';
-  fetch(url).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
-    var parser=new DOMParser();
-    var doc=parser.parseFromString(html,'text/html');
-    var h=doc.querySelector('header');
+  fetch(pre+'assets/top_nav.tpl').then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
+    html=html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi,'');
+    var d=document.createElement('div');d.innerHTML=html;
+    var h=d.querySelector('header');
     if(!h)return;
-    var imported=document.adoptNode(h);
-    hp.parentNode.replaceChild(imported,hp);
+    hp.parentNode.replaceChild(h,hp);
   }).catch(function(){});
 }
 
