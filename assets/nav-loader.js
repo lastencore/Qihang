@@ -73,5 +73,7 @@ function loadHeader(){
   });
 }
 
-document.addEventListener('DOMContentLoaded',function(){loadSidebar();loadHeader();});
+console.log('[nav-loader] script loaded, v=2');
+// 用 setTimeout 0 确保 DOM 已解析，不依赖 DOMContentLoaded（Live Server 外部浏览器可能抢注事件）
+setTimeout(function(){loadSidebar();loadHeader();},0);
 })();
