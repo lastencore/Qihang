@@ -34,11 +34,20 @@ function loadSidebar(){
     if(sel) s.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel) li.classList.add('ant-menu-item-selected');
     });
-    // 删除 placeholder 前面的空占位 div（原页面残留的 width:208px overflow:hidden）
+    // 删除 placeholder 前面的空占位 div
     var prev=sp.previousElementSibling;
     if(prev && prev.style && prev.style.width==='208px' && !prev.querySelector('aside,ul,nav')) prev.remove();
+    // 确保 sidebar 可见并参与布局
+    s.style.display='';
+    s.style.visibility='visible';
+    s.style.opacity='1';
+    s.style.position='';
+    s.style.flex='0 0 208px';
+    s.style.maxWidth='208px';
+    s.style.minWidth='208px';
+    s.style.width='208px';
     sp.parentNode.replaceChild(s,sp);
-    console.log('[nav-loader] sidebar replaced OK, removed prev sibling:',!!prev);
+    console.log('[nav-loader] sidebar replaced OK, removed prev:',!!prev,'computed:',getComputedStyle(s).display,getComputedStyle(s).width);
   }).catch(function(err){
     console.error('[nav-loader] sidebar fetch failed: '+err.message);
   });
