@@ -5,8 +5,6 @@ var page=window.location.pathname.split('/').pop().replace('.html','');
 var sel=PM[page]||'';
 var pre='../';
 
-console.log('[nav-loader] v=3, page='+page+', sel='+(sel||'(none)'));
-
 function fixLinks(el){
   el.querySelectorAll('a[href]').forEach(function(a){
     var h=a.getAttribute('href');
@@ -17,58 +15,38 @@ function fixLinks(el){
 
 function loadSidebar(){
   var sp=document.getElementById('nav-sidebar-placeholder');
-  if(!sp){console.warn('[nav-loader] sidebar placeholder not found');return;}
-  console.log('[nav-loader] sidebar placeholder found, fetching...');
+  if(!sp)return;
   var url=pre+'assets/sidebar.html';
-  fetch(url).then(function(r){
-    console.log('[nav-loader] sidebar fetch status='+r.status);
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    return r.text();
-  }).then(function(html){
-    console.log('[nav-loader] sidebar html length='+html.length);
+  fetch(url).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
     var d=document.createElement('div');d.innerHTML=html;
     var s=d.querySelector('aside');
-    if(!s){console.warn('[nav-loader] no <aside>, first child:',d.firstElementChild?d.firstElementChild.tagName:'none');return;}
-    console.log('[nav-loader] <aside> found, replacing placeholder...');
+    if(!s)return;
     fixLinks(s);
-    if(sel) s.querySelectorAll('li[title]').forEach(function(li){
-      if(li.getAttribute('title')===sel) li.classList.add('ant-menu-item-selected');
-    });
-    // 删除 placeholder 前面的空占位 div
+    // 删除前面空占位 div
     var prev=sp.previousElementSibling;
-    if(prev && prev.style && prev.style.width==='208px' && !prev.querySelector('aside,ul,nav')) prev.remove();
-    // 确保 sidebar 可见并参与布局
-    s.style.display='';
-    s.style.visibility='visible';
-    s.style.opacity='1';
-    s.style.position='';
-    s.style.flex='0 0 208px';
-    s.style.maxWidth='208px';
-    s.style.minWidth='208px';
-    s.style.width='208px';
+    if(prev&&prev.style&&prev.style.width==='208px'&&!prev.querySelector('aside,ul,nav'))prev.remove();
+    // 强制可见 + 参与flex布局
+    s.removeAttribute('style');
+    s.style.cssText='flex:0 0 208px;max-width:208px;min-width:208px;width:208px;display:block;visibility:visible;opacity:1;position:relative;overflow:hidden auto;';
+    if(sel)s.querySelectorAll('li[title]').forEach(function(li){
+      if(li.getAttribute('title')===sel)li.classList.add('ant-menu-item-selected');
+    });
     sp.parentNode.replaceChild(s,sp);
-    console.log('[nav-loader] sidebar replaced OK, removed prev:',!!prev,'computed:',getComputedStyle(s).display,getComputedStyle(s).width);
-  }).catch(function(err){
-    console.error('[nav-loader] sidebar fetch failed: '+err.message);
-  });
+  }).catch(function(){});
 }
 
 function loadHeader(){
   var hp=document.getElementById('nav-header-placeholder');
-  if(!hp){console.warn('[nav-loader] header placeholder not found');return;}
-  console.log('[nav-loader] header placeholder found, fetching...');
+  if(!hp)return;
   var url=pre+'assets/top_nav.html';
-  fetch(url).then(function(r){
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    return r.text();
-  }).then(function(html){
+  fetch(url).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
     var d=document.createElement('div');d.innerHTML=html;
     var h=d.querySelector('header');
-    if(h) {hp.parentNode.replaceChild(h,hp);console.log('[nav-loader] header replaced OK');}
-    else console.warn('[nav-loader] no <header> in top_nav.html');
-  }).catch(function(err){
-    console.error('[nav-loader] header fetch failed: '+err.message);
-  });
+    if(!h)return;
+    h.removeAttribute('style');
+    h.style.cssText='height:48px;line-height:48px;background:#fff;padding:0;z-index:9;position:relative;flex-shrink:0;';
+    hp.parentNode.replaceChild(h,hp);
+  }).catch(function(){});
 }
 
 setTimeout(function(){loadSidebar();loadHeader();},0);
