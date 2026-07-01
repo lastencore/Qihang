@@ -26,10 +26,15 @@ function loadSidebar(){
     // 删除空占位 div
     var prev=sp.previousElementSibling;
     if(prev&&prev.style&&prev.style.width==='208px'&&!prev.querySelector('aside,ul,nav'))prev.remove();
-    // 去掉 fixed 定位
+    // 去掉 fixed 定位，强制在父容器内正确定位
     s.classList.remove('ant-pro-sider-fixed');
-    s.style.position='';
-    s.style.paddingTop='';
+    s.style.position='relative';
+    s.style.top='0';
+    s.style.left='0';
+    s.style.margin='0';
+    s.style.paddingTop='0';
+    s.style.height='100vh';
+    s.style.overflow='hidden auto';
     if(sel) s.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel)li.classList.add('ant-menu-item-selected');
     });
