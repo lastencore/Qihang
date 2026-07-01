@@ -135,7 +135,7 @@
                  </label>
                  <div style="flex: 1;display:flex;align-items:center;gap:12px;">
                   <div style="display:flex;align-items:center;flex:1;">
-                   <label for="releaseWindow" style="font-size:14px;color:rgba(0,0,0,.85);white-space:nowrap;flex-shrink:0;margin-right:8px;"><span style="color:#ff4d4f;margin-right:4px;">*</span>发布窗口</label>
+                   <label for="releaseWindow" style="font-size:14px;color:rgba(0,0,0,.85);white-space:nowrap;flex-shrink:0;margin-right:8px;"><span id="releaseReqStar" style="color:#ff4d4f;margin-right:4px;">*</span>发布窗口</label>
                    <select id="releaseWindow" style="flex:1;border:1px solid #dcdfe6;border-radius:4px;height:32px;padding:0 11px;font-size:14px;background:#fff;cursor:pointer;color:rgba(0,0,0,.88);">
                     <option value="">请选择发布窗口</option>
                     <option value="2026-07-15 项目发布">2026-07-15 项目发布</option>
@@ -149,7 +149,7 @@
                    </select>
                   </div>
                   <div style="display:flex;align-items:center;flex:1;">
-                   <label style="font-size:14px;color:rgba(0,0,0,.85);white-space:nowrap;flex-shrink:0;margin-right:8px;"><span style="color:#ff4d4f;margin-right:4px;">*</span>关联PMS系统</label>
+                   <label style="font-size:14px;color:rgba(0,0,0,.85);white-space:nowrap;flex-shrink:0;margin-right:8px;"><span id="pmsReqStar" style="color:#ff4d4f;margin-right:4px;">*</span>关联PMS系统</label>
                    <input id="pmsSystem" readonly style="width:100%;border:1px solid #dcdfe6;border-radius:4px;height:32px;padding:0 11px;font-size:14px;background:#f5f5f5;color:rgba(0,0,0,.65);" placeholder="根据应用名称自动关联">
                   </div>
                  </div>
@@ -368,12 +368,16 @@ function toggleReleaseFields() {
   var c = document.getElementById("isReleaseUpdate").checked;
   var w = document.getElementById("releaseWindow");
   var p = document.getElementById("pmsSystem");
+  var rs = document.getElementById("releaseReqStar");
+  var ps = document.getElementById("pmsReqStar");
   if (!c) { w.value = ""; p.value = ""; }
   w.disabled = !c;
   w.style.background = c ? "#fff" : "#f5f5f5";
   w.style.color = c ? "rgba(0,0,0,.88)" : "rgba(0,0,0,.25)";
   p.style.background = "#f5f5f5";
   p.style.color = c ? "rgba(0,0,0,.65)" : "rgba(0,0,0,.25)";
+  if (rs) rs.style.display = c ? "" : "none";
+  if (ps) ps.style.display = c ? "" : "none";
 }
 document.getElementById("appId").addEventListener("change", function() {
   var p = document.getElementById("pmsSystem");
