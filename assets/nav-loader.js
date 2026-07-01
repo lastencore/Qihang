@@ -16,7 +16,7 @@ function fixLinks(el){
 function loadSidebar(){
   var sp=document.getElementById('nav-sidebar-placeholder');
   if(!sp)return;
-  var url=pre+'assets/sidebar.html';
+  var url=pre+'assets/sidebar.tpl';
   fetch(url).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
     // 用 DOMParser 替代 innerHTML，避免内嵌 <style> 破坏解析
     var parser=new DOMParser();
@@ -39,7 +39,7 @@ function loadSidebar(){
 function loadHeader(){
   var hp=document.getElementById('nav-header-placeholder');
   if(!hp)return;
-  var url=pre+'assets/top_nav.html';
+  var url=pre+'assets/top_nav.tpl';
   fetch(url).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
     var parser=new DOMParser();
     var doc=parser.parseFromString(html,'text/html');
