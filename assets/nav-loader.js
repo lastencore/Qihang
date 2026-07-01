@@ -26,12 +26,9 @@ function loadSidebar(){
     // 删除空占位 div
     var prev=sp.previousElementSibling;
     if(prev&&prev.style&&prev.style.width==='208px'&&!prev.querySelector('aside,ul,nav'))prev.remove();
-    // 强制正确定位，菜单区可滚动
+    // 去掉 fixed，但保留 padding-top 48px 给 header 留空间
     s.classList.remove('ant-pro-sider-fixed');
-    s.setAttribute('style','position:relative!important;top:0!important;left:0!important;margin:0!important;padding-top:0!important;height:100vh!important;overflow:hidden!important;flex:0 0 208px!important;max-width:208px!important;min-width:208px!important;width:208px!important;');
-    // 让菜单列表区域可滚动
-    var menuList=s.querySelector('.ant-pro-sider-menu');
-    if(menuList) menuList.style.cssText='max-height:calc(100vh - 48px);overflow-y:auto;overflow-x:hidden;';
+    s.setAttribute('style','position:relative!important;top:0!important;left:0!important;margin:0!important;padding-top:48px!important;height:100vh!important;overflow:hidden auto!important;flex:0 0 208px!important;max-width:208px!important;min-width:208px!important;width:208px!important;');
     if(sel) s.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel)li.classList.add('ant-menu-item-selected');
     });
