@@ -15,26 +15,61 @@ function fixLinks(el){
 
 function loadSidebar(){
   var sp=document.getElementById('nav-sidebar-placeholder');
-  if(!sp)return;
-  fetch(pre+'assets/sidebar.html').then(function(r){return r.text()}).then(function(html){
+  if(!sp){console.warn('[nav-loader] placeholder #nav-sidebar-placeholder not found');return;}
+  var url=pre+'assets/sidebar.html';
+  fetch(url).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return r.text();
+  }).then(function(html){
     var d=document.createElement('div');d.innerHTML=html;
     var s=d.querySelector('aside');
-    if(!s)return;
+    if(!s){console.warn('[nav-loader] no <aside> in sidebar.html');return;}
     fixLinks(s);
     if(sel) s.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel) li.classList.add('ant-menu-item-selected');
     });
     sp.parentNode.replaceChild(s,sp);
+  }).catch(function(err){
+    console.error('[nav-loader] sidebar load failed:',err.message,'retrying with XHR...');
+    var x=new XMLHttpRequest();
+    x.open('GET',url);
+    x.onload=function(){
+      var d=document.createElement('div');d.innerHTML=x.responseText;
+      var s=d.querySelector('aside');
+      if(!s)return;
+      fixLinks(s);
+      if(sel) s.querySelectorAll('li[title]').forEach(function(li){
+        if(li.getAttribute('title')===sel) li.classList.add('ant-menu-item-selected');
+      });
+      sp.parentNode.replaceChild(s,sp);
+    };
+    x.onerror=function(){console.error('[nav-loader] XHR sidebar load also failed');};
+    x.send();
   });
 }
 
 function loadHeader(){
   var hp=document.getElementById('nav-header-placeholder');
-  if(!hp)return;
-  fetch(pre+'assets/top_nav.html').then(function(r){return r.text()}).then(function(html){
+  if(!hp){console.warn('[nav-loader] placeholder #nav-header-placeholder not found');return;}
+  var url=pre+'assets/top_nav.html';
+  fetch(url).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return r.text();
+  }).then(function(html){
     var d=document.createElement('div');d.innerHTML=html;
     var h=d.querySelector('header');
     if(h) hp.parentNode.replaceChild(h,hp);
+  }).catch(function(err){
+    console.error('[nav-loader] header load failed:',err.message,'retrying with XHR...');
+    var x=new XMLHttpRequest();
+    x.open('GET',url);
+    x.onload=function(){
+      var d=document.createElement('div');d.innerHTML=x.responseText;
+      var h=d.querySelector('header');
+      if(h) hp.parentNode.replaceChild(h,hp);
+    };
+    x.onerror=function(){console.error('[nav-loader] XHR header load also failed');};
+    x.send();
   });
 }
 
