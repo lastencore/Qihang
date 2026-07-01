@@ -18,20 +18,21 @@ function loadSidebar(){
   if(!sp)return;
   var url=pre+'assets/sidebar.html';
   fetch(url).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
-    var d=document.createElement('div');d.innerHTML=html;
-    var s=d.querySelector('aside');
+    // 用 DOMParser 替代 innerHTML，避免内嵌 <style> 破坏解析
+    var parser=new DOMParser();
+    var doc=parser.parseFromString(html,'text/html');
+    var s=doc.querySelector('aside');
     if(!s)return;
     fixLinks(s);
-    // 删除前面空占位 div
+    // 删除空占位 div
     var prev=sp.previousElementSibling;
     if(prev&&prev.style&&prev.style.width==='208px'&&!prev.querySelector('aside,ul,nav'))prev.remove();
-    // 强制可见 + 参与flex布局
-    s.removeAttribute('style');
-    s.style.cssText='flex:0 0 208px;max-width:208px;min-width:208px;width:208px;display:block;visibility:visible;opacity:1;position:relative;overflow:hidden auto;';
-    if(sel)s.querySelectorAll('li[title]').forEach(function(li){
+    // 导入到主文档
+    var imported=document.adoptNode(s);
+    if(sel) imported.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel)li.classList.add('ant-menu-item-selected');
     });
-    sp.parentNode.replaceChild(s,sp);
+    sp.parentNode.replaceChild(imported,sp);
   }).catch(function(){});
 }
 
@@ -40,12 +41,12 @@ function loadHeader(){
   if(!hp)return;
   var url=pre+'assets/top_nav.html';
   fetch(url).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(function(html){
-    var d=document.createElement('div');d.innerHTML=html;
-    var h=d.querySelector('header');
+    var parser=new DOMParser();
+    var doc=parser.parseFromString(html,'text/html');
+    var h=doc.querySelector('header');
     if(!h)return;
-    h.removeAttribute('style');
-    h.style.cssText='height:48px;line-height:48px;background:#fff;padding:0;z-index:9;position:relative;flex-shrink:0;';
-    hp.parentNode.replaceChild(h,hp);
+    var imported=document.adoptNode(h);
+    hp.parentNode.replaceChild(imported,hp);
   }).catch(function(){});
 }
 
