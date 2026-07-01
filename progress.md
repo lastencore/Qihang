@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-06-29
+> 最后更新：2026-07-01
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -40,14 +40,22 @@
 - [x] Logo 跳转 BUG 修复：管理端页面 logo `href="/"` → `href="../index.html"`
 - [x] progress-doc skill 创建
 - [x] 产品蓝图（Tailwind CSS 版）：用户决定自行修改，AI 不再迭代
+- [x] 应用管理弹窗（嵌入前端同事完整版，绑定新建+编辑按钮）
+- [x] 应用分类管理页面（`admin/app_category_management.html`）
+- [x] 客户端应用地图（`client/app_map.html`）
+- [x] 客户端应用大厅（`client/client.html`）
+- [x] 导航组件化（sidebar/header 动态加载，`assets/nav-loader.js`）
+- [x] `manual_query.html` 列名修正：关联PMS → 关联PMS系统，未关联显示灰色"未关联"
+- [x] `update_log_*` 原型扩展：增加发布窗口字段 + 关联PMS系统下拉选择器
 
 ### 🔄 进行中
 
 - [ ] **操作手册 PRD**：待用户审阅后反馈修改点
+- [ ] **`manual_workspace.html` 结构化模板**：编辑页增加操作步骤/注意事项/常见问题分区
 
 ### ⏳ 待办
 
-- [ ] 更新日志两种方案的原型页面扩展
+- [ ] 更新日志方案 PRD 落文档（方案已定，待写入）
 - [ ] 应用目录方案 vs 更新日志方案待用户决策
 - [ ] 产品蓝图二（操作手册模块展开）暂缓
 
@@ -134,6 +142,7 @@ prototype/
 - 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
 - 提交前必须先 `git pull`，再 `commit` + `push`
 - 原型分发走 GitHub，不再用 tdrive zip
+- **🚫 AI 不自行推送**：原型或文档更新后，只在用户明确说「推送」时才执行 git push。GitHub 上必须是用户验证过的版本
 
 ### 4.7 任务交接
 - 维护 `progress.md`，用 progress-doc skill
@@ -182,8 +191,9 @@ prototype/
 > **说明**：用户只需上传 `progress.md` 并告知 Token，clone 后所有原型文件、Git 历史都在。
 
 ### 当前可执行任务
-1. **PRD 修订**：新增应用目录章节、三类展示端口、结构化 + PMS 关联留口、830 MVP 时间节点
-2. **更新日志原型**：方案已定（运营创建 + PMS 关联），扩展 `admin/update_log_*` 原型
+1. **`manual_workspace.html` 结构化模板**：编辑页增加操作步骤/注意事项/常见问题三个分区
+2. **PRD 修订**：新增应用目录章节、三类展示端口、结构化 + PMS 关联留口、830 MVP 时间节点
+3. **更新日志方案 PRD**：方案已定（运营创建 + PMS 关联），落成 PRD 文档
 
 ### 待用户决策
 - 能力地图/岗位场景地图的具体形式（待用户设计）
