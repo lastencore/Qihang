@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-02
+> 最后更新：2026-07-03
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -56,6 +56,10 @@
 - [x] **`app_management.html` 弹窗修复**：移除多余 `</div>` 解决 DOM 不平衡；修复 `overflow-y: hidden` 导致的页面无法滚动；PMS 下拉宽度修正；placeholder 重叠修复
 - [x] **`update_log_query.html` 样式修复**：状态列去除 sticky 固定定位；日志摘要列缩窄（300→200px）、操作列加宽（100→150px）
 - [x] **`manual_query.html`**：应用名称筛选框 placeholder 移除
+- [x] **`app_management.html` PMS 筛选**：表格上方增加"关联PMS系统"筛选项，带搜索下拉框（复用114系统 datalist），布局在独立第二行
+- [x] **`update_log_modify.html` 导航模板化**：移除内嵌 sidebar+header HTML，改为 nav-loader.js 模板模式（占位 div + `nav-sidebar-placeholder` + `nav-header-placeholder`），与其他页面一致
+- [x] **`update_log_modify.html` 发布类更新布局**：发布类更新 checkbox + 发布窗口 + 关联PMS 三个控件 label 放左侧、压缩到同一行，关联PMS 始终只读并由应用名称自动填充
+- [x] **`update_log_modify.html` 间距修复**：正文内容 label 与下方富文本编辑器间距减小（margin-bottom: 4px）
 
 ### 🔄 进行中
 
