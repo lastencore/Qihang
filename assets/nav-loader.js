@@ -29,6 +29,10 @@ function loadSidebar(){
     if(prev&&prev.style&&prev.style.width==='208px'&&!prev.querySelector('aside,ul,nav'))prev.remove();
     // 导入到主文档
     var imported=document.adoptNode(s);
+    // 去掉 fixed 定位，让 sidebar 正常参与父容器布局
+    imported.classList.remove('ant-pro-sider-fixed');
+    imported.style.position='';
+    imported.style.paddingTop='';
     if(sel) imported.querySelectorAll('li[title]').forEach(function(li){
       if(li.getAttribute('title')===sel)li.classList.add('ant-menu-item-selected');
     });
