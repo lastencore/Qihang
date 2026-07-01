@@ -45,8 +45,11 @@
 - [x] 客户端应用地图（`client/app_map.html`）
 - [x] 客户端应用大厅（`client/client.html`）
 - [x] 导航组件化（sidebar/header 动态加载，`assets/nav-loader.js`）
-- [x] `manual_query.html` 列名修正：关联PMS → 关联PMS系统，未关联显示灰色"未关联"
-- [x] `update_log_*` 原型扩展：增加发布窗口字段 + 关联PMS系统下拉选择器
+- [x] `manual_query.html` 列名修正：关联PMS → 关联PMS系统，未关联显示灰色"未关联"；关联PMS列左对齐
+- [x] `update_log_*` 原型扩展：增加发布窗口字段 + 关联PMS系统下拉选择器；发布窗口格式改为 "YYYY-MM-DD常规发布/项目发布"
+- [x] `update_log_modify.html` 应用管理/分类管理跳转白名单补全
+- [x] 全局布局修复：nav-loader.js 保留 Ant Design 原生 fixed 定位 + 空占位 div，解决侧边栏空白和遮挡
+- [x] progress-doc skill 纳入 Git 管理（`skills/progress-doc.md`）
 
 ### 🔄 进行中
 
@@ -75,14 +78,21 @@ prototype/
 │   ├── manual_query.html         # 管理端-手册大盘列表
 │   ├── manual_workspace.html     # 管理端-配置工作台
 │   ├── update_log_query.html     # 管理端-日志查询列表
-│   └── update_log_modify.html    # 管理端-日志新增/编辑
+│   ├── update_log_modify.html    # 管理端-日志新增/编辑
+│   ├── app_management.html       # 管理端-应用管理
+│   └── app_category_management.html # 管理端-应用分类管理
 ├── slides/
 │   ├── app_catalog_proposal.html # 应用目录来源方案（HTML PPT）
 │   └── update_log_flow.html      # 更新日志方案泳道图（Mermaid）
 ├── blueprint/
 │   └── manual_blueprint.html     # 产品蓝图（自用，用户自行修改）
-└── assets/
-    └── common.css                # 全局样式表
+├── assets/
+│   ├── common.css                # 全局样式表
+│   ├── nav-loader.js             # 导航动态加载器
+│   ├── sidebar.tpl               # 侧边栏模板
+│   └── top_nav.tpl               # 顶栏模板
+└── skills/
+    └── progress-doc.md           # 交接文档 skill
 ```
 
 全部状态：✅
