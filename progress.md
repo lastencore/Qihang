@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-01
+> 最后更新：2026-07-02
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -50,6 +50,12 @@
 - [x] `update_log_modify.html` 应用管理/分类管理跳转白名单补全
 - [x] 全局布局修复：nav-loader.js 保留 Ant Design 原生 fixed 定位 + 空占位 div，解决侧边栏空白和遮挡
 - [x] progress-doc skill 纳入 Git 管理（`skills/progress-doc.md`）
+- [x] **PMS 系统关联全链路**：`app_management.html` 新增/编辑弹窗增加 PMS 关联下拉框（114 系统 datalist 可搜索选择），列表增加"关联PMS系统"列并填充数据
+- [x] **PMS 列数据补全**：`manual_query.html`、`update_log_query.html` 的 PMS 列全部填充实际系统数据，不再存在"未关联"
+- [x] **PMS 列表头/样式统一**：三页面 PMS 列去除灰色字体，列表头统一为"关联PMS系统"
+- [x] **`app_management.html` 弹窗修复**：移除多余 `</div>` 解决 DOM 不平衡；修复 `overflow-y: hidden` 导致的页面无法滚动；PMS 下拉宽度修正；placeholder 重叠修复
+- [x] **`update_log_query.html` 样式修复**：状态列去除 sticky 固定定位；日志摘要列缩窄（300→200px）、操作列加宽（100→150px）
+- [x] **`manual_query.html`**：应用名称筛选框 placeholder 移除
 
 ### 🔄 进行中
 
