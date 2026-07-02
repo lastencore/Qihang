@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-03
+> 最后更新：2026-07-04
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -60,6 +60,10 @@
 - [x] **`update_log_modify.html` 导航模板化**：移除内嵌 sidebar+header HTML，改为 nav-loader.js 模板模式（占位 div + `nav-sidebar-placeholder` + `nav-header-placeholder`），与其他页面一致
 - [x] **`update_log_modify.html` 发布类更新布局**：发布类更新 checkbox + 发布窗口 + 关联PMS 三个控件 label 放左侧、压缩到同一行，关联PMS 始终只读并由应用名称自动填充
 - [x] **`update_log_modify.html` 间距修复**：正文内容 label 与下方富文本编辑器间距减小（margin-bottom: 4px）
+- [x] **`manual_query.html` / `update_log_query.html` PMS 筛选项**：两页面均增加"关联PMS系统"筛选项（独立第二行，复用114系统 datalist），样式与 `app_management.html` 一致
+- [x] **`update_log_modify.html` 非必选逻辑**：未勾选"发布类更新"时，发布窗口和关联PMS的红色必选星号隐藏（非必选）
+- [x] **`update_log_modify.html` 标签改名+布局重排**："应用名称"→"所属应用"，"发布日期"→"发布时间"；标题+所属应用同行（col-12+col-12），发布类更新+发布窗口+关联PMS第二行，发布时间第三行
+- [x] **`update_log_modify.html` 发布时间联动**：勾选"发布类更新"时发布时间自动填入次日12:00且不可编辑，提示文案变为"将于发布日次日中午12:00自动发布"（红色）；未勾选时恢复可编辑，提示文案恢复默认
 
 ### 🔄 进行中
 
