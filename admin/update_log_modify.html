@@ -58,7 +58,7 @@
              <form autocomplete="off" class="ant-form ant-form-vertical">
               <div class="ant-row" style="margin-left: -12px; margin-right: -12px;">
                
-               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px;">
+               <div class="ant-col ant-col-12" style="padding-left: 12px; padding-right: 12px;">
                 <div class="ant-form-item">
                  <div class="ant-row ant-form-item-row">
                   <div class="ant-col ant-form-item-label">
@@ -82,7 +82,7 @@
                 <div class="ant-form-item">
                  <div class="ant-row ant-form-item-row">
                   <div class="ant-col ant-form-item-label">
-                   <label class="ant-form-item-required" for="appId" title="应用名称">应用名称</label>
+                   <label class="ant-form-item-required" for="appId" title="所属应用">所属应用</label>
                   </div>
                   <div class="ant-col ant-form-item-control">
                    <div class="ant-form-item-control-input">
@@ -108,17 +108,18 @@
                 </div>
                </div>
                
-               <div class="ant-col ant-col-12" style="padding-left: 12px; padding-right: 12px;">
+               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px; margin-top: 8px;">
                 <div class="ant-form-item">
                  <div class="ant-row ant-form-item-row">
-                  <div class="ant-col ant-form-item-label">
-                   <label class="ant-form-item-required" for="publishDate" title="发布日期">发布日期</label>
+                  <div class="ant-col ant-form-item-label" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px;">
+                   <label class="ant-form-item-required" for="publishDate" title="发布时间" style="display: flex; align-items: center;">发布时间</label>
+                   <span id="publishTimeTip" style="font-size: 13px; font-weight: normal; transition: color 0.3s;"></span>
                   </div>
                   <div class="ant-col ant-form-item-control">
                    <div class="ant-form-item-control-input">
                     <div class="ant-form-item-control-input-content">
-                     <div class="ant-picker" style="width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; height: 32px; display: inline-flex; align-items: center; padding: 4px 11px;">
-                      <input autocomplete="off" id="publishDate" placeholder="请选择投产上线日期" style="border: none; outline: none; width: 100%; font-size: 14px;" type="date" value="2026-06-18">
+                     <div class="ant-picker" id="publishDatePickerContainer" style="width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; height: 32px; display: inline-flex; align-items: center; padding: 4px 11px; transition: background-color 0.3s;">
+                      <input autocomplete="off" id="publishDate" placeholder="请选择发布自动对外发布时间" style="border: none; outline: none; width: 100%; font-size: 14px; background: transparent;" type="datetime-local">
                      </div>
                     </div>
                    </div>
@@ -127,30 +128,56 @@
                 </div>
                </div>
 
-               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px; margin-bottom: 16px;">
-                <div style="display: flex; align-items: center; gap: 16px;">
-                 <label style="cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none;white-space:nowrap;font-size:14px;font-weight:400;flex-shrink:0;padding-top:5px;">
-                  <input type="checkbox" id="isReleaseUpdate" checked onchange="toggleReleaseFields()" style="accent-color:#cc0000;width:16px;height:16px;">
-                  发布类更新
-                 </label>
-                 <div style="flex: 1;display:flex;align-items:center;gap:12px;">
-                  <div style="display:flex;align-items:center;flex:1;">
-                   <label for="releaseWindow" style="font-size:14px;color:rgba(0,0,0,.85);white-space:nowrap;flex-shrink:0;margin-right:8px;"><span id="releaseReqStar" style="color:#ff4d4f;margin-right:4px;">*</span>发布窗口</label>
-                   <select id="releaseWindow" style="flex:1;border:1px solid #dcdfe6;border-radius:4px;height:32px;padding:0 11px;font-size:14px;background:#fff;cursor:pointer;color:rgba(0,0,0,.88);">
-                    <option value="">请选择发布窗口</option>
-                    <option value="2026-07-15 项目发布">2026-07-15 项目发布</option>
-                    <option value="2026-07-10 常规发布">2026-07-10 常规发布</option>
-                    <option value="2026-07-08 常规发布">2026-07-08 常规发布</option>
-                    <option value="2026-07-03 常规发布">2026-07-03 常规发布</option>
-                    <option value="2026-07-01 常规发布">2026-07-01 常规发布</option>
-                    <option value="2026-06-28 项目发布">2026-06-28 项目发布</option>
-                    <option value="2026-06-25 项目发布">2026-06-25 项目发布</option>
-                    <option value="2026-06-20 项目发布">2026-06-20 项目发布</option>
-                   </select>
+               <div class="ant-col ant-col-24" style="padding-left: 12px; padding-right: 12px; margin-top: 4px; margin-bottom: 4px;">
+                <div style="display: flex; gap: 24px; align-items: flex-end; width: 100%;">
+                 <div style="flex: 0 0 auto; padding-bottom: 6px;">
+                  <div class="ant-form-item" style="margin-bottom: 0;">
+                   <label style="cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none;">
+                    <input type="checkbox" id="isReleaseUpdate" checked="" onchange="toggleReleaseFields()" style="accent-color:#cc0000;width:16px;height:16px;">
+                    <span style="font-weight:500;">发布类更新</span>
+                   </label>
                   </div>
-                  <div style="display:flex;align-items:center;flex:1;">
-                   <label style="font-size:14px;color:rgba(0,0,0,.85);white-space:nowrap;flex-shrink:0;margin-right:8px;"><span id="pmsReqStar" style="color:#ff4d4f;margin-right:4px;">*</span>关联PMS系统</label>
-                   <input id="pmsSystem" readonly style="width:100%;border:1px solid #dcdfe6;border-radius:4px;height:32px;padding:0 11px;font-size:14px;background:#f5f5f5;color:rgba(0,0,0,.65);" placeholder="根据应用名称自动关联">
+                 </div>
+                 <div style="flex: 1;">
+                  <div class="ant-form-item" style="margin-bottom: 0;">
+                   <div class="ant-row ant-form-item-row">
+                    <div class="ant-col ant-form-item-label">
+                     <label class="ant-form-item-required" title="发布窗口">发布窗口</label>
+                    </div>
+                    <div class="ant-col ant-form-item-control">
+                     <div class="ant-form-item-control-input">
+                      <div class="ant-form-item-control-input-content">
+                       <select id="releaseWindow" style="width: 100%; border: 1px solid rgb(220, 223, 230); border-radius: 4px; height: 32px; padding: 0px 11px; font-size: 14px; background: rgb(255, 255, 255); cursor: pointer; color: rgba(0, 0, 0, 0.88);">
+                        <option value="">请选择发布窗口</option>
+                        <option value="2026-07-15 项目发布">2026-07-15 项目发布</option>
+                        <option value="2026-07-10 常规发布">2026-07-10 常规发布</option>
+                        <option value="2026-07-08 常规发布">2026-07-08 常规发布</option>
+                        <option value="2026-07-03 常规发布">2026-07-03 常规发布</option>
+                        <option value="2026-07-01 常规发布">2026-07-01 常规发布</option>
+                        <option value="2026-06-28 项目发布">2026-06-28 项目发布</option>
+                        <option value="2026-06-25 项目发布">2026-06-25 项目发布</option>
+                        <option value="2026-06-20 项目发布">2026-06-20 项目发布</option>
+                       </select>
+                      </div>
+                     </div>
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                 <div style="flex: 1;">
+                  <div class="ant-form-item" style="margin-bottom: 0;">
+                   <div class="ant-row ant-form-item-row">
+                    <div class="ant-col ant-form-item-label">
+                     <label class="ant-form-item-required" title="关联PMS系统">关联PMS系统</label>
+                    </div>
+                    <div class="ant-col ant-form-item-control">
+                     <div class="ant-form-item-control-input">
+                      <div class="ant-form-item-control-input-content">
+                       <input id="pmsSystem" readonly="" style="width: 100%; border: 1px solid rgb(220, 223, 230); border-radius: 4px; height: 32px; padding: 0px 11px; font-size: 14px; background: rgb(245, 245, 245); color: rgba(0, 0, 0, 0.65);" placeholder="根据所属应用自动关联">
+                      </div>
+                     </div>
+                    </div>
+                   </div>
                   </div>
                  </div>
                 </div>
@@ -364,26 +391,69 @@ var pmsMap = {
   "SJ003": "A70028-智慧决策平台",
   "YY004": "A50048-产品研发运营管理平台"
 };
+
+// 自动计算投产窗口次日中午12:00并格式化填入的方法
+function calculateAutoPublishTime() {
+  var isChecked = document.getElementById("isReleaseUpdate").checked;
+  if (!isChecked) return;
+  var windowValue = document.getElementById("releaseWindow").value;
+  var publishDateInput = document.getElementById("publishDate");
+  if (windowValue) {
+    var dateMatch = windowValue.match(/^(\d{4}-\d{2}-\d{2})/);
+    if (dateMatch) {
+      var windowDateStr = dateMatch[1];
+      var dateObj = new Date(windowDateStr);
+      if (!isNaN(dateObj.getTime())) {
+        dateObj.setDate(dateObj.getDate() + 1);
+        var yyyy = dateObj.getFullYear();
+        var mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+        var dd = String(dateObj.getDate()).padStart(2, '0');
+        publishDateInput.value = yyyy + "-" + mm + "-" + dd + "T12:00";
+      }
+    }
+  } else {
+    publishDateInput.value = "";
+  }
+}
+
 function toggleReleaseFields() {
   var c = document.getElementById("isReleaseUpdate").checked;
   var w = document.getElementById("releaseWindow");
   var p = document.getElementById("pmsSystem");
-  var rs = document.getElementById("releaseReqStar");
-  var ps = document.getElementById("pmsReqStar");
-  if (!c) { w.value = ""; p.value = ""; }
+  var t = document.getElementById("publishDate");
+  var container = document.getElementById("publishDatePickerContainer");
+  var tip = document.getElementById("publishTimeTip");
   w.disabled = !c;
   w.style.background = c ? "#fff" : "#f5f5f5";
   w.style.color = c ? "rgba(0,0,0,.88)" : "rgba(0,0,0,.25)";
   p.style.background = "#f5f5f5";
   p.style.color = c ? "rgba(0,0,0,.65)" : "rgba(0,0,0,.25)";
-  if (rs) rs.style.display = c ? "" : "none";
-  if (ps) ps.style.display = c ? "" : "none";
+  t.disabled = c;
+  container.style.backgroundColor = c ? "#f5f5f5" : "#fff";
+  if (c) {
+    tip.innerText = "将于发布日次日中午12:00自动发布";
+    tip.style.color = "#cc0000";
+    calculateAutoPublishTime();
+  } else {
+    tip.innerText = "日志将在设定时间自动对外发布";
+    tip.style.color = "rgba(0,0,0,0.45)";
+    if (!w.value) { p.value = ""; }
+  }
 }
+
+document.getElementById("releaseWindow").addEventListener("change", function() {
+  calculateAutoPublishTime();
+});
+
 document.getElementById("appId").addEventListener("change", function() {
   var p = document.getElementById("pmsSystem");
   if (document.getElementById("isReleaseUpdate").checked) {
     p.value = pmsMap[this.value] || "";
   }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  toggleReleaseFields();
 });
 </script>
 </body></html>
