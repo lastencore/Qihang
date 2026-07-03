@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-03 14:19:39
+> 最后更新：2026-07-03 17:38:34
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -68,7 +68,10 @@
 - [x] **`app_management.html` 弹窗栅格规范化**：label `ant-col-4` + control `ant-col-20` 填满 24 栅格，表单项 `margin-bottom: 20px` 呼吸留白
 - [x] **`update_log_modify.html` 文案统一**："发布窗口"→"PMS发布窗口"，"发布时间"→"日志对外发布时间"，所有控件 placeholder 统一为"请输入"/"请选择"
 - [x] **`update_log_modify.html` 发布类更新行内对齐**：PMS发布窗口和关联PMS系统 label 固定宽度 `white-space: nowrap` + 控件 `flex: 1` 同行排布，`align-items: center` 垂直居中
-- [x] **progress-doc skill v1.1.0**：新增铁律——更新时间必须取系统时间（`date +%Y-%m-%d`），禁止推断；打包为 progress-doc-skill.zip 上传 tdrive
+- [x] **progress-doc skill v1.1.1**：更新时间格式加入 `HH:MM:SS`，更新 skill 定义和执行流程
+- [x] **`app_detail.html` 独立详情页**：从 client.html 抽取应用详情为独立页面，四 Tab（操作手册/更新日志/相关课程/我有建议），支持 `?name=系统名` 参数跳转；详情区默认显示，大厅区 hidden-layout 隐藏
+- [x] **`app_map.html` 跳转详情**：108 个 flat-card 模块点击 → `app_detail.html?name=XXX`；搜索下拉结果新增 click 跳转；"应用大厅"按钮链接修正
+- [x] **`index.html` 索引入口整理**：应用地图 → 应用大厅（方案待定）→ 应用详情（新增），全部链接验证通过；新增 `blueprint/manual_blueprint.html` 蓝图入口
 
 ### 🔄 进行中
 
