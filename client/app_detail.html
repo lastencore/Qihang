@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>应用详情 - 启航平台</title>
+<head><meta charset="UTF-8"><title>应用详情 - 启航平台</title>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -146,18 +144,16 @@
     
 </head>
 <body>
-
 <header>
         <div class="logo">启航平台 - 新一代核心系统应用能力地图</div>
         <div class="user-info">当前登录：系统操作员</div>
     </header>
-
 <div class="container">
-    <div class="detail-section" style="display:block;" id="detailSection">
+<div class="detail-section" style="display:block;" id="detailSection">
             <div class="detail-header">
                 <div class="detail-title-info">
                     <div style="margin-bottom: 12px;">
-                        <button class="btn-secondary" style="padding: 5px 16px; font-size: 13px; width: auto; cursor: pointer; background: #fff;" onclick="location.href='app_map.html'">← 返回大厅</button>
+                        <button class="btn-secondary" style="padding: 5px 16px; font-size: 13px; width: auto; cursor: pointer; background: #fff;" onclick="returnToLobby()">← 返回大厅</button>
                     </div>
                     <h1 id="det_appName">加载中...</h1>
                     <div class="detail-app-intro-p" id="det_appDesc">暂无数据描述。</div>
@@ -239,673 +235,197 @@
         </div>
     </div>
 
-    <script>
-        // 53个全量用户视角新一代系统应用静态字典数据
-        const appsData = {
-            "全部应用清单": [],
-            "承保业务": [
-                { id: "app1", cat: "承保业务", name: "车险承保平台", desc: "提供车险全流程投保、费率计算、保单生成及电子签章的一站式承保作业能力。", updateCount: 2 },
-                { id: "app2", cat: "承保业务", name: "意健险承保平台", desc: "支持个人及团体意外险、健康险的在线快速投保、契约信息自动录入与初审流水线。", updateCount: 0 },
-                { id: "app3", cat: "承保业务", name: "财责险承保平台", desc: "面向财产险、责任险等企业级业务，提供复杂的承保风险要素登记与合同排版分发。", updateCount: 4 },
-                { id: "app4", cat: "承保业务", name: "农险承保平台", desc: "针对农业保险特点设计的承保系统，全面支持地块信息关联、农户清单导入及政策性补贴核算。", updateCount: 1 },
-                { id: "app5", cat: "承保业务", name: "扫码保", desc: "极简便携式前端投保应用，支持客户或代理人通过二维码实现现场极速出单与扫码收付。", updateCount: 0 },
-                { id: "app6", cat: "承保业务", name: "政策性健康险平台", desc: "专用于大病保险、长期护理保险等政策性业务的精准承保记录、待遇资格库比对及多级结算对接。", updateCount: 3 },
-                { id: "app7", cat: "承保业务", name: "信用保证险承保平台", desc: "提供信保业务的线上投保通道，涵盖核心履约保证、借贷信用保证等风险评级出单。", updateCount: 1 },
-                { id: "app8", cat: "承保业务", name: "非融资信保平台", desc: "针对非融资类信用保证险提供的特定线上出单台账，支持企业贸易信用险规则配置。", updateCount: 0 },
-                { id: "app9", cat: "承保业务", name: "农险GIS平台", desc: "融合地理信息系统（GIS），提供农险承保地块的空间矢量化测绘、承保分布热力图及验标存证。", updateCount: 2 }
-            ],
-            "核保业务": [
-                { id: "app10", cat: "核保业务", name: "车险核保", desc: "车险规则自动化校验网格与人工核保作业台，集成车型风险库、历史理赔安全因子拦截。", updateCount: 5 },
-                { id: "app11", cat: "核保业务", name: "个非核保", desc: "个人非车险（意健险、个财险）的人工多级核保流转、风险系数裁决与批注管理工作流。", updateCount: 1 },
-                { id: "app12", cat: "核保业务", name: "团非核保", desc: "团体非车险复杂业务的专家集中式会审平台，支持大型法人方案的特殊费率特批与分层授权。", updateCount: 3 }
-            ],
-            "后台支持": [
-                { id: "app13", cat: "后台支持", name: "再保平台", desc: "提供原保险合同的自动分出评估、临时再保分保批处理、账单勾稽及结算清算台账。", updateCount: 0 }
-            ],
-            "履约业务": [
-                { id: "app14", cat: "履约业务", name: "综合履约平台", desc: "覆盖承保后合同效力追踪、重要单证合规检查及客户权益履约节点的自动化状态监控。", updateCount: 2 },
-                { id: "app15", cat: "履约业务", name: "送修平台", desc: "联动线下合作车商与维修网络，提供理赔定损后的智能送修派单、维修进度实时跟踪。", updateCount: 1 },
-                { id: "app16", cat: "履约业务", name: "AI中华（理赔）", desc: "理赔全功能智能化中台，支持理赔发票智能OCR结构化拆解、损失照片自动测损及极速小额直赔。", updateCount: 6 },
-                { id: "app17", cat: "履约业务", name: "农险履约平台", desc: "专门用于农业保险灾后查勘时效监控、无赔款优待核定及大面积灾情快速群体赔付的合规公示底座。", updateCount: 0 }
-            ],
-            "数据中台": [
-                { id: "app18", cat: "数据中台", name: "经营分析平台", desc: "数据域统一展现中心，提供多维度满期赔付率、保费达成率及续保率的时序趋势与经营分析。", updateCount: 4 },
-                { id: "app19", cat: "数据中台", name: "自助 analysis 平台", desc: "为各分公司业务骨干提供免代码拖拽式宽表自助检索、拖拽式漏斗图看板配置器。", updateCount: 1 },
-                { id: "app20", cat: "数据中台", name: "智慧决策平台", desc: "深度整合管理层决策模型，对渠道产能、机构费用效益进行智能化综合评估与风险预警。", updateCount: 0 },
-                { id: "app21", cat: "数据中台", name: "统一数据服务平台", desc: "统一对外分发标准数据API，为前端各展业应用、核心中台提供高并发的实时数据查询服务。", updateCount: 2 },
-                { id: "app22", cat: "数据中台", name: "标签运营管理平台", desc: "构建全景客群与渠道的标签画像，支持精细化客户分群、精准触达策略及活动效果追踪。", updateCount: 3 },
-                { id: "app23", cat: "数据中台", name: "数据大学", desc: "面向内部提供数据资产字典查询、数据标准规范学习以及指标口径溯源的在线知识社区。", updateCount: 0 },
-                { id: "app24", cat: "数据中台", name: "数据标准平台", desc: "统筹全集团核心业务对象的数据元 definition 、代码集规范，保障全流程底层数据口径的一致性。", updateCount: 1 },
-                { id: "app25", cat: "数据中台", name: "统一算法平台", desc: "集中托管核保风控模型、反欺诈评分、客户流失预测等各类核心AI算法的训练与部署。", updateCount: 0 },
-                { id: "app26", cat: "数据中台", name: "统一提数平台", desc: "为合规审计、专项课题提供高隔离度的历史大明细数据安全提取与脱敏下载审批通道。", updateCount: 2 }
-            ],
-            "通用板块": [
-                { id: "app27", cat: "通用板块", name: "运营支撑域", desc: "提供全系统基础工单流转、跨部门任务协同调度以及日常运营资源作业效能的量化监控。", updateCount: 1 }
-            ],
-            "销售营销": [
-                { id: "app28", cat: "销售营销", name: "智能一体化平台", desc: "集成全渠道综合展业工具，支持多险种交叉销售、一站式客户开户与全生命周期运营。", updateCount: 3 },
-                { id: "app29", cat: "销售营销", name: "智能一体化团客", desc: "聚焦团体客户、法人机构的统一关系维护，支持大客户承保方案在线定制与历史贡献度盘点。", updateCount: 0 },
-                { id: "app30", cat: "销售营销", name: "线上运营平台", desc: "承载自营App、官方小程序等线上私域流量的日常活动运营、用户活跃度及互动路径打磨。", updateCount: 4 },
-                { id: "app31", cat: "销售营销", name: "增值服务平台", desc: "VIP客户权益卡券分发、线上线下健康管理及道路救援等增值服务供应链的闭环管理。", updateCount: 1 },
-                { id: "app32", cat: "销售营销", name: "AI中华（销售）", desc: "销售侧智能化AI助手，提供精准产品话术推荐、客户购买意向雷达及智能建议书诊断。", updateCount: 2 },
-                { id: "app33", cat: "销售营销", name: "共享保", desc: "创新型场景化共创销售工具，支持跨渠道协同作业、利益共享核算及联合展业动线。", updateCount: 0 }
-            ],
-            "运营管理": [
-                { id: "app34", cat: "运营管理", name: "非车险定价决策系统", desc: "利用精算模型进行复杂非车险大单的自适应风险概率测算与最低盈亏底线控价。", updateCount: 1 },
-                { id: "app35", cat: "运营管理", name: "车险定价决策", desc: "紧跟 market 车险自主定价系数变化，提供多因子报价测算、机构费率竞争策略动态调配。", updateCount: 2 },
-                { id: "app36", cat: "运营管理", name: "标的域", desc: "统一维护全险种底层物理标的（房屋、船舶、企业资产、特定人群）的基础主数据与历史档案。", updateCount: 0 },
-                { id: "app37", cat: "运营管理", name: "风控平台", desc: "全流程内控合规审计、反洗钱涉恐风控异常拦截及高频操作行为的实时合规监控。", updateCount: 3 },
-                { id: "app38", cat: "运营管理", name: "调言平台", desc: "收集并规整全系统前线展业人员、后援作业人员的业务优化提议，提供流转评估反馈机制。", updateCount: 0 },
-                { id: "app39", cat: "运营管理", name: "回溯平台", desc: "严格匹配监管要求，对线上销售及承保关键节点、双录影像留痕进行合规回溯与真伪质检。", updateCount: 1 },
-                { id: "app40", cat: "运营管理", name: "新销管平台", desc: "全面重构的销售组织架构管理、业务员基本法利益结算及考核评级自动化计算流水线。", updateCount: 4 },
-                { id: "app41", cat: "运营管理", name: "合作伙伴平台", desc: "集中管理外部合作渠道（车商、兼代、中介机构）的准入资格、协议合同及佣金配置。", updateCount: 0 },
-                { id: "app42", cat: "运营管理", name: "单证域", desc: "全公司纸质与电子发票、保单、照会件等重要凭证单证的生命周期状态跟踪、领用与核销。", updateCount: 1 },
-                { id: "app43", cat: "运营管理", name: "产品运营平台", desc: "实现全险种产品条款、责任配置、费率表的配置化极速上架工作台，降低条款维护门槛。", updateCount: 2 },
-                { id: "app44", cat: "运营管理", name: "销售业绩管理系统", desc: "实时汇总各业务条线保费规模，提供日/周/月度业绩快报、竞赛排名及达成看板。", updateCount: 5 }
-            ],
-            "战略企划": [
-                { id: "app45", cat: "战略企划", name: "高管驾驶舱平台", desc: "专为中高层管理者定制，一屏呈现核心保费规模、大类理赔时效、资金流向等核心宏观指标。", updateCount: 1 }
-            ],
-            "资金财务": [
-                { id: "app46", cat: "资金财务", name: "资金系统", desc: "全公司银行账户资金流水归集、大额资金调拨划转及收付结算基础台账管理。", updateCount: 0 },
-                { id: "app47", cat: "资金财务", name: "综合对账平台", desc: "实现全渠道支付流水、核心业务应收流水、银行实际到账单的三位一体每日自动清算勾稽。", updateCount: 2 },
-                { id: "app48", cat: "资金财务", name: "增值税平台", desc: "对接国家税务总局接口，实现销项发票自动开具、红字发票管控及进项发票查验认证。", updateCount: 3 },
-                { id: "app49", cat: "资金财务", name: "服务计费", desc: "针对内部共享服务、外部技术接口调用进行精准的计费测算、成本摊销内部结算核算。", updateCount: 0 },
-                { id: "app50", cat: "资金财务", name: "支付结算域", desc: "统一集成微信、支付宝、银联等主流第三方支付网关，提供高并发的首期及续期保费扣收服务。", updateCount: 4 },
-                { id: "app51", cat: "资金财务", name: "交易域", desc: "核心收付指令的并发调度中台，保障大批量理赔付费、退保给付事务的资金安全与安全校验。", updateCount: 1 },
-                { id: "app52", cat: "资金财务", name: "账务域", desc: "将承保、保全、理赔等业务交易流水实时编译为会计分录，实现凭证的自动化应收应付生成。", updateCount: 2 },
-                { id: "app53", cat: "资金财务", name: "费用中心", desc: "集中管控各分公司、各渠道的日常行政报销、展业费提拨及手续费佣金的出账风控审查。", updateCount: 0 }
-            ]
-        };
-
-        // 执行原厂自动化清洗合并，注入“全部应用清单”
-        let allApps = [];
-        Object.keys(appsData).forEach(cat => {
-            if (cat !== "全部应用清单") allApps = allApps.concat(appsData[cat]);
-        });
-        appsData["全部应用清单"] = allApps;
-
-        let currentActiveCategory = "全部应用清单";
-
-        // SOP 静态指南
-        const mockDetailContent = {
-            manualTree: [
-                { id: "m1", title: "1. 业务操作前置准备与系统鉴权要求", content: "<p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的“标准业务作业组”建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class='doc-highlight-box'>📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div>" },
-                { id: "m2", title: "2. 标准核心流程流转与智能化校验规程", content: "<p>进入应用核心作业面后，标准单据的录入与智能化流转需严格执行如下规范方案：</p><ol><li><strong>数据源识别与流水关联：</strong>点击表单左上角“单据初始化”，通过智能识别影像拆解技术录入。</li><li><strong>表单高亮约束项作答：</strong>系统将以黄色高亮框圈定“高风险必填项”。</li></ol>" },
-                { id: "m3", title: "3. 典型卡点风控拦截与线上申诉解除指引", content: "<p>在日常高频作业场景下，如果因触发底层风控指标导致表单被强拦截，请执行以下标准解锁恢复步骤：</p><ul><li><strong>步骤一：精确定位错误拦截码：</strong>拦截发生时，前台中央通知框将输出专用的异常拦截代码（例如 <code>ERR_SEC_AML_403</code>）。</li><li><strong>步骤二：补充客观补充合规证明材料：</strong>在申诉解控浮层中，上传对应证明报告。</li></ul>" }
-            ],
-            logs: [
-                { version: "V1.3.0 新一代核心系统季度分布式架构演进公告", date: "2026-06-01", items: ["<strong>【核心底层交易流重构】</strong> 将旧有的多线程阻塞队列池切换为反应式非阻塞高并发事件流框架。全链路接口平均综合耗时大幅削减 34.2%。", "<strong>【分布式强事务投产】</strong> 针对跨资金结算应收应付、理赔长周期追偿等动线，全量上线 SAGA 分布式补偿机制，确保账实完全相符。", "<strong>【体验改进】</strong> 优化了全量采集字段的焦点捕获时效。全面开放基于无鼠标化作业的键盘高频切换录入。"] },
-                { version: "V1.2.4 线上重要升级说明", date: "2026-05-15", items: ["【功能优化】大范围重构了核心业务计算逻辑，页面综合交互响应耗时缩短。", "【体验改进】优化了复杂录入表单的焦点流转规则。"] }
-            ],
-            courses: [
-                { title: "新一代核心系统：本项业务应用功能线上化实操通关指引", duration: "15分钟", type: "岗位必修" },
-                { title: "运营合规规范：基于新一代核心系统操作的风险因子防范", duration: "30分钟", type: "技能提升" }
-            ]
-        };
-
-        // 统一图标计算渲染函数（彻底修复 ReferenceError 卡死缺陷）
-        function getCategoryIconSvg(category) {
-            let color = "#3b82f6";
-            let path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />`;
-            
-            if (category === "承保业务" || category === "核保业务" || category === "履约业务") {
-                color = "#2563eb";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />`;
-            } else if (category === "资金财务") {
-                color = "#d97706";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`;
-            } else if (category === "数据中台" || category === "战略企划") {
-                color = "#6d28d9";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />`;
-            } else if (category === "销售营销") {
-                color = "#db2777";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />`;
-            }
-
-            return `<div class="app-icon-box" style="background-color: ${color}15; color: ${color};">
-                <svg xmlns="http://www.w3.org/2000/svg" style="width:20px; height:20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">${path}</svg>
-            </div>`;
-        }
-
-        // 饱和初首屏网格装载
-        window.onload = function() {
-            renderAppGrid("全部应用清单");
-        };
-
-        // 核心网格看板绘制
-        function renderAppGrid(categoryKey, filterKeyword = "") {
-            const gridContainer = document.getElementById("lobby-apps-grid");
-            if (!gridContainer) return;
-            gridContainer.innerHTML = "";
-            
-            let list = appsData[categoryKey] || [];
-            
-            if (filterKeyword !== "") {
-                const kw = filterKeyword.toLowerCase().trim();
-                list = list.filter(app => 
-                    app.name.toLowerCase().includes(kw) || 
-                    app.desc.toLowerCase().includes(kw)
-                );
-            }
-
-            if(list.length === 0) {
-                gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8; background: #fff; border-radius:8px;">暂未检索到符合条件的系统应用，请更换关键字重试。</div>`;
-                return;
-            }
-
-            list.forEach(app => {
-                const card = document.createElement("div");
-                card.className = "app-card";
-                card.onclick = () => loadAppDetail(app.id, 0);
-                
-                let badgeHtml = "";
-                if (app.updateCount > 0) {
-                    badgeHtml += `<span class="badge badge-update" style="cursor: pointer; position: absolute; top: 16px; right: 16px;" onclick="loadAppDetail('${app.id}', 1); event.stopPropagation();">近一周更新 (${app.updateCount})</span>`;
-                }
-
-                card.innerHTML = `
-                    <div>
-                        <div class="app-card-top-header">
-                            ${getCategoryIconSvg(app.cat)}
-                            <div class="app-name-wrapper">
-                                <div class="app-name">${app.name}</div>
-                            </div>
-                        </div>
-                        <div class="app-desc">${app.desc}</div>
-                        <div class="app-badges">${badgeHtml}</div>
-                    </div>
-                    <div class="app-actions">
-                        <a href="javascript:void(0)" class="btn-secondary" onclick="loadAppDetail('${app.id}', 0); event.stopPropagation();">查看详情</a>
-                        <a href="javascript:void(0)" class="btn-primary" onclick="alert('已进入系统'); event.stopPropagation();">进入系统</a>
-                    </div>
-                `;
-                gridContainer.appendChild(card);
-            });
-        }
-
-        // 侧边栏品类洗牌
-        function switchCategory(catId, element) {
-            document.querySelectorAll(".category-item").forEach(item => item.classList.remove("active"));
-            element.classList.add("active");
-            
-            const titleText = element.querySelector("span").innerText;
-            document.getElementById("currentCategoryTitle").innerText = "当前分类：" + titleText;
-            document.getElementById("globalSearch").value = "";
-            
-            currentActiveCategory = catId === 'all' ? '全部应用清单' : catId;
-            renderAppGrid(currentActiveCategory);
-        }
-
-        // 大厅核心全局搜索
-        function triggerSearch() {
-            const kw = document.getElementById("globalSearch").value;
-            document.querySelectorAll(".category-item").forEach(item => item.classList.remove("active"));
-            document.querySelector('[data-cat="all"]').classList.add("active");
-            document.getElementById("currentCategoryTitle").innerText = "搜索结果";
-            renderAppGrid("全部应用清单", kw);
-        }
-
-        document.getElementById("globalSearch").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") { triggerSearch(); }
-        });
-
-        // SPA 纯净视图切流流控控制核心
-        function loadAppDetail(appId, defaultTab = 0) {
-            let targetApp = null;
-            let foundCategory = "";
-            
-            Object.keys(appsData).forEach(cat => {
-                if (cat !== "全部应用清单") {
-                    const matched = appsData[cat].find(a => a.id === appId);
-                    if (matched) { targetApp = matched; foundCategory = cat; }
-                }
-            });
-
-            if (!targetApp) return;
-
-            // 1. 原子化类名控制：彻底隐藏大厅、显化详情面
-            // lobby-view-wrapper not present on standalone page
-            document.getElementById("detailSection").className = "detail-section block-layout"; document.getElementById("detailSection").style.display = "block";
-
-            document.getElementById("det_appName").innerText = targetApp.name;
-            document.getElementById("det_catName").innerText = foundCategory;
-            document.getElementById("det_appDesc").innerText = targetApp.desc;
-            document.getElementById("det_launchBtn").onclick = () => alert('已进入系统');
-
-            // 2. 装载操作手册左树
-            const treeContainer = document.getElementById("det_manualTree");
-            treeContainer.innerHTML = "";
-            mockDetailContent.manualTree.forEach((node, idx) => {
-                const a = document.createElement("a");
-                a.href = "javascript:void(0)";
-                a.className = `tree-node ${idx === 0 ? 'active' : ''}`;
-                a.innerText = node.title;
-                a.onclick = function() {
-                    document.querySelectorAll(".tree-node").forEach(n => n.classList.remove("active"));
-                    a.classList.add("active");
-                    document.getElementById("det_manualTitle").innerText = node.title;
-                    document.getElementById("det_manualBody").innerHTML = node.content;
-                };
-                treeContainer.appendChild(a);
-            });
-            document.getElementById("det_manualTitle").innerText = mockDetailContent.manualTree[0].title;
-            document.getElementById("det_manualBody").innerHTML = mockDetailContent.manualTree[0].content;
-
-            // 3. 装载风琴更新日志
-            const logContainer = document.getElementById("det_logTimeline");
-            logContainer.innerHTML = "";
-            mockDetailContent.logs.forEach((log, idx) => {
-                let liHtml = "";
-                log.items.forEach(li => liHtml += `<li>${li}</li>`);
-                const item = document.createElement("div");
-                item.className = `timeline-item ${idx === 0 ? 'expanded' : ''}`;
-                item.innerHTML = `
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-header" onclick="this.parentElement.classList.toggle('expanded')">
-                        <div class="timeline-title-left">
-                            <span class="timeline-version">${log.version}</span>
-                            <span class="timeline-date">${log.date}</span>
-                        </div>
-                        <div class="timeline-toggle-icon">展开/折叠</div>
-                    </div>
-                    <div class="timeline-body"><ul>${liHtml}</ul></div>
-                `;
-                logContainer.appendChild(item);
-            });
-
-            // 4. 装载相关课程
-            const courseContainer = document.getElementById("det_courseGrid");
-            courseContainer.innerHTML = "";
-            mockDetailContent.courses.forEach(c => {
-                const div = document.createElement("div");
-                div.className = "course-card";
-                div.innerHTML = `
-                    <div class="course-thumb">
-                        <span class="course-tag">${c.type}</span>
-                        <div class="course-title-text">${c.title}</div>
-                    </div>
-                    <div class="course-info">
-                        <div class="course-meta">学习时长：${c.duration}</div>
-                        <a href="javascript:void(0)" class="btn-course" onclick="alert('已开始学习')">开始研习</a>
-                    </div>
-                `;
-                courseContainer.appendChild(div);
-            });
-
-            document.getElementById("det_feedbackBanner").innerHTML = `📌 您的建议将直达聆听平台：【${foundCategory}】分类 - 【${targetApp.name}】。`;
-            switchTab(defaultTab, document.querySelectorAll(".tab-btn")[defaultTab]);
-            window.scrollTo(0, 0);
-        }
-
-        // 反向控制：安全退回大厅
-        function location.href='app_map.html' {
-            // no lobby on standalone page
-            // standalone page - return handled by button redirect
-            window.scrollTo(0, 0);
-        }
-
-        function switchTab(panelIndex, btnElement) {
-            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-            btnElement.classList.add("active");
-            document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
-            document.getElementById("panel-" + panelIndex).classList.add("active");
-        }
-
-        function selectAdviceCard(element) {
-            document.querySelectorAll('.type-card').forEach(card => card.classList.remove('active'));
-            element.classList.add('active');
-        }
-    </script>
-</div>
-
-<script>
-    const appsData = {
-            "全部应用清单": [],
-            "承保业务": [
-                { id: "app1", cat: "承保业务", name: "车险承保平台", desc: "提供车险全流程投保、费率计算、保单生成及电子签章的一站式承保作业能力。", updateCount: 2 },
-                { id: "app2", cat: "承保业务", name: "意健险承保平台", desc: "支持个人及团体意外险、健康险的在线快速投保、契约信息自动录入与初审流水线。", updateCount: 0 },
-                { id: "app3", cat: "承保业务", name: "财责险承保平台", desc: "面向财产险、责任险等企业级业务，提供复杂的承保风险要素登记与合同排版分发。", updateCount: 4 },
-                { id: "app4", cat: "承保业务", name: "农险承保平台", desc: "针对农业保险特点设计的承保系统，全面支持地块信息关联、农户清单导入及政策性补贴核算。", updateCount: 1 },
-                { id: "app5", cat: "承保业务", name: "扫码保", desc: "极简便携式前端投保应用，支持客户或代理人通过二维码实现现场极速出单与扫码收付。", updateCount: 0 },
-                { id: "app6", cat: "承保业务", name: "政策性健康险平台", desc: "专用于大病保险、长期护理保险等政策性业务的精准承保记录、待遇资格库比对及多级结算对接。", updateCount: 3 },
-                { id: "app7", cat: "承保业务", name: "信用保证险承保平台", desc: "提供信保业务的线上投保通道，涵盖核心履约保证、借贷信用保证等风险评级出单。", updateCount: 1 },
-                { id: "app8", cat: "承保业务", name: "非融资信保平台", desc: "针对非融资类信用保证险提供的特定线上出单台账，支持企业贸易信用险规则配置。", updateCount: 0 },
-                { id: "app9", cat: "承保业务", name: "农险GIS平台", desc: "融合地理信息系统（GIS），提供农险承保地块的空间矢量化测绘、承保分布热力图及验标存证。", updateCount: 2 }
-            ],
-            "核保业务": [
-                { id: "app10", cat: "核保业务", name: "车险核保", desc: "车险规则自动化校验网格与人工核保作业台，集成车型风险库、历史理赔安全因子拦截。", updateCount: 5 },
-                { id: "app11", cat: "核保业务", name: "个非核保", desc: "个人非车险（意健险、个财险）的人工多级核保流转、风险系数裁决与批注管理工作流。", updateCount: 1 },
-                { id: "app12", cat: "核保业务", name: "团非核保", desc: "团体非车险复杂业务的专家集中式会审平台，支持大型法人方案的特殊费率特批与分层授权。", updateCount: 3 }
-            ],
-            "后台支持": [
-                { id: "app13", cat: "后台支持", name: "再保平台", desc: "提供原保险合同的自动分出评估、临时再保分保批处理、账单勾稽及结算清算台账。", updateCount: 0 }
-            ],
-            "履约业务": [
-                { id: "app14", cat: "履约业务", name: "综合履约平台", desc: "覆盖承保后合同效力追踪、重要单证合规检查及客户权益履约节点的自动化状态监控。", updateCount: 2 },
-                { id: "app15", cat: "履约业务", name: "送修平台", desc: "联动线下合作车商与维修网络，提供理赔定损后的智能送修派单、维修进度实时跟踪。", updateCount: 1 },
-                { id: "app16", cat: "履约业务", name: "AI中华（理赔）", desc: "理赔全功能智能化中台，支持理赔发票智能OCR结构化拆解、损失照片自动测损及极速小额直赔。", updateCount: 6 },
-                { id: "app17", cat: "履约业务", name: "农险履约平台", desc: "专门用于农业保险灾后查勘时效监控、无赔款优待核定及大面积灾情快速群体赔付的合规公示底座。", updateCount: 0 }
-            ],
-            "数据中台": [
-                { id: "app18", cat: "数据中台", name: "经营分析平台", desc: "数据域统一展现中心，提供多维度满期赔付率、保费达成率及续保率的时序趋势与经营分析。", updateCount: 4 },
-                { id: "app19", cat: "数据中台", name: "自助 analysis 平台", desc: "为各分公司业务骨干提供免代码拖拽式宽表自助检索、拖拽式漏斗图看板配置器。", updateCount: 1 },
-                { id: "app20", cat: "数据中台", name: "智慧决策平台", desc: "深度整合管理层决策模型，对渠道产能、机构费用效益进行智能化综合评估与风险预警。", updateCount: 0 },
-                { id: "app21", cat: "数据中台", name: "统一数据服务平台", desc: "统一对外分发标准数据API，为前端各展业应用、核心中台提供高并发的实时数据查询服务。", updateCount: 2 },
-                { id: "app22", cat: "数据中台", name: "标签运营管理平台", desc: "构建全景客群与渠道的标签画像，支持精细化客户分群、精准触达策略及活动效果追踪。", updateCount: 3 },
-                { id: "app23", cat: "数据中台", name: "数据大学", desc: "面向内部提供数据资产字典查询、数据标准规范学习以及指标口径溯源的在线知识社区。", updateCount: 0 },
-                { id: "app24", cat: "数据中台", name: "数据标准平台", desc: "统筹全集团核心业务对象的数据元 definition 、代码集规范，保障全流程底层数据口径的一致性。", updateCount: 1 },
-                { id: "app25", cat: "数据中台", name: "统一算法平台", desc: "集中托管核保风控模型、反欺诈评分、客户流失预测等各类核心AI算法的训练与部署。", updateCount: 0 },
-                { id: "app26", cat: "数据中台", name: "统一提数平台", desc: "为合规审计、专项课题提供高隔离度的历史大明细数据安全提取与脱敏下载审批通道。", updateCount: 2 }
-            ],
-            "通用板块": [
-                { id: "app27", cat: "通用板块", name: "运营支撑域", desc: "提供全系统基础工单流转、跨部门任务协同调度以及日常运营资源作业效能的量化监控。", updateCount: 1 }
-            ],
-            "销售营销": [
-                { id: "app28", cat: "销售营销", name: "智能一体化平台", desc: "集成全渠道综合展业工具，支持多险种交叉销售、一站式客户开户与全生命周期运营。", updateCount: 3 },
-                { id: "app29", cat: "销售营销", name: "智能一体化团客", desc: "聚焦团体客户、法人机构的统一关系维护，支持大客户承保方案在线定制与历史贡献度盘点。", updateCount: 0 },
-                { id: "app30", cat: "销售营销", name: "线上运营平台", desc: "承载自营App、官方小程序等线上私域流量的日常活动运营、用户活跃度及互动路径打磨。", updateCount: 4 },
-                { id: "app31", cat: "销售营销", name: "增值服务平台", desc: "VIP客户权益卡券分发、线上线下健康管理及道路救援等增值服务供应链的闭环管理。", updateCount: 1 },
-                { id: "app32", cat: "销售营销", name: "AI中华（销售）", desc: "销售侧智能化AI助手，提供精准产品话术推荐、客户购买意向雷达及智能建议书诊断。", updateCount: 2 },
-                { id: "app33", cat: "销售营销", name: "共享保", desc: "创新型场景化共创销售工具，支持跨渠道协同作业、利益共享核算及联合展业动线。", updateCount: 0 }
-            ],
-            "运营管理": [
-                { id: "app34", cat: "运营管理", name: "非车险定价决策系统", desc: "利用精算模型进行复杂非车险大单的自适应风险概率测算与最低盈亏底线控价。", updateCount: 1 },
-                { id: "app35", cat: "运营管理", name: "车险定价决策", desc: "紧跟 market 车险自主定价系数变化，提供多因子报价测算、机构费率竞争策略动态调配。", updateCount: 2 },
-                { id: "app36", cat: "运营管理", name: "标的域", desc: "统一维护全险种底层物理标的（房屋、船舶、企业资产、特定人群）的基础主数据与历史档案。", updateCount: 0 },
-                { id: "app37", cat: "运营管理", name: "风控平台", desc: "全流程内控合规审计、反洗钱涉恐风控异常拦截及高频操作行为的实时合规监控。", updateCount: 3 },
-                { id: "app38", cat: "运营管理", name: "调言平台", desc: "收集并规整全系统前线展业人员、后援作业人员的业务优化提议，提供流转评估反馈机制。", updateCount: 0 },
-                { id: "app39", cat: "运营管理", name: "回溯平台", desc: "严格匹配监管要求，对线上销售及承保关键节点、双录影像留痕进行合规回溯与真伪质检。", updateCount: 1 },
-                { id: "app40", cat: "运营管理", name: "新销管平台", desc: "全面重构的销售组织架构管理、业务员基本法利益结算及考核评级自动化计算流水线。", updateCount: 4 },
-                { id: "app41", cat: "运营管理", name: "合作伙伴平台", desc: "集中管理外部合作渠道（车商、兼代、中介机构）的准入资格、协议合同及佣金配置。", updateCount: 0 },
-                { id: "app42", cat: "运营管理", name: "单证域", desc: "全公司纸质与电子发票、保单、照会件等重要凭证单证的生命周期状态跟踪、领用与核销。", updateCount: 1 },
-                { id: "app43", cat: "运营管理", name: "产品运营平台", desc: "实现全险种产品条款、责任配置、费率表的配置化极速上架工作台，降低条款维护门槛。", updateCount: 2 },
-                { id: "app44", cat: "运营管理", name: "销售业绩管理系统", desc: "实时汇总各业务条线保费规模，提供日/周/月度业绩快报、竞赛排名及达成看板。", updateCount: 5 }
-            ],
-            "战略企划": [
-                { id: "app45", cat: "战略企划", name: "高管驾驶舱平台", desc: "专为中高层管理者定制，一屏呈现核心保费规模、大类理赔时效、资金流向等核心宏观指标。", updateCount: 1 }
-            ],
-            "资金财务": [
-                { id: "app46", cat: "资金财务", name: "资金系统", desc: "全公司银行账户资金流水归集、大额资金调拨划转及收付结算基础台账管理。", updateCount: 0 },
-                { id: "app47", cat: "资金财务", name: "综合对账平台", desc: "实现全渠道支付流水、核心业务应收流水、银行实际到账单的三位一体每日自动清算勾稽。", updateCount: 2 },
-                { id: "app48", cat: "资金财务", name: "增值税平台", desc: "对接国家税务总局接口，实现销项发票自动开具、红字发票管控及进项发票查验认证。", updateCount: 3 },
-                { id: "app49", cat: "资金财务", name: "服务计费", desc: "针对内部共享服务、外部技术接口调用进行精准的计费测算、成本摊销内部结算核算。", updateCount: 0 },
-                { id: "app50", cat: "资金财务", name: "支付结算域", desc: "统一集成微信、支付宝、银联等主流第三方支付网关，提供高并发的首期及续期保费扣收服务。", updateCount: 4 },
-                { id: "app51", cat: "资金财务", name: "交易域", desc: "核心收付指令的并发调度中台，保障大批量理赔付费、退保给付事务的资金安全与安全校验。", updateCount: 1 },
-                { id: "app52", cat: "资金财务", name: "账务域", desc: "将承保、保全、理赔等业务交易流水实时编译为会计分录，实现凭证的自动化应收应付生成。", updateCount: 2 },
-                { id: "app53", cat: "资金财务", name: "费用中心", desc: "集中管控各分公司、各渠道的日常行政报销、展业费提拨及手续费佣金的出账风控审查。", updateCount: 0 }
-            ]
-        };
-
-        // 执行原厂自动化清洗合并，注入“全部应用清单”
-        let allApps = [];
-        Object.keys(appsData).forEach(cat => {
-            if (cat !== "全部应用清单") allApps = allApps.concat(appsData[cat]);
-        });
-        appsData["全部应用清单"] = allApps;
-
-        let currentActiveCategory = "全部应用清单";
-
-        // SOP 静态指南
-        const mockDetailContent = {
-            manualTree: [
-                { id: "m1", title: "1. 业务操作前置准备与系统鉴权要求", content: "<p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的“标准业务作业组”建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class='doc-highlight-box'>📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div>" },
-                { id: "m2", title: "2. 标准核心流程流转与智能化校验规程", content: "<p>进入应用核心作业面后，标准单据的录入与智能化流转需严格执行如下规范方案：</p><ol><li><strong>数据源识别与流水关联：</strong>点击表单左上角“单据初始化”，通过智能识别影像拆解技术录入。</li><li><strong>表单高亮约束项作答：</strong>系统将以黄色高亮框圈定“高风险必填项”。</li></ol>" },
-                { id: "m3", title: "3. 典型卡点风控拦截与线上申诉解除指引", content: "<p>在日常高频作业场景下，如果因触发底层风控指标导致表单被强拦截，请执行以下标准解锁恢复步骤：</p><ul><li><strong>步骤一：精确定位错误拦截码：</strong>拦截发生时，前台中央通知框将输出专用的异常拦截代码（例如 <code>ERR_SEC_AML_403</code>）。</li><li><strong>步骤二：补充客观补充合规证明材料：</strong>在申诉解控浮层中，上传对应证明报告。</li></ul>" }
-            ],
-            logs: [
-                { version: "V1.3.0 新一代核心系统季度分布式架构演进公告", date: "2026-06-01", items: ["<strong>【核心底层交易流重构】</strong> 将旧有的多线程阻塞队列池切换为反应式非阻塞高并发事件流框架。全链路接口平均综合耗时大幅削减 34.2%。", "<strong>【分布式强事务投产】</strong> 针对跨资金结算应收应付、理赔长周期追偿等动线，全量上线 SAGA 分布式补偿机制，确保账实完全相符。", "<strong>【体验改进】</strong> 优化了全量采集字段的焦点捕获时效。全面开放基于无鼠标化作业的键盘高频切换录入。"] },
-                { version: "V1.2.4 线上重要升级说明", date: "2026-05-15", items: ["【功能优化】大范围重构了核心业务计算逻辑，页面综合交互响应耗时缩短。", "【体验改进】优化了复杂录入表单的焦点流转规则。"] }
-            ],
-            courses: [
-                { title: "新一代核心系统：本项业务应用功能线上化实操通关指引", duration: "15分钟", type: "岗位必修" },
-                { title: "运营合规规范：基于新一代核心系统操作的风险因子防范", duration: "30分钟", type: "技能提升" }
-            ]
-        };
-
-        // 统一图标计算渲染函数（彻底修复 ReferenceError 卡死缺陷）
-        function getCategoryIconSvg(category) {
-            let color = "#3b82f6";
-            let path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />`;
-            
-            if (category === "承保业务" || category === "核保业务" || category === "履约业务") {
-                color = "#2563eb";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />`;
-            } else if (category === "资金财务") {
-                color = "#d97706";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`;
-            } else if (category === "数据中台" || category === "战略企划") {
-                color = "#6d28d9";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />`;
-            } else if (category === "销售营销") {
-                color = "#db2777";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />`;
-            }
-
-            return `<div class="app-icon-box" style="background-color: ${color}15; color: ${color};">
-                <svg xmlns="http://www.w3.org/2000/svg" style="width:20px; height:20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">${path}</svg>
-            </div>`;
-        }
-
-        // 饱和初首屏网格装载
-        window.onload = function() {
-            renderAppGrid("全部应用清单");
-        };
-
-        // 核心网格看板绘制
-        function renderAppGrid(categoryKey, filterKeyword = "") {
-            const gridContainer = document.getElementById("lobby-apps-grid");
-            if (!gridContainer) return;
-            gridContainer.innerHTML = "";
-            
-            let list = appsData[categoryKey] || [];
-            
-            if (filterKeyword !== "") {
-                const kw = filterKeyword.toLowerCase().trim();
-                list = list.filter(app => 
-                    app.name.toLowerCase().includes(kw) || 
-                    app.desc.toLowerCase().includes(kw)
-                );
-            }
-
-            if(list.length === 0) {
-                gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8; background: #fff; border-radius:8px;">暂未检索到符合条件的系统应用，请更换关键字重试。</div>`;
-                return;
-            }
-
-            list.forEach(app => {
-                const card = document.createElement("div");
-                card.className = "app-card";
-                card.onclick = () => loadAppDetail(app.id, 0);
-                
-                let badgeHtml = "";
-                if (app.updateCount > 0) {
-                    badgeHtml += `<span class="badge badge-update" style="cursor: pointer; position: absolute; top: 16px; right: 16px;" onclick="loadAppDetail('${app.id}', 1); event.stopPropagation();">近一周更新 (${app.updateCount})</span>`;
-                }
-
-                card.innerHTML = `
-                    <div>
-                        <div class="app-card-top-header">
-                            ${getCategoryIconSvg(app.cat)}
-                            <div class="app-name-wrapper">
-                                <div class="app-name">${app.name}</div>
-                            </div>
-                        </div>
-                        <div class="app-desc">${app.desc}</div>
-                        <div class="app-badges">${badgeHtml}</div>
-                    </div>
-                    <div class="app-actions">
-                        <a href="javascript:void(0)" class="btn-secondary" onclick="loadAppDetail('${app.id}', 0); event.stopPropagation();">查看详情</a>
-                        <a href="javascript:void(0)" class="btn-primary" onclick="alert('已进入系统'); event.stopPropagation();">进入系统</a>
-                    </div>
-                `;
-                gridContainer.appendChild(card);
-            });
-        }
-
-        // 侧边栏品类洗牌
-        function switchCategory(catId, element) {
-            document.querySelectorAll(".category-item").forEach(item => item.classList.remove("active"));
-            element.classList.add("active");
-            
-            const titleText = element.querySelector("span").innerText;
-            document.getElementById("currentCategoryTitle").innerText = "当前分类：" + titleText;
-            document.getElementById("globalSearch").value = "";
-            
-            currentActiveCategory = catId === 'all' ? '全部应用清单' : catId;
-            renderAppGrid(currentActiveCategory);
-        }
-
-        // 大厅核心全局搜索
-        function triggerSearch() {
-            const kw = document.getElementById("globalSearch").value;
-            document.querySelectorAll(".category-item").forEach(item => item.classList.remove("active"));
-            document.querySelector('[data-cat="all"]').classList.add("active");
-            document.getElementById("currentCategoryTitle").innerText = "搜索结果";
-            renderAppGrid("全部应用清单", kw);
-        }
-
-        document.getElementById("globalSearch").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") { triggerSearch(); }
-        });
-
-        // SPA 纯净视图切流流控控制核心
-        function loadAppDetail(appId, defaultTab = 0) {
-            let targetApp = null;
-            let foundCategory = "";
-            
-            Object.keys(appsData).forEach(cat => {
-                if (cat !== "全部应用清单") {
-                    const matched = appsData[cat].find(a => a.id === appId);
-                    if (matched) { targetApp = matched; foundCategory = cat; }
-                }
-            });
-
-            if (!targetApp) return;
-
-            // 1. 原子化类名控制：彻底隐藏大厅、显化详情面
-            // lobby-view-wrapper not present on standalone page
-            document.getElementById("detailSection").className = "detail-section block-layout"; document.getElementById("detailSection").style.display = "block";
-
-            document.getElementById("det_appName").innerText = targetApp.name;
-            document.getElementById("det_catName").innerText = foundCategory;
-            document.getElementById("det_appDesc").innerText = targetApp.desc;
-            document.getElementById("det_launchBtn").onclick = () => alert('已进入系统');
-
-            // 2. 装载操作手册左树
-            const treeContainer = document.getElementById("det_manualTree");
-            treeContainer.innerHTML = "";
-            mockDetailContent.manualTree.forEach((node, idx) => {
-                const a = document.createElement("a");
-                a.href = "javascript:void(0)";
-                a.className = `tree-node ${idx === 0 ? 'active' : ''}`;
-                a.innerText = node.title;
-                a.onclick = function() {
-                    document.querySelectorAll(".tree-node").forEach(n => n.classList.remove("active"));
-                    a.classList.add("active");
-                    document.getElementById("det_manualTitle").innerText = node.title;
-                    document.getElementById("det_manualBody").innerHTML = node.content;
-                };
-                treeContainer.appendChild(a);
-            });
-            document.getElementById("det_manualTitle").innerText = mockDetailContent.manualTree[0].title;
-            document.getElementById("det_manualBody").innerHTML = mockDetailContent.manualTree[0].content;
-
-            // 3. 装载风琴更新日志
-            const logContainer = document.getElementById("det_logTimeline");
-            logContainer.innerHTML = "";
-            mockDetailContent.logs.forEach((log, idx) => {
-                let liHtml = "";
-                log.items.forEach(li => liHtml += `<li>${li}</li>`);
-                const item = document.createElement("div");
-                item.className = `timeline-item ${idx === 0 ? 'expanded' : ''}`;
-                item.innerHTML = `
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-header" onclick="this.parentElement.classList.toggle('expanded')">
-                        <div class="timeline-title-left">
-                            <span class="timeline-version">${log.version}</span>
-                            <span class="timeline-date">${log.date}</span>
-                        </div>
-                        <div class="timeline-toggle-icon">展开/折叠</div>
-                    </div>
-                    <div class="timeline-body"><ul>${liHtml}</ul></div>
-                `;
-                logContainer.appendChild(item);
-            });
-
-            // 4. 装载相关课程
-            const courseContainer = document.getElementById("det_courseGrid");
-            courseContainer.innerHTML = "";
-            mockDetailContent.courses.forEach(c => {
-                const div = document.createElement("div");
-                div.className = "course-card";
-                div.innerHTML = `
-                    <div class="course-thumb">
-                        <span class="course-tag">${c.type}</span>
-                        <div class="course-title-text">${c.title}</div>
-                    </div>
-                    <div class="course-info">
-                        <div class="course-meta">学习时长：${c.duration}</div>
-                        <a href="javascript:void(0)" class="btn-course" onclick="alert('已开始学习')">开始研习</a>
-                    </div>
-                `;
-                courseContainer.appendChild(div);
-            });
-
-            document.getElementById("det_feedbackBanner").innerHTML = `📌 您的建议将直达聆听平台：【${foundCategory}】分类 - 【${targetApp.name}】。`;
-            switchTab(defaultTab, document.querySelectorAll(".tab-btn")[defaultTab]);
-            window.scrollTo(0, 0);
-        }
-
-        // 反向控制：安全退回大厅
-        function location.href='app_map.html' {
-            // no lobby on standalone page
-            // standalone page - return handled by button redirect
-            window.scrollTo(0, 0);
-        }
-
-        function switchTab(panelIndex, btnElement) {
-            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-            btnElement.classList.add("active");
-            document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
-            document.getElementById("panel-" + panelIndex).classList.add("active");
-        }
-
-        function selectAdviceCard(element) {
-            document.querySelectorAll('.type-card').forEach(card => card.classList.remove('active'));
-            element.classList.add('active');
-        }
-    </script>
     
-    // 从 URL 参数加载指定应用
-    (function() {
-        var params = new URLSearchParams(window.location.search);
-        var name = params.get('name');
-        if (name) {
-            loadAppDetailByName(name);
-        }
-    })();
+</div>
+<script>
+const appsData = {
+            "全部应用清单": [],
+            "承保业务": [
+                { id: "app1", cat: "承保业务", name: "车险承保平台", desc: "提供车险全流程投保、费率计算、保单生成及电子签章的一站式承保作业能力。", updateCount: 2 },
+                { id: "app2", cat: "承保业务", name: "意健险承保平台", desc: "支持个人及团体意外险、健康险的在线快速投保、契约信息自动录入与初审流水线。", updateCount: 0 },
+                { id: "app3", cat: "承保业务", name: "财责险承保平台", desc: "面向财产险、责任险等企业级业务，提供复杂的承保风险要素登记与合同排版分发。", updateCount: 4 },
+                { id: "app4", cat: "承保业务", name: "农险承保平台", desc: "针对农业保险特点设计的承保系统，全面支持地块信息关联、农户清单导入及政策性补贴核算。", updateCount: 1 },
+                { id: "app5", cat: "承保业务", name: "扫码保", desc: "极简便携式前端投保应用，支持客户或代理人通过二维码实现现场极速出单与扫码收付。", updateCount: 0 },
+                { id: "app6", cat: "承保业务", name: "政策性健康险平台", desc: "专用于大病保险、长期护理保险等政策性业务的精准承保记录、待遇资格库比对及多级结算对接。", updateCount: 3 },
+                { id: "app7", cat: "承保业务", name: "信用保证险承保平台", desc: "提供信保业务的线上投保通道，涵盖核心履约保证、借贷信用保证等风险评级出单。", updateCount: 1 },
+                { id: "app8", cat: "承保业务", name: "非融资信保平台", desc: "针对非融资类信用保证险提供的特定线上出单台账，支持企业贸易信用险规则配置。", updateCount: 0 },
+                { id: "app9", cat: "承保业务", name: "农险GIS平台", desc: "融合地理信息系统（GIS），提供农险承保地块的空间矢量化测绘、承保分布热力图及验标存证。", updateCount: 2 }
+            ],
+            "核保业务": [
+                { id: "app10", cat: "核保业务", name: "车险核保", desc: "车险规则自动化校验网格与人工核保作业台，集成车型风险库、历史理赔安全因子拦截。", updateCount: 5 },
+                { id: "app11", cat: "核保业务", name: "个非核保", desc: "个人非车险（意健险、个财险）的人工多级核保流转、风险系数裁决与批注管理工作流。", updateCount: 1 },
+                { id: "app12", cat: "核保业务", name: "团非核保", desc: "团体非车险复杂业务的专家集中式会审平台，支持大型法人方案的特殊费率特批与分层授权。", updateCount: 3 }
+            ],
+            "后台支持": [
+                { id: "app13", cat: "后台支持", name: "再保平台", desc: "提供原保险合同的自动分出评估、临时再保分保批处理、账单勾稽及结算清算台账。", updateCount: 0 }
+            ],
+            "履约业务": [
+                { id: "app14", cat: "履约业务", name: "综合履约平台", desc: "覆盖承保后合同效力追踪、重要单证合规检查及客户权益履约节点的自动化状态监控。", updateCount: 2 },
+                { id: "app15", cat: "履约业务", name: "送修平台", desc: "联动线下合作车商与维修网络，提供理赔定损后的智能送修派单、维修进度实时跟踪。", updateCount: 1 },
+                { id: "app16", cat: "履约业务", name: "AI中华（理赔）", desc: "理赔全功能智能化中台，支持理赔发票智能OCR结构化拆解、损失照片自动测损及极速小额直赔。", updateCount: 6 },
+                { id: "app17", cat: "履约业务", name: "农险履约平台", desc: "专门用于农业保险灾后查勘时效监控、无赔款优待核定及大面积灾情快速群体赔付的合规公示底座。", updateCount: 0 }
+            ],
+            "数据中台": [
+                { id: "app18", cat: "数据中台", name: "经营分析平台", desc: "数据域统一展现中心，提供多维度满期赔付率、保费达成率及续保率的时序趋势与经营分析。", updateCount: 4 },
+                { id: "app19", cat: "数据中台", name: "自助 analysis 平台", desc: "为各分公司业务骨干提供免代码拖拽式宽表自助检索、拖拽式漏斗图看板配置器。", updateCount: 1 },
+                { id: "app20", cat: "数据中台", name: "智慧决策平台", desc: "深度整合管理层决策模型，对渠道产能、机构费用效益进行智能化综合评估与风险预警。", updateCount: 0 },
+                { id: "app21", cat: "数据中台", name: "统一数据服务平台", desc: "统一对外分发标准数据API，为前端各展业应用、核心中台提供高并发的实时数据查询服务。", updateCount: 2 },
+                { id: "app22", cat: "数据中台", name: "标签运营管理平台", desc: "构建全景客群与渠道的标签画像，支持精细化客户分群、精准触达策略及活动效果追踪。", updateCount: 3 },
+                { id: "app23", cat: "数据中台", name: "数据大学", desc: "面向内部提供数据资产字典查询、数据标准规范学习以及指标口径溯源的在线知识社区。", updateCount: 0 },
+                { id: "app24", cat: "数据中台", name: "数据标准平台", desc: "统筹全集团核心业务对象的数据元 definition 、代码集规范，保障全流程底层数据口径的一致性。", updateCount: 1 },
+                { id: "app25", cat: "数据中台", name: "统一算法平台", desc: "集中托管核保风控模型、反欺诈评分、客户流失预测等各类核心AI算法的训练与部署。", updateCount: 0 },
+                { id: "app26", cat: "数据中台", name: "统一提数平台", desc: "为合规审计、专项课题提供高隔离度的历史大明细数据安全提取与脱敏下载审批通道。", updateCount: 2 }
+            ],
+            "通用板块": [
+                { id: "app27", cat: "通用板块", name: "运营支撑域", desc: "提供全系统基础工单流转、跨部门任务协同调度以及日常运营资源作业效能的量化监控。", updateCount: 1 }
+            ],
+            "销售营销": [
+                { id: "app28", cat: "销售营销", name: "智能一体化平台", desc: "集成全渠道综合展业工具，支持多险种交叉销售、一站式客户开户与全生命周期运营。", updateCount: 3 },
+                { id: "app29", cat: "销售营销", name: "智能一体化团客", desc: "聚焦团体客户、法人机构的统一关系维护，支持大客户承保方案在线定制与历史贡献度盘点。", updateCount: 0 },
+                { id: "app30", cat: "销售营销", name: "线上运营平台", desc: "承载自营App、官方小程序等线上私域流量的日常活动运营、用户活跃度及互动路径打磨。", updateCount: 4 },
+                { id: "app31", cat: "销售营销", name: "增值服务平台", desc: "VIP客户权益卡券分发、线上线下健康管理及道路救援等增值服务供应链的闭环管理。", updateCount: 1 },
+                { id: "app32", cat: "销售营销", name: "AI中华（销售）", desc: "销售侧智能化AI助手，提供精准产品话术推荐、客户购买意向雷达及智能建议书诊断。", updateCount: 2 },
+                { id: "app33", cat: "销售营销", name: "共享保", desc: "创新型场景化共创销售工具，支持跨渠道协同作业、利益共享核算及联合展业动线。", updateCount: 0 }
+            ],
+            "运营管理": [
+                { id: "app34", cat: "运营管理", name: "非车险定价决策系统", desc: "利用精算模型进行复杂非车险大单的自适应风险概率测算与最低盈亏底线控价。", updateCount: 1 },
+                { id: "app35", cat: "运营管理", name: "车险定价决策", desc: "紧跟 market 车险自主定价系数变化，提供多因子报价测算、机构费率竞争策略动态调配。", updateCount: 2 },
+                { id: "app36", cat: "运营管理", name: "标的域", desc: "统一维护全险种底层物理标的（房屋、船舶、企业资产、特定人群）的基础主数据与历史档案。", updateCount: 0 },
+                { id: "app37", cat: "运营管理", name: "风控平台", desc: "全流程内控合规审计、反洗钱涉恐风控异常拦截及高频操作行为的实时合规监控。", updateCount: 3 },
+                { id: "app38", cat: "运营管理", name: "调言平台", desc: "收集并规整全系统前线展业人员、后援作业人员的业务优化提议，提供流转评估反馈机制。", updateCount: 0 },
+                { id: "app39", cat: "运营管理", name: "回溯平台", desc: "严格匹配监管要求，对线上销售及承保关键节点、双录影像留痕进行合规回溯与真伪质检。", updateCount: 1 },
+                { id: "app40", cat: "运营管理", name: "新销管平台", desc: "全面重构的销售组织架构管理、业务员基本法利益结算及考核评级自动化计算流水线。", updateCount: 4 },
+                { id: "app41", cat: "运营管理", name: "合作伙伴平台", desc: "集中管理外部合作渠道（车商、兼代、中介机构）的准入资格、协议合同及佣金配置。", updateCount: 0 },
+                { id: "app42", cat: "运营管理", name: "单证域", desc: "全公司纸质与电子发票、保单、照会件等重要凭证单证的生命周期状态跟踪、领用与核销。", updateCount: 1 },
+                { id: "app43", cat: "运营管理", name: "产品运营平台", desc: "实现全险种产品条款、责任配置、费率表的配置化极速上架工作台，降低条款维护门槛。", updateCount: 2 },
+                { id: "app44", cat: "运营管理", name: "销售业绩管理系统", desc: "实时汇总各业务条线保费规模，提供日/周/月度业绩快报、竞赛排名及达成看板。", updateCount: 5 }
+            ],
+            "战略企划": [
+                { id: "app45", cat: "战略企划", name: "高管驾驶舱平台", desc: "专为中高层管理者定制，一屏呈现核心保费规模、大类理赔时效、资金流向等核心宏观指标。", updateCount: 1 }
+            ],
+            "资金财务": [
+                { id: "app46", cat: "资金财务", name: "资金系统", desc: "全公司银行账户资金流水归集、大额资金调拨划转及收付结算基础台账管理。", updateCount: 0 },
+                { id: "app47", cat: "资金财务", name: "综合对账平台", desc: "实现全渠道支付流水、核心业务应收流水、银行实际到账单的三位一体每日自动清算勾稽。", updateCount: 2 },
+                { id: "app48", cat: "资金财务", name: "增值税平台", desc: "对接国家税务总局接口，实现销项发票自动开具、红字发票管控及进项发票查验认证。", updateCount: 3 },
+                { id: "app49", cat: "资金财务", name: "服务计费", desc: "针对内部共享服务、外部技术接口调用进行精准的计费测算、成本摊销内部结算核算。", updateCount: 0 },
+                { id: "app50", cat: "资金财务", name: "支付结算域", desc: "统一集成微信、支付宝、银联等主流第三方支付网关，提供高并发的首期及续期保费扣收服务。", updateCount: 4 },
+                { id: "app51", cat: "资金财务", name: "交易域", desc: "核心收付指令的并发调度中台，保障大批量理赔付费、退保给付事务的资金安全与安全校验。", updateCount: 1 },
+                { id: "app52", cat: "资金财务", name: "账务域", desc: "将承保、保全、理赔等业务交易流水实时编译为会计分录，实现凭证的自动化应收应付生成。", updateCount: 2 },
+                { id: "app53", cat: "资金财务", name: "费用中心", desc: "集中管控各分公司、各渠道的日常行政报销、展业费提拨及手续费佣金的出账风控审查。", updateCount: 0 }
+            ]
+        };
 
-    // 按名称匹配应用（适配 app_map 传入的中文名称）
-    function loadAppDetailByName(appName) {
-        var targetApp = null, foundCategory = "";
-        Object.keys(appsData).forEach(function(cat) {
-            if (cat === "全部应用清单") return;
-            var apps = appsData[cat] || [];
-            apps.forEach(function(a) {
-                if (a.name === appName) {
-                    targetApp = a;
-                    foundCategory = cat;
-                }
-            });
+        // 执行原厂自动化清洗合并，注入“全部应用清单”
+        let allApps = [];
+        Object.keys(appsData).forEach(cat => {
+            if (cat !== "全部应用清单") allApps = allApps.concat(appsData[cat]);
         });
-        if (!targetApp) {
-            document.getElementById("det_appName").innerText = appName + "（信息加载中...）";
-            document.getElementById("det_appDesc").innerText = "该应用的详细信息暂未录入。";
-            return;
+        appsData["全部应用清单"] = allApps;
+
+        let currentActiveCategory = "全部应用清单";
+
+        // SOP 静态指南
+        const mockDetailContent = {
+            manualTree: [
+                { id: "m1", title: "1. 业务操作前置准备与系统鉴权要求", content: "<p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的“标准业务作业组”建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class='doc-highlight-box'>📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div>" },
+                { id: "m2", title: "2. 标准核心流程流转与智能化校验规程", content: "<p>进入应用核心作业面后，标准单据的录入与智能化流转需严格执行如下规范方案：</p><ol><li><strong>数据源识别与流水关联：</strong>点击表单左上角“单据初始化”，通过智能识别影像拆解技术录入。</li><li><strong>表单高亮约束项作答：</strong>系统将以黄色高亮框圈定“高风险必填项”。</li></ol>" },
+                { id: "m3", title: "3. 典型卡点风控拦截与线上申诉解除指引", content: "<p>在日常高频作业场景下，如果因触发底层风控指标导致表单被强拦截，请执行以下标准解锁恢复步骤：</p><ul><li><strong>步骤一：精确定位错误拦截码：</strong>拦截发生时，前台中央通知框将输出专用的异常拦截代码（例如 <code>ERR_SEC_AML_403</code>）。</li><li><strong>步骤二：补充客观补充合规证明材料：</strong>在申诉解控浮层中，上传对应证明报告。</li></ul>" }
+            ],
+            logs: [
+                { version: "V1.3.0 新一代核心系统季度分布式架构演进公告", date: "2026-06-01", items: ["<strong>【核心底层交易流重构】</strong> 将旧有的多线程阻塞队列池切换为反应式非阻塞高并发事件流框架。全链路接口平均综合耗时大幅削减 34.2%。", "<strong>【分布式强事务投产】</strong> 针对跨资金结算应收应付、理赔长周期追偿等动线，全量上线 SAGA 分布式补偿机制，确保账实完全相符。", "<strong>【体验改进】</strong> 优化了全量采集字段的焦点捕获时效。全面开放基于无鼠标化作业的键盘高频切换录入。"] },
+                { version: "V1.2.4 线上重要升级说明", date: "2026-05-15", items: ["【功能优化】大范围重构了核心业务计算逻辑，页面综合交互响应耗时缩短。", "【体验改进】优化了复杂录入表单的焦点流转规则。"] }
+            ],
+            courses: [
+                { title: "新一代核心系统：本项业务应用功能线上化实操通关指引", duration: "15分钟", type: "岗位必修" },
+                { title: "运营合规规范：基于新一代核心系统操作的风险因子防范", duration: "30分钟", type: "技能提升" }
+            ]
+       
+
+function loadAppDetail(appId, defaultTab) {
+    defaultTab = defaultTab || 0;
+    var ta = null, fc = "";
+    Object.keys(appsData).forEach(function(cat) {
+        if (cat === "全部应用清单") return;
+        var m = appsData[cat].find(function(a) { return a.id === appId; });
+        if (m) { ta = m; fc = cat; }
+    });
+    if (!ta) return;
+    var ds = document.getElementById("detailSection");
+    ds.className = "detail-section block-layout";
+    ds.style.display = "block";
+    document.getElementById("det_appName").innerText = ta.name;
+    document.getElementById("det_catName").innerText = fc;
+    document.getElementById("det_appDesc").innerText = ta.desc;
+    document.getElementById("det_launchBtn").onclick = function(){ alert("已进入系统"); };
+    var tc = document.getElementById("det_manualTree"); tc.innerHTML = "";
+    mockDetailContent.manualTree.forEach(function(node, idx) {
+        var a = document.createElement("a"); a.href = "javascript:void(0)";
+        a.className = "tree-node" + (idx === 0 ? " active" : "");
+        a.innerText = node.title;
+        a.onclick = function() {
+            document.querySelectorAll(".tree-node").forEach(function(n){ n.classList.remove("active"); });
+            a.classList.add("active");
+            document.getElementById("det_manualTitle").innerText = node.title;
+            document.getElementById("det_manualBody").innerHTML = node.content;
+        };
+        tc.appendChild(a);
+    });
+    document.getElementById("det_manualTitle").innerText = mockDetailContent.manualTree[0].title;
+    document.getElementById("det_manualBody").innerHTML = mockDetailContent.manualTree[0].content;
+    var lc = document.getElementById("det_logTimeline"); lc.innerHTML = "";
+    mockDetailContent.logs.forEach(function(log, idx) {
+        var h = ""; log.items.forEach(function(li){ h += "<li>" + li + "</li>"; });
+        var it = document.createElement("div");
+        it.className = "timeline-item" + (idx === 0 ? " expanded" : "");
+        it.innerHTML = '<div class="timeline-dot"></div><div class="timeline-header" onclick="this.parentElement.classList.toggle(\'expanded\')"><div class="timeline-title-left"><span class="timeline-version">' + log.version + '</span><span class="timeline-date">' + log.date + '</span></div><div class="timeline-toggle-icon">展开/折叠</div></div><div class="timeline-body"><ul>' + h + '</ul></div>';
+        lc.appendChild(it);
+    });
+    var cc = document.getElementById("det_courseGrid"); cc.innerHTML = "";
+    mockDetailContent.courses.forEach(function(c) {
+        var d = document.createElement("div"); d.className = "course-card";
+        d.innerHTML = '<div class="course-thumb"><span class="course-tag">' + c.type + '</span><div class="course-title-text">' + c.title + '</div></div><div class="course-info"><div class="course-meta">学习时长：' + c.duration + '</div><a href="javascript:void(0)" class="btn-course" onclick="alert(\'已开始学习\')">开始研习</a></div>';
+        cc.appendChild(d);
+    });
+    document.getElementById("det_feedbackBanner").innerHTML = '📌 您的建议将直达聆听平台：【' + fc + '】分类 - 【' + ta.name + '】。';
+    switchTab(defaultTab, document.querySelectorAll(".tab-btn")[defaultTab]);
+    window.scrollTo(0, 0);
+}
+
+function returnToLobby() { window.location.href = "app_map.html"; }
+
+function switchTab(panelIndex, btnElement) {
+            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+            btnElement.classList.add("active");
+            document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
+            document.getElementById("panel-" + panelIndex).classList.add("active");
         }
-        loadAppDetail(targetApp.id, 0);
+
+        
+function selectAdviceCard(element) {
+            document.querySelectorAll('.type-card').forEach(card => card.classList.remove('active'));
+            element.classList.add('active');
+        }
+    
+
+function loadAppDetailByName(appName) {
+    var t = null;
+    Object.keys(appsData).forEach(function(cat) {
+        if (cat === "全部应用清单") return;
+        (appsData[cat] || []).forEach(function(a) { if (a.name === appName) t = a; });
+    });
+    if (!t) {
+        document.getElementById("det_appName").innerText = appName;
+        document.getElementById("det_appDesc").innerText = "该应用的详细信息暂未录入。";
+        document.getElementById("detailSection").style.display = "block";
+        return;
     }
+    loadAppDetail(t.id, 0);
+}
+
+(function() {
+    var n = new URLSearchParams(window.location.search).get("name");
+    if (n) loadAppDetailByName(n);
+})();
 </script>
-<div style="display:none" hidden></div></body>
+</body>
 </html>
