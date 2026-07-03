@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><title>应用详情 - 启航平台</title>
-<!DOCTYPE html>
-<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>启航平台 - 新一代核心系统应用能力地图</title>
-    <style>
+<meta charset="UTF-8">
+<title>应用详情 - 启航平台</title>
+<style>
         body { font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; color: #333; line-height: 1.5; }
         header { background-color: #1e3a8a; color: #fff; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .logo { font-size: 20px; font-weight: bold; letter-spacing: 1px; }
@@ -141,7 +138,7 @@
         .hidden-layout { display: none !important; }
         .block-layout { display: block !important; }
         .flex-layout { display: flex !important; }
-    
+    </style>
 </head>
 <body>
 <header>
@@ -377,16 +374,16 @@ function loadAppDetail(appId, defaultTab) {
         var h = ""; log.items.forEach(function(li){ h += "<li>" + li + "</li>"; });
         var it = document.createElement("div");
         it.className = "timeline-item" + (idx === 0 ? " expanded" : "");
-        it.innerHTML = '<div class="timeline-dot"></div><div class="timeline-header" onclick="this.parentElement.classList.toggle(\'expanded\')"><div class="timeline-title-left"><span class="timeline-version">' + log.version + '</span><span class="timeline-date">' + log.date + '</span></div><div class="timeline-toggle-icon">展开/折叠</div></div><div class="timeline-body"><ul>' + h + '</ul></div>';
+        it.innerHTML = "<div class=\"timeline-dot\"></div><div class=\"timeline-header\" onclick=\"this.parentElement.classList.toggle('expanded')\"><div class=\"timeline-title-left\"><span class=\"timeline-version\">" + log.version + "</span><span class=\"timeline-date\">" + log.date + "</span></div><div class=\"timeline-toggle-icon\">展开/折叠</div></div><div class=\"timeline-body\"><ul>" + h + "</ul></div>";
         lc.appendChild(it);
     });
     var cc = document.getElementById("det_courseGrid"); cc.innerHTML = "";
     mockDetailContent.courses.forEach(function(c) {
         var d = document.createElement("div"); d.className = "course-card";
-        d.innerHTML = '<div class="course-thumb"><span class="course-tag">' + c.type + '</span><div class="course-title-text">' + c.title + '</div></div><div class="course-info"><div class="course-meta">学习时长：' + c.duration + '</div><a href="javascript:void(0)" class="btn-course" onclick="alert(\'已开始学习\')">开始研习</a></div>';
+        d.innerHTML = "<div class=\"course-thumb\"><span class=\"course-tag\">" + c.type + "</span><div class=\"course-title-text\">" + c.title + "</div></div><div class=\"course-info\"><div class=\"course-meta\">学习时长：" + c.duration + "</div><a href=\"javascript:void(0)\" class=\"btn-course\" onclick=\"alert('已开始学习')\">开始研习</a></div>";
         cc.appendChild(d);
     });
-    document.getElementById("det_feedbackBanner").innerHTML = '📌 您的建议将直达聆听平台：【' + fc + '】分类 - 【' + ta.name + '】。';
+    document.getElementById("det_feedbackBanner").innerHTML = "📌 您的建议将直达聆听平台：【" + fc + "】分类 - 【" + ta.name + "】。";
     switchTab(defaultTab, document.querySelectorAll(".tab-btn")[defaultTab]);
     window.scrollTo(0, 0);
 }
