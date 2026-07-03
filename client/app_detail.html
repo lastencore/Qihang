@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<html lang="zh-CN"><head>
     <meta charset="UTF-8">
     <title>应用详情 - 启航平台</title>
     <style>
@@ -49,7 +47,7 @@
         .btn-secondary:hover { background-color: #f1f5f9; color: #1e293b; }
 
         /* 应用详情面板 */
-        .detail-section { margin-bottom: 60px; scroll-margin-top: 20px; }
+        .detail-section { display: none; margin-bottom: 60px; scroll-margin-top: 20px; }
         .detail-header { background: #fff; border-radius: 8px; padding: 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; border-top: 4px solid #2563eb; }
         .detail-title-info h1 { margin: 0 0 8px 0; font-size: 22px; color: #1e293b; }
         
@@ -149,18 +147,70 @@
 
     <div class="container">
         
-        
+        <div id="lobby-view-wrapper" class="hidden-layout" style="display: none;">
+            <div class="search-wrapper">
+                <input type="text" id="globalSearch" class="search-input" placeholder="请输入应用名称、业务关键字查找核心系统功能...">
+                <button class="search-btn" onclick="triggerSearch()">搜索功能</button>
+            </div>
 
-        <div class="detail-section" id="detailSection">
+            <div class="page-title">
+                <span>新一代核心系统应用目录</span>
+                <span id="currentCategoryTitle" style="font-size: 14px; color:#64748b; font-weight: normal;">当前分类：承保业务</span>
+            </div>
+
+            <div class="main-layout">
+                <div class="sidebar" id="categorySidebar">
+                    <a href="javascript:void(0)" class="category-item" data-cat="all" onclick="switchCategory('all', this)">
+                        <span>全部应用清单</span><span class="category-count" id="count-all">53</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item active" data-cat="承保业务" onclick="switchCategory('承保业务', this)">
+                        <span>承保业务</span><span class="category-count">9</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="核保业务" onclick="switchCategory('核保业务', this)">
+                        <span>核保业务</span><span class="category-count">3</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="后台支持" onclick="switchCategory('后台支持', this)">
+                        <span>后台支持</span><span class="category-count">1</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="履约业务" onclick="switchCategory('履约业务', this)">
+                        <span>履约业务</span><span class="category-count">4</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="数据中台" onclick="switchCategory('数据中台', this)">
+                        <span>数据中台</span><span class="category-count">9</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="通用板块" onclick="switchCategory('通用板块', this)">
+                        <span>通用板块</span><span class="category-count">1</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="销售营销" onclick="switchCategory('销售营销', this)">
+                        <span>销售营销</span><span class="category-count">6</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="运营管理" onclick="switchCategory('运营管理', this)">
+                        <span>运营管理</span><span class="category-count">11</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="战略企划" onclick="switchCategory('战略企划', this)">
+                        <span>战略企划</span><span class="category-count">1</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="资金财务" onclick="switchCategory('资金财务', this)">
+                        <span>资金财务</span><span class="category-count">8</span>
+                    </a>
+                </div>
+
+                <div class="content-container">
+                    <div class="content-grid" id="lobby-apps-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section block-layout" id="detailSection" style="display: block;">
             <div class="detail-header">
                 <div class="detail-title-info">
                     <div style="margin-bottom: 12px;">
                         <button class="btn-secondary" style="padding: 5px 16px; font-size: 13px; width: auto; cursor: pointer; background: #fff;" onclick="returnToLobby()">← 返回大厅</button>
                     </div>
-                    <h1 id="det_appName">加载中...</h1>
-                    <div class="detail-app-intro-p" id="det_appDesc">暂无数据描述。</div>
+                    <h1 id="det_appName">车险承保平台</h1>
+                    <div class="detail-app-intro-p" id="det_appDesc">提供车险全流程投保、费率计算、保单生成及电子签章的一站式承保作业能力。</div>
                     <div class="detail-meta">
-                        <span>业务域分类：<strong id="det_catName">--</strong></span>
+                        <span>业务域分类：<strong id="det_catName">承保业务</strong></span>
                     </div>
                 </div>
                 <a href="javascript:void(0)" class="btn-launch" id="det_launchBtn">进入系统</a>
@@ -177,25 +227,63 @@
                 <div class="tab-content">
                     <div class="tab-panel active" id="panel-0">
                         <div class="doc-layout">
-                            <div class="doc-tree" id="det_manualTree"></div>
+                            <div class="doc-tree" id="det_manualTree"><a href="javascript:void(0)" class="tree-node active">1. 业务操作前置准备与系统鉴权要求</a><a href="javascript:void(0)" class="tree-node ">2. 标准核心流程流转与智能化校验规程</a><a href="javascript:void(0)" class="tree-node ">3. 典型卡点风控拦截与线上申诉解除指引</a></div>
                             <div class="doc-body">
-                                <h2 id="det_manualTitle">请选择左侧目录节点查看指南</h2>
-                                <div id="det_manualBody"></div>
+                                <h2 id="det_manualTitle">1. 业务操作前置准备与系统鉴权要求</h2>
+                                <div id="det_manualBody"><p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的"标准业务作业组"建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class="doc-highlight-box">📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="tab-panel" id="panel-1">
-                        <div class="timeline" id="det_logTimeline"></div>
+                        <div class="timeline" id="det_logTimeline"><div class="timeline-item expanded">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="timeline-title-left">
+                            <span class="timeline-version">V1.3.0 新一代核心系统季度分布式架构演进公告</span>
+                            <span class="timeline-date">2026-06-01</span>
+                        </div>
+                        <div class="timeline-toggle-icon">展开/折叠</div>
+                    </div>
+                    <div class="timeline-body"><ul><li><strong>【核心底层交易流重构】</strong> 将旧有的多线程阻塞队列池切换为反应式非阻塞高并发事件流框架。全链路接口平均综合耗时大幅削减 34.2%。</li><li><strong>【分布式强事务投产】</strong> 针对跨资金结算应收应付、理赔长周期追偿等动线，全量上线 SAGA 分布式补偿机制，确保账实完全相符。</li><li><strong>【体验改进】</strong> 优化了全量采集字段的焦点捕获时效。全面开放基于无鼠标化作业的键盘高频切换录入。</li></ul></div>
+                </div><div class="timeline-item ">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="timeline-title-left">
+                            <span class="timeline-version">V1.2.4 线上重要升级说明</span>
+                            <span class="timeline-date">2026-05-15</span>
+                        </div>
+                        <div class="timeline-toggle-icon">展开/折叠</div>
+                    </div>
+                    <div class="timeline-body"><ul><li>【功能优化】大范围重构了核心业务计算逻辑，页面综合交互响应耗时缩短。</li><li>【体验改进】优化了复杂录入表单的焦点流转规则。</li></ul></div>
+                </div></div>
                     </div>
 
                     <div class="tab-panel" id="panel-2">
-                        <div class="course-grid" id="det_courseGrid"></div>
+                        <div class="course-grid" id="det_courseGrid"><div class="course-card">
+                    <div class="course-thumb">
+                        <span class="course-tag">岗位必修</span>
+                        <div class="course-title-text">新一代核心系统：本项业务应用功能线上化实操通关指引</div>
+                    </div>
+                    <div class="course-info">
+                        <div class="course-meta">学习时长：15分钟</div>
+                        <a href="javascript:void(0)" class="btn-course" onclick="alert('已开始学习')">开始研习</a>
+                    </div>
+                </div><div class="course-card">
+                    <div class="course-thumb">
+                        <span class="course-tag">技能提升</span>
+                        <div class="course-title-text">运营合规规范：基于新一代核心系统操作的风险因子防范</div>
+                    </div>
+                    <div class="course-info">
+                        <div class="course-meta">学习时长：30分钟</div>
+                        <a href="javascript:void(0)" class="btn-course" onclick="alert('已开始学习')">开始研习</a>
+                    </div>
+                </div></div>
                     </div>
 
                     <div class="tab-panel" id="panel-3">
                         <div class="feedback-form">
-                            <div class="form-info-banner" id="det_feedbackBanner"></div>
+                            <div class="form-info-banner" id="det_feedbackBanner">📌 您的建议将直达聆听平台：【承保业务】分类 - 【车险承保平台】。</div>
                             
                             <div class="form-group">
                                 <label class="form-label">建议类型：</label>
@@ -316,7 +404,7 @@
             ]
         };
 
-        // 执行原厂自动化清洗合并，注入“全部应用清单”
+        // 执行原厂自动化清洗合并，注入"全部应用清单"
         let allApps = [];
         Object.keys(appsData).forEach(cat => {
             if (cat !== "全部应用清单") allApps = allApps.concat(appsData[cat]);
@@ -328,8 +416,8 @@
         // SOP 静态指南
         const mockDetailContent = {
             manualTree: [
-                { id: "m1", title: "1. 业务操作前置准备与系统鉴权要求", content: "<p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的“标准业务作业组”建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class='doc-highlight-box'>📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div>" },
-                { id: "m2", title: "2. 标准核心流程流转与智能化校验规程", content: "<p>进入应用核心作业面后，标准单据的录入与智能化流转需严格执行如下规范方案：</p><ol><li><strong>数据源识别与流水关联：</strong>点击表单左上角“单据初始化”，通过智能识别影像拆解技术录入。</li><li><strong>表单高亮约束项作答：</strong>系统将以黄色高亮框圈定“高风险必填项”。</li></ol>" },
+                { id: "m1", title: "1. 业务操作前置准备与系统鉴权要求", content: "<p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的"标准业务作业组"建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class='doc-highlight-box'>📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div>" },
+                { id: "m2", title: "2. 标准核心流程流转与智能化校验规程", content: "<p>进入应用核心作业面后，标准单据的录入与智能化流转需严格执行如下规范方案：</p><ol><li><strong>数据源识别与流水关联：</strong>点击表单左上角"单据初始化"，通过智能识别影像拆解技术录入。</li><li><strong>表单高亮约束项作答：</strong>系统将以黄色高亮框圈定"高风险必填项"。</li></ol>" },
                 { id: "m3", title: "3. 典型卡点风控拦截与线上申诉解除指引", content: "<p>在日常高频作业场景下，如果因触发底层风控指标导致表单被强拦截，请执行以下标准解锁恢复步骤：</p><ul><li><strong>步骤一：精确定位错误拦截码：</strong>拦截发生时，前台中央通知框将输出专用的异常拦截代码（例如 <code>ERR_SEC_AML_403</code>）。</li><li><strong>步骤二：补充客观补充合规证明材料：</strong>在申诉解控浮层中，上传对应证明报告。</li></ul>" }
             ],
             logs: [
@@ -366,8 +454,11 @@
             </div>`;
         }
 
-        // 饱和初首屏网格装载
+        // 详情页模式：直接显示详情，从 URL 加载应用
         window.onload = function() {
+            document.getElementById("lobby-view-wrapper").style.display = "none";
+            document.getElementById("detailSection").className = "detail-section";
+            document.getElementById("detailSection").style.display = "block";
             var params = new URLSearchParams(window.location.search);
             var name = params.get("name");
             if (name) {
@@ -376,7 +467,12 @@
                     if (cat === "全部应用清单") return;
                     (appsData[cat] || []).forEach(function(a) { if (a.name === name) target = a; });
                 });
-                if (target) { loadAppDetail(target.id, 0); }
+                if (target) {
+                    loadAppDetail(target.id, 0);
+                } else {
+                    document.getElementById("det_appName").innerText = name;
+                    document.getElementById("det_appDesc").innerText = "该应用的详细信息暂未录入。";
+                }
             }
         };
 
@@ -453,8 +549,7 @@
             renderAppGrid("全部应用清单", kw);
         }
 
-        var gs = document.getElementById("globalSearch");
-        if (gs) gs.addEventListener("keypress", function(e) {
+        document.getElementById("globalSearch").addEventListener("keypress", function(e) {
             if (e.key === "Enter") { triggerSearch(); }
         });
 
@@ -472,6 +567,8 @@
 
             if (!targetApp) return;
 
+            // 1. 原子化类名控制：彻底隐藏大厅、显化详情面
+            document.getElementById("lobby-view-wrapper").className = "hidden-layout";
             document.getElementById("detailSection").className = "detail-section block-layout";
 
             document.getElementById("det_appName").innerText = targetApp.name;
@@ -561,5 +658,5 @@
             element.classList.add('active');
         }
     </script>
-    </body>
-</html>
+    
+</body></html>
