@@ -230,7 +230,7 @@
                             <div class="doc-tree" id="det_manualTree"><a href="javascript:void(0)" class="tree-node active">1. 业务操作前置准备与系统鉴权要求</a><a href="javascript:void(0)" class="tree-node ">2. 标准核心流程流转与智能化校验规程</a><a href="javascript:void(0)" class="tree-node ">3. 典型卡点风控拦截与线上申诉解除指引</a></div>
                             <div class="doc-body">
                                 <h2 id="det_manualTitle">1. 业务操作前置准备与系统鉴权要求</h2>
-                                <div id="det_manualBody"><p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的"标准业务作业组"建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class="doc-highlight-box">📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div></div>
+                                <div id="det_manualBody"><p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的“标准业务作业组”建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class="doc-highlight-box">📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div></div>
                             </div>
                         </div>
                     </div>
@@ -416,8 +416,8 @@
         // SOP 静态指南
         const mockDetailContent = {
             manualTree: [
-                { id: "m1", title: "1. 业务操作前置准备与系统鉴权要求", content: "<p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的"标准业务作业组"建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class='doc-highlight-box'>📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div>" },
-                { id: "m2", title: "2. 标准核心流程流转与智能化校验规程", content: "<p>进入应用核心作业面后，标准单据的录入与智能化流转需严格执行如下规范方案：</p><ol><li><strong>数据源识别与流水关联：</strong>点击表单左上角"单据初始化"，通过智能识别影像拆解技术录入。</li><li><strong>表单高亮约束项作答：</strong>系统将以黄色高亮框圈定"高风险必填项"。</li></ol>" },
+                { id: "m1", title: "1. 业务操作前置准备与系统鉴权要求", content: "<p>在使用本应用办理线上化作业前，请确保您的岗位角色及机构代码已在基础平台完成正确配置，且已被授予相应条线的作业权限。</p><ul><li><strong>IAM岗位角色绑定：</strong>操作员号必须与所在机构对应的“标准业务作业组”建立全映射关联。</li><li><strong>多因子身份安全校验：</strong>凡涉及跨核心资金结算或核保费率特批的指令，系统在提交时将自动拦截并唤起双因子动态口令识别。</li></ul><div class='doc-highlight-box'>📌 <strong>安全合规红线：</strong>禁止非业务场景、非授权范畴的批量单据信息检索。系统后台审计模块已开启100%操作留痕机制。</div>" },
+                { id: "m2", title: "2. 标准核心流程流转与智能化校验规程", content: "<p>进入应用核心作业面后，标准单据的录入与智能化流转需严格执行如下规范方案：</p><ol><li><strong>数据源识别与流水关联：</strong>点击表单左上角“单据初始化”，通过智能识别影像拆解技术录入。</li><li><strong>表单高亮约束项作答：</strong>系统将以黄色高亮框圈定“高风险必填项”。</li></ol>" },
                 { id: "m3", title: "3. 典型卡点风控拦截与线上申诉解除指引", content: "<p>在日常高频作业场景下，如果因触发底层风控指标导致表单被强拦截，请执行以下标准解锁恢复步骤：</p><ul><li><strong>步骤一：精确定位错误拦截码：</strong>拦截发生时，前台中央通知框将输出专用的异常拦截代码（例如 <code>ERR_SEC_AML_403</code>）。</li><li><strong>步骤二：补充客观补充合规证明材料：</strong>在申诉解控浮层中，上传对应证明报告。</li></ul>" }
             ],
             logs: [
