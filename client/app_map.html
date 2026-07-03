@@ -576,17 +576,18 @@
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+(function(){
     document.body.addEventListener("click", function(e) {
         var card = e.target.closest(".flat-card");
         if (card) {
             var name = card.getAttribute("data-name");
             if (name) {
                 window.location.href = "app_detail.html?name=" + encodeURIComponent(name);
+                return;
             }
         }
     });
-});
+})();
 </script>
 </body>
 </html>
