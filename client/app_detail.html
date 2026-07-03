@@ -453,7 +453,8 @@
             renderAppGrid("全部应用清单", kw);
         }
 
-        document.getElementById("globalSearch").addEventListener("keypress", function(e) {
+        var gs = document.getElementById("globalSearch");
+        if (gs) gs.addEventListener("keypress", function(e) {
             if (e.key === "Enter") { triggerSearch(); }
         });
 
