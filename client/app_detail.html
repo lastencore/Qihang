@@ -465,8 +465,8 @@
             if (!targetApp) return;
 
             // 1. 原子化类名控制：彻底隐藏大厅、显化详情面
-            document.getElementById("lobby-view-wrapper").className = "hidden-layout";
-            document.getElementById("detailSection").className = "detail-section block-layout";
+            // lobby-view-wrapper not present on standalone page
+            document.getElementById("detailSection").className = "detail-section block-layout"; document.getElementById("detailSection").style.display = "block";
 
             document.getElementById("det_appName").innerText = targetApp.name;
             document.getElementById("det_catName").innerText = foundCategory;
@@ -540,8 +540,8 @@
 
         // 反向控制：安全退回大厅
         function location.href='app_map.html' {
-            document.getElementById("lobby-view-wrapper").className = "block-layout";
-            document.getElementById("detailSection").className = "detail-section hidden-layout";
+            // no lobby on standalone page
+            // standalone page - return handled by button redirect
             window.scrollTo(0, 0);
         }
 
@@ -784,8 +784,8 @@
             if (!targetApp) return;
 
             // 1. 原子化类名控制：彻底隐藏大厅、显化详情面
-            document.getElementById("lobby-view-wrapper").className = "hidden-layout";
-            document.getElementById("detailSection").className = "detail-section block-layout";
+            // lobby-view-wrapper not present on standalone page
+            document.getElementById("detailSection").className = "detail-section block-layout"; document.getElementById("detailSection").style.display = "block";
 
             document.getElementById("det_appName").innerText = targetApp.name;
             document.getElementById("det_catName").innerText = foundCategory;
@@ -859,8 +859,8 @@
 
         // 反向控制：安全退回大厅
         function location.href='app_map.html' {
-            document.getElementById("lobby-view-wrapper").className = "block-layout";
-            document.getElementById("detailSection").className = "detail-section hidden-layout";
+            // no lobby on standalone page
+            // standalone page - return handled by button redirect
             window.scrollTo(0, 0);
         }
 

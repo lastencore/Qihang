@@ -505,12 +505,15 @@
                         if(targetId) {
                             const targetEl = document.getElementById(targetId);
                             targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            
-                            // 附加微光高亮闪烁提示
                             targetEl.classList.add('flash-target');
                             setTimeout(() => targetEl.classList.remove('flash-target'), 1500);
                         }
                     };
+                    // 点击跳转到应用详情页
+                    li.onclick = function(e) {
+                        window.location.href = "app_detail.html?name=" + encodeURIComponent(originalName);
+                    };
+                    li.style.cursor = 'pointer';
                     resultsList.appendChild(li);
                 } else {
                     card.classList.remove('filtered-hit');
