@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-02
+> 最后更新：2026-07-03
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -64,6 +64,11 @@
 - [x] **`update_log_modify.html` 非必选逻辑**：未勾选"发布类更新"时，发布窗口和关联PMS的红色必选星号隐藏（非必选）
 - [x] **`update_log_modify.html` 标签改名+布局重排**："应用名称"→"所属应用"，"发布日期"→"发布时间"；标题+所属应用同行（col-12+col-12），发布类更新+发布窗口+关联PMS第二行，发布时间第三行
 - [x] **`update_log_modify.html` 发布时间联动**：勾选"发布类更新"时发布时间自动填入次日12:00且不可编辑，提示文案变为"将于发布日次日中午12:00自动发布"（红色）；未勾选时恢复可编辑，提示文案恢复默认
+- [x] **`app_management.html` PMS系统属主字段**：新增应用弹窗增加"PMS系统属主"必填字段，tag 选择器交互（点击候添加/×移除），提供"全部填入""全部清空"便捷操作，候选池带"可选属主"文案提示和浅色背景；关联PMS系统改用 app_map 风格下拉（按钮触发 + 搜索面板）
+- [x] **`app_management.html` 弹窗栅格规范化**：label `ant-col-4` + control `ant-col-20` 填满 24 栅格，表单项 `margin-bottom: 20px` 呼吸留白
+- [x] **`update_log_modify.html` 文案统一**："发布窗口"→"PMS发布窗口"，"发布时间"→"日志对外发布时间"，所有控件 placeholder 统一为"请输入"/"请选择"
+- [x] **`update_log_modify.html` 发布类更新行内对齐**：PMS发布窗口和关联PMS系统 label 固定宽度 `white-space: nowrap` + 控件 `flex: 1` 同行排布，`align-items: center` 垂直居中
+- [x] **progress-doc skill v1.1.0**：新增铁律——更新时间必须取系统时间（`date +%Y-%m-%d`），禁止推断；打包为 progress-doc-skill.zip 上传 tdrive
 
 ### 🔄 进行中
 
