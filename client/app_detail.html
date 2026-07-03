@@ -149,7 +149,9 @@
 
     <div class="container">
         
-        <div class="detail-section" style="display:block;" id="detailSection">
+        
+
+        <div class="detail-section hidden-layout" id="detailSection">
             <div class="detail-header">
                 <div class="detail-title-info">
                     <div style="margin-bottom: 12px;">
@@ -364,9 +366,8 @@
             </div>`;
         }
 
-        // 详情页模式：直接显示详情，从 URL 加载应用
+        // 饱和初首屏网格装载
         window.onload = function() {
-            document.getElementById("detailSection").style.display = "block";
             var params = new URLSearchParams(window.location.search);
             var name = params.get("name");
             if (name) {
@@ -375,14 +376,9 @@
                     if (cat === "全部应用清单") return;
                     (appsData[cat] || []).forEach(function(a) { if (a.name === name) target = a; });
                 });
-                if (target) {
-                    loadAppDetail(target.id, 0);
-                } else {
-                    document.getElementById("det_appName").innerText = name;
-                    document.getElementById("det_appDesc").innerText = "该应用的详细信息暂未录入。";
-                }
+                if (target) { loadAppDetail(target.id, 0); }
             }
-        }
+        };
 
         // 核心网格看板绘制
         function renderAppGrid(categoryKey, filterKeyword = "") {
@@ -475,7 +471,6 @@
 
             if (!targetApp) return;
 
-            // 显化详情面
             document.getElementById("detailSection").className = "detail-section block-layout";
 
             document.getElementById("det_appName").innerText = targetApp.name;
