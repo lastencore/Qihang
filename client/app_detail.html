@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>应用详情 - 启航平台</title>
-<style>
+    <meta charset="UTF-8">
+    <title>应用详情 - 启航平台</title>
+    <style>
         body { font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; color: #333; line-height: 1.5; }
         header { background-color: #1e3a8a; color: #fff; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .logo { font-size: 20px; font-weight: bold; letter-spacing: 1px; }
@@ -141,12 +141,69 @@
     </style>
 </head>
 <body>
-<header>
+
+    <header>
         <div class="logo">启航平台 - 新一代核心系统应用能力地图</div>
         <div class="user-info">当前登录：系统操作员</div>
     </header>
-<div class="container">
-<div class="detail-section" style="display:block;" id="detailSection">
+
+    <div class="container">
+        
+        <div id="lobby-view-wrapper" class="block-layout">
+            <div class="search-wrapper">
+                <input type="text" id="globalSearch" class="search-input" placeholder="请输入应用名称、业务关键字查找核心系统功能...">
+                <button class="search-btn" onclick="triggerSearch()">搜索功能</button>
+            </div>
+
+            <div class="page-title">
+                <span>新一代核心系统应用目录</span>
+                <span id="currentCategoryTitle" style="font-size: 14px; color:#64748b; font-weight: normal;">当前分类：全部应用清单</span>
+            </div>
+
+            <div class="main-layout">
+                <div class="sidebar" id="categorySidebar">
+                    <a href="javascript:void(0)" class="category-item active" data-cat="all" onclick="switchCategory('all', this)">
+                        <span>全部应用清单</span><span class="category-count" id="count-all">53</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="承保业务" onclick="switchCategory('承保业务', this)">
+                        <span>承保业务</span><span class="category-count">9</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="核保业务" onclick="switchCategory('核保业务', this)">
+                        <span>核保业务</span><span class="category-count">3</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="后台支持" onclick="switchCategory('后台支持', this)">
+                        <span>后台支持</span><span class="category-count">1</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="履约业务" onclick="switchCategory('履约业务', this)">
+                        <span>履约业务</span><span class="category-count">4</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="数据中台" onclick="switchCategory('数据中台', this)">
+                        <span>数据中台</span><span class="category-count">9</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="通用板块" onclick="switchCategory('通用板块', this)">
+                        <span>通用板块</span><span class="category-count">1</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="销售营销" onclick="switchCategory('销售营销', this)">
+                        <span>销售营销</span><span class="category-count">6</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="运营管理" onclick="switchCategory('运营管理', this)">
+                        <span>运营管理</span><span class="category-count">11</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="战略企划" onclick="switchCategory('战略企划', this)">
+                        <span>战略企划</span><span class="category-count">1</span>
+                    </a>
+                    <a href="javascript:void(0)" class="category-item" data-cat="资金财务" onclick="switchCategory('资金财务', this)">
+                        <span>资金财务</span><span class="category-count">8</span>
+                    </a>
+                </div>
+
+                <div class="content-container">
+                    <div class="content-grid" id="lobby-apps-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section hidden-layout" id="detailSection">
             <div class="detail-header">
                 <div class="detail-title-info">
                     <div style="margin-bottom: 12px;">
@@ -232,10 +289,9 @@
         </div>
     </div>
 
-    
-</div>
-<script>
-const appsData = {
+    <script>
+        // 53个全量用户视角新一代系统应用静态字典数据
+        const appsData = {
             "全部应用清单": [],
             "承保业务": [
                 { id: "app1", cat: "承保业务", name: "车险承保平台", desc: "提供车险全流程投保、费率计算、保单生成及电子签章的一站式承保作业能力。", updateCount: 2 },
@@ -336,93 +392,235 @@ const appsData = {
                 { title: "新一代核心系统：本项业务应用功能线上化实操通关指引", duration: "15分钟", type: "岗位必修" },
                 { title: "运营合规规范：基于新一代核心系统操作的风险因子防范", duration: "30分钟", type: "技能提升" }
             ]
-       
-
-function loadAppDetail(appId, defaultTab) {
-    defaultTab = defaultTab || 0;
-    var ta = null, fc = "";
-    Object.keys(appsData).forEach(function(cat) {
-        if (cat === "全部应用清单") return;
-        var m = appsData[cat].find(function(a) { return a.id === appId; });
-        if (m) { ta = m; fc = cat; }
-    });
-    if (!ta) return;
-    var ds = document.getElementById("detailSection");
-    ds.className = "detail-section block-layout";
-    ds.style.display = "block";
-    document.getElementById("det_appName").innerText = ta.name;
-    document.getElementById("det_catName").innerText = fc;
-    document.getElementById("det_appDesc").innerText = ta.desc;
-    document.getElementById("det_launchBtn").onclick = function(){ alert("已进入系统"); };
-    var tc = document.getElementById("det_manualTree"); tc.innerHTML = "";
-    mockDetailContent.manualTree.forEach(function(node, idx) {
-        var a = document.createElement("a"); a.href = "javascript:void(0)";
-        a.className = "tree-node" + (idx === 0 ? " active" : "");
-        a.innerText = node.title;
-        a.onclick = function() {
-            document.querySelectorAll(".tree-node").forEach(function(n){ n.classList.remove("active"); });
-            a.classList.add("active");
-            document.getElementById("det_manualTitle").innerText = node.title;
-            document.getElementById("det_manualBody").innerHTML = node.content;
         };
-        tc.appendChild(a);
-    });
-    document.getElementById("det_manualTitle").innerText = mockDetailContent.manualTree[0].title;
-    document.getElementById("det_manualBody").innerHTML = mockDetailContent.manualTree[0].content;
-    var lc = document.getElementById("det_logTimeline"); lc.innerHTML = "";
-    mockDetailContent.logs.forEach(function(log, idx) {
-        var h = ""; log.items.forEach(function(li){ h += "<li>" + li + "</li>"; });
-        var it = document.createElement("div");
-        it.className = "timeline-item" + (idx === 0 ? " expanded" : "");
-        it.innerHTML = "<div class=\"timeline-dot\"></div><div class=\"timeline-header\" onclick=\"this.parentElement.classList.toggle('expanded')\"><div class=\"timeline-title-left\"><span class=\"timeline-version\">" + log.version + "</span><span class=\"timeline-date\">" + log.date + "</span></div><div class=\"timeline-toggle-icon\">展开/折叠</div></div><div class=\"timeline-body\"><ul>" + h + "</ul></div>";
-        lc.appendChild(it);
-    });
-    var cc = document.getElementById("det_courseGrid"); cc.innerHTML = "";
-    mockDetailContent.courses.forEach(function(c) {
-        var d = document.createElement("div"); d.className = "course-card";
-        d.innerHTML = "<div class=\"course-thumb\"><span class=\"course-tag\">" + c.type + "</span><div class=\"course-title-text\">" + c.title + "</div></div><div class=\"course-info\"><div class=\"course-meta\">学习时长：" + c.duration + "</div><a href=\"javascript:void(0)\" class=\"btn-course\" onclick=\"alert('已开始学习')\">开始研习</a></div>";
-        cc.appendChild(d);
-    });
-    document.getElementById("det_feedbackBanner").innerHTML = "📌 您的建议将直达聆听平台：【" + fc + "】分类 - 【" + ta.name + "】。";
-    switchTab(defaultTab, document.querySelectorAll(".tab-btn")[defaultTab]);
-    window.scrollTo(0, 0);
-}
 
-function returnToLobby() { window.location.href = "app_map.html"; }
+        // 统一图标计算渲染函数（彻底修复 ReferenceError 卡死缺陷）
+        function getCategoryIconSvg(category) {
+            let color = "#3b82f6";
+            let path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />`;
+            
+            if (category === "承保业务" || category === "核保业务" || category === "履约业务") {
+                color = "#2563eb";
+                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />`;
+            } else if (category === "资金财务") {
+                color = "#d97706";
+                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`;
+            } else if (category === "数据中台" || category === "战略企划") {
+                color = "#6d28d9";
+                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />`;
+            } else if (category === "销售营销") {
+                color = "#db2777";
+                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />`;
+            }
 
-function switchTab(panelIndex, btnElement) {
+            return `<div class="app-icon-box" style="background-color: ${color}15; color: ${color};">
+                <svg xmlns="http://www.w3.org/2000/svg" style="width:20px; height:20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">${path}</svg>
+            </div>`;
+        }
+
+        // 详情页模式：直接显示详情，从 URL 加载应用
+        window.onload = function() {
+            document.getElementById("lobby-view-wrapper").style.display = "none";
+            document.getElementById("detailSection").className = "detail-section";
+            document.getElementById("detailSection").style.display = "block";
+            var params = new URLSearchParams(window.location.search);
+            var name = params.get("name");
+            if (name) {
+                var target = null;
+                Object.keys(appsData).forEach(function(cat) {
+                    if (cat === "全部应用清单") return;
+                    (appsData[cat] || []).forEach(function(a) { if (a.name === name) target = a; });
+                });
+                if (target) {
+                    loadAppDetail(target.id, 0);
+                } else {
+                    document.getElementById("det_appName").innerText = name;
+                    document.getElementById("det_appDesc").innerText = "该应用的详细信息暂未录入。";
+                }
+            }
+        };
+
+        // 核心网格看板绘制
+        function renderAppGrid(categoryKey, filterKeyword = "") {
+            const gridContainer = document.getElementById("lobby-apps-grid");
+            if (!gridContainer) return;
+            gridContainer.innerHTML = "";
+            
+            let list = appsData[categoryKey] || [];
+            
+            if (filterKeyword !== "") {
+                const kw = filterKeyword.toLowerCase().trim();
+                list = list.filter(app => 
+                    app.name.toLowerCase().includes(kw) || 
+                    app.desc.toLowerCase().includes(kw)
+                );
+            }
+
+            if(list.length === 0) {
+                gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8; background: #fff; border-radius:8px;">暂未检索到符合条件的系统应用，请更换关键字重试。</div>`;
+                return;
+            }
+
+            list.forEach(app => {
+                const card = document.createElement("div");
+                card.className = "app-card";
+                card.onclick = () => loadAppDetail(app.id, 0);
+                
+                let badgeHtml = "";
+                if (app.updateCount > 0) {
+                    badgeHtml += `<span class="badge badge-update" style="cursor: pointer; position: absolute; top: 16px; right: 16px;" onclick="loadAppDetail('${app.id}', 1); event.stopPropagation();">近一周更新 (${app.updateCount})</span>`;
+                }
+
+                card.innerHTML = `
+                    <div>
+                        <div class="app-card-top-header">
+                            ${getCategoryIconSvg(app.cat)}
+                            <div class="app-name-wrapper">
+                                <div class="app-name">${app.name}</div>
+                            </div>
+                        </div>
+                        <div class="app-desc">${app.desc}</div>
+                        <div class="app-badges">${badgeHtml}</div>
+                    </div>
+                    <div class="app-actions">
+                        <a href="javascript:void(0)" class="btn-secondary" onclick="loadAppDetail('${app.id}', 0); event.stopPropagation();">查看详情</a>
+                        <a href="javascript:void(0)" class="btn-primary" onclick="alert('已进入系统'); event.stopPropagation();">进入系统</a>
+                    </div>
+                `;
+                gridContainer.appendChild(card);
+            });
+        }
+
+        // 侧边栏品类洗牌
+        function switchCategory(catId, element) {
+            document.querySelectorAll(".category-item").forEach(item => item.classList.remove("active"));
+            element.classList.add("active");
+            
+            const titleText = element.querySelector("span").innerText;
+            document.getElementById("currentCategoryTitle").innerText = "当前分类：" + titleText;
+            document.getElementById("globalSearch").value = "";
+            
+            currentActiveCategory = catId === 'all' ? '全部应用清单' : catId;
+            renderAppGrid(currentActiveCategory);
+        }
+
+        // 大厅核心全局搜索
+        function triggerSearch() {
+            const kw = document.getElementById("globalSearch").value;
+            document.querySelectorAll(".category-item").forEach(item => item.classList.remove("active"));
+            document.querySelector('[data-cat="all"]').classList.add("active");
+            document.getElementById("currentCategoryTitle").innerText = "搜索结果";
+            renderAppGrid("全部应用清单", kw);
+        }
+
+        document.getElementById("globalSearch").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") { triggerSearch(); }
+        });
+
+        // SPA 纯净视图切流流控控制核心
+        function loadAppDetail(appId, defaultTab = 0) {
+            let targetApp = null;
+            let foundCategory = "";
+            
+            Object.keys(appsData).forEach(cat => {
+                if (cat !== "全部应用清单") {
+                    const matched = appsData[cat].find(a => a.id === appId);
+                    if (matched) { targetApp = matched; foundCategory = cat; }
+                }
+            });
+
+            if (!targetApp) return;
+
+            // 1. 原子化类名控制：彻底隐藏大厅、显化详情面
+            document.getElementById("lobby-view-wrapper").className = "hidden-layout";
+            document.getElementById("detailSection").className = "detail-section block-layout";
+
+            document.getElementById("det_appName").innerText = targetApp.name;
+            document.getElementById("det_catName").innerText = foundCategory;
+            document.getElementById("det_appDesc").innerText = targetApp.desc;
+            document.getElementById("det_launchBtn").onclick = () => alert('已进入系统');
+
+            // 2. 装载操作手册左树
+            const treeContainer = document.getElementById("det_manualTree");
+            treeContainer.innerHTML = "";
+            mockDetailContent.manualTree.forEach((node, idx) => {
+                const a = document.createElement("a");
+                a.href = "javascript:void(0)";
+                a.className = `tree-node ${idx === 0 ? 'active' : ''}`;
+                a.innerText = node.title;
+                a.onclick = function() {
+                    document.querySelectorAll(".tree-node").forEach(n => n.classList.remove("active"));
+                    a.classList.add("active");
+                    document.getElementById("det_manualTitle").innerText = node.title;
+                    document.getElementById("det_manualBody").innerHTML = node.content;
+                };
+                treeContainer.appendChild(a);
+            });
+            document.getElementById("det_manualTitle").innerText = mockDetailContent.manualTree[0].title;
+            document.getElementById("det_manualBody").innerHTML = mockDetailContent.manualTree[0].content;
+
+            // 3. 装载风琴更新日志
+            const logContainer = document.getElementById("det_logTimeline");
+            logContainer.innerHTML = "";
+            mockDetailContent.logs.forEach((log, idx) => {
+                let liHtml = "";
+                log.items.forEach(li => liHtml += `<li>${li}</li>`);
+                const item = document.createElement("div");
+                item.className = `timeline-item ${idx === 0 ? 'expanded' : ''}`;
+                item.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="timeline-title-left">
+                            <span class="timeline-version">${log.version}</span>
+                            <span class="timeline-date">${log.date}</span>
+                        </div>
+                        <div class="timeline-toggle-icon">展开/折叠</div>
+                    </div>
+                    <div class="timeline-body"><ul>${liHtml}</ul></div>
+                `;
+                logContainer.appendChild(item);
+            });
+
+            // 4. 装载相关课程
+            const courseContainer = document.getElementById("det_courseGrid");
+            courseContainer.innerHTML = "";
+            mockDetailContent.courses.forEach(c => {
+                const div = document.createElement("div");
+                div.className = "course-card";
+                div.innerHTML = `
+                    <div class="course-thumb">
+                        <span class="course-tag">${c.type}</span>
+                        <div class="course-title-text">${c.title}</div>
+                    </div>
+                    <div class="course-info">
+                        <div class="course-meta">学习时长：${c.duration}</div>
+                        <a href="javascript:void(0)" class="btn-course" onclick="alert('已开始学习')">开始研习</a>
+                    </div>
+                `;
+                courseContainer.appendChild(div);
+            });
+
+            document.getElementById("det_feedbackBanner").innerHTML = `📌 您的建议将直达聆听平台：【${foundCategory}】分类 - 【${targetApp.name}】。`;
+            switchTab(defaultTab, document.querySelectorAll(".tab-btn")[defaultTab]);
+            window.scrollTo(0, 0);
+        }
+
+        // 反向控制：安全退回大厅
+        function returnToLobby() {
+            window.location.href = "app_map.html";
+        }
+
+        function switchTab(panelIndex, btnElement) {
             document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
             btnElement.classList.add("active");
             document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
             document.getElementById("panel-" + panelIndex).classList.add("active");
         }
 
-        
-function selectAdviceCard(element) {
+        function selectAdviceCard(element) {
             document.querySelectorAll('.type-card').forEach(card => card.classList.remove('active'));
             element.classList.add('active');
         }
-    
-
-function loadAppDetailByName(appName) {
-    var t = null;
-    Object.keys(appsData).forEach(function(cat) {
-        if (cat === "全部应用清单") return;
-        (appsData[cat] || []).forEach(function(a) { if (a.name === appName) t = a; });
-    });
-    if (!t) {
-        document.getElementById("det_appName").innerText = appName;
-        document.getElementById("det_appDesc").innerText = "该应用的详细信息暂未录入。";
-        document.getElementById("detailSection").style.display = "block";
-        return;
-    }
-    loadAppDetail(t.id, 0);
-}
-
-(function() {
-    var n = new URLSearchParams(window.location.search).get("name");
-    if (n) loadAppDetailByName(n);
-})();
-</script>
-</body>
+    </script>
+    </body>
 </html>
