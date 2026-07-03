@@ -420,9 +420,8 @@
 
         // 详情页模式：直接显示详情，从 URL 加载应用
         window.onload = function() {
-            document.getElementById("lobby-view-wrapper").style.display = "none";
-            document.getElementById("detailSection").className = "detail-section";
-            document.getElementById("detailSection").style.display = "block";
+            document.getElementById("lobby-view-wrapper").className = "hidden-layout";
+            document.getElementById("detailSection").className = "detail-section block-layout";
             var params = new URLSearchParams(window.location.search);
             var name = params.get("name");
             if (name) {
