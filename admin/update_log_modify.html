@@ -68,7 +68,7 @@
                    <div class="ant-form-item-control-input">
                     <div class="ant-form-item-control-input-content">
                      <span class="ant-input-affix-wrapper">
-                      <input class="ant-input" id="title" maxlength="50" placeholder="请输入投产公告标题" type="text" value="">
+                      <input class="ant-input" id="title" maxlength="50" placeholder="请输入" type="text" value="">
                       <span class="ant-input-suffix"><span class="ant-input-show-count-suffix">0 / 50</span></span>
                      </span>
                     </div>
@@ -90,7 +90,7 @@
                      <div class="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow" style="width: 100%;">
                       <div class="ant-select-selector" style="border: 1px solid #dcdfe6; border-radius: 4px; height: 32px; padding: 0 11px; background: #fff; display: flex; align-items: center;">
                        <select class="ant-select-selection-search-input" id="appId" style="width: 100%; border: none; background: transparent; font-size: 14px; outline: none; cursor: pointer; color: rgba(0,0,0,0.88);">
-                        <option value="">请选择系统范围</option>
+                        <option value="">请选择</option>
                         <option value="CB001">车险承保平台 [CB001]</option>
                         <option value="CB002">意健险承保平台 [CB002]</option>
                         <option value="CB003">财责险承保平台 [CB003]</option>
@@ -120,17 +120,17 @@
                    </label>
                   </div>
                  </div>
-                 <div style="flex: 1;">
+                 <div style="flex: 1; min-width: 0;">
                   <div class="ant-form-item" style="margin-bottom: 0;">
-                   <div class="ant-row ant-form-item-row">
-                    <div class="ant-col ant-form-item-label">
-                     <label class="ant-form-item-required" title="发布窗口">发布窗口</label>
+                   <div class="ant-row ant-form-item-row" style="flex-flow: row nowrap; align-items: center; gap: 8px;">
+                    <div class="ant-col ant-form-item-label" style="flex: 0 0 auto; white-space: nowrap; padding: 0;">
+                     <label class="ant-form-item-required" title="PMS发布窗口">PMS发布窗口</label>
                     </div>
-                    <div class="ant-col ant-form-item-control">
+                    <div class="ant-col ant-form-item-control" style="flex: 1;">
                      <div class="ant-form-item-control-input">
                       <div class="ant-form-item-control-input-content">
-                       <select id="releaseWindow" style="width: 100%; border: 1px solid rgb(220, 223, 230); border-radius: 4px; height: 32px; padding: 0px 11px; font-size: 14px; background: rgb(255, 255, 255); cursor: pointer; color: rgba(0, 0, 0, 0.88);">
-                        <option value="">请选择发布窗口</option>
+                       <select id="releaseWindow" style="width: 100%; border: 1px solid rgb(220, 223, 230); border-radius: 4px; height: 32px; padding: 0px 6px; font-size: 13px; background: rgb(255, 255, 255); cursor: pointer; color: rgba(0, 0, 0, 0.88);">
+                        <option value="">请选择</option>
                         <option value="2026-07-15 项目发布">2026-07-15 项目发布</option>
                         <option value="2026-07-10 常规发布">2026-07-10 常规发布</option>
                         <option value="2026-07-08 常规发布">2026-07-08 常规发布</option>
@@ -146,16 +146,16 @@
                    </div>
                   </div>
                  </div>
-                 <div style="flex: 1;">
+                 <div style="flex: 1; min-width: 0;">
                   <div class="ant-form-item" style="margin-bottom: 0;">
-                   <div class="ant-row ant-form-item-row">
-                    <div class="ant-col ant-form-item-label">
+                   <div class="ant-row ant-form-item-row" style="flex-flow: row nowrap; align-items: center; gap: 8px;">
+                    <div class="ant-col ant-form-item-label" style="flex: 0 0 auto; white-space: nowrap; padding: 0;">
                      <label class="ant-form-item-required" title="关联PMS系统">关联PMS系统</label>
                     </div>
-                    <div class="ant-col ant-form-item-control">
+                    <div class="ant-col ant-form-item-control" style="flex: 1;">
                      <div class="ant-form-item-control-input">
                       <div class="ant-form-item-control-input-content">
-                       <input id="pmsSystem" readonly="" style="width: 100%; border: 1px solid rgb(220, 223, 230); border-radius: 4px; height: 32px; padding: 0px 11px; font-size: 14px; background: rgb(245, 245, 245); color: rgba(0, 0, 0, 0.65);" placeholder="根据所属应用自动关联">
+                       <input id="pmsSystem" readonly="" style="width: 100%; border: 1px solid rgb(220, 223, 230); border-radius: 4px; height: 32px; padding: 0px 6px; font-size: 13px; background: rgb(245, 245, 245); color: rgba(0, 0, 0, 0.65);" placeholder="请选择">
                       </div>
                      </div>
                     </div>
@@ -168,14 +168,14 @@
                 <div class="ant-form-item">
                  <div class="ant-row ant-form-item-row">
                   <div class="ant-col ant-form-item-label" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px;">
-                   <label class="ant-form-item-required" for="publishDate" title="发布时间" style="display: flex; align-items: center;">发布时间</label>
+                   <label class="ant-form-item-required" for="publishDate" title="日志对外发布时间" style="display: flex; align-items: center;">日志对外发布时间</label>
                    <span id="publishTimeTip" style="font-size: 13px; font-weight: normal; transition: color 0.3s;"></span>
                   </div>
                   <div class="ant-col ant-form-item-control">
                    <div class="ant-form-item-control-input">
                     <div class="ant-form-item-control-input-content">
                      <div class="ant-picker" id="publishDatePickerContainer" style="width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; height: 32px; display: inline-flex; align-items: center; padding: 4px 11px; transition: background-color 0.3s;">
-                      <input autocomplete="off" id="publishDate" placeholder="请选择发布自动对外发布时间" style="border: none; outline: none; width: 100%; font-size: 14px; background: transparent;" type="datetime-local">
+                      <input autocomplete="off" id="publishDate" placeholder="请选择" style="border: none; outline: none; width: 100%; font-size: 14px; background: transparent;" type="datetime-local">
                      </div>
                     </div>
                    </div>
@@ -194,7 +194,7 @@
                    <div class="ant-form-item-control-input">
                     <div class="ant-form-item-control-input-content">
                      <div class="ant-input-textarea" style="position: relative;">
-                      <textarea class="ant-input" id="summary" maxlength="100" placeholder="一句话提炼核心功能变更摘要，限100字" rows="2" style="width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; padding: 4px 11px; outline: none;"></textarea>
+                      <textarea class="ant-input" id="summary" maxlength="100" placeholder="请输入" rows="2" style="width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; padding: 4px 11px; outline: none;"></textarea>
                      </div>
                     </div>
                    </div>
