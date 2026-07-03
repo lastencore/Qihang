@@ -149,61 +149,7 @@
 
     <div class="container">
         
-        <div id="lobby-view-wrapper" class="block-layout">
-            <div class="search-wrapper">
-                <input type="text" id="globalSearch" class="search-input" placeholder="请输入应用名称、业务关键字查找核心系统功能...">
-                <button class="search-btn" onclick="triggerSearch()">搜索功能</button>
-            </div>
-
-            <div class="page-title">
-                <span>新一代核心系统应用目录</span>
-                <span id="currentCategoryTitle" style="font-size: 14px; color:#64748b; font-weight: normal;">当前分类：全部应用清单</span>
-            </div>
-
-            <div class="main-layout">
-                <div class="sidebar" id="categorySidebar">
-                    <a href="javascript:void(0)" class="category-item active" data-cat="all" onclick="switchCategory('all', this)">
-                        <span>全部应用清单</span><span class="category-count" id="count-all">53</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="承保业务" onclick="switchCategory('承保业务', this)">
-                        <span>承保业务</span><span class="category-count">9</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="核保业务" onclick="switchCategory('核保业务', this)">
-                        <span>核保业务</span><span class="category-count">3</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="后台支持" onclick="switchCategory('后台支持', this)">
-                        <span>后台支持</span><span class="category-count">1</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="履约业务" onclick="switchCategory('履约业务', this)">
-                        <span>履约业务</span><span class="category-count">4</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="数据中台" onclick="switchCategory('数据中台', this)">
-                        <span>数据中台</span><span class="category-count">9</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="通用板块" onclick="switchCategory('通用板块', this)">
-                        <span>通用板块</span><span class="category-count">1</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="销售营销" onclick="switchCategory('销售营销', this)">
-                        <span>销售营销</span><span class="category-count">6</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="运营管理" onclick="switchCategory('运营管理', this)">
-                        <span>运营管理</span><span class="category-count">11</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="战略企划" onclick="switchCategory('战略企划', this)">
-                        <span>战略企划</span><span class="category-count">1</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="资金财务" onclick="switchCategory('资金财务', this)">
-                        <span>资金财务</span><span class="category-count">8</span>
-                    </a>
-                </div>
-
-                <div class="content-container">
-                    <div class="content-grid" id="lobby-apps-grid"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="detail-section hidden-layout" id="detailSection">
+        <div class="detail-section" style="display:block;" id="detailSection">
             <div class="detail-header">
                 <div class="detail-title-info">
                     <div style="margin-bottom: 12px;">
@@ -420,8 +366,7 @@
 
         // 详情页模式：直接显示详情，从 URL 加载应用
         window.onload = function() {
-            document.getElementById("lobby-view-wrapper").className = "hidden-layout";
-            document.getElementById("detailSection").className = "detail-section block-layout";
+            document.getElementById("detailSection").style.display = "block";
             var params = new URLSearchParams(window.location.search);
             var name = params.get("name");
             if (name) {
@@ -437,7 +382,7 @@
                     document.getElementById("det_appDesc").innerText = "该应用的详细信息暂未录入。";
                 }
             }
-        };
+        }
 
         // 核心网格看板绘制
         function renderAppGrid(categoryKey, filterKeyword = "") {
@@ -530,8 +475,7 @@
 
             if (!targetApp) return;
 
-            // 1. 原子化类名控制：彻底隐藏大厅、显化详情面
-            document.getElementById("lobby-view-wrapper").className = "hidden-layout";
+            // 显化详情面
             document.getElementById("detailSection").className = "detail-section block-layout";
 
             document.getElementById("det_appName").innerText = targetApp.name;
