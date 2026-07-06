@@ -115,35 +115,56 @@
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; flex-direction: column; gap: 6px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #1e293b;">
                     <span style="cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 9px; margin-right: 4px; color: #94a3b8;">▼</span> 前置准备与系统鉴权</span>
-                    <div style="display: flex; gap: 6px; font-size: 11px; font-weight: normal; color: #94a3b8;">
+                    <div style="display: flex; gap: 4px; align-items: center; font-size: 11px; font-weight: normal; color: #94a3b8;">
                       <span class="anticon" onclick="alert('已上移')" style="cursor: pointer;">▲</span>
                       <span class="anticon" onclick="alert('已下移')" style="cursor: pointer;">▼</span>
-                      <span onclick="triggerDeleteValidation('前置准备与系统鉴权')" style="color: #64748b; cursor: pointer; margin-left: 2px;">删除</span>
+                      <button onclick="triggerDeleteValidation('前置准备与系统鉴权')" class="tree-icon-action-btn" title="删除" style="padding:0 2px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                      </button>
                     </div>
                   </div>
                   
-                  <div style="padding-left: 12px; border-left: 2px solid #cbd5e1; display: flex; flex-direction: column; gap: 4px; margin-top: 2px;">
-                    <div style="background: #fff1f2; border: 1px solid #ffe4e6; border-radius: 4px; padding: 6px; display: flex; justify-content: space-between; align-items: center; color: #cc0000; font-weight: bold;">
-                      <span style="display: inline-flex; align-items: center;">📄 核心岗位鉴权校验指引</span>
-                      <div style="display: flex; gap: 4px; font-size: 10px; font-weight: normal; color: #f43f5e;">
-                        <span onclick="triggerDeleteValidation('核心岗位鉴权校验指引')" style="cursor: pointer;">删</span>
+                  <div style="padding-left: 12px; border-left: 2px solid #cbd5e1; display: flex; flex-direction: column; gap: 6px; margin-top: 2px;">
+                    
+                    <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px; display: flex; flex-direction: column; gap: 6px;">
+                      <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #475569; font-size: 12.5px;">
+                        <span style="cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 8px; margin-right: 4px; color: #a1a1aa;">▼</span> 安全鉴权子域</span>
+                        <button onclick="triggerDeleteValidation('安全鉴权子域')" class="tree-icon-action-btn" title="删除" style="padding:0 2px;">
+                          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                      </div>
+                      
+                      <div style="padding-left: 12px; border-left: 1px dashed #cbd5e1; display: flex; flex-direction: column; gap: 4px; font-weight: normal;">
+                        <div style="background: #fff1f2; border: 1px solid #ffe4e6; border-radius: 4px; padding: 6px; display: flex; justify-content: space-between; align-items: center; color: #cc0000; font-weight: bold;">
+                          <span style="display: inline-flex; align-items: center;">📄 核心岗位鉴权校验指引</span>
+                          <button onclick="triggerDeleteValidation('核心岗位鉴权校验指引')" class="tree-icon-action-btn" title="删除" style="color: #cc0000; padding:0 2px;">
+                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                          </button>
+                        </div>
+                        <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px; display: flex; justify-content: space-between; align-items: center;">
+                          <span style="color: #475569;">📄 VPN 远程安全作业规范</span>
+                          <button onclick="triggerDeleteValidation('VPN 远程安全作业规范')" class="tree-icon-action-btn" title="删除" style="padding:0 2px;">
+                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px; display: flex; justify-content: space-between; align-items: center;">
-                      <span style="color: #475569;">📄 VPN 远程安全作业规范</span>
-                      <span onclick="triggerDeleteValidation('VPN 远程安全作业规范')" style="color: #94a3b8; font-size: 10px; cursor: pointer;">删</span>
-                    </div>
+                    
                   </div>
                 </div>
 
                 <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
                   <span style="color: #334155; cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 9px; margin-right: 4px; color: #94a3b8;">▶</span> 新一代线上化作业标准流程</span>
-                  <span onclick="triggerDeleteValidation('新一代线上化作业标准流程')" style="font-size: 11px; font-weight: normal; color: #94a3b8; cursor: pointer;">删除</span>
+                  <button onclick="triggerDeleteValidation('新一代线上化作业标准流程')" class="tree-icon-action-btn" title="删除">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                  </button>
                 </div>
 
                 <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
                   <span style="color: #334155; cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 9px; margin-right: 4px; color: #94a3b8;">▶</span> 典型卡点阻断风控拦截指引</span>
-                  <span onclick="triggerDeleteValidation('典型卡点阻断风控拦截指引')" style="font-size: 11px; font-weight: normal; color: #94a3b8; cursor: pointer;">删除</span>
+                  <button onclick="triggerDeleteValidation('典型卡点阻断风控拦截指引')" class="tree-icon-action-btn" title="删除">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                  </button>
                 </div>
 
               </div>
