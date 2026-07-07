@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-03 17:38:34
+> 最后更新：2026-07-07 10:05:59
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -75,14 +75,21 @@
 
 ### 🔄 进行中
 
-- [ ] **操作手册 PRD**：待用户审阅后反馈修改点
-- [ ] **`manual_workspace.html` 结构化模板**：编辑页增加操作步骤/注意事项/常见问题分区
+- [ ] **操作手册 PRD**：用户延后，尚未到 PRD 步骤（方案确认后再做；若与现有原型对不上后续再改）
+- [ ] **53 应用 / 10 大分类重新规划**：用户正在做，涉及合并、拆分；应用地图同步调整中
 
 ### ⏳ 待办
 
-- [ ] 更新日志方案 PRD 落文档（方案已定，待写入）
+- [ ] 更新日志方案 PRD 落文档（方案已定：运营创建 + PMS 关联，待写入）
 - [ ] 应用目录方案 vs 更新日志方案待用户决策
 - [ ] 产品蓝图二（操作手册模块展开）暂缓
+
+### ✅ 本会话完成（未推送，待用户检查）
+- [x] **应用地图客户端改版**：设计稿由用户提供，已落 `client/app_map.html`（两级分类 + 重点/核心/大屏标签 + 不可点卡片；保留跳 `app_detail` 链路）
+- [x] **应用地图中端系统调整**：承保作业平台改为上下两栏（融资性/非融资性信保上移并入承保平台组）；综合履约重命名并新增农险/政健险两条（共 8 项）
+
+### ❌ 已废弃
+- [x] ~~`manual_workspace.html` 结构化模板~~：用户明确"这版本不做了"，不再推进
 
 ---
 
@@ -185,9 +192,9 @@ prototype/
 
 ### 5.1 关键路径与认证
 - 原型根目录：`/workspace/prototype/`
-- 预览：`python3 -m http.server 8080` + notify
+- 预览：链接**必须**由 `notify <port>` 生成（机制见 5.5），严禁手拼 URL
 - GitHub 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
-- GitHub Token：需用户在新对话中提供（或使用 SSH key 方式 clone）
+- GitHub Token：clone 一般由环境 git credential helper 自动注入，**多数情况无需用户手动提供**；仅当返回 401 再向用户索取
 - Clone 命令模板：`git clone https://lastencore:<TOKEN>@github.com/lastencore/Qihang.git /workspace/prototype`
 - tdrive 根 ID：`SrgvhjiFWppt`
 
@@ -201,6 +208,13 @@ prototype/
 
 ### 5.4 用户身份
 - 产品经理：中华财险创新研发中心业务中台部
+
+### 5.5 预览服务（Preview）运行机制 ⚠️ 跨会话复用
+- **取链接唯一正确方式**：服务起来后运行 `notify <port>`（脚本 `/root/.codebuddy/skills/preview/notify`），输出即预览地址。**绝不要自己拼 URL**——手拼缺 `?x-cs-sandbox-id=...&x-cs-sandbox-port=<port>` 路由参数，网关直接 404。
+- **网关路由原理**：带参请求 → 网关 `Set-Cookie(x-cs-sandbox-id/port)` + `302` 跳干净路径；浏览器带 cookie 即正常渲染（首次会跳一次，正常现象）。`curl` 自检必须带 cookie jar（`-c/-b`），否则 302 后 404。
+- **服务必须用 supervisord 托管**（不要 nohup）：nohup 进程在沙箱休眠/恢复后会死，表现为"服务挂了"。配置写 `/usr/local/share/supervisor/preview-<port>.conf`，`command=python3 -m http.server <port> --bind 0.0.0.0 --directory /workspace/prototype`，`autorestart=true`；再 `${IDE_EDITOR_SERVER_DIR}/bin/supervisord ctl -c ${IDE_EDITOR_SERVER_DIR}/supervisord-conf/supervisord.conf reload` 后 `start preview-<port>`。
+- 约定端口 **8080**；`preview` skill 为标准入口。
+- 当前线上预览示例（下次以 `notify` 输出为准，区/标识会变）：`https://webview.e2b.gz4.sandbox.cloudstudio.club/index.html?x-cs-sandbox-id=8d32a81c587f4b888685797157d6f82f&x-cs-sandbox-port=8080`
 
 ---
 
@@ -220,13 +234,15 @@ prototype/
 > cat /workspace/prototype/progress.md
 > ```
 >
+> **第三步（启动预览，按需）**：用户要看原型时，用 supervisord 起服务并 `notify <port>` 取链接，详见 5.5。**不要 nohup**，否则沙箱休眠后服务挂掉需重排。
+>
 > **说明**：用户只需上传 `progress.md` 并告知 Token，clone 后所有原型文件、Git 历史都在。
 
 ### 当前可执行任务
-1. **`manual_workspace.html` 结构化模板**：编辑页增加操作步骤/注意事项/常见问题三个分区
-2. **PRD 修订**：新增应用目录章节、三类展示端口、结构化 + PMS 关联留口、830 MVP 时间节点
-3. **更新日志方案 PRD**：方案已定（运营创建 + PMS 关联），落成 PRD 文档
+1. **应用地图改版收尾**：用户检查 `client/app_map.html` 后反馈；如需"纯静态不可点"则撤掉跳 `app_detail` 逻辑
+2. **（延后）PRD 修订 / 更新日志 PRD**：用户确认进入 PRD 步骤后再做
 
 ### 待用户决策
 - 能力地图/岗位场景地图的具体形式（待用户设计）
 - 应用目录最终方案细节
+- 应用地图是否保留卡片点击跳转（当前保留，用户认可"静态样式+保留跳转链路"）
