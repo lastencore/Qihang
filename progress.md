@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-07 10:05:59
+> 最后更新：2026-07-07 11:42:52
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -84,9 +84,13 @@
 - [ ] 应用目录方案 vs 更新日志方案待用户决策
 - [ ] 产品蓝图二（操作手册模块展开）暂缓
 
-### ✅ 本会话完成（未推送，待用户检查）
-- [x] **应用地图客户端改版**：设计稿由用户提供，已落 `client/app_map.html`（两级分类 + 重点/核心/大屏标签 + 不可点卡片；保留跳 `app_detail` 链路）
-- [x] **应用地图中端系统调整**：承保作业平台改为上下两栏（融资性/非融资性信保上移并入承保平台组）；综合履约重命名并新增农险/政健险两条（共 8 项）
+### ✅ 本会话完成（随本次推送入库）
+- [x] **应用地图客户端改版**：设计稿落地 `client/app_map.html`（两级分类 + 重点/核心/大屏标签 + 不可点卡片；保留跳 `app_detail` 链路）——已含于提交 `31ce7b0`
+- [x] **应用地图中端系统调整**：承保作业平台上下两栏（融资性/非融资性信保上移并入承保平台组）；综合履约重命名 + 新增农险/政健险两条（共 8 项）——已含于 `31ce7b0`
+- [x] **中端三栏并排收尾**：承保/核保/综合履约左中右三栏（`grid-cols-[1.25fr_0.8fr_1.55fr]`）；核保作业平台改单列；综合履约列最宽
+- [x] **综合履约标签缩写**：「综合履约作业平台-车险、意外险、财责险」→「综合履约作业平台-车意财」（id / data-name / 文字 三处一致）；去掉灰色提示「车损、物损、人伤」
+- [x] **笔记本适配**：容器 `max-w-[1760px]` + `lg` 三栏响应式；综合履约卡片 `whitespace-nowrap` 防折行
+- [x] **预览服务 live**：supervisord 托管 8080（`autorestart=true`），`notify 8080` 取链接已验证
 
 ### ❌ 已废弃
 - [x] ~~`manual_workspace.html` 结构化模板~~：用户明确"这版本不做了"，不再推进
@@ -214,7 +218,7 @@ prototype/
 - **网关路由原理**：带参请求 → 网关 `Set-Cookie(x-cs-sandbox-id/port)` + `302` 跳干净路径；浏览器带 cookie 即正常渲染（首次会跳一次，正常现象）。`curl` 自检必须带 cookie jar（`-c/-b`），否则 302 后 404。
 - **服务必须用 supervisord 托管**（不要 nohup）：nohup 进程在沙箱休眠/恢复后会死，表现为"服务挂了"。配置写 `/usr/local/share/supervisor/preview-<port>.conf`，`command=python3 -m http.server <port> --bind 0.0.0.0 --directory /workspace/prototype`，`autorestart=true`；再 `${IDE_EDITOR_SERVER_DIR}/bin/supervisord ctl -c ${IDE_EDITOR_SERVER_DIR}/supervisord-conf/supervisord.conf reload` 后 `start preview-<port>`。
 - 约定端口 **8080**；`preview` skill 为标准入口。
-- 当前线上预览示例（下次以 `notify` 输出为准，区/标识会变）：`https://webview.e2b.gz4.sandbox.cloudstudio.club/index.html?x-cs-sandbox-id=8d32a81c587f4b888685797157d6f82f&x-cs-sandbox-port=8080`
+- 当前线上预览（以 `notify` 输出为准，区/标识会变）：`https://webview.e2b.bj7.sandbox.cloudstudio.club/?x-cs-sandbox-id=a95900f7c98845a596fe887aab7e2eda&x-cs-sandbox-port=8080`
 
 ---
 
@@ -239,7 +243,7 @@ prototype/
 > **说明**：用户只需上传 `progress.md` 并告知 Token，clone 后所有原型文件、Git 历史都在。
 
 ### 当前可执行任务
-1. **应用地图改版收尾**：用户检查 `client/app_map.html` 后反馈；如需"纯静态不可点"则撤掉跳 `app_detail` 逻辑
+1. **应用地图改版收尾**：✅ 已完成（三栏并排、核保单列、综合履约缩写+放大、去灰提示、笔记本适配），随本次 progress 一并推送
 2. **（延后）PRD 修订 / 更新日志 PRD**：用户确认进入 PRD 步骤后再做
 
 ### 待用户决策
