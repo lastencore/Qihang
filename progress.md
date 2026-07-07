@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-07 11:42:52
+> 最后更新：2026-07-07 11:56:14
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -198,7 +198,8 @@ prototype/
 - 原型根目录：`/workspace/prototype/`
 - 预览：链接**必须**由 `notify <port>` 生成（机制见 5.5），严禁手拼 URL
 - GitHub 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
-- GitHub Token：clone 一般由环境 git credential helper 自动注入，**多数情况无需用户手动提供**；仅当返回 401 再向用户索取
+- GitHub Token：环境 `git-credential-helper` **仅提供只读（匿名 clone）能力**，**push 必须用户提供 repo 写权限的 PAT**。本会话实测：直接 `git push` 报 `could not read Username/Password`，由用户提供 PAT 后才推送成功。
+- **推送做法（不落地凭据）**：`git -c credential.helper= -c "url.https://<PAT>@github.com/.insteadOf=https://github.com/" push origin main`；推送后凭据不写入 `~/.gitconfig`、不修改 remote URL，用完即弃。
 - Clone 命令模板：`git clone https://lastencore:<TOKEN>@github.com/lastencore/Qihang.git /workspace/prototype`
 - tdrive 根 ID：`SrgvhjiFWppt`
 
@@ -243,7 +244,7 @@ prototype/
 > **说明**：用户只需上传 `progress.md` 并告知 Token，clone 后所有原型文件、Git 历史都在。
 
 ### 当前可执行任务
-1. **应用地图改版收尾**：✅ 已完成（三栏并排、核保单列、综合履约缩写+放大、去灰提示、笔记本适配），随本次 progress 一并推送
+1. **应用地图改版收尾**：✅ 已完成且**已推送 origin/main（commit `32cd31d`）**——三栏并排、核保单列、综合履约缩写"车意财"+放大、去灰提示、笔记本适配
 2. **（延后）PRD 修订 / 更新日志 PRD**：用户确认进入 PRD 步骤后再做
 
 ### 待用户决策
