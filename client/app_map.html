@@ -80,7 +80,7 @@
         <div class="flex items-center flex-1 max-w-2xl gap-2 relative">
             <div class="relative flex-1">
                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-xs text-slate-400"></i>
-                <input type="text" id="systemSearchInput" oninput="executeGlobalFilter()" placeholder="搜索系统名称..." 
+                <input type="text" id="systemSearchInput" oninput="executeGlobalFilter()" placeholder="搜索系统名称、系统分类、属主部门..." 
                        class="w-full bg-slate-100 border border-slate-300 rounded pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:border-blue-500 focus:bg-white transition">
             </div>
 
@@ -126,9 +126,6 @@
         </div>
 
         <div class="flex bg-slate-100 p-1 rounded border border-slate-200 text-xs shrink-0">
-            <button onclick="location.href='client.html'" class="px-4 py-1.5 font-medium text-slate-600 rounded hover:text-slate-900">
-                <i class="fa-solid fa-border-all mr-1.5"></i>应用大厅
-            </button>
             <button class="px-4 py-1.5 font-bold bg-white text-blue-600 rounded border border-slate-200/60 shadow-sm">
                 <i class="fa-solid fa-map-location-dot mr-1.5"></i>应用地图
             </button>
@@ -147,12 +144,12 @@
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded flex flex-col justify-between">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1.5 border-b border-slate-200"><i class="fa-solid fa-user text-emerald-600 mr-2"></i>1. 个客销售/营销</div>
                     <div class="grid grid-cols-2 gap-2 flex-1 content-start">
-                        <div id="sys-智能一体化个客版" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能一体化个客版" data-dept="共享服务中心">智能一体化个客版</div>
-                        <div id="sys-AI中华APP" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华APP" data-dept="共享服务中心">AI中华APP</div>
-                        <div id="sys-线上运营平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="线上运营平台" data-dept="团体客户渠道部">线上运营平台</div>
-                        <div id="sys-中华保微信小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保微信小程序" data-dept="共享服务中心">中华保微信小程序</div>
-                        <div id="sys-共享保APP" class="flat-card rounded text-xs font-medium text-slate-700" data-name="共享保APP" data-dept="团体客户渠道部">共享保APP</div>
-                        <div id="sys-中华保APP" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="中华保APP" data-dept="共享服务中心">
+                        <div id="sys-智能一体化个客版" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能一体化个客版" data-dept="共享服务中心" data-category="个客销售/营销">智能一体化个客版</div>
+                        <div id="sys-AI中华APP" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华APP" data-dept="共享服务中心" data-category="个客销售/营销">AI中华APP</div>
+                        <div id="sys-线上运营平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="线上运营平台" data-dept="团体客户渠道部" data-category="个客销售/营销">线上运营平台</div>
+                        <div id="sys-中华保微信小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保微信小程序" data-dept="共享服务中心" data-category="个客销售/营销">中华保微信小程序</div>
+                        <div id="sys-共享保APP" class="flat-card rounded text-xs font-medium text-slate-700" data-name="共享保APP" data-dept="团体客户渠道部" data-category="个客销售/营销">共享保APP</div>
+                        <div id="sys-中华保APP" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="中华保APP" data-dept="共享服务中心" data-category="个客销售/营销">
                             <strong>中华保APP</strong>
                         </div>
                     </div>
@@ -160,30 +157,30 @@
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1.5 border-b border-slate-200"><i class="fa-solid fa-users text-emerald-600 mr-2"></i>2. 团客销售/营销</div>
                     <div class="space-y-2">
-                        <div id="sys-智能一体化团客版" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能一体化团客版" data-dept="团体客户渠道部">智能一体化团客版</div>
-                        <div id="sys-AI中华APP团客" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华APP团客" data-dept="团体客户渠道部">AI中华APP团客</div>
-                        <div id="sys-中华保支付宝小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保支付宝小程序" data-dept="团体客户渠道部">中华保支付宝小程序</div>
+                        <div id="sys-智能一体化团客版" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能一体化团客版" data-dept="团体客户渠道部" data-category="团客销售/营销">智能一体化团客版</div>
+                        <div id="sys-AI中华APP团客" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华APP团客" data-dept="团体客户渠道部" data-category="团客销售/营销">AI中华APP团客</div>
+                        <div id="sys-中华保支付宝小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保支付宝小程序" data-dept="团体客户渠道部" data-category="团客销售/营销">中华保支付宝小程序</div>
                     </div>
                 </div>
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded flex flex-col justify-between">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1.5 border-b border-slate-200"><i class="fa-solid fa-headset text-emerald-600 mr-2"></i>3. 客户服务</div>
                     <div class="grid grid-cols-2 gap-2 flex-1 content-start">
-                        <div id="sys-智能客服平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能客服平台" data-dept="共享服务中心">智能客服平台</div>
-                        <div id="sys-新话务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="新话务平台" data-dept="共享服务中心">新话务平台</div>
-                        <div id="sys-在线客服平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="在线客服平台" data-dept="共享服务中心">在线客服平台</div>
-                        <div id="sys-增值服务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="增值服务平台" data-dept="共享服务中心">增值服务平台</div>
-                        <div id="sys-客户接触管理平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="客户接触管理平台" data-dept="共享服务中心"><strong>客户接触管理</strong></div>
-                        <div id="sys-服务品质管理平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="服务品质管理平台" data-dept="共享服务中心"><strong>服务品质管理</strong></div>
+                        <div id="sys-智能客服平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能客服平台" data-dept="共享服务中心" data-category="客户服务">智能客服平台</div>
+                        <div id="sys-新话务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="新话务平台" data-dept="共享服务中心" data-category="客户服务">新话务平台</div>
+                        <div id="sys-在线客服平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="在线客服平台" data-dept="共享服务中心" data-category="客户服务">在线客服平台</div>
+                        <div id="sys-增值服务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="增值服务平台" data-dept="共享服务中心" data-category="客户服务">增值服务平台</div>
+                        <div id="sys-客户接触管理平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="客户接触管理平台" data-dept="共享服务中心" data-category="客户服务"><strong>客户接触管理</strong></div>
+                        <div id="sys-服务品质管理平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="服务品质管理平台" data-dept="共享服务中心" data-category="客户服务"><strong>服务品质管理</strong></div>
                     </div>
                 </div>
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded flex flex-col justify-between">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1.5 border-b border-slate-200"><i class="fa-solid fa-handshake-angle text-emerald-600 mr-2"></i>4. 渠道合作</div>
                     <div class="grid grid-cols-2 gap-2 flex-1 content-start">
-                        <div id="sys-合作伙伴服务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="合作伙伴服务平台" data-dept="团体客户渠道部">合作伙伴服务平台</div>
-                        <div id="sys-渠道适配平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="渠道适配平台" data-dept="团体客户渠道部">渠道适配平台</div>
-                        <div id="sys-互联网运营平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="互联网运营平台" data-dept="团体客户渠道部">互联网运营平台</div>
-                        <div id="sys-车商伙伴小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="车商伙伴小程序" data-dept="团体客户渠道部">车商伙伴小程序</div>
-                        <div id="sys-生态合作开放平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="生态合作开放平台" data-dept="团体客户渠道部"><strong>生态合作开放</strong></div>
+                        <div id="sys-合作伙伴服务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="合作伙伴服务平台" data-dept="团体客户渠道部" data-category="渠道合作">合作伙伴服务平台</div>
+                        <div id="sys-渠道适配平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="渠道适配平台" data-dept="团体客户渠道部" data-category="渠道合作">渠道适配平台</div>
+                        <div id="sys-互联网运营平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="互联网运营平台" data-dept="团体客户渠道部" data-category="渠道合作">互联网运营平台</div>
+                        <div id="sys-车商伙伴小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="车商伙伴小程序" data-dept="团体客户渠道部" data-category="渠道合作">车商伙伴小程序</div>
+                        <div id="sys-生态合作开放平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="生态合作开放平台" data-dept="团体客户渠道部" data-category="渠道合作"><strong>生态合作开放</strong></div>
                     </div>
                 </div>
             </div>
@@ -204,20 +201,20 @@
                     
                     <div class="flex-1 flex flex-col justify-between space-y-3">
                         <div class="grid grid-cols-2 gap-2">
-                            <div id="sys-车险承保平台" class="flat-card rounded text-xs font-medium text-slate-700 border-l-4 border-l-sky-400" data-name="车险承保平台" data-dept="团体非车险部">车险承承平台</div>
-                            <div id="sys-意健险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="意健险承保平台" data-dept="普惠金融部/农村金融部">意健险承保平台</div>
-                            <div id="sys-农险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="农险承保平台" data-dept="普惠金融部/农村金融部">农险承保平台</div>
-                            <div id="sys-财责险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="财责险承保平台" data-dept="团体非车险部">财责险承保平台</div>
-                            <div id="sys-政健险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="政健险承保平台" data-dept="普惠金融部/农村金融部">政健险承保平台</div>
-                            <div id="sys-融资性信保承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="融资性信保承保平台" data-dept="团体非车险部">融资性信保承保</div>
-                            <div id="sys-非融资性信保承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="非融资性信保承保平台" data-dept="团体非车险部">非融资性信保承保</div>
+                            <div id="sys-车险承保平台" class="flat-card rounded text-xs font-medium text-slate-700 border-l-4 border-l-sky-400" data-name="车险承保平台" data-dept="团体非车险部" data-category="承保作业平台">车险承承平台</div>
+                            <div id="sys-意健险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="意健险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">意健险承保平台</div>
+                            <div id="sys-农险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="农险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">农险承保平台</div>
+                            <div id="sys-财责险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="财责险承保平台" data-dept="团体非车险部" data-category="承保作业平台">财责险承保平台</div>
+                            <div id="sys-政健险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="政健险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">政健险承保平台</div>
+                            <div id="sys-融资性信保承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="融资性信保承保平台" data-dept="团体非车险部" data-category="承保作业平台">融资性信保承保</div>
+                            <div id="sys-非融资性信保承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="非融资性信保承保平台" data-dept="团体非车险部" data-category="承保作业平台">非融资性信保承保</div>
                         </div>
 
                         <div class="border-t border-dashed border-slate-300 my-1"></div>
 
                         <div class="grid grid-cols-2 gap-2">
-                            <div id="sys-兴农保" class="flat-card rounded text-xs font-medium text-slate-700" data-name="兴农保" data-dept="普惠金融部/农村金融部">兴农保</div>
-                            <div id="sys-扫码保" class="flat-card rounded text-xs font-medium text-slate-700" data-name="扫码保" data-dept="团体非车险部">扫码保</div>
+                            <div id="sys-兴农保" class="flat-card rounded text-xs font-medium text-slate-700" data-name="兴农保" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">兴农保</div>
+                            <div id="sys-扫码保" class="flat-card rounded text-xs font-medium text-slate-700" data-name="扫码保" data-dept="团体非车险部" data-category="承保作业平台">扫码保</div>
                         </div>
                     </div>
                 </div>
@@ -227,16 +224,16 @@
                             <i class="fa-solid fa-clipboard-check text-indigo-600 mr-2"></i>2. 核保作业平台
                         </div>
                         <div class="grid grid-cols-1 gap-2 flex-1 content-start">
-                            <div id="sys-车险核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="车险核保" data-dept="团体非车险部">
+                            <div id="sys-车险核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="车险核保" data-dept="团体非车险部" data-category="核保作业平台">
                                 <i class="fa-solid fa-car text-[10px] text-slate-400 mr-1"></i>车险核保
                             </div>
-                            <div id="sys-个非核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="个非核保" data-dept="团体非车险部">
+                            <div id="sys-个非核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="个非核保" data-dept="团体非车险部" data-category="核保作业平台">
                                 <i class="fa-solid fa-user-shield text-[10px] text-slate-400 mr-1"></i>个非核保
                             </div>
-                            <div id="sys-团非核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="团非核保" data-dept="团体非车险部">
+                            <div id="sys-团非核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="团非核保" data-dept="团体非车险部" data-category="核保作业平台">
                                 <i class="fa-solid fa-building text-[10px] text-slate-400 mr-1"></i>团非核保
                             </div>
-                            <div id="sys-农险核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="农险核保" data-dept="普惠金融部/农村金融部">
+                            <div id="sys-农险核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="农险核保" data-dept="普惠金融部/农村金融部" data-category="核保作业平台">
                                 <i class="fa-solid fa-seedling text-[10px] text-slate-400 mr-1"></i>农险核保
                             </div>
                         </div>
@@ -247,16 +244,16 @@
                             <i class="fa-solid fa-truck-fast text-sky-600 mr-2"></i>3. 综合履约
                         </div>
                         <div class="grid grid-cols-2 gap-2 flex-1 content-start whitespace-nowrap">
-                        <div id="sys-综合履约作业平台-车意财" class="flat-card rounded text-xs font-medium text-slate-700 flex items-baseline gap-1" data-name="综合履约作业平台-车意财" data-dept="理赔部">
+                        <div id="sys-综合履约作业平台-车意财" class="flat-card rounded text-xs font-medium text-slate-700 flex items-baseline gap-1" data-name="综合履约作业平台-车意财" data-dept="理赔部" data-category="综合履约">
                             <strong>综合履约作业平台-车意财</strong>
                         </div>
-                        <div id="sys-综合履约作业平台-农险" class="flat-card rounded text-xs font-medium text-slate-700" data-name="综合履约作业平台-农险" data-dept="理赔部">综合履约作业平台-农险</div>
-                        <div id="sys-综合履约作业平台-政健险" class="flat-card rounded text-xs font-medium text-slate-700" data-name="综合履约作业平台-政健险" data-dept="理赔部">综合履约作业平台-政健险</div>
-                            <div id="sys-在线理赔平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="在线理赔平台" data-dept="理赔部">在线理赔平台</div>
-                            <div id="sys-AI中华-履约" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华-履约" data-dept="理赔部">AI中华-履约</div>
-                            <div id="sys-中华保微信小程序-履约" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保微信小程序-履约" data-dept="理赔部">中华保微信小程序-履约</div>
-                            <div id="sys-中易赔" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中易赔" data-dept="理赔部">中易赔</div>
-                            <div id="sys-车商OMS" class="flat-card rounded text-xs font-medium text-slate-700" data-name="车商OMS" data-dept="理赔部">车商OMS</div>
+                        <div id="sys-综合履约作业平台-农险" class="flat-card rounded text-xs font-medium text-slate-700" data-name="综合履约作业平台-农险" data-dept="理赔部" data-category="综合履约">综合履约作业平台-农险</div>
+                        <div id="sys-综合履约作业平台-政健险" class="flat-card rounded text-xs font-medium text-slate-700" data-name="综合履约作业平台-政健险" data-dept="理赔部" data-category="综合履约">综合履约作业平台-政健险</div>
+                            <div id="sys-在线理赔平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="在线理赔平台" data-dept="理赔部" data-category="综合履约">在线理赔平台</div>
+                            <div id="sys-AI中华-履约" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华-履约" data-dept="理赔部" data-category="综合履约">AI中华-履约</div>
+                            <div id="sys-中华保微信小程序-履约" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保微信小程序-履约" data-dept="理赔部" data-category="综合履约">中华保微信小程序-履约</div>
+                            <div id="sys-中易赔" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中易赔" data-dept="理赔部" data-category="综合履约">中易赔</div>
+                            <div id="sys-车商OMS" class="flat-card rounded text-xs font-medium text-slate-700" data-name="车商OMS" data-dept="理赔部" data-category="综合履约">车商OMS</div>
                         </div>
                     </div>
 
@@ -273,15 +270,15 @@
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded space-y-4">
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-box text-slate-500 mr-2"></i>1. 产品管理</div>
-                        <div id="sys-产品研发运营管理平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="产品研发运营管理平台" data-dept="团体非车险部">产品研发运营管理平台</div>
+                        <div id="sys-产品研发运营管理平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="产品研发运营管理平台" data-dept="团体非车险部" data-category="产品管理">产品研发运营管理平台</div>
                     </div>
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-id-card text-slate-500 mr-2"></i>2. 客户管理</div>
-                        <div id="sys-客户信息系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="客户信息系统" data-dept="共享服务中心">客户信息系统</div>
+                        <div id="sys-客户信息系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="客户信息系统" data-dept="共享服务中心" data-category="客户管理">客户信息系统</div>
                     </div>
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-handshake text-slate-500 mr-2"></i>3. 合作伙伴管理</div>
-                        <div id="sys-合作伙伴管理平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="合作伙伴管理平台" data-dept="团体客户渠道部">合作伙伴管理平台</div>
+                        <div id="sys-合作伙伴管理平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="合作伙伴管理平台" data-dept="团体客户渠道部" data-category="合作伙伴管理">合作伙伴管理平台</div>
                     </div>
                 </div>
 
@@ -289,15 +286,15 @@
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-tags text-slate-500 mr-2"></i>4. 定价管理</div>
                         <div class="space-y-1.5">
-                            <div id="sys-车险定价决策系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="车险定价决策系统" data-dept="团体非车险部">车险定价决策系统</div>
-                            <div id="sys-非车险定价决策平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="非车险定价决策平台" data-dept="团体非车险部">非车险定价决策平台</div>
+                            <div id="sys-车险定价决策系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="车险定价决策系统" data-dept="团体非车险部" data-category="定价管理">车险定价决策系统</div>
+                            <div id="sys-非车险定价决策平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="非车险定价决策平台" data-dept="团体非车险部" data-category="定价管理">非车险定价决策平台</div>
                         </div>
                     </div>
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-chart-line text-slate-500 mr-2"></i>5. 销售管理</div>
                         <div class="space-y-1.5">
-                            <div id="sys-销售系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="销售系统" data-dept="团体客户渠道部">销售系统</div>
-                            <div id="sys-销售人员业绩管理系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="销售人员业绩管理系统" data-dept="团体客户渠道部">销售人员业绩管理系统</div>
+                            <div id="sys-销售系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="销售系统" data-dept="团体客户渠道部" data-category="销售管理">销售系统</div>
+                            <div id="sys-销售人员业绩管理系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="销售人员业绩管理系统" data-dept="团体客户渠道部" data-category="销售管理">销售人员业绩管理系统</div>
                         </div>
                     </div>
                 </div>
@@ -306,16 +303,16 @@
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-layer-group text-slate-500 mr-2"></i>6. 再保管理</div>
                         <div class="space-y-1.5">
-                            <div id="sys-再保前置平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="再保前置平台" data-dept="再保险部">再保前置平台</div>
-                            <div id="sys-再保服务平台" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="再保服务平台" data-dept="再保险部"><span>再保服务平台</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
-                            <div id="sys-再保管理平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="再保管理平台" data-dept="再保险部">再保管理平台</div>
+                            <div id="sys-再保前置平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="再保前置平台" data-dept="再保险部" data-category="再保管理">再保前置平台</div>
+                            <div id="sys-再保服务平台" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="再保服务平台" data-dept="再保险部" data-category="再保管理"><span>再保服务平台</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
+                            <div id="sys-再保管理平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="再保管理平台" data-dept="再保险部" data-category="再保管理">再保管理平台</div>
                         </div>
                     </div>
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-percent text-slate-500 mr-2"></i>7. 精算中心</div>
                         <div class="space-y-1.5">
-                            <div id="sys-精算管理平台" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="精算管理平台" data-dept="再保险部"><span>精算管理平台</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
-                            <div id="sys-精算准备金系统" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="精算准备金系统" data-dept="再保险部"><span>精算准备金系统</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
+                            <div id="sys-精算管理平台" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="精算管理平台" data-dept="再保险部" data-category="精算中心"><span>精算管理平台</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
+                            <div id="sys-精算准备金系统" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="精算准备金系统" data-dept="再保险部" data-category="精算中心"><span>精算准备金系统</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
                         </div>
                     </div>
                 </div>
@@ -324,30 +321,30 @@
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-shield text-slate-500 mr-2"></i>8. 风险防控</div>
                         <div class="space-y-1.5">
-                            <div id="sys-统一风控平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="统一风控平台" data-dept="团体非车险部">统一风控平台</div>
-                            <div id="sys-调查平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="调查平台" data-dept="理赔部">调查平台</div>
-                            <div id="sys-关联交易系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="关联交易系统" data-dept="纪委办公室">关联交易系统</div>
-                            <div id="sys-风险减量平台" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="风险减量平台" data-dept="团体非车险部"><span>风险减量平台</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
+                            <div id="sys-统一风控平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="统一风控平台" data-dept="团体非车险部" data-category="风险防控">统一风控平台</div>
+                            <div id="sys-调查平台" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="调查平台" data-dept="理赔部" data-category="风险防控">调查平台</div>
+                            <div id="sys-关联交易系统" class="flat-card rounded text-xs text-slate-700 font-medium" data-name="关联交易系统" data-dept="纪委办公室" data-category="风险防控">关联交易系统</div>
+                            <div id="sys-风险减量平台" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="风险减量平台" data-dept="团体非车险部" data-category="风险防控"><span>风险减量平台</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
                         </div>
                     </div>
                     <div>
                         <div class="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200"><i class="fa-solid fa-business-time text-slate-500 mr-2"></i>9. 经营管理</div>
-                        <div id="sys-经营企划系统" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="经营企划系统" data-dept="共享服务中心"><span>经营企划系统</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
+                        <div id="sys-经营企划系统" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="经营企划系统" data-dept="共享服务中心" data-category="经营管理"><span>经营企划系统</span><span class="text-[9px] bg-blue-100 text-blue-600 px-1 rounded">核心</span></div>
                     </div>
                 </div>
 
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded flex flex-col justify-start">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1 border-b border-slate-200"><i class="fa-solid fa-calculator text-slate-500 mr-2"></i>10. 财务管理</div>
                     <div class="grid grid-cols-2 gap-2">
-                        <div id="sys-资金管理系统" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center">资金管理系统</div>
-                        <div id="sys-综合报销平台" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="综合报销平台" data-dept="共享服务中心"><span>综合报销</span><span class="text-[8px] bg-blue-100 text-blue-600 px-0.5 rounded">核心</span></div>
-                        <div id="sys-非保交易中心" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="非保交易中心" data-dept="共享服务中心">非保交易中心</div>
-                        <div id="sys-综合对账平台" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="综合对账平台" data-dept="共享服务中心">综合对账平台</div>
-                        <div id="sys-I17平台-财险" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="I17平台-财险" data-dept="共享服务中心">I17平台财险</div>
-                        <div id="sys-应收预警平台" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="应收预警平台" data-dept="共享服务中心">应收预警平台</div>
-                        <div id="sys-增值税管理系统" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="增值税管理系统" data-dept="共享服务中心">增值税系统</div>
-                        <div id="sys-服务计费分摊" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="服务计费分摊" data-dept="共享服务中心">服务计费分摊</div>
-                        <div id="sys-预算管理系统" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="预算管理系统" data-dept="共享服务中心">预算管理系统</div>
+                        <div id="sys-资金管理系统" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-category="财务管理" data-name="资金管理系统">资金管理系统</div>
+                        <div id="sys-综合报销平台" class="flat-card rounded text-xs text-slate-800 font-bold bg-blue-50/40 border-blue-300 flex justify-between items-center" data-name="综合报销平台" data-dept="共享服务中心" data-category="财务管理"><span>综合报销</span><span class="text-[8px] bg-blue-100 text-blue-600 px-0.5 rounded">核心</span></div>
+                        <div id="sys-非保交易中心" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="非保交易中心" data-dept="共享服务中心" data-category="财务管理">非保交易中心</div>
+                        <div id="sys-综合对账平台" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="综合对账平台" data-dept="共享服务中心" data-category="财务管理">综合对账平台</div>
+                        <div id="sys-I17平台-财险" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="I17平台-财险" data-dept="共享服务中心" data-category="财务管理">I17平台财险</div>
+                        <div id="sys-应收预警平台" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="应收预警平台" data-dept="共享服务中心" data-category="财务管理">应收预警平台</div>
+                        <div id="sys-增值税管理系统" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="增值税管理系统" data-dept="共享服务中心" data-category="财务管理">增值税系统</div>
+                        <div id="sys-服务计费分摊" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="服务计费分摊" data-dept="共享服务中心" data-category="财务管理">服务计费分摊</div>
+                        <div id="sys-预算管理系统" class="flat-card rounded text-xs text-slate-700 font-medium flex items-center" data-name="预算管理系统" data-dept="共享服务中心" data-category="财务管理">预算管理系统</div>
                     </div>
                 </div>
             </div>
@@ -358,15 +355,15 @@
                 <i class="fa-solid fa-screwdriver-wrench mr-2"></i>四、工具平台
             </div>
             <div class="p-4 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2">
-                <div id="sys-车型查询平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="车型查询平台" data-dept="共享服务中心">车型查询平台</div>
-                <div id="sys-监管接入平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="监管接入平台" data-dept="共享服务中心">监管接入平台</div>
-                <div id="sys-打印平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="打印平台" data-dept="共享服务中心">打印平台</div>
-                <div id="sys-OCR平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="OCR平台" data-dept="共享服务中心">OCR平台</div>
-                <div id="sys-鹊桥" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="鹊桥" data-dept="共享服务中心">鹊桥</div>
-                <div id="sys-影像助手" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="影像助手" data-dept="共享服务中心">影像助手</div>
-                <div id="sys-投保电子化平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="投保电子化平台" data-dept="共享服务中心">投保电子化</div>
-                <div id="sys-人脸验证系统" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="人脸验证系统" data-dept="共享服务中心">人脸验证系统</div>
-                <div id="sys-融合通讯平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="融合通讯平台" data-dept="共享服务中心">融合通讯平台</div>
+                <div id="sys-车型查询平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="车型查询平台" data-dept="共享服务中心" data-category="工具平台">车型查询平台</div>
+                <div id="sys-监管接入平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="监管接入平台" data-dept="共享服务中心" data-category="工具平台">监管接入平台</div>
+                <div id="sys-打印平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="打印平台" data-dept="共享服务中心" data-category="工具平台">打印平台</div>
+                <div id="sys-OCR平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="OCR平台" data-dept="共享服务中心" data-category="工具平台">OCR平台</div>
+                <div id="sys-鹊桥" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="鹊桥" data-dept="共享服务中心" data-category="工具平台">鹊桥</div>
+                <div id="sys-影像助手" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="影像助手" data-dept="共享服务中心" data-category="工具平台">影像助手</div>
+                <div id="sys-投保电子化平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="投保电子化平台" data-dept="共享服务中心" data-category="工具平台">投保电子化</div>
+                <div id="sys-人脸验证系统" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="人脸验证系统" data-dept="共享服务中心" data-category="工具平台">人脸验证系统</div>
+                <div id="sys-融合通讯平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="融合通讯平台" data-dept="共享服务中心" data-category="工具平台">融合通讯平台</div>
             </div>
         </section>
 
@@ -375,28 +372,28 @@
                 <i class="fa-solid fa-cubes mr-2"></i>五、业务中台 (原子化共享域)
             </div>
             <div class="p-4 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2">
-                <div id="sys-承保域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="承保域" data-dept="团体非车险部">承保域</div>
-                <div id="sys-批改域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="批改域" data-dept="团体非车险部">批改域</div>
-                <div id="sys-保单服务域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="保单服务域" data-dept="团体非车险部">保单服务域</div>
-                <div id="sys-产品域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="产品域" data-dept="团体非车险部">产品域</div>
-                <div id="sys-客户域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="客户域" data-dept="共享服务中心">客户域</div>
-                <div id="sys-标的域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="标的域" data-dept="团体非车险部">标的域</div>
-                <div id="sys-营销域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="营销域" data-dept="团体客户渠道部">营销域</div>
-                <div id="sys-履约域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="履约域" data-dept="理赔部">履约域</div>
-                <div id="sys-交易域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="交易域" data-dept="共享服务中心">交易域</div>
-                <div id="sys-账务域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="账务域" data-dept="共享服务中心">账务域</div>
-                <div id="sys-合约域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="合约域" data-dept="再保险部">合约域</div>
-                <div id="sys-支付结算域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="支付结算域" data-dept="共享服务中心">支付结算域</div>
-                <div id="sys-单证域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="单证域" data-dept="共享服务中心">单证域</div>
-                <div id="sys-合作开放域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="合作开放域" data-dept="团体客户渠道部">合作开放域</div>
-                <div id="sys-客户服务域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="客户服务域" data-dept="共享服务中心">客户服务域</div>
-                <div id="sys-安全域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="安全域" data-dept="共享服务中心">安全域</div>
-                <div id="sys-客户接触域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="客户接触域" data-dept="共享服务中心">客户接触域</div>
-                <div id="sys-运营支撑域" class="flat-card rounded text-xs text-blue-800 font-black text-center bg-blue-50 border-blue-400" data-name="运营支撑域" data-dept="人力资源部（党委组织部）/教育培训部">运营支撑域</div>
+                <div id="sys-承保域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="承保域" data-dept="团体非车险部" data-category="业务中台">承保域</div>
+                <div id="sys-批改域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="批改域" data-dept="团体非车险部" data-category="业务中台">批改域</div>
+                <div id="sys-保单服务域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="保单服务域" data-dept="团体非车险部" data-category="业务中台">保单服务域</div>
+                <div id="sys-产品域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="产品域" data-dept="团体非车险部" data-category="业务中台">产品域</div>
+                <div id="sys-客户域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="客户域" data-dept="共享服务中心" data-category="业务中台">客户域</div>
+                <div id="sys-标的域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="标的域" data-dept="团体非车险部" data-category="业务中台">标的域</div>
+                <div id="sys-营销域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="营销域" data-dept="团体客户渠道部" data-category="业务中台">营销域</div>
+                <div id="sys-履约域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="履约域" data-dept="理赔部" data-category="业务中台">履约域</div>
+                <div id="sys-交易域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="交易域" data-dept="共享服务中心" data-category="业务中台">交易域</div>
+                <div id="sys-账务域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="账务域" data-dept="共享服务中心" data-category="业务中台">账务域</div>
+                <div id="sys-合约域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="合约域" data-dept="再保险部" data-category="业务中台">合约域</div>
+                <div id="sys-支付结算域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="支付结算域" data-dept="共享服务中心" data-category="业务中台">支付结算域</div>
+                <div id="sys-单证域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="单证域" data-dept="共享服务中心" data-category="业务中台">单证域</div>
+                <div id="sys-合作开放域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="合作开放域" data-dept="团体客户渠道部" data-category="业务中台">合作开放域</div>
+                <div id="sys-客户服务域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="客户服务域" data-dept="共享服务中心" data-category="业务中台">客户服务域</div>
+                <div id="sys-安全域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="安全域" data-dept="共享服务中心" data-category="业务中台">安全域</div>
+                <div id="sys-客户接触域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="客户接触域" data-dept="共享服务中心" data-category="业务中台">客户接触域</div>
+                <div id="sys-运营支撑域" class="flat-card rounded text-xs text-blue-800 font-black text-center bg-blue-50 border-blue-400" data-name="运营支撑域" data-dept="人力资源部（党委组织部）/教育培训部" data-category="业务中台">运营支撑域</div>
                 
-                <div id="sys-文档中心" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="文档中心" data-dept="共享服务中心">文档中心</div>
-                <div id="sys-事件中心" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="事件中心" data-dept="共享服务中心">事件中心</div>
-                <div id="sys-规则平台" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="规则平台" data-dept="共享服务中心">规则平台</div>
+                <div id="sys-文档中心" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="文档中心" data-dept="共享服务中心" data-category="业务中台">文档中心</div>
+                <div id="sys-事件中心" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="事件中心" data-dept="共享服务中心" data-category="业务中台">事件中心</div>
+                <div id="sys-规则平台" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="规则平台" data-dept="共享服务中心" data-category="业务中台">规则平台</div>
             </div>
         </section>
 
@@ -405,17 +402,17 @@
                 <i class="fa-solid fa-chart-pie mr-2"></i>六、数据中台
             </div>
             <div class="p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                <div id="sys-经营分析平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="经营分析平台" data-dept="共享服务中心">经营分析平台</div>
-                <div id="sys-智慧决策平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智慧决策平台" data-dept="共享服务中心">智慧决策平台</div>
-                <div id="sys-高管驾驶舱" class="flat-card rounded text-xs font-bold bg-blue-50/60 border-blue-300 text-blue-900 flex justify-between items-center" data-name="高管驾驶舱" data-dept="共享服务中心"><span>高管驾驶舱</span><span class="text-[9px] bg-blue-200 text-blue-700 px-1 rounded">大屏</span></div>
-                <div id="sys-统一提数平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一提数平台" data-dept="共享服务中心">统一提数平台</div>
-                <div id="sys-统一数据服务" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一数据服务" data-dept="共享服务中心">统一数据服务</div>
-                <div id="sys-统一数据门户" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一数据门户" data-dept="共享服务中心">统一数据门户</div>
-                <div id="sys-公共数据中心" class="flat-card rounded text-xs font-medium text-slate-700" data-name="公共数据中心" data-dept="共享服务中心">公共数据中心</div>
-                <div id="sys-数据质量管理平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="数据质量管理平台" data-dept="共享服务中心">数据质量管理平台</div>
-                <div id="sys-数据标准管理平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="数据标准管理平台" data-dept="共享服务中心">数据标准管理平台</div>
-                <div id="sys-标签管理系统" class="flat-card rounded text-xs font-medium text-slate-700" data-name="标签管理系统" data-dept="共享服务中心">标签管理系统</div>
-                <div id="sys-帆软报表" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="帆软报表">帆软报表</div>
+                <div id="sys-经营分析平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="经营分析平台" data-dept="共享服务中心" data-category="数据中台">经营分析平台</div>
+                <div id="sys-智慧决策平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智慧决策平台" data-dept="共享服务中心" data-category="数据中台">智慧决策平台</div>
+                <div id="sys-高管驾驶舱" class="flat-card rounded text-xs font-bold bg-blue-50/60 border-blue-300 text-blue-900 flex justify-between items-center" data-name="高管驾驶舱" data-dept="共享服务中心" data-category="数据中台"><span>高管驾驶舱</span><span class="text-[9px] bg-blue-200 text-blue-700 px-1 rounded">大屏</span></div>
+                <div id="sys-统一提数平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一提数平台" data-dept="共享服务中心" data-category="数据中台">统一提数平台</div>
+                <div id="sys-统一数据服务" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一数据服务" data-dept="共享服务中心" data-category="数据中台">统一数据服务</div>
+                <div id="sys-统一数据门户" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一数据门户" data-dept="共享服务中心" data-category="数据中台">统一数据门户</div>
+                <div id="sys-公共数据中心" class="flat-card rounded text-xs font-medium text-slate-700" data-name="公共数据中心" data-dept="共享服务中心" data-category="数据中台">公共数据中心</div>
+                <div id="sys-数据质量管理平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="数据质量管理平台" data-dept="共享服务中心" data-category="数据中台">数据质量管理平台</div>
+                <div id="sys-数据标准管理平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="数据标准管理平台" data-dept="共享服务中心" data-category="数据中台">数据标准管理平台</div>
+                <div id="sys-标签管理系统" class="flat-card rounded text-xs font-medium text-slate-700" data-name="标签管理系统" data-dept="共享服务中心" data-category="数据中台">标签管理系统</div>
+                <div id="sys-帆软报表" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="帆软报表" data-category="数据中台">帆软报表</div>
             </div>
         </section>
 
@@ -426,7 +423,7 @@
                 </span>
             </div>
             <div class="p-4">
-                <div id="sys-统一监管报送平台" class="flat-card rounded text-xs font-bold bg-white border-slate-300 max-w-sm py-3 px-4 shadow-sm flex items-center justify-between" data-name="统一监管报送平台" data-dept="共享服务中心">
+                <div id="sys-统一监管报送平台" class="flat-card rounded text-xs font-bold bg-white border-slate-300 max-w-sm py-3 px-4 shadow-sm flex items-center justify-between" data-name="统一监管报送平台" data-dept="共享服务中心" data-category="监管报送">
                     <div class="space-y-0.5">
                         <strong class="text-slate-900 block text-xs"><i class="fa-solid fa-gavel mr-1.5 text-red-700"></i>统一监管报送平台</strong>
                         <span class="text-[11px] text-slate-500 font-normal block">合规脱敏及标准化报送集市</span>
@@ -495,6 +492,7 @@
             cards.forEach(card => {
                 const sysName = card.getAttribute('data-name') ? card.getAttribute('data-name').toLowerCase() : "";
                 const sysDept = card.getAttribute('data-dept') ? card.getAttribute('data-dept') : "";
+                const sysCategory = card.getAttribute('data-category') ? card.getAttribute('data-category').toLowerCase() : "";
                 const originalName = card.getAttribute('data-name') || card.innerText.trim().split('\n')[0];
 
                 if (!isFilterActive) {
@@ -502,7 +500,9 @@
                     return;
                 }
 
-                const matchesName = (nameKeyword === "") || sysName.includes(nameKeyword);
+                // 关键字同时匹配：系统名称 / 系统分类 / 属主部门
+                const matchesName = (nameKeyword === "") || sysName.includes(nameKeyword)
+                    || sysCategory.includes(nameKeyword) || sysDept.toLowerCase().includes(nameKeyword);
                 const matchesDept = (currentSelectedDept === "全部属主部门") || (sysDept === currentSelectedDept);
 
                 if (matchesName && matchesDept) {
