@@ -13,16 +13,7 @@ env/
 .DS_Store
 Thumbs.db
 
-# 排除所有文档文件
-*.docx
-*.doc
-*.ppt
-*.pptx
-*.xmind
-*.pdf
-*.xlsx
-
-#排除临时文件
+# 临时文件
 *.tmp
 *.swp
 temp/
