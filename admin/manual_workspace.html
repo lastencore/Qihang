@@ -63,25 +63,7 @@
             </span>
            </div>
            
-           <div class="ant-page-header-heading-extra">
-            <div class="ant-space ant-space-horizontal ant-space-align-center" style="gap: 8px; display: flex;">
-             <div class="ant-space-item">
-              <button class="ant-btn ant-btn-default" onclick="triggerLocalMarkdownCopy()" type="button" style="height: 32px; padding: 0 15px; border-radius: 4px; border: 1px solid #cbd5e1; background: #f8fafc; color: #0284c7; font-weight: 600; cursor: pointer;">
-               <span>复制为 md 格式</span>
-              </button>
-             </div>
-             <div class="ant-space-item">
-              <button class="ant-btn ant-btn-default" onclick="alert('已暂存')" type="button" style="height: 32px; padding: 0 15px; border-radius: 4px; border: 1px solid #d9d9d9; background: #fff; cursor: pointer;">
-               <span>暂存草稿</span>
-              </button>
-             </div>
-             <div class="ant-space-item">
-              <button class="ant-btn ant-btn-primary" onclick="alert('已发布')" type="button" style="height: 32px; padding: 0 15px; border-radius: 4px; background: #cc0000; border: 1px solid #cc0000; color: #fff; font-weight: bold; cursor: pointer;">
-               <span>保存发布</span>
-              </button>
-             </div>
-            </div>
-           </div>
+
           </div>
          </div>
         </div>
@@ -173,6 +155,19 @@
 
           <div class="ant-pro-card" style="flex: 1; display: flex; flex-direction: column; background: #fff; border-radius: 8px; border: 1px solid #e6e6e6; overflow: hidden;">
             
+            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; padding: 10px 24px; border-bottom: 1px solid #f0f0f0; background: #fafafa; flex-shrink: 0;">
+              <button class="ant-btn ant-btn-default" onclick="triggerLocalMarkdownCopy()" type="button" style="height: 28px; padding: 0 12px; font-size: 12px; border-radius: 4px; border: 1px solid #cbd5e1; background: #f8fafc; color: #0284c7; font-weight: 600; cursor: pointer; white-space: nowrap;">
+                <span>复制为 md 格式</span>
+              </button>
+              <button class="ant-btn ant-btn-primary" onclick="alert('已保存')" type="button" style="height: 28px; padding: 0 12px; font-size: 12px; border-radius: 4px; background: #cc0000; border: 1px solid #cc0000; color: #fff; font-weight: bold; cursor: pointer; white-space: nowrap;">
+                <span>保存</span>
+              </button>
+              <button id="manualPublishSwitch" class="ant-switch ant-switch-checked" role="switch" type="button" onclick="this.classList.toggle('ant-switch-checked');var s=this.querySelector('.ant-switch-inner');s.textContent=this.classList.contains('ant-switch-checked')?'公开':'不公开'" style="margin: 0;">
+                <div class="ant-switch-handle"></div>
+                <span class="ant-switch-inner">公开</span>
+              </button>
+            </div>
+
             <div class="custom-scrollbar" style="flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px;">
               
               <div style="display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
