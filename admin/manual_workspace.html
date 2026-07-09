@@ -21,6 +21,20 @@
     .cic-richtext-editor .editor-editable-area ul[data-type="taskList"] input[type="checkbox"] { margin-right: 8px; margin-top: 4px; cursor: pointer; }
     .tree-icon-action-btn { background: transparent; border: none; padding: 2px 4px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; color: #1e3a8a; transition: all 0.2s; }
     .tree-icon-action-btn:hover { background-color: #f1f5f9; color: #cc0000; }
+    /* 目录树：hover 菜单 + 拖拽 */
+    .tree-node { transition: box-shadow .15s, opacity .15s; }
+    .tree-node.dragging { opacity: .4; }
+    .tree-node.drag-over { box-shadow: 0 0 0 2px #1677ff; border-radius: 6px; }
+    .tree-actions { display: flex; gap: 4px; align-items: center; }
+    .tree-popwrap { position: relative; display: inline-flex; }
+    .tree-menu { display: none; position: absolute; right: 0; top: 100%; margin-top: 4px; background: #fff; border: 1px solid #e6e6e6; border-radius: 6px; box-shadow: 0 6px 16px rgba(0,0,0,.12); min-width: 124px; padding: 4px; z-index: 60; }
+    .tree-popwrap:hover .tree-menu { display: block; }
+    .tree-menu > div { padding: 6px 10px; font-size: 12px; color: #334155; border-radius: 4px; cursor: pointer; white-space: nowrap; }
+    .tree-menu > div:hover { background: #f1f5f9; color: #cc0000; }
+    .tree-dot { background: transparent; border: none; cursor: pointer; color: #94a3b8; font-size: 15px; line-height: 1; padding: 2px 4px; border-radius: 4px; }
+    .tree-dot:hover { background: #f1f5f9; color: #334155; }
+    .tree-plus { background: transparent; border: none; cursor: pointer; color: #1677ff; font-size: 17px; font-weight: 700; line-height: 1; padding: 0 5px; border-radius: 4px; }
+    .tree-plus:hover { background: #e6f4ff; }
   </style>
  </head>
  <body>
@@ -34,7 +48,7 @@
       <header class="ant-layout-header" style="height: 48px; line-height: 48px; background: transparent; flex-shrink: 0;"></header>
       
       <div id="nav-header-placeholder" style="height:48px;"></div>
-
+      
       <main class="ant-layout-content ant-pro-basicLayout-content ant-pro-basicLayout-has-header ant-pro-basicLayout-content-disable-margin" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
        <div class="ant-pro-page-container" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
         
@@ -63,11 +77,10 @@
             </span>
            </div>
            
-
           </div>
          </div>
         </div>
-
+        
         <div class="ant-pro-grid-content" style="flex: 1; display: flex; overflow: hidden; background: #f0f2f5; padding: 12px; gap: 12px;">
          
           <div class="ant-pro-card" style="width: 280px; display: flex; flex-direction: column; background: #fff; border-radius: 8px; border: 1px solid #e6e6e6; overflow: hidden;">
@@ -81,53 +94,77 @@
                     <path d="M12 11v6M9 14h6" stroke="#cc0000" stroke-width="2.5"></path>
                   </svg>
                 </button>
-                <button onclick="addNewNodePrompt('doc')" class="tree-icon-action-btn" title="新建文档">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <path d="M12 12v6M9 15h6" stroke="#cc0000" stroke-width="2.5"></path>
-                  </svg>
-                </button>
               </div>
             </div>
             
             <div class="custom-scrollbar" style="flex: 1; overflow-y: auto; padding: 12px; font-size: 13px; color: #475569;">
               <div id="tree-root-nodes" style="display: flex; flex-direction: column; gap: 6px;">
                 
-                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; flex-direction: column; gap: 6px;">
+                <div class="tree-node" draggable="true" data-name="前置准备与系统鉴权" ondragstart="onDragStart(event,this)" ondragover="onDragOver(event,this)" ondrop="onDrop(event,this)" ondragend="onDragEnd(event)" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; flex-direction: column; gap: 6px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #1e293b;">
                     <span style="cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 9px; margin-right: 4px; color: #94a3b8;">▼</span> 前置准备与系统鉴权</span>
-                    <div style="display: flex; gap: 4px; align-items: center; font-size: 11px; font-weight: normal; color: #94a3b8;">
-                      <span class="anticon" onclick="alert('已上移')" style="cursor: pointer;">▲</span>
-                      <span class="anticon" onclick="alert('已下移')" style="cursor: pointer;">▼</span>
-                      <button onclick="triggerDeleteValidation('前置准备与系统鉴权')" class="tree-icon-action-btn" title="删除" style="padding:0 2px;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                      </button>
+                    <div class="tree-actions">
+                      <div class="tree-popwrap">
+                        <button class="tree-dot" title="更多">⋯</button>
+                        <div class="tree-menu">
+                          <div onclick="delDir('前置准备与系统鉴权')">删除</div>
+                          <div onclick="renameDir('前置准备与系统鉴权')">重命名</div>
+                        </div>
+                      </div>
+                      <div class="tree-popwrap">
+                        <button class="tree-plus" title="新建">＋</button>
+                        <div class="tree-menu">
+                          <div onclick="addSub('前置准备与系统鉴权')">新增子目录</div>
+                          <div onclick="addDoc('前置准备与系统鉴权')">创建文档</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
-                  <div style="padding-left: 12px; border-left: 2px solid #cbd5e1; display: flex; flex-direction: column; gap: 6px; margin-top: 2px;">
+                  <div class="tree-children" style="padding-left: 12px; border-left: 2px solid #cbd5e1; display: flex; flex-direction: column; gap: 6px; margin-top: 2px;">
                     
-                    <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px; display: flex; flex-direction: column; gap: 6px;">
+                    <div class="tree-node" draggable="true" data-name="安全鉴权子域" ondragstart="onDragStart(event,this)" ondragover="onDragOver(event,this)" ondrop="onDrop(event,this)" ondragend="onDragEnd(event)" style="background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px; display: flex; flex-direction: column; gap: 6px;">
                       <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #475569; font-size: 12.5px;">
                         <span style="cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 8px; margin-right: 4px; color: #a1a1aa;">▼</span> 安全鉴权子域</span>
-                        <button onclick="triggerDeleteValidation('安全鉴权子域')" class="tree-icon-action-btn" title="删除" style="padding:0 2px;">
-                          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
+                        <div class="tree-actions">
+                          <div class="tree-popwrap">
+                            <button class="tree-dot" title="更多">⋯</button>
+                            <div class="tree-menu">
+                              <div onclick="delDir('安全鉴权子域')">删除</div>
+                              <div onclick="renameDir('安全鉴权子域')">重命名</div>
+                            </div>
+                          </div>
+                          <div class="tree-popwrap">
+                            <button class="tree-plus" title="新建">＋</button>
+                            <div class="tree-menu">
+                              <div onclick="addDoc('安全鉴权子域')">创建文档</div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       
-                      <div style="padding-left: 12px; border-left: 1px dashed #cbd5e1; display: flex; flex-direction: column; gap: 4px; font-weight: normal;">
-                        <div style="background: #fff1f2; border: 1px solid #ffe4e6; border-radius: 4px; padding: 6px; display: flex; justify-content: space-between; align-items: center; color: #cc0000; font-weight: bold;">
+                      <div class="tree-children" style="padding-left: 12px; border-left: 1px dashed #cbd5e1; display: flex; flex-direction: column; gap: 4px; font-weight: normal;">
+                        <div class="tree-node" draggable="true" data-name="核心岗位鉴权校验指引" ondragstart="onDragStart(event,this)" ondragover="onDragOver(event,this)" ondrop="onDrop(event,this)" ondragend="onDragEnd(event)" style="background: #fff1f2; border: 1px solid #ffe4e6; border-radius: 4px; padding: 6px; display: flex; justify-content: space-between; align-items: center; color: #cc0000; font-weight: bold;">
                           <span style="display: inline-flex; align-items: center;">📄 核心岗位鉴权校验指引</span>
-                          <button onclick="triggerDeleteValidation('核心岗位鉴权校验指引')" class="tree-icon-action-btn" title="删除" style="color: #cc0000; padding:0 2px;">
-                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                          </button>
+                          <div class="tree-actions">
+                            <div class="tree-popwrap">
+                              <button class="tree-dot" title="更多">⋯</button>
+                              <div class="tree-menu">
+                                <div onclick="delDoc('核心岗位鉴权校验指引')">删除</div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="tree-node" draggable="true" data-name="VPN 远程安全作业规范" ondragstart="onDragStart(event,this)" ondragover="onDragOver(event,this)" ondrop="onDrop(event,this)" ondragend="onDragEnd(event)" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px; display: flex; justify-content: space-between; align-items: center;">
                           <span style="color: #475569;">📄 VPN 远程安全作业规范</span>
-                          <button onclick="triggerDeleteValidation('VPN 远程安全作业规范')" class="tree-icon-action-btn" title="删除" style="padding:0 2px;">
-                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                          </button>
+                          <div class="tree-actions">
+                            <div class="tree-popwrap">
+                              <button class="tree-dot" title="更多">⋯</button>
+                              <div class="tree-menu">
+                                <div onclick="delDoc('VPN 远程安全作业规范')">删除</div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -135,24 +172,50 @@
                   </div>
                 </div>
 
-                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
+                <div class="tree-node" draggable="true" data-name="新一代线上化作业标准流程" ondragstart="onDragStart(event,this)" ondragover="onDragOver(event,this)" ondrop="onDrop(event,this)" ondragend="onDragEnd(event)" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
                   <span style="color: #334155; cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 9px; margin-right: 4px; color: #94a3b8;">▶</span> 新一代线上化作业标准流程</span>
-                  <button onclick="triggerDeleteValidation('新一代线上化作业标准流程')" class="tree-icon-action-btn" title="删除">
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                  </button>
+                  <div class="tree-actions">
+                    <div class="tree-popwrap">
+                      <button class="tree-dot" title="更多">⋯</button>
+                      <div class="tree-menu">
+                        <div onclick="delDir('新一代线上化作业标准流程')">删除</div>
+                        <div onclick="renameDir('新一代线上化作业标准流程')">重命名</div>
+                      </div>
+                    </div>
+                    <div class="tree-popwrap">
+                      <button class="tree-plus" title="新建">＋</button>
+                      <div class="tree-menu">
+                        <div onclick="addSub('新一代线上化作业标准流程')">新增子目录</div>
+                        <div onclick="addDoc('新一代线上化作业标准流程')">创建文档</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
+                <div class="tree-node" draggable="true" data-name="典型卡点阻断风控拦截指引" ondragstart="onDragStart(event,this)" ondragover="onDragOver(event,this)" ondrop="onDrop(event,this)" ondragend="onDragEnd(event)" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
                   <span style="color: #334155; cursor: pointer; display: inline-flex; align-items: center;"><span style="font-size: 9px; margin-right: 4px; color: #94a3b8;">▶</span> 典型卡点阻断风控拦截指引</span>
-                  <button onclick="triggerDeleteValidation('典型卡点阻断风控拦截指引')" class="tree-icon-action-btn" title="删除">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                  </button>
+                  <div class="tree-actions">
+                    <div class="tree-popwrap">
+                      <button class="tree-dot" title="更多">⋯</button>
+                      <div class="tree-menu">
+                        <div onclick="delDir('典型卡点阻断风控拦截指引')">删除</div>
+                        <div onclick="renameDir('典型卡点阻断风控拦截指引')">重命名</div>
+                      </div>
+                    </div>
+                    <div class="tree-popwrap">
+                      <button class="tree-plus" title="新建">＋</button>
+                      <div class="tree-menu">
+                        <div onclick="addSub('典型卡点阻断风控拦截指引')">新增子目录</div>
+                        <div onclick="addDoc('典型卡点阻断风控拦截指引')">创建文档</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
               </div>
             </div>
           </div>
-
+          
           <div class="ant-pro-card" style="flex: 1; display: flex; flex-direction: column; background: #fff; border-radius: 8px; border: 1px solid #e6e6e6; overflow: hidden;">
             
             <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; padding: 10px 24px; border-bottom: 1px solid #f0f0f0; background: #fafafa; flex-shrink: 0;">
@@ -167,7 +230,7 @@
                 <span class="ant-switch-inner">公开</span>
               </button>
             </div>
-
+            
             <div class="custom-scrollbar" style="flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px;">
               
               <div style="display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
@@ -176,7 +239,7 @@
                   <input type="text" id="workspace-node-title-input" value="核心岗位鉴权多层级校验指引" class="ant-input-workspace-title"/>
                 </div>
               </div>
-
+              
               <div style="display: flex; flex-direction: column; gap: 6px; flex: 1; overflow: hidden; margin-top: 8px;">
                 <span style="font-size: 12px; font-weight: bold; color: #94a3b8;">正文</span>
                 
@@ -211,11 +274,11 @@
                     <p>请根据真实的职场网络环境，严格参照操作手册目录核对网络通信定损链路状态。</p>
                   </div>
                 </div>
-
+                
               </div>
             </div>
           </div>
-
+          
         </div>
        </div>
       </main>
@@ -231,7 +294,7 @@
     </section>
    </div>
   </div>
-
+  
   <script>
     const mountNode = document.getElementById('tiptap-local-poly-mount');
 
@@ -275,7 +338,7 @@
         }
     };
 
-    // 优化 1：全新升级升级升级的 DOM 级逐层节点深度深度解析——彻底修复旧版正则替换时表格与行内代码错乱的Bug
+    // 优化 1：全新升级升级升级的 DOM 级逐层节点深度深度解析——彻底修复旧版正则替换时表格与行内代码错乱的 Bug
     window.triggerLocalMarkdownCopy = () => {
         const titleStr = document.getElementById('workspace-node-title-input').value || '未命名章节';
         
@@ -354,18 +417,84 @@
         document.body.removeChild(textArea);
     }
 
-    function triggerDeleteValidation(nodeName) {
-        return confirm(`您确定要永久安全移除目录节点【${nodeName}】吗？删除后前台用户将同步秒级挂起。`);
+    // ===== 目录树交互（按本期交互规范重构）=====
+    function findNode(name) {
+        return document.querySelector('.tree-node[data-name="' + (window.CSS ? CSS.escape(name) : name) + '"]');
     }
 
-    // 优化 2：严密执行 2 层级目录拦截校验（1层文件夹目录，2层文档）
-    function addNewNodePrompt(type) {
-        const alertLabel = type === 'dir' ? '目录' : '文档';
-        const text = prompt(`新建${alertLabel}，请输入名称：`, "未命名");
-        if (text) {
-            alert(`已添加：${text}`);
+    // 删除目录：含子节点（子目录/子文档）则拦截
+    window.delDir = (name) => {
+        const node = findNode(name);
+        const children = node && node.querySelector(':scope > .tree-children');
+        if (children && children.children.length) {
+            alert('目录不为空，请先移出或删除目录内文档');
+            return;
         }
+        if (confirm('确认删除目录？')) {
+            alert('已删除目录：' + name);
+        }
+    };
+
+    // 目录重命名
+    window.renameDir = (name) => {
+        const text = prompt('目录重命名，请输入新名称：', name);
+        if (text) alert('已重命名：' + name + ' → ' + text);
+    };
+
+    // 新增子目录
+    window.addSub = (name) => {
+        const text = prompt('新增子目录，请输入目录名称：', '未命名');
+        if (text) alert('已在【' + name + '】下新增子目录：' + text);
+    };
+
+    // 创建文档（命名为“新建文档”）
+    window.addDoc = (name) => {
+        alert('已在【' + name + '】下创建文档：新建文档');
+    };
+
+    // 删除文档
+    window.delDoc = (name) => {
+        if (confirm('确认删除文档？删除后无法恢复！')) {
+            alert('已删除文档：' + name);
+        }
+    };
+
+    // 根目录新建目录（仅允许建目录，不允许建文件）
+    function addNewNodePrompt(type) {
+        if (type !== 'dir') return;
+        const text = prompt('新建目录，请输入名称：', '未命名');
+        if (text) alert('已在根目录新增目录：' + text);
     }
+
+    // 目录树拖拽：调整顺序 / 变更所属目录
+    let dragSrc = null;
+    window.onDragStart = (e, el) => {
+        dragSrc = el;
+        el.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+    };
+    window.onDragOver = (e, el) => {
+        e.preventDefault();
+        el.classList.add('drag-over');
+    };
+    window.onDragEnd = () => {
+        document.querySelectorAll('.drag-over').forEach(n => n.classList.remove('drag-over'));
+        if (dragSrc) dragSrc.classList.remove('dragging');
+        dragSrc = null;
+    };
+    window.onDrop = (e, el) => {
+        e.preventDefault();
+        el.classList.remove('drag-over');
+        if (!dragSrc || dragSrc === el) return;
+        const children = el.querySelector(':scope > .tree-children');
+        if (children) {
+            children.appendChild(dragSrc);
+        } else {
+            el.parentNode.insertBefore(dragSrc, el.nextSibling);
+        }
+        const title = dragSrc.querySelector('span');
+        alert('已移动节点：' + (title ? title.innerText.trim() : '节点'));
+    };
   </script>
   
 <script src="../assets/nav-loader.js"></script>
