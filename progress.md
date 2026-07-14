@@ -114,7 +114,9 @@
 - [x] **`manual_workspace.html` 目录树交互重构**：按 5 条规则 + 交互细则重写——根目录仅可建目录（移除"创建文件"按钮）；文件夹 ⋯/＋ hover 菜单（新增子目录/创建文档/重命名/删除）；二级目录 ＋ 不显示"新增子目录"；目录非空删除拦截；文档删除二次确认；移除上下三角箭头；全节点支持拖拽调整顺序与所属目录
 - [x] **CDN 样式塌陷修复**：`manual_workspace.html` 头部 `umi.cssabe1862.css` 误写为 `umi.cssabe1862.css` 致 ant-pro 基础样式 404、页面塌陷；改回 `umi.cabe1862.css`（HTTP 200）恢复正常，playwright 渲染验证通过
 - [x] **`index.html` 批次指针化**：当前 index 对应 202606 需求批次，未来批次会增多；将 index 降级为极简批次指针（一行 `<meta http-equiv="refresh" content="0; url=requirement_202606.html">`），原看板内容整体迁出为 `requirement_202606.html`（202606 批次专属导航页）；未来切批次仅改 index 一行 `url=` 即可，旧批次文件留作"归档"
-- [x] **PRD 目录树管理节（用户本地更新）**：你在本地 `启航平台_更新日志_操作手册_PRD.md` 补了 §3.4.3.2 左侧目录树需求，比原型更细（新增"名称非空、最大 20 字符"约束）；**原型 gap 已提示**：当前 `manual_workspace.html` 的 addNewNodePrompt/addSub/renameDir 仍是裸 `prompt`，未做非空/长度校验，若按 PRD 验收需对齐
+- [x] **PRD 目录树管理节（用户本地更新）**：你在本地 `启航平台_更新日志_操作手册_PRD.md` 补了 §3.4.3.2 左侧目录树需求，比原型更细（新增"名称非空、最大 20 字符"约束）；**原型已对齐**：本会话补 `validateNodeName`（非空 + ≤20 字符），`addNewNodePrompt`/`addSub`/`renameDir` 三个 prompt 入口接入校验，playwright 单测 + dialog 端到端验证通过
+
+- [x] **#1 目录树名称校验对齐 PRD**：`manual_workspace.html` 新增 `validateNodeName`（非空 + ≤20 字符），根目录新建 / 新增子目录 / 重命名三处 prompt 入口统一接入；空或超长弹 alert 拦截，合法才执行；playwright 5 用例全过 + 3 条 alert 文案正确 + 零 console error
 
 **2026-07-07（前文，随 `31ce7b0` 入库）**
 
