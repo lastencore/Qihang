@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-09 10:51:00
+> 最后更新：2026-07-14 14:31:35
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -70,6 +70,9 @@
 - [x] **`app_detail.html` 独立详情页**：从 client.html 抽取应用详情为独立页面，四 Tab（操作手册/更新日志/相关课程/我有建议），支持 `?name=系统名` 参数跳转；详情区默认显示，大厅区 hidden-layout 隐藏
 - [x] **`app_map.html` 跳转详情**：108 个 flat-card 模块点击 → `app_detail.html?name=XXX`；搜索下拉结果新增 click 跳转；"应用大厅"按钮链接修正
 - [x] **`index.html` 索引入口整理**：应用地图 → 应用详情（新增），全部链接验证通过
+- [x] **`manual_workspace.html` 目录树交互重构**：根目录仅建目录；文件夹新增子目录/创建文档/重命名/删除（非空拦截）；文档删除；⋯/＋ hover 菜单；拖拽调整顺序与所属目录
+- [x] **`manual_workspace.html` CDN 样式修复**：`umi.cssabe1862.css` → `umi.cabe1862.css`，消除 404 导致 ant-pro 基础样式塌陷
+- [x] **`index.html` 批次指针化**：降级为一行 meta refresh 跳转到批次页；新增 `requirement_202606.html` 作为 202606 批次专属导航页；未来切批次仅改 index 一行 url
 
 ### 🔄 进行中
 
@@ -106,6 +109,13 @@
 - [x] **走查整改结论（用户决策）**：原型改动全部不做（开发能看懂）；我有建议的 iframe/5 类口径由 PM 自行收口 PRD；相关课程原样保留
 - [x] **index.html 项目综述加功能蓝图**：用你提供的图 `images/blueprint_202606.png`（启航202606功能蓝图）原样嵌入，置于映射关系图之前（先看蓝图再看关系图）；缩略图 max-width:190px；同步删除此前误手画的 HTML 架构图与对应 CSS
 
+**2026-07-14（本次，待推送 origin/main）**
+
+- [x] **`manual_workspace.html` 目录树交互重构**：按 5 条规则 + 交互细则重写——根目录仅可建目录（移除"创建文件"按钮）；文件夹 ⋯/＋ hover 菜单（新增子目录/创建文档/重命名/删除）；二级目录 ＋ 不显示"新增子目录"；目录非空删除拦截；文档删除二次确认；移除上下三角箭头；全节点支持拖拽调整顺序与所属目录
+- [x] **CDN 样式塌陷修复**：`manual_workspace.html` 头部 `umi.cssabe1862.css` 误写为 `umi.cssabe1862.css` 致 ant-pro 基础样式 404、页面塌陷；改回 `umi.cabe1862.css`（HTTP 200）恢复正常，playwright 渲染验证通过
+- [x] **`index.html` 批次指针化**：当前 index 对应 202606 需求批次，未来批次会增多；将 index 降级为极简批次指针（一行 `<meta http-equiv="refresh" content="0; url=requirement_202606.html">`），原看板内容整体迁出为 `requirement_202606.html`（202606 批次专属导航页）；未来切批次仅改 index 一行 `url=` 即可，旧批次文件留作"归档"
+- [x] **PRD 目录树管理节（用户本地更新）**：你在本地 `启航平台_更新日志_操作手册_PRD.md` 补了 §3.4.3.2 左侧目录树需求，比原型更细（新增"名称非空、最大 20 字符"约束）；**原型 gap 已提示**：当前 `manual_workspace.html` 的 addNewNodePrompt/addSub/renameDir 仍是裸 `prompt`，未做非空/长度校验，若按 PRD 验收需对齐
+
 **2026-07-07（前文，随 `31ce7b0` 入库）**
 
 - [x] **应用地图客户端改版**：设计稿落地 `client/app_map.html`（两级分类 + 重点/核心/大屏标签 + 不可点卡片；保留跳 `app_detail` 链路）
@@ -126,7 +136,8 @@
 
 ```
 prototype/
-├── index.html                    # 原型导航索引（合并卡片 + tag分类 + PM署名；替代原 client.html 入口）
+├── index.html                    # 批次指针：meta refresh → requirement_202606.html（托管平台必需入口，打开即跳默认批次）
+├── requirement_202606.html      # 202606 批次专属导航页（从 index 迁出，含功能蓝图/映射关系图/各子页入口）
 ├── images/
 │   ├── mapping_relation.png      # PMS 关联关系配图
 │   └── update_log_flow.jpg       # 更新日志泳道图（图片版）
@@ -246,7 +257,7 @@ prototype/
 - **网关路由原理**：带参请求 → 网关 `Set-Cookie(x-cs-sandbox-id/port)` + `302` 跳干净路径；浏览器带 cookie 即正常渲染（首次会跳一次，正常现象）。`curl` 自检必须带 cookie jar（`-c/-b`），否则 302 后 404。
 - **服务必须用 supervisord 托管**（不要 nohup）：nohup 进程在沙箱休眠/恢复后会死，表现为"服务挂了"。配置写 `/usr/local/share/supervisor/preview-<port>.conf`，`command=python3 -m http.server <port> --bind 0.0.0.0 --directory /workspace/prototype`，`autorestart=true`；再 `${IDE_EDITOR_SERVER_DIR}/bin/supervisord ctl -c ${IDE_EDITOR_SERVER_DIR}/supervisord-conf/supervisord.conf reload` 后 `start preview-<port>`。
 - 约定端口 **8080**；`preview` skill 为标准入口。
-- 当前线上预览（以 `notify` 输出为准，区/标识会变）：`https://webview.e2b.bj7.sandbox.cloudstudio.club/?x-cs-sandbox-id=a95900f7c98845a596fe887aab7e2eda&x-cs-sandbox-port=8080`
+- 当前线上预览（以 `notify` 输出为准，区/标识会变）：`https://webview.e2b.sh4.sandbox.cloudstudio.club/?x-cs-sandbox-id=86364673f11942588155bfdb3ef85172&x-cs-sandbox-port=8080`
 
 ---
 
