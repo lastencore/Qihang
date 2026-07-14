@@ -437,14 +437,20 @@
 
     // 目录重命名
     window.renameDir = (name) => {
-        const text = prompt('目录重命名，请输入新名称：', name);
-        if (text) alert('已重命名：' + name + ' → ' + text);
+        const raw = prompt('目录重命名，请输入新名称：', name);
+        if (raw === null) return;
+        const err = validateNodeName(raw);
+        if (err) { alert(err); return; }
+        alert('已重命名：' + name + ' → ' + raw.trim());
     };
 
     // 新增子目录
     window.addSub = (name) => {
-        const text = prompt('新增子目录，请输入目录名称：', '未命名');
-        if (text) alert('已在【' + name + '】下新增子目录：' + text);
+        const raw = prompt('新增子目录，请输入目录名称：', '未命名');
+        if (raw === null) return;
+        const err = validateNodeName(raw);
+        if (err) { alert(err); return; }
+        alert('已在【' + name + '】下新增子目录：' + raw.trim());
     };
 
     // 创建文档（命名为“新建文档”）
@@ -459,11 +465,22 @@
         }
     };
 
+    // 目录/文档名称校验：非空 + ≤20 字符；返回 null 表示合法，否则返回错误提示
+    function validateNodeName(raw) {
+        const text = (raw === null ? '' : String(raw)).trim();
+        if (!text) return '名称不能为空';
+        if (text.length > 20) return '名称不能超过 20 个字符（当前 ' + text.length + ' 字）';
+        return null;
+    }
+
     // 根目录新建目录（仅允许建目录，不允许建文件）
     function addNewNodePrompt(type) {
         if (type !== 'dir') return;
-        const text = prompt('新建目录，请输入名称：', '未命名');
-        if (text) alert('已在根目录新增目录：' + text);
+        const raw = prompt('新建目录，请输入名称：', '未命名');
+        if (raw === null) return;
+        const err = validateNodeName(raw);
+        if (err) { alert(err); return; }
+        alert('已在根目录新增目录：' + raw.trim());
     }
 
     // 目录树拖拽：调整顺序 / 变更所属目录
