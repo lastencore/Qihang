@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-14 14:31:35
+> 最后更新：2026-07-14 17:48:24
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -118,6 +118,12 @@
 
 - [x] **#1 目录树名称校验对齐 PRD**：`manual_workspace.html` 新增 `validateNodeName`（非空 + ≤20 字符），根目录新建 / 新增子目录 / 重命名三处 prompt 入口统一接入；空或超长弹 alert 拦截，合法才执行；playwright 5 用例全过 + 3 条 alert 文案正确 + 零 console error
 
+**2026-07-14（本次，待推送 origin/main）— 需求设计中心共用导航重构**
+- [x] **导航抽出为共用模块**：`requirement_202606.html` 顶部平台 Tab + 左侧「需求版本」批次列表抽离，新增 `assets/req-nav.css` / `req_header.tpl` / `req_sidebar.tpl` / `req-nav.js` 四件套；页面仅留占位符 + 脚本引用，样式与结构改模板即全站生效
+- [x] **各平台独立批次**：侧栏批次按 `data-platform`（qihang/zhixing/tingting）区分，加载器按 `<body data-platform>` 只显示当前平台批次并高亮 `data-batch`；未来新增批次 = 改 `req_sidebar.tpl` 一行，启用新平台 = 改 `req_header.tpl`
+- [x] **新页脚手架**：新增 `requirement_TEMPLATE.html`，复制改 1 处 `data-platform/data-batch` 即可新建批次/平台页，导航自动套用
+- [x] **渲染验证**：playwright 加载 requirement_202606.html / requirement_TEMPLATE.html，断言头部+侧栏注入、占位符替换、启航高亮/知行聆听 disabled/仅显示本平台批次，零 console error，全部 PASS
+
 **2026-07-07（前文，随 `31ce7b0` 入库）**
 
 - [x] **应用地图客户端改版**：设计稿落地 `client/app_map.html`（两级分类 + 重点/核心/大屏标签 + 不可点卡片；保留跳 `app_detail` 链路）
@@ -139,7 +145,8 @@
 ```
 prototype/
 ├── index.html                    # 批次指针：meta refresh → requirement_202606.html（托管平台必需入口，打开即跳默认批次）
-├── requirement_202606.html      # 202606 批次专属导航页（从 index 迁出，含功能蓝图/映射关系图/各子页入口）
+├── requirement_202606.html      # 202606 批次专属导航页（从 index 迁出；头部+侧栏已抽为共用模块）
+├── requirement_TEMPLATE.html     # 新批次/新平台页面脚手架（复制即用，导航自动套用）
 ├── images/
 │   ├── mapping_relation.png      # PMS 关联关系配图
 │   └── update_log_flow.jpg       # 更新日志泳道图（图片版）
@@ -161,10 +168,14 @@ prototype/
 │   ├── app_catalog_proposal.html # 应用目录来源方案（HTML PPT）
 │   └── update_log_flow.html      # 更新日志方案泳道图（Mermaid）
 ├── assets/
-│   ├── common.css                # 全局样式表
-│   ├── nav-loader.js             # 导航动态加载器
-│   ├── sidebar.tpl               # 侧边栏模板
-│   └── top_nav.tpl               # 顶栏模板
+│   ├── common.css                # 全局样式表（admin 端）
+│   ├── nav-loader.js             # admin 端导航动态加载器
+│   ├── sidebar.tpl               # admin 端侧边栏模板
+│   ├── top_nav.tpl               # admin 端顶栏模板
+│   ├── req-nav.css               # 【共用】需求设计中心头部+侧栏+布局样式
+│   ├── req_header.tpl            # 【共用】顶部平台 Tab（启航/知行/聆听）
+│   ├── req_sidebar.tpl           # 【共用】左侧需求版本批次（按 data-platform 区分）
+│   └── req-nav.js                # 【共用】导航加载器：注入模板+按 body[data-platform/data-batch] 高亮/过滤
 ├── skills/
 │   └── progress-doc.md           # 交接文档 skill
 └── 启航平台_需求说明_202607.md     # 202607 迭代需求说明（用户维护，已同步 GitHub）
@@ -238,9 +249,9 @@ prototype/
 - GitHub 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
 - GitHub Token：**已内置于本文档**（拆分两段以规避 GitHub push protection，bash 自动拼接），clone 和 push 均可直接使用，无需用户额外发送。
 - Clone 命令：
-  `git clone "https://x-access-token:github_pat_11AFBPCQY0nDsSW66ypn3C""_tlvkMAbdc0CkFKEPfAzuMcEKYfhkRa1EFHP67HiJqWUDBGTVO3Nv0CMJV8F""@github.com/lastencore/Qihang.git" /workspace/prototype`
+  `git clone "https://x-access-token:github_pat_11AFBPCQY08OpGoYIpxoj0""_SX8e7Ng5RnynK2pEDm6MRLLZhzC5ZG1jGx9ANKGvERdMLJO6TIKK4yhuWXm""@github.com/lastencore/Qihang.git" /workspace/prototype`
 - Push 命令：
-  `git -c credential.helper= push "https://x-access-token:github_pat_11AFBPCQY0nDsSW66ypn3C""_tlvkMAbdc0CkFKEPfAzuMcEKYfhkRa1EFHP67HiJqWUDBGTVO3Nv0CMJV8F""@github.com/lastencore/Qihang.git" main`（用完即弃，不写入 config）
+  `git -c credential.helper= push "https://x-access-token:github_pat_11AFBPCQY08OpGoYIpxoj0""_SX8e7Ng5RnynK2pEDm6MRLLZhzC5ZG1jGx9ANKGvERdMLJO6TIKK4yhuWXm""@github.com/lastencore/Qihang.git" main`（用完即弃，不写入 config）
 - tdrive 根 ID：`SrgvhjiFWppt`
 
 ### 5.2 关键数据
@@ -270,7 +281,7 @@ prototype/
 > **第一步（初始化仓库）**：
 > 新对话 workspace 为空，直接从 GitHub clone（Token 已内置于 5.1）：
 > ```bash
-> git clone "https://x-access-token:github_pat_11AFBPCQY0nDsSW66ypn3C""_tlvkMAbdc0CkFKEPfAzuMcEKYfhkRa1EFHP67HiJqWUDBGTVO3Nv0CMJV8F""@github.com/lastencore/Qihang.git" /workspace/prototype
+> git clone "https://x-access-token:github_pat_11AFBPCQY08OpGoYIpxoj0""_SX8e7Ng5RnynK2pEDm6MRLLZhzC5ZG1jGx9ANKGvERdMLJO6TIKK4yhuWXm""@github.com/lastencore/Qihang.git" /workspace/prototype
 > ```
 > 如果 `/workspace/prototype/` 已存在旧数据，先 `rm -rf /workspace/prototype`。
 >

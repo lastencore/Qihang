@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>需求设计中心 - 批次页模板</title>
+    <!-- 共用导航样式（顶部平台 Tab + 左侧需求版本批次 + 布局骨架） -->
+    <link rel="stylesheet" href="assets/req-nav.css">
+    <style>
+        /* 本页内容专属样式：参考 requirement_202606.html 的 .content-display-pane / .asset-category-card 等 */
+        .content-display-pane {
+            flex-grow: 1; padding: 24px 32px 16px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 24px; scroll-behavior: smooth;
+        }
+        .pane-header { border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        .breadcrumb-area h2 { font-size: 20px; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
+        .breadcrumb-sub { font-size: 13px; color: var(--text-secondary); }
+        .tpl-hint {
+            background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px;
+            padding: 16px 20px; font-size: 13px; color: #614700; line-height: 1.8;
+        }
+        .tpl-hint code { background: #fff1b8; padding: 1px 5px; border-radius: 3px; }
+    </style>
+</head>
+<!--
+  ============ 新批次 / 新平台页面脚手架使用说明 ============
+  1) 复制本文件为 requirement_<平台>_<批次>.html（如 requirement_202607.html / requirement_zhixing_202607.html）
+  2) 修改下方 <body> 的 data-platform / data-batch：
+       · data-platform：qihang(启航) / zhixing(知行) / tingting(聆听)
+       · data-batch  ：本页对应的批次 id（用于侧栏高亮，须与 req_sidebar.tpl 中某项 data-batch 一致）
+  3) 若【新平台】首次出现：
+       · 在 assets/req_header.tpl 把对应 <div class="platform-tab disabled" data-platform="xxx"> 改为
+         <a class="platform-tab" data-platform="xxx" href="本页.html">平台名</a>
+       · 在 assets/req_sidebar.tpl 增加 <li class="version-item" data-platform="xxx" data-batch="yyy"><a href="本页.html">显示名</a></li>
+  4) 若【新批次】加入到已有平台：只需在 assets/req_sidebar.tpl 增加一行 <li>（见第 3 步）
+  5) 删除本 .tpl-hint 提示块，填入本批次的实际内容（参考 requirement_202606.html 的卡片结构）
+  顶部与左侧导航会自动从共用模块注入，无需每页维护。
+-->
+<body data-platform="qihang" data-batch="__BATCH__">
+
+    <!-- 顶部平台导航（共用模块，由 assets/req-nav.js 注入） -->
+    <div id="req-header-placeholder"></div>
+
+    <main class="main-workspace">
+
+        <!-- 左侧需求版本批次导航（共用模块，由 assets/req-nav.js 注入） -->
+        <div id="req-sidebar-placeholder"></div>
+
+        <section class="content-display-pane">
+            <div class="pane-header">
+                <div class="breadcrumb-area">
+                    <h2>「平台名 · 批次名」需求批次</h2>
+                    <div class="breadcrumb-sub">面向团队内部评审，点击对应文件即可预览</div>
+                </div>
+            </div>
+
+            <div class="tpl-hint">
+                📌 <strong>这是脚手架占位页</strong>。正式使用前请：<br>
+                ① 把 <code>&lt;body data-platform="qihang" data-batch="__BATCH__"&gt;</code> 改为实际平台与批次；<br>
+                ② 在 <code>assets/req_header.tpl</code> / <code>assets/req_sidebar.tpl</code> 登记平台或批次（新平台/新批次时）；<br>
+                ③ 删掉本提示块，填入本批次内容（参考 <code>requirement_202606.html</code> 的卡片结构）。
+            </div>
+        </section>
+    </main>
+
+    <!-- 共用导航加载器：注入顶部 + 左侧，并按 body[data-platform/data-batch] 高亮 -->
+    <script src="assets/req-nav.js"></script>
+
+</body></html>
