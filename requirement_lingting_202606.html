@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聆听平台 - 产品设计中心资产看板</title>
+    <!-- 共用导航样式（顶部平台 Tab + 左侧需求版本批次 + 布局骨架） -->
+    <link rel="stylesheet" href="assets/req-nav.css">
+    <style>
+        /* 与 requirement_202606.html 共用同一套内容样式，保证三平台视觉一致 */
+        .content-display-pane {
+            flex-grow: 1; padding: 24px 32px 16px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 24px; scroll-behavior: smooth;
+        }
+        .pane-header { border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        .breadcrumb-area h2 { font-size: 20px; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
+        .breadcrumb-sub { font-size: 13px; color: var(--text-secondary); }
+
+        .quick-anchor-nav {
+            display: flex; gap: 12px; background: #fff; border: 1px solid var(--border-color);
+            padding: 8px 16px; border-radius: 6px; box-shadow: var(--shadow-sm);
+        }
+        .anchor-btn {
+            font-size: 13px; color: var(--text-secondary); text-decoration: none;
+            padding: 4px 12px; border-radius: 4px; transition: all 0.2s; font-weight: 500;
+        }
+        .anchor-btn:hover { background: #f0f4ff; color: var(--primary-color); }
+
+        .flow-stack-container { display: flex; flex-direction: column; gap: 28px; }
+
+        .asset-category-card {
+            background-color: var(--bg-container); border: 1px solid var(--border-color);
+            border-radius: var(--radius-main); box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: row; overflow: hidden; min-height: 280px;
+        }
+        .card-brief-pane {
+            width: 35%; background-color: var(--bg-brief); border-right: 1px solid var(--border-color);
+            padding: 20px; display: flex; flex-direction: column; gap: 16px;
+        }
+        .brief-sec-title { font-size: 15px; font-weight: 600; color: #001529; display: flex; align-items: center; gap: 8px; }
+        .brief-sec-icon { width: 4px; height: 16px; background-color: var(--primary-color); border-radius: 2px; }
+        .brief-block { display: flex; flex-direction: column; gap: 6px; }
+        .brief-sub-title {
+            font-size: 14px; font-weight: 700; color: var(--text-main);
+            display: flex; align-items: center; gap: 6px;
+            padding: 4px 0 4px 10px; margin: 2px 0 8px;
+            border-left: 3px solid var(--primary-color); line-height: 1.4;
+        }
+        .brief-text { font-size: 13px; color: var(--text-main); line-height: 1.6; }
+        .brief-list { padding-left: 18px; font-size: 13px; color: var(--text-main); line-height: 1.6; }
+        .brief-note { font-size: 12px; color: #cf1322; background: #fff1f0; border: 1px solid #ffccc7; border-radius: 4px; padding: 8px 10px; line-height: 1.6; }
+
+        .card-links-pane { width: 65%; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .links-sec-title { font-size: 13px; font-weight: bold; color: var(--text-secondary); margin-bottom: -4px; }
+        .links-group { display: flex; flex-direction: column; gap: 10px; }
+
+        .document-link-item {
+            border: 1px solid #f0f0f0; border-radius: 6px; padding: 12px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; color: var(--text-main); background-color: #ffffff; transition: all 0.2s;
+        }
+        .document-link-item:hover { border-color: var(--primary-color); background-color: #fcfdfe; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .doc-meta-left { display: flex; flex-direction: column; gap: 4px; }
+        .doc-title-text { font-size: 13px; font-weight: 600; color: #262626; transition: color 0.2s; }
+        .document-link-item:hover .doc-title-text { color: var(--primary-color); }
+        .doc-desc-sub { font-size: 12px; color: var(--text-secondary); }
+        .action-arrow { color: var(--text-disabled); font-size: 14px; transition: transform 0.2s; margin-left: 8px; }
+        .document-link-item:hover .action-arrow { color: var(--primary-color); transform: translateX(3px); }
+
+        .doc-tag {
+            display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 6px;
+            border-radius: 3px; margin-right: 6px; vertical-align: middle; line-height: 14px;
+        }
+        .tag-base { background: #e6fffb; color: #08979c; }
+        .tag-client { background: #e6f4ff; color: #1677ff; }
+        .tag-blueprint { background: #f0f5ff; color: #2b5aed; }
+
+        .pane-footer { text-align: center; padding: 16px 0 8px; font-size: 12px; color: #8f959e; }
+
+        .img-thumb {
+            max-width: 240px; max-height: 120px; width: auto; height: auto;
+            display: block; align-self: flex-start; object-fit: contain; background: #fafafa;
+            border-radius: 4px; border: 1px solid #f0f0f0; cursor: zoom-in; transition: opacity .2s;
+        }
+        .img-thumb:hover { opacity: .85; }
+        .lightbox-mask {
+            position: fixed; inset: 0; background: rgba(0,0,0,.5);
+            display: none; align-items: center; justify-content: center; z-index: 9999; cursor: zoom-out;
+        }
+        .lightbox-mask.open { display: flex; }
+        .lightbox-mask img { max-width: 78vw; max-height: 78vh; border-radius: 6px; box-shadow: 0 8px 30px rgba(0,0,0,.45); }
+        .lightbox-mask .lb-tip { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; color: #fff; font-size: 12px; opacity: .65; }
+    </style>
+</head>
+<body data-platform="lingting" data-batch="202606">
+
+    <!-- 顶部平台导航（共用模块，由 assets/req-nav.js 注入） -->
+    <div id="req-header-placeholder"></div>
+
+    <main class="main-workspace">
+
+        <!-- 左侧需求版本批次导航（共用模块，由 assets/req-nav.js 注入） -->
+        <div id="req-sidebar-placeholder"></div>
+
+        <section class="content-display-pane">
+            <div class="pane-header">
+                <div class="breadcrumb-area">
+                    <h2>聆听平台 · 202606需求批次</h2>
+                    <div class="breadcrumb-sub">面向团队内部评审，点击对应文件即可预览</div>
+                </div>
+            </div>
+
+            <nav class="quick-anchor-nav">
+                <span style="font-size: 13px; color: var(--text-disabled); align-self: center; font-weight: bold; margin-right: 4px;">模块目录：</span>
+                <a href="#base-entry" class="anchor-btn">🎯 一、项目综述</a>
+                <a href="#status-entry" class="anchor-btn">🟡 二、新增状态"开发中"</a>
+                <a href="#export-entry" class="anchor-btn">📤 三、建议导出</a>
+                <a href="#dashboard-entry" class="anchor-btn">📊 四、统计大盘</a>
+            </nav>
+
+            <div class="flow-stack-container">
+
+                <!-- ============ 一、项目综述 ============ -->
+                <div class="asset-category-card" id="base-entry">
+                    <div class="card-brief-pane" style="background-color: #f0fbfb;">
+                        <div class="brief-sec-title">
+                            <div class="brief-sec-icon" style="background-color: #08979c;"></div>
+                            一、项目综述
+                        </div>
+                        <div class="brief-block" style="margin-top: 4px;">
+                            <span class="brief-sub-title">【本期核心目标】</span>
+                            <ul class="brief-list">
+                                <li><strong>扩充建议状态字典，新增"开发中"状态</strong>
+                                    <ul class="brief-list">
+                                        <li>状态集：评估中 / 未采纳 / 已采纳 / <strong>开发中</strong> / 已实现</li>
+                                        <li>补全建议全生命周期可视化，管理端 + 用户端双端呈现</li>
+                                    </ul>
+                                </li>
+                                <li><strong>管理端新增"建议导出"能力</strong>
+                                    <ul class="brief-list">
+                                        <li>按查询结果导出 Excel，并提供导出记录查看与下载</li>
+                                    </ul>
+                                </li>
+                                <li><strong>新增"统计大盘"页面</strong>
+                                    <ul class="brief-list">
+                                        <li>全局时间筛选 + 核心指标卡 + 分公司多维分布 + 各应用处理进度</li>
+                                        <li>支撑管理决策与建议处理效能洞察</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="brief-note" style="background:#fff7e6;border-color:#ffd591;color:#ad6800;">
+                            ⚠️ PRD 的「需求背景 / 编写目的」章节为空，上述核心目标依据 §2.3 功能列表与 §3 功能详情提炼，供评审确认。
+                        </div>
+                    </div>
+                    <div class="card-links-pane">
+                        <div class="links-sec-title">核心交付物</div>
+                        <div class="links-group">
+                            <a href="https://cic_irc.yuque.com/tyl581/hc4ngp/ceyk3nc7gbrrfrqf" target="_blank" class="document-link-item">
+                                <div class="doc-meta-left">
+                                    <span class="doc-title-text"><span class="doc-tag tag-base">PRD</span> 聆听平台_状态增加、列表导出、数据看板PRD</span>
+                                </div>
+                                <span class="action-arrow">➔</span>
+                            </a>
+                            <a href="lingting/lingting_statistic.html" target="_blank" class="document-link-item">
+                                <div class="doc-meta-left">
+                                    <span class="doc-title-text"><span class="doc-tag tag-client">原型</span> 聆听统计大盘原型（本期原型仅此一页）</span>
+                                </div>
+                                <span class="action-arrow">➔</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ 二、新增状态"开发中" ============ -->
+                <div class="asset-category-card" id="status-entry">
+                    <div class="card-brief-pane">
+                        <div class="brief-sec-title">
+                            <div class="brief-sec-icon" style="background-color: #fa8c16;"></div>
+                            二、新增状态"开发中"
+                        </div>
+                        <div class="brief-block" style="margin-top: 4px;">
+                            <span class="brief-sub-title">1. 状态字典扩充</span>
+                            <ul class="brief-list">
+                                <li>原：评估中、未采纳、已采纳、已实现</li>
+                                <li>新：增加 <strong>开发中</strong>，共 5 态</li>
+                                <li>状态流转不做控制，管理员可自由切换（任意状态互切）</li>
+                            </ul>
+                        </div>
+                        <div class="brief-block">
+                            <span class="brief-sub-title">2. 双端界面调整</span>
+                            <ul class="brief-list">
+                                <li><strong>管理端</strong>：筛选区"建议状态"追加"开发中"；详情页状态下拉增加"开发中"；列表"开发中"采用<strong>黄色 tag</strong></li>
+                                <li><strong>用户端（全部建议页）</strong>：筛选栏追加"开发中"；工单"开发中"状态标签<strong>黄色</strong>呈现</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-links-pane">
+                        <div class="links-sec-title">PRD 章节</div>
+                        <div class="links-group">
+                            <a href="https://cic_irc.yuque.com/tyl581/hc4ngp/ceyk3nc7gbrrfrqf" target="_blank" class="document-link-item">
+                                <div class="doc-meta-left">
+                                    <span class="doc-title-text"><span class="doc-tag tag-base">PRD</span> §3.1 新增状态"开发中"</span>
+                                </div>
+                                <span class="action-arrow">➔</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ 三、建议导出 ============ -->
+                <div class="asset-category-card" id="export-entry">
+                    <div class="card-brief-pane">
+                        <div class="brief-sec-title">
+                            <div class="brief-sec-icon" style="background-color: #1890ff;"></div>
+                            三、建议导出
+                        </div>
+                        <div class="brief-block" style="margin-top: 4px;">
+                            <span class="brief-sub-title">1. 入口与交互</span>
+                            <ul class="brief-list">
+                                <li>管理端列表页右上角新增"导出"与"导出结果"按钮</li>
+                                <li>导出弹窗确认"确认导出查询结果？"；文件名"导出建议工单+当前日期"</li>
+                                <li>toast"已导出，请通过导出结果查看导出进度"</li>
+                                <li>"导出结果"弹窗：查看进度、下载 Excel</li>
+                            </ul>
+                        </div>
+                        <div class="brief-block">
+                            <span class="brief-sub-title">2. 导出字段（13 项）</span>
+                            <ul class="brief-list">
+                                <li>应用名称 / 建议类型 / 反馈人 / 反馈人账号</li>
+                                <li>归属分公司组织 / 归属部门 / 标题 / 正文 / 反馈时间</li>
+                                <li>建议状态 / 浏览数 / 评论数 / 点赞数 / 收藏数</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-links-pane">
+                        <div class="links-sec-title">PRD 章节</div>
+                        <div class="links-group">
+                            <a href="https://cic_irc.yuque.com/tyl581/hc4ngp/ceyk3nc7gbrrfrqf" target="_blank" class="document-link-item">
+                                <div class="doc-meta-left">
+                                    <span class="doc-title-text"><span class="doc-tag tag-base">PRD</span> §3.2 管理端新增"建议导出"功能</span>
+                                </div>
+                                <span class="action-arrow">➔</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ 四、统计大盘 ============ -->
+                <div class="asset-category-card" id="dashboard-entry">
+                    <div class="card-brief-pane">
+                        <div class="brief-sec-title">
+                            <div class="brief-sec-icon" style="background-color: #52c41a;"></div>
+                            四、统计大盘
+                        </div>
+                        <div class="brief-block" style="margin-top: 4px;">
+                            <span class="brief-sub-title">1. 页面结构（四区块）</span>
+                            <ul class="brief-list">
+                                <li>① 全局条件筛选区 ② 核心指标展示区</li>
+                                <li>③ 分公司建议上报统计（表一）④ 各应用建议处理进度（表二）</li>
+                            </ul>
+                        </div>
+                        <div class="brief-block">
+                            <span class="brief-sub-title">2. 全局筛选</span>
+                            <ul class="brief-list">
+                                <li>"建议反馈时间" + 6 个周期快捷（上月/本月/上季度/本季度/上年度/本年度）</li>
+                                <li>双日期选择器 + "查询统计"按钮重算整页</li>
+                            </ul>
+                        </div>
+                        <div class="brief-block">
+                            <span class="brief-sub-title">3. 核心指标 & 表一/表二</span>
+                            <ul class="brief-list">
+                                <li>5 张状态卡：评估中/未采纳/已采纳/<strong>开发中</strong>/已实现 建议总数</li>
+                                <li>表一：双层表头（分公司 / 建议处理情况 / 10 应用大类），单元格数据条，点击下钻联动表二，可排序</li>
+                                <li>表二：独立筛选（分公司/应用大类下拉），列=应用名称+5 状态，分类小计，可排序</li>
+                                <li>性能：统计按天更新</li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card-links-pane">
+                        <div class="links-sec-title">PRD / 原型</div>
+                        <div class="links-group">
+                            <a href="https://cic_irc.yuque.com/tyl581/hc4ngp/ceyk3nc7gbrrfrqf" target="_blank" class="document-link-item">
+                                <div class="doc-meta-left">
+                                    <span class="doc-title-text"><span class="doc-tag tag-base">PRD</span> §3.3 统计大盘</span>
+                                </div>
+                                <span class="action-arrow">➔</span>
+                            </a>
+                            <a href="lingting/lingting_statistic.html" target="_blank" class="document-link-item">
+                                <div class="doc-meta-left">
+                                    <span class="doc-title-text"><span class="doc-tag tag-client">原型</span> 聆听统计大盘原型</span>
+                                </div>
+                                <span class="action-arrow">➔</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pane-footer">仅供创新研发中心团队评审查阅使用 · 涉及新一代保司核心架构请注意保密</div>
+        </section>
+    </main>
+
+    <!-- 图片点击放大灯箱（用到配图时生效） -->
+    <div class="lightbox-mask" id="lightboxMask" onclick="closeImageModal()">
+        <img id="lightboxImg" src="" alt="" />
+        <div class="lb-tip">点击任意处或按 Esc 关闭</div>
+    </div>
+    <script>
+        function openImageModal(src, alt) {
+            var img = document.getElementById("lightboxImg");
+            img.src = src; img.alt = alt || "";
+            document.getElementById("lightboxMask").classList.add("open");
+        }
+        function closeImageModal() {
+            document.getElementById("lightboxMask").classList.remove("open");
+        }
+        document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeImageModal(); });
+    </script>
+
+    <!-- 共用导航加载器：注入顶部 + 左侧，并按 body[data-platform/data-batch] 高亮 -->
+    <script src="assets/req-nav.js"></script>
+
+</body></html>

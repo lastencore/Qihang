@@ -18,10 +18,9 @@
             <a href="requirement_zhixing_202607.html">202607 需求批次</a>
         </li>
         -->
-        <!-- 聆听平台批次（平台启用后接）
-        <li class="version-item" data-platform="tingting" data-batch="202607">
-            <a href="requirement_tingting_202607.html">202607 需求批次</a>
+        <!-- 聆听平台批次 -->
+        <li class="version-item" data-platform="lingting" data-batch="202606">
+            <a href="requirement_lingting_202606.html">202606 需求批次</a>
         </li>
-        -->
     </ul>
 </aside>

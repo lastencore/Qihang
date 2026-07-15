@@ -33,13 +33,11 @@
     }
 
     function applySidebar(aside) {
-        // 只显示当前平台的批次
+        // 只显示当前平台的批次，并仅对当前平台中 data-batch 匹配的项高亮
         aside.querySelectorAll('.version-item[data-platform]').forEach(function (li) {
-            li.style.display = (li.getAttribute('data-platform') === platform) ? '' : 'none';
-        });
-        // 高亮当前批次
-        aside.querySelectorAll('.version-item[data-batch]').forEach(function (li) {
-            if (li.getAttribute('data-batch') === batch) li.classList.add('active');
+            var isCurrent = li.getAttribute('data-platform') === platform;
+            li.style.display = isCurrent ? '' : 'none';
+            if (isCurrent && li.getAttribute('data-batch') === batch) li.classList.add('active');
             else li.classList.remove('active');
         });
     }
