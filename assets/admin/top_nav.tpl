@@ -1,12 +1,16 @@
+<!-- 管理端共用顶栏模板（参数化）。nav-loader 按 <body data-system> 注入并填充 #sysName。
+     新增系统：在 sidebar.tpl 增加对应 <aside data-system> 即可（顶栏结构三系统通用）。 -->
 <header class="ant-layout-header ant-pro-fixed-header ant-pro-fixed-header-action" style="padding: 0px; height: 48px; line-height: 48px; width: 100%; z-index: 100; right: 0px;">
        <div class="cic-layout-header-nav-header light">
         <div class="cic-layout-header-nav-header-main">
          <div class="cic-layout-header-nav-header-left">
           <div class="cic-layout-header-nav-header-logo">
-           <a href="../index.html">
+           <!-- logo 跳当前系统的客户端首页：从 {system}/admin/ 起 ../client/ 对任意系统通用 -->
+           <a href="../client/">
             <img alt="logo" height="24" src="https://static.property.cic.cn/prod-platform-lamp/common/image/cic-logo.svg" width="auto"/>
            </a>
           </div>
+          <span class="sys-name" id="sysName" style="margin-left:12px; font-size:14px; font-weight:600; color:#1f2329;"></span>
          </div>
          <div class="cic-layout-header-nav-header-middle">
           <ul class="ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-light" data-menu-list="true" dir="ltr" role="menu" tabindex="0">
@@ -28,7 +32,7 @@
            <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 3;">
             <div class="ant-menu-submenu-title" role="menuitem" tabindex="-1">
              <span class="ant-menu-title-content">数据门户</span><i class="ant-menu-submenu-arrow"></i>
-            </span>
+            </div>
            </li>
            <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 4;">
              <div class="ant-menu-submenu-title" role="menuitem" tabindex="-1">
@@ -44,7 +48,7 @@
              <div class="ant-dropdown-trigger">
               <span class="ant-tag ant-tag-red" style="margin: 0px;">
                <span aria-label="environment" class="anticon anticon-environment" role="img">
-                <svg aria-hidden="true" data-icon="environment" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+                <svg aria-hidden="true" data-icon="environment" fill="currentColor" focusable="false" height="1em" viewBox="64 64 896 896" width="1em">
                  <path d="M854.6 289.1a362.49 362.49 0 00-79.9-115.7 370.83 370.83 0 00-118.2-77.8C610.7 76.6 562.1 67 512 67c-50.1 0-98.7 9.6-144.5 28.5-44.3 18.3-84 44.5-118.2 77.8A363.6 363.6 0 00169.4 289c-19.5 45-29.4 92.8-29.4 142 0 70.6 16.9 140.9 50.1 208.7 26.7 54.5 64 107.6 111 158.1 80.3 86.2 164.5 138.9 188.4 153a43.9 43.9 0 0022.4 6.1c7.8 0 15.5-2 22.4-6.1 23.9-14.1 108.1-66.8 188.4-153 47-50.4 84.3-103.6 111-158.1C867.1 572 884 501.8 884 431.1c0-49.2-9.9-97-29.4-142zM512 880.2c-65.9-41.9-300-207.8-300-449.1 0-77.9 31.1-151.1 87.6-206.3C356.3 169.5 431.7 139 512 139s155.7 30.5 212.4 85.9C780.9 280 812 353.2 812 431.1c0 241.3-234.1 407.2-300 449.1zm0-617.2c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm79.2 255.2A111.6 111.6 0 01512 551c-29.9 0-58-11.7-79.2-32.8A111.6 111.6 0 01400 439c0-29.9 11.7-58 32.8-79.2C454 338.6 482.1 327 512 327c29.9 0 58 11.6 79.2 32.8C612.4 381 624 409.1 624 439c0 29.9-11.6 58-32.8 79.2z"></path>
                 </svg>
                </span>
@@ -55,7 +59,7 @@
             <div class="cic-layout-header-nav-header-actions-item">
              <span class="cic-layout-header-apps-icon">
               <span aria-label="appstore" class="anticon anticon-appstore" role="img">
-               <svg aria-hidden="true" data-icon="appstore" fill="currentColor" focusable="false" height="1em" viewbox="64 64 896 896" width="1em">
+               <svg aria-hidden="true" data-icon="appstore" fill="currentColor" focusable="false" height="1em" viewBox="64 64 896 896" width="1em">
                 <path d="M464 144H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H212V212h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H612V212h200v200zM464 544H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H212V612h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H612V612h200v200z"></path>
                </svg>
               </span>

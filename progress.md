@@ -126,6 +126,16 @@
 - [x] **新页脚手架**：新增 `requirement_TEMPLATE.html`，复制改 1 处 `data-platform/data-batch` 即可新建批次/平台页，导航自动套用
 - [x] **渲染验证**：playwright 加载 requirement_202606.html / requirement_TEMPLATE.html，断言头部+侧栏注入、占位符替换、启航高亮/知行聆听 disabled/仅显示本平台批次，零 console error，全部 PASS
 - [x] **聆听平台登记**：由脚手架派生 `requirement_lingting_202606.html`（data-platform=lingting / data-batch=202606）；`req_header.tpl` 启用聆听 Tab（移除 disabled、指向本页），`req_sidebar.tpl` 登记聆听 202606 批次；跨平台导航打通，启航/聆听互不干扰
+
+**2026-07-15（本次，待推送 origin/main）—— 原型目录重组 + 管理端导航参数化**
+- [x] **目录按系统优先重组**：`admin/`→`qihang/admin/`、`client/`→`qihang/client/`、`lingting/lingting_statistic.html`→`lingting/admin/statistic.html`；批次页 `requirement_*.html`→`requirements/`（改名 `qihang_202606`/`lingting_202606`/`TEMPLATE`）；`启航平台_需求说明_202607.md`→`docs/`；`zhixing/`、`lingting/` 建空骨架（admin/client/assets/client）备用
+- [x] **导航资产归集 + 去冗余**：`assets/{nav-loader.js,sidebar.tpl,top_nav.tpl,common.css}`→`assets/admin/`（common.css 改名 admin.css）；`assets/req-*`→`assets/req-center/`；删除冗余副本 `sidebar.html`/`top_nav.html`
+- [x] **管理端导航参数化（仿 req-nav）**：`nav-loader.js` 从自身 `<script>` src 推导 base（去 `../` 硬编码），按 `<body data-system>` 只注入对应 `<aside data-system>`；`sidebar.tpl` 拆为 qihang/zhixing/lingting 三份侧栏（知行/聆听为占位骨架，上传即填）；`top_nav.tpl` logo→`../client/`（三系统通用）、新增 `#sysName` 由加载器填系统名
+- [x] **req-center 路径自洽**：`req-nav.js` 同样改从自身 src 推导 base、模板 `./req_*.tpl`；批次页/模板链接、图片路径、入口指针全部修正到新位置
+- [x] **playwright 渲染验证通过**：管理端注入启航侧栏+顶栏、当前页高亮、sysName=「启航平台 · 管理端」、知行/聆听侧栏不注入；需求页平台 Tab/批次高亮、跨平台批次 `display:none` 隐藏；三页控制台 **0 错误**（顺手消除 favicon 404）
+- [x] **修复需求页卡片链接**：`requirements/qihang_202606.html` 中 `admin/`→`../qihang/admin/`、`client/`→`../qihang/client/`、`slides/`→`../slides/`（页面迁入子目录后缺 `../` 导致所有卡片 404）；`requirements/lingting_202606.html` 中 `lingting/lingting_statistic.html`→`../lingting/admin/statistic.html`；curl + playwright 验证均 200
+- [x] **移除 manual_blueprint.html**：用户确认删除，`blueprint/` 目录一同清除
+- [x] **marked CDN 超时修复**：`manual_workspace.html`、`update_log_modify.html` 引用的 `https://cdn.jsdelivr.net/npm/marked/marked.min.js` 在沙箱环境超时（`ERR_TIMED_OUT`）；下载 `marked.umd.js`（43KB）自托管到 `assets/admin/marked.umd.js`，两页面改引本地 `../../assets/admin/marked.umd.js`，playwright 验证 marked ✓ 且 0 错误
 - [x] **加载器高亮修正**：`req-nav.js` 仅对当前平台且 data-batch 匹配的项加 `.active`，避免隐藏的其他平台同批次项被误标（多平台同批次 id 时必现）
 - [x] **聆听页面填实 + 原型入库**：`requirement_lingting_202606.html` 据 PRD《聆听平台-状态增加、列表导出、数据看板》提炼核心目标 + 三模块（新增状态"开发中"/建议导出/统计大盘），PRD 链 yuque、原型 `lingting/lingting_statistic.html` 入仓；PRD 口径不一致（"研发中" vs "开发中"）已由 PM 确认统一为 **"开发中"**，原型文案与需求页同步修正
 
@@ -149,44 +159,55 @@
 
 ```
 prototype/
-├── index.html                    # 批次指针：meta refresh → requirement_202606.html（托管平台必需入口，打开即跳默认批次）
-├── requirement_202606.html      # 202606 批次专属导航页（从 index 迁出；头部+侧栏已抽为共用模块）
-├── lingting/                    # 聆听平台原型（本期原型仅统计大盘一页）
-│   └── lingting_statistic.html  # 聆听统计大盘原型（对应 PRD 模块三·统计大盘）
-├── requirement_lingting_202606.html  # 聆听平台 202606 批次页（脚手架派生；Tab 已启用、侧栏已登记）
-├── requirement_TEMPLATE.html     # 新批次/新平台页面脚手架（复制即用，导航自动套用）
-├── images/
-│   ├── mapping_relation.png      # PMS 关联关系配图
-│   └── update_log_flow.jpg       # 更新日志泳道图（图片版）
-├── docs/
-│   └── 启航平台_产品需求说明书_202607.md  # 本期迭代 PRD 草稿（四模块，EARS）
-├── progress.md                   # 本文档
-├── client/
-│   ├── app_map.html              # 客户端应用地图（搜索扩展：名称/属主/分类）
-│   ├── app_detail.html           # 应用独立详情页（四 Tab：操作手册/更新日志/相关课程/我有建议）
-│   └── client.html               # ⚠️ 已弃用：原客户端首页，跳转入口并入 index.html
-├── admin/
-│   ├── manual_query.html         # 管理端-手册大盘列表
-│   ├── manual_workspace.html     # 管理端-配置工作台
-│   ├── update_log_query.html     # 管理端-日志查询列表
-│   ├── update_log_modify.html    # 管理端-日志新增/编辑
-│   ├── app_management.html       # 管理端-应用管理（含 PMS 关联 + 应用简介）
-│   └── app_category_management.html # 管理端-应用分类管理
-├── slides/
-│   ├── app_catalog_proposal.html # 应用目录来源方案（HTML PPT）
-│   └── update_log_flow.html      # 更新日志方案泳道图（Mermaid）
-├── assets/
-│   ├── common.css                # 全局样式表（admin 端）
-│   ├── nav-loader.js             # admin 端导航动态加载器
-│   ├── sidebar.tpl               # admin 端侧边栏模板
-│   ├── top_nav.tpl               # admin 端顶栏模板
-│   ├── req-nav.css               # 【共用】需求设计中心头部+侧栏+布局样式
-│   ├── req_header.tpl            # 【共用】顶部平台 Tab（启航/知行/聆听）
-│   ├── req_sidebar.tpl           # 【共用】左侧需求版本批次（按 data-platform 区分）
-│   └── req-nav.js                # 【共用】导航加载器：注入模板+按 body[data-platform/data-batch] 高亮/过滤
-├── skills/
-│   └── progress-doc.md           # 交接文档 skill
-└── 启航平台_需求说明_202607.md     # 202607 迭代需求说明（用户维护，已同步 GitHub）
+├── index.html                    # 批次指针：meta refresh → requirements/qihang_202606.html
+├── progress.md                   # 本文档（交接记忆）
+├── assets/                        # 跨系统共享资产（顶层，所有系统复用）
+│   ├── shared/                 # 跨系统件预留（logo/变量/字体）
+│   ├── admin/                 # ★管理端共用导航（参数化，按 data-system 复用）
+│   │   ├── nav-loader.js         # 从自身 src 推导 base；按 <body data-system> 注入
+│   │   ├── sidebar.tpl           # 侧栏模板（按 data-system 分三份 <aside>：qihang/zhixing/lingting）
+│   │   ├── top_nav.tpl          # 顶栏模板（logo → ../client/；含 #sysName 由加载器填系统名）
+│   │   ├── admin.css            # 管理端全局样式
+│   │   └── marked.umd.js        # marked 本地自托管（消除 CDN 超时 ERR_TIMED_OUT）
+│   └── req-center/            # 需求设计中心共用导航（data-platform 参数化）
+│       ├── req-nav.js            # 从自身 src 推导 base
+│       ├── req-nav.css
+│       ├── req_header.tpl        # 顶部平台 Tab（启航/知行/聆听）
+│       └── req_sidebar.tpl      # 左侧需求版本批次（按 data-platform 过滤高亮）
+├── qihang/                    # ★启航系统（全部端集中）
+│   ├── admin/                 # 管理端原型（6 页，均 <body data-system="qihang">）
+│   │   ├── app_management.html
+│   │   ├── app_category_management.html
+│   │   ├── manual_query.html
+│   │   ├── manual_workspace.html
+│   │   ├── update_log_query.html
+│   │   └── update_log_modify.html
+│   ├── client/                # 客户端原型（3 页）
+│   │   ├── app_map.html
+│   │   ├── app_detail.html
+│   │   └── client.html
+│   └── assets/client/         # 启航客户端壳（header.tpl / client.css 预留，随上传补）
+├── zhixing/                    # 知行系统（结构同启航，暂空骨架）
+│   ├── admin/  client/  assets/client/
+├── lingting/                   # 聆听系统
+│   ├── admin/statistic.html    # 统计大盘（聆听管理端）
+│   ├── client/  assets/client/
+├── requirements/               # ★需求中心批次页（从根目录迁出）
+│   ├── qihang_202606.html      # 202606 批次页（启航需求中心入口）
+│   ├── lingting_202606.html     # 202606 批次页（聆听需求中心入口）
+│   └── TEMPLATE.html            # 批次页脚手架模板
+├── slides/                     # 演示/汇报页（保持）
+│   ├── app_catalog_proposal.html
+│   └── update_log_flow.html
+├── docs/                       # 正式文档（中文名 OK）
+│   ├── 启航平台_产品需求说明书_202607.md
+│   └── 启航平台_需求说明_202607.md   # 迭代需求说明
+├── images/                     # 共享图片（保持）
+│   ├── blueprint_202606.png
+│   ├── mapping_relation.png
+│   └── update_log_flow.jpg
+└── skills/
+    └── progress-doc.md           # 交接文档 skill
 ```
 
 全部状态：✅
@@ -301,12 +322,6 @@ prototype/
 > **第三步（启动预览，每次都做）**：Clone 完成后**立即**用 supervisord 起 8080 服务（详见 5.5），然后运行 `notify 8080` 获取预览链接，**将链接提供给用户**即可——用户自行打开 index 页面。**不要 nohup**，否则沙箱休眠后服务挂掉需重排。
 >
 > **说明**：用户只需上传 `progress.md`，clone → 启动 → 出链接三步走，所有原型文件、Git 历史、PRD 文档都在。
-
-### 当前可执行任务
-1. **PRD 深化**：补充数据指标、异常状态、埋点需求等细节（当前草稿为基础框架，见 `docs/启航平台_产品需求说明书_202607.md`）
-2. **事项拆分**：将四模块（PMS 关联 / 新一代应用地图 / 更新日志 / 操作手册）拆成独立事项，分配负责人、附 PRD、加关注人
-3. **PRD 上传 tdrive**：将 PRD 草稿上传到项目资料库，与聆听/知行社历史 PRD 并列
-4. **原型 → PRD 对齐**：对照需求说明逐条走查原型页面，标记差异点
 
 ### 待用户决策
 - 能力地图/岗位场景地图的具体形式（待用户设计）

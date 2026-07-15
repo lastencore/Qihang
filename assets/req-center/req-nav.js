@@ -2,11 +2,19 @@
 // 用法：页面 <body data-platform="qihang" data-batch="202606"> 内放
 //   <div id="req-header-placeholder"></div>（body 首子）
 //   <div id="req-sidebar-placeholder"></div>（main 首子）
-// 然后引入本脚本。改 assets/req_*.tpl 即全站生效。
+// 然后引入本脚本。改 assets/req-center/req_*.tpl 即全站生效。
 (function () {
     var body = document.body;
     var platform = body.getAttribute('data-platform') || 'qihang';
     var batch = body.getAttribute('data-batch') || '';
+
+    // 从自身 <script> 的 src 推导 base，避免硬编码相对路径（页面在 requirements/ 也通用）
+    function baseUrl() {
+        var s = document.currentScript;
+        if (!s || !s.src) return '';
+        return s.src.substring(0, s.src.lastIndexOf('/') + 1);
+    }
+    var BASE = baseUrl();
 
     function inject(placeholderId, url, onReady) {
         var ph = document.getElementById(placeholderId);
@@ -45,11 +53,11 @@
     // 等 DOM 就绪后注入（占位元素已在页面中）
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () {
-            inject('req-header-placeholder', 'assets/req_header.tpl', applyHeader);
-            inject('req-sidebar-placeholder', 'assets/req_sidebar.tpl', applySidebar);
+            inject('req-header-placeholder', BASE + 'req_header.tpl', applyHeader);
+            inject('req-sidebar-placeholder', BASE + 'req_sidebar.tpl', applySidebar);
         });
     } else {
-        inject('req-header-placeholder', 'assets/req_header.tpl', applyHeader);
-        inject('req-sidebar-placeholder', 'assets/req_sidebar.tpl', applySidebar);
+        inject('req-header-placeholder', BASE + 'req_header.tpl', applyHeader);
+        inject('req-sidebar-placeholder', BASE + 'req_sidebar.tpl', applySidebar);
     }
 })();

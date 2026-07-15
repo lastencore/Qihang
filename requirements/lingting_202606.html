@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>聆听平台 - 产品设计中心资产看板</title>
     <!-- 共用导航样式（顶部平台 Tab + 左侧需求版本批次 + 布局骨架） -->
-    <link rel="stylesheet" href="assets/req-nav.css">
+    <link rel="stylesheet" href="../assets/req-center/req-nav.css">
     <style>
         /* 与 requirement_202606.html 共用同一套内容样式，保证三平台视觉一致 */
         .content-display-pane {
@@ -90,15 +90,16 @@
         .lightbox-mask img { max-width: 78vw; max-height: 78vh; border-radius: 6px; box-shadow: 0 8px 30px rgba(0,0,0,.45); }
         .lightbox-mask .lb-tip { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; color: #fff; font-size: 12px; opacity: .65; }
     </style>
+  <link rel="icon" href="data:," />
 </head>
 <body data-platform="lingting" data-batch="202606">
 
-    <!-- 顶部平台导航（共用模块，由 assets/req-nav.js 注入） -->
+    <!-- 顶部平台导航（共用模块，由 ../assets/req-center/req-nav.js 注入） -->
     <div id="req-header-placeholder"></div>
 
     <main class="main-workspace">
 
-        <!-- 左侧需求版本批次导航（共用模块，由 assets/req-nav.js 注入） -->
+        <!-- 左侧需求版本批次导航（共用模块，由 ../assets/req-center/req-nav.js 注入） -->
         <div id="req-sidebar-placeholder"></div>
 
         <section class="content-display-pane">
@@ -161,7 +162,7 @@
                                 </div>
                                 <span class="action-arrow">➔</span>
                             </a>
-                            <a href="lingting/lingting_statistic.html" target="_blank" class="document-link-item">
+                            <a href="../lingting/admin/statistic.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-client">原型</span> 聆听统计大盘原型（本期原型仅此一页）</span>
                                 </div>
@@ -285,7 +286,7 @@
                                 </div>
                                 <span class="action-arrow">➔</span>
                             </a>
-                            <a href="lingting/lingting_statistic.html" target="_blank" class="document-link-item">
+                            <a href="../lingting/admin/statistic.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-client">原型</span> 聆听统计大盘原型</span>
                                 </div>
@@ -319,6 +320,6 @@
     </script>
 
     <!-- 共用导航加载器：注入顶部 + 左侧，并按 body[data-platform/data-batch] 高亮 -->
-    <script src="assets/req-nav.js"></script>
+    <script src="../assets/req-center/req-nav.js"></script>
 
 </body></html>

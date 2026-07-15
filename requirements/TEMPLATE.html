@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>需求设计中心 - 批次页模板</title>
     <!-- 共用导航样式（顶部平台 Tab + 左侧需求版本批次 + 布局骨架） -->
-    <link rel="stylesheet" href="assets/req-nav.css">
+    <link rel="stylesheet" href="../assets/req-center/req-nav.css">
     <style>
         /* 本页内容专属样式：参考 requirement_202606.html 的 .content-display-pane / .asset-category-card 等 */
         .content-display-pane {
@@ -20,6 +20,7 @@
         }
         .tpl-hint code { background: #fff1b8; padding: 1px 5px; border-radius: 3px; }
     </style>
+  <link rel="icon" href="data:," />
 </head>
 <!--
   ============ 新批次 / 新平台页面脚手架使用说明 ============
@@ -37,12 +38,12 @@
 -->
 <body data-platform="qihang" data-batch="__BATCH__">
 
-    <!-- 顶部平台导航（共用模块，由 assets/req-nav.js 注入） -->
+    <!-- 顶部平台导航（共用模块，由 ../assets/req-center/req-nav.js 注入） -->
     <div id="req-header-placeholder"></div>
 
     <main class="main-workspace">
 
-        <!-- 左侧需求版本批次导航（共用模块，由 assets/req-nav.js 注入） -->
+        <!-- 左侧需求版本批次导航（共用模块，由 ../assets/req-center/req-nav.js 注入） -->
         <div id="req-sidebar-placeholder"></div>
 
         <section class="content-display-pane">
@@ -63,6 +64,6 @@
     </main>
 
     <!-- 共用导航加载器：注入顶部 + 左侧，并按 body[data-platform/data-batch] 高亮 -->
-    <script src="assets/req-nav.js"></script>
+    <script src="../assets/req-center/req-nav.js"></script>
 
 </body></html>

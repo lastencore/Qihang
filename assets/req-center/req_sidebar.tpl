@@ -6,7 +6,7 @@
     <ul class="version-menu-list">
         <!-- 启航平台批次 -->
         <li class="version-item" data-platform="qihang" data-batch="202606">
-            <a href="requirement_202606.html">202606 需求批次</a>
+            <a href="qihang_202606.html">202606 需求批次</a>
         </li>
         <!-- 未来示例（取消注释并改 href 即可）：
         <li class="version-item" data-platform="qihang" data-batch="202607">
@@ -15,12 +15,12 @@
         -->
         <!-- 知行平台批次（平台启用后接）
         <li class="version-item" data-platform="zhixing" data-batch="202607">
-            <a href="requirement_zhixing_202607.html">202607 需求批次</a>
+            <a href="zhixing_202607.html">202607 需求批次</a>
         </li>
         -->
         <!-- 聆听平台批次 -->
         <li class="version-item" data-platform="lingting" data-batch="202606">
-            <a href="requirement_lingting_202606.html">202606 需求批次</a>
+            <a href="lingting_202606.html">202606 需求批次</a>
         </li>
     </ul>
 </aside>
