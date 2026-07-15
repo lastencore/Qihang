@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-14 17:57:32
+> 最后更新：2026-07-15 11:17:55
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -122,9 +122,12 @@
 
 **2026-07-14（本次，待推送 origin/main）— 需求设计中心共用导航重构**
 - [x] **导航抽出为共用模块**：`requirement_202606.html` 顶部平台 Tab + 左侧「需求版本」批次列表抽离，新增 `assets/req-nav.css` / `req_header.tpl` / `req_sidebar.tpl` / `req-nav.js` 四件套；页面仅留占位符 + 脚本引用，样式与结构改模板即全站生效
-- [x] **各平台独立批次**：侧栏批次按 `data-platform`（qihang/zhixing/tingting）区分，加载器按 `<body data-platform>` 只显示当前平台批次并高亮 `data-batch`；未来新增批次 = 改 `req_sidebar.tpl` 一行，启用新平台 = 改 `req_header.tpl`
+- [x] **各平台独立批次**：侧栏批次按 `data-platform`（qihang/zhixing/lingting）区分，加载器按 `<body data-platform>` 只显示当前平台批次并高亮 `data-batch`；未来新增批次 = 改 `req_sidebar.tpl` 一行，启用新平台 = 改 `req_header.tpl`
 - [x] **新页脚手架**：新增 `requirement_TEMPLATE.html`，复制改 1 处 `data-platform/data-batch` 即可新建批次/平台页，导航自动套用
 - [x] **渲染验证**：playwright 加载 requirement_202606.html / requirement_TEMPLATE.html，断言头部+侧栏注入、占位符替换、启航高亮/知行聆听 disabled/仅显示本平台批次，零 console error，全部 PASS
+- [x] **聆听平台登记**：由脚手架派生 `requirement_lingting_202606.html`（data-platform=lingting / data-batch=202606）；`req_header.tpl` 启用聆听 Tab（移除 disabled、指向本页），`req_sidebar.tpl` 登记聆听 202606 批次；跨平台导航打通，启航/聆听互不干扰
+- [x] **加载器高亮修正**：`req-nav.js` 仅对当前平台且 data-batch 匹配的项加 `.active`，避免隐藏的其他平台同批次项被误标（多平台同批次 id 时必现）
+- [x] **聆听页面填实 + 原型入库**：`requirement_lingting_202606.html` 据 PRD《聆听平台-状态增加、列表导出、数据看板》提炼核心目标 + 三模块（新增状态"开发中"/建议导出/统计大盘），PRD 链 yuque、原型 `lingting/lingting_statistic.html` 入仓；PRD 口径不一致（"研发中" vs "开发中"）已由 PM 确认统一为 **"开发中"**，原型文案与需求页同步修正
 
 **2026-07-07（前文，随 `31ce7b0` 入库）**
 
@@ -148,6 +151,9 @@
 prototype/
 ├── index.html                    # 批次指针：meta refresh → requirement_202606.html（托管平台必需入口，打开即跳默认批次）
 ├── requirement_202606.html      # 202606 批次专属导航页（从 index 迁出；头部+侧栏已抽为共用模块）
+├── lingting/                    # 聆听平台原型（本期原型仅统计大盘一页）
+│   └── lingting_statistic.html  # 聆听统计大盘原型（对应 PRD 模块三·统计大盘）
+├── requirement_lingting_202606.html  # 聆听平台 202606 批次页（脚手架派生；Tab 已启用、侧栏已登记）
 ├── requirement_TEMPLATE.html     # 新批次/新平台页面脚手架（复制即用，导航自动套用）
 ├── images/
 │   ├── mapping_relation.png      # PMS 关联关系配图

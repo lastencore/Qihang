@@ -9,6 +9,6 @@
     <nav class="platform-tabs">
         <a class="platform-tab" data-platform="qihang" href="requirement_202606.html">启航平台</a>
         <div class="platform-tab disabled" data-platform="zhixing">知行平台<span class="badge-coming">规划中</span></div>
-        <div class="platform-tab disabled" data-platform="tingting">聆听平台<span class="badge-coming">规划中</span></div>
+        <a class="platform-tab" data-platform="lingting" href="requirement_lingting_202606.html">聆听平台</a>
     </nav>
 </header>
