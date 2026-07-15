@@ -4,9 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>启航平台 - 产品设计中心资产看板</title>
     <!-- 共用导航样式（顶部平台 Tab + 左侧需求版本批次 + 布局骨架） -->
-    <link rel="stylesheet" href="assets/req-nav.css">
+    <link rel="stylesheet" href="../assets/req-center/req-nav.css">
     <style>
-        /* 以下内容样式为 202606 批次页面专属；头部 / 侧栏 / 布局已由 assets/req-nav.css 统一提供 */
+        /* 以下内容样式为 202606 批次页面专属；头部 / 侧栏 / 布局已由 ../assets/req-center/req-nav.css 统一提供 */
 
         /* 右侧内容滚动舱 */
         .content-display-pane {
@@ -108,15 +108,16 @@
         .lightbox-mask img { max-width: 78vw; max-height: 78vh; border-radius: 6px; box-shadow: 0 8px 30px rgba(0,0,0,.45); }
         .lightbox-mask .lb-tip { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; color: #fff; font-size: 12px; opacity: .65; }
     </style>
+  <link rel="icon" href="data:," />
 </head>
 <body data-platform="qihang" data-batch="202606">
 
-    <!-- 顶部平台导航（共用模块，由 assets/req-nav.js 注入） -->
+    <!-- 顶部平台导航（共用模块，由 ../assets/req-center/req-nav.js 注入） -->
     <div id="req-header-placeholder"></div>
 
     <main class="main-workspace">
 
-        <!-- 左侧需求版本批次导航（共用模块，由 assets/req-nav.js 注入） -->
+        <!-- 左侧需求版本批次导航（共用模块，由 ../assets/req-center/req-nav.js 注入） -->
         <div id="req-sidebar-placeholder"></div>
 
         <section class="content-display-pane">
@@ -182,11 +183,11 @@
                             </a>
                             <div class="document-link-item" style="flex-direction: column; align-items: stretch;">
                                 <div style="font-size: 13px; font-weight: 600; color: #262626; margin-bottom: 8px;"><span class="doc-tag tag-blueprint">功能蓝图</span> 启航应用地图_更新日志_操作手册功能蓝图</div>
-                                <img src="images/blueprint_202606.png" alt="启航202606功能蓝图" class="img-thumb" style="max-width:190px;" onclick="openImageModal('images/blueprint_202606.png','启航202606功能蓝图')" />
+                                <img src="../images/blueprint_202606.png" alt="启航202606功能蓝图" class="img-thumb" style="max-width:190px;" onclick="openImageModal('../images/blueprint_202606.png','启航202606功能蓝图')" />
                             </div>
                             <div class="document-link-item" style="flex-direction: column; align-items: stretch;">
                                 <div style="font-size: 13px; font-weight: 600; color: #262626; margin-bottom: 8px;"><span class="doc-tag tag-base">关系图</span> 启航应用与 PMS 系统映射关系图</div>
-                                <img src="images/mapping_relation.png" alt="启航应用与 PMS 系统映射关系图" class="img-thumb" onclick="openImageModal('images/mapping_relation.png','启航应用与 PMS 系统映射关系图')" />
+                                <img src="../images/mapping_relation.png" alt="启航应用与 PMS 系统映射关系图" class="img-thumb" onclick="openImageModal('../images/mapping_relation.png','启航应用与 PMS 系统映射关系图')" />
                             </div>
                                                     </div>
                     </div>
@@ -233,13 +234,13 @@
                     <div class="card-links-pane">
                         <div class="links-sec-title">管理端原型</div>
                         <div class="links-group">
-                            <a href="admin/app_category_management.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/admin/app_category_management.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-client">管理端</span> 应用分类管理</span>
                                 </div>
                                 <span class="action-arrow">➔</span>
                             </a>
-                            <a href="admin/app_management.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/admin/app_management.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-client">管理端</span> 应用管理</span>
                                 </div>
@@ -248,19 +249,19 @@
                         </div>
                         <div class="links-sec-title" style="margin-top: 6px;">客户端原型</div>
                         <div class="links-group">
-                            <a href="client/app_map.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/client/app_map.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-client">客户端</span> 启航首页 / 新一代应用地图</span>
                                 </div>
                                 <span class="action-arrow">➔</span>
                             </a>
-                            <a href="client/client.html" target="_blank" class="document-link-item" style="opacity:.6;">
+                            <a href="../qihang/client/client.html" target="_blank" class="document-link-item" style="opacity:.6;">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-client">客户端</span> 旧版应用大厅（已废弃）</span>
                                 </div>
                                 <span class="action-arrow">➔</span>
                             </a>
-                            <a href="client/app_detail.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/client/app_detail.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-client">客户端</span> 应用详情页</span>
                                 </div>
@@ -269,7 +270,7 @@
                         </div>
                         <div class="links-sec-title" style="margin-top: 6px;">会议讨论材料</div>
                         <div class="links-group">
-                            <a href="slides/app_catalog_proposal.html" target="_blank" class="document-link-item">
+                            <a href="../slides/app_catalog_proposal.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text">应用目录维护方案对比</span>
                                 </div>
@@ -305,13 +306,13 @@
                     <div class="card-links-pane">
                         <div class="links-sec-title">管理端原型</div>
                         <div class="links-group">
-                            <a href="admin/update_log_query.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/admin/update_log_query.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-log">管理端</span> 更新日志列表</span>
                                 </div>
                                 <span class="action-arrow">➔</span>
                             </a>
-                            <a href="admin/update_log_modify.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/admin/update_log_modify.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-log">管理端</span> 更新日志编辑</span>
                                 </div>
@@ -320,7 +321,7 @@
                         </div>
                         <div class="links-sec-title" style="margin-top: 6px;">客户端原型</div>
                         <div class="links-group">
-                            <a href="client/app_detail.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/client/app_detail.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-log">客户端</span> 应用详情-更新日志tab</span>
                                 </div>
@@ -331,7 +332,7 @@
                         <div class="links-group">
                             <div class="document-link-item" style="flex-direction: column; align-items: stretch;">
                                 <div style="font-size: 13px; font-weight: 600; color: #262626; margin-bottom: 8px;"><span class="doc-tag tag-log">流程图</span> 更新日志发布流程（方案2：运营支撑域）</div>
-                                <img src="images/update_log_flow.jpg" alt="更新日志发布流程（方案2：运营支撑域）" class="img-thumb" onclick="openImageModal('images/update_log_flow.jpg','更新日志发布流程（方案2：运营支撑域）')" />
+                                <img src="../images/update_log_flow.jpg" alt="更新日志发布流程（方案2：运营支撑域）" class="img-thumb" onclick="openImageModal('../images/update_log_flow.jpg','更新日志发布流程（方案2：运营支撑域）')" />
                             </div>
                         </div>
                     </div>
@@ -362,13 +363,13 @@
                     <div class="card-links-pane">
                         <div class="links-sec-title">管理端原型</div>
                         <div class="links-group">
-                            <a href="admin/manual_query.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/admin/manual_query.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-manual">管理端</span> 操作手册列表</span>
                                 </div>
                                 <span class="action-arrow">➔</span>
                             </a>
-                            <a href="admin/manual_workspace.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/admin/manual_workspace.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-manual">管理端</span> 操作手册编辑</span>
                                 </div>
@@ -377,7 +378,7 @@
                         </div>
                         <div class="links-sec-title" style="margin-top: 6px;">客户端原型</div>
                         <div class="links-group">
-                            <a href="client/app_detail.html" target="_blank" class="document-link-item">
+                            <a href="../qihang/client/app_detail.html" target="_blank" class="document-link-item">
                                 <div class="doc-meta-left">
                                     <span class="doc-title-text"><span class="doc-tag tag-manual">客户端</span> 应用详情-操作手册tab</span>
                                 </div>
@@ -411,6 +412,6 @@
     </script>
 
     <!-- 共用导航加载器：注入顶部 + 左侧，并按 body[data-platform/data-batch] 高亮 -->
-    <script src="assets/req-nav.js"></script>
+    <script src="../assets/req-center/req-nav.js"></script>
 
 </body></html>
