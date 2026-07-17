@@ -3,14 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>启航平台 - 产品设计中心资产看板</title>
-  <!-- 批次指针：打开即跳转到当前默认需求批次页；未来切换批次只需改此处的 url -->
-  <meta http-equiv="refresh" content="0; url=requirements/qihang_202606.html">
+  <title>产品设计中心</title>
   <link rel="icon" href="data:," />
+  <script>
+    /* ============================================================
+     * ★ 批次指针 —— 全文件唯一需要修改的地方
+     * 每次启动新批次，产品经理只需修改下方 DESIGN_CENTER 配置，
+     * 然后告知 AI「设置新默认页」即可；title / 跳转地址 / 提示文案会自动同步。
+     *   system : 系统目录 key —— qihang(启航) / zhixing(知行) / lingting(聆听)
+     *   batch  : 当前默认批次号（对应 requirements/{system}_{batch}.html）
+     * ============================================================ */
+    const DESIGN_CENTER = {
+      system: 'qihang',
+      batch:  '202606'
+    };
+    const SYSTEM_LABEL = {
+      qihang:   '启航平台',
+      zhixing:  '知行社',
+      lingting: '聆听平台'
+    };
+  </script>
 </head>
 <body>
   <p style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif;color:#646a73;text-align:center;margin-top:80px;font-size:14px;">
-    正在跳转到「启航 202606 需求批次」…
+    正在跳转到「<span id="batchName"></span>」…
   </p>
+  <script>
+    (function () {
+      var label  = (SYSTEM_LABEL[DESIGN_CENTER.system] || DESIGN_CENTER.system) + ' ' + DESIGN_CENTER.batch + ' 需求批次';
+      var target = 'requirements/' + DESIGN_CENTER.system + '_' + DESIGN_CENTER.batch + '.html';
+      document.title = '产品设计中心 - ' + label;
+      document.getElementById('batchName').textContent = label;
+      window.location.replace(target);
+    })();
+  </script>
 </body>
 </html>
