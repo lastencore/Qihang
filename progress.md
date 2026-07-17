@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-15 11:17:55
+> 最后更新：2026-07-17 11:31:08
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -79,6 +79,7 @@
 ### 🔄 进行中
 
 - [ ] **53 应用 / 10 大分类重新规划**：用户正在做，涉及合并、拆分；应用地图同步调整中
+- [ ] **产品设计中心目录上移**：prototype 从「启航平台/原型/」整体提至「中华财险产品项目/」根，与启航平台/知行社/聆听平台平行（三平台共用）；待用户本地执行，git 整体搬目录（含 .git）不致乱
 
 ### ⏳ 待办 / 已决议项
 
@@ -148,6 +149,12 @@
 - [x] **笔记本适配**：容器 `max-w-[1760px]` + `lg` 三栏响应式；综合履约卡片 `whitespace-nowrap` 防折行
 - [x] **预览服务 live**：supervisord 托管 8080（`autorestart=true`），`notify 8080` 取链接已验证
 
+**2026-07-17（本次）**
+- [x] **index.html 批次指针配置化**：原写死的 title / 跳转 URL / 提示文案收拢为 `<head>` 顶部 `DESIGN_CENTER` 单一配置（`system` + `batch`），自动推导 `requirements/{system}_{batch}.html`、动态标题与提示；跳转改 `location.replace`；以后新批次只需改一处。改完待提交
+- [x] **知行考试页防切屏 bug 分析与修复**：用户上传 `gemini-code-*.html`（知行社考试原型）发现防切屏仅监听 `visibilitychange`，窗口化后点击浏览器外应用/另一浏览器（仅 blur 不失可见性）漏检；修复版加 `blur` 监听 + 三重防护（`modalOpen` 弹窗期间不扣次 / `hasLeft` 同段离开去重 / `isSubmitting` 交卷 confirm 误触保护）。修复页 `gemini-code-fixed.html` 放 `/workspace/zhixing_exam_preview/`（独立目录、不在 prototype 仓库），8081 预览。属知行社、未入库
+- [x] **预览服务扩展**：新增 8081（supervisord 托管，`/workspace/zhixing_exam_preview`），与 8080（prototype）并存；均为 `autorestart=true`
+- [x] **产品设计中心目录方案确认**：prototype 整体从「启航平台/原型/」上移至「中华财险产品项目/」根，与三平台平行（三平台共用）；本地三系统文件夹映射仓库 `qihang/zhixing/lingting/`；git 整体搬目录（含 .git）不致乱，待用户本地执行
+
 ### ❌ 已废弃
 - [x] ~~`manual_workspace.html` 结构化模板~~：用户明确"这版本不做了"，不再推进
 
@@ -159,7 +166,7 @@
 
 ```
 prototype/
-├── index.html                    # 批次指针：meta refresh → requirements/qihang_202606.html
+├── index.html                    # 批次指针：JS 跳转 → requirements/{system}_{batch}.html，配置见 DESIGN_CENTER
 ├── progress.md                   # 本文档（交接记忆）
 ├── assets/                        # 跨系统共享资产（顶层，所有系统复用）
 │   ├── shared/                 # 跨系统件预留（logo/变量/字体）
@@ -298,8 +305,10 @@ prototype/
 - **取链接唯一正确方式**：服务起来后运行 `notify <port>`（脚本 `/root/.codebuddy/skills/preview/notify`），输出即预览地址。**绝不要自己拼 URL**——手拼缺 `?x-cs-sandbox-id=...&x-cs-sandbox-port=<port>` 路由参数，网关直接 404。
 - **网关路由原理**：带参请求 → 网关 `Set-Cookie(x-cs-sandbox-id/port)` + `302` 跳干净路径；浏览器带 cookie 即正常渲染（首次会跳一次，正常现象）。`curl` 自检必须带 cookie jar（`-c/-b`），否则 302 后 404。
 - **服务必须用 supervisord 托管**（不要 nohup）：nohup 进程在沙箱休眠/恢复后会死，表现为"服务挂了"。配置写 `/usr/local/share/supervisor/preview-<port>.conf`，`command=python3 -m http.server <port> --bind 0.0.0.0 --directory /workspace/prototype`，`autorestart=true`；再 `${IDE_EDITOR_SERVER_DIR}/bin/supervisord ctl -c ${IDE_EDITOR_SERVER_DIR}/supervisord-conf/supervisord.conf reload` 后 `start preview-<port>`。
-- 约定端口 **8080**；`preview` skill 为标准入口。
-- 当前线上预览（以 `notify` 输出为准，区/标识会变）：`https://webview.e2b.sh4.sandbox.cloudstudio.club/?x-cs-sandbox-id=86364673f11942588155bfdb3ef85172&x-cs-sandbox-port=8080`
+- 约定端口 **8080**（prototype 原型）；**8081** 为知行修复预览（`/workspace/zhixing_exam_preview`，独立目录）。两者均 supervisord 托管、`autorestart=true`。
+- 当前线上预览（以 `notify` 输出为准，区/标识会变）：
+  - 8080：`https://webview.e2b.sh1.sandbox.cloudstudio.club/?x-cs-sandbox-id=d250b30a754949d2a06903d01fa9ac51&x-cs-sandbox-port=8080`
+  - 8081：`https://webview.e2b.sh1.sandbox.cloudstudio.club/?x-cs-sandbox-id=d250b30a754949d2a06903d01fa9ac51&x-cs-sandbox-port=8081`
 
 ---
 
@@ -326,3 +335,4 @@ prototype/
 ### 待用户决策
 - 能力地图/岗位场景地图的具体形式（待用户设计）
 - PRD 评审排期与参与人
+- 产品设计中心目录上移：用户本地把 prototype 整体上移（启航平台/原型 → 中华财险产品项目/根）并 push 后，我侧 `git pull` 同步
