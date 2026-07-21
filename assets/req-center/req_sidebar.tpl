@@ -22,5 +22,9 @@
         <li class="version-item" data-platform="lingting" data-batch="202606">
             <a href="lingting_202606.html">202606 需求批次</a>
         </li>
+        <!-- 新一代首页批次 -->
+        <li class="version-item" data-platform="workbench" data-batch="202607">
+            <a href="workbench_202607.html">202607 待办工作台</a>
+        </li>
     </ul>
 </aside>

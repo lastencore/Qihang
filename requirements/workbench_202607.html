@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新一代首页 - 产品设计中心资产看板</title>
+    <!-- 共用导航样式（顶部平台 Tab + 左侧需求版本批次 + 布局骨架） -->
+    <link rel="stylesheet" href="../assets/req-center/req-nav.css">
+    <style>
+        /* 与 requirement_202606.html 共用同一套内容样式，保证三平台视觉一致 */
+        .content-display-pane {
+            flex-grow: 1; padding: 24px 32px 16px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 24px; scroll-behavior: smooth;
+        }
+        .pane-header { border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        .breadcrumb-area h2 { font-size: 20px; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
+        .breadcrumb-sub { font-size: 13px; color: var(--text-secondary); }
+
+        .quick-anchor-nav {
+            display: flex; gap: 12px; background: #fff; border: 1px solid var(--border-color);
+            padding: 8px 16px; border-radius: 6px; box-shadow: var(--shadow-sm);
+        }
+        .anchor-btn {
+            font-size: 13px; color: var(--text-secondary); text-decoration: none;
+            padding: 4px 12px; border-radius: 4px; transition: all 0.2s; font-weight: 500;
+        }
+        .anchor-btn:hover { background: #f0f4ff; color: var(--primary-color); }
+
+        .flow-stack-container { display: flex; flex-direction: column; gap: 28px; }
+
+        .asset-category-card {
+            background-color: var(--bg-container); border: 1px solid var(--border-color);
+            border-radius: var(--radius-main); box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: row; overflow: hidden; min-height: 280px;
+        }
+        .card-brief-pane {
+            width: 35%; background-color: var(--bg-brief); border-right: 1px solid var(--border-color);
+            padding: 20px; display: flex; flex-direction: column; gap: 16px;
+        }
+        .brief-sec-title { font-size: 15px; font-weight: 600; color: #001529; display: flex; align-items: center; gap: 8px; }
+        .brief-sec-icon { width: 4px; height: 16px; background-color: var(--primary-color); border-radius: 2px; }
+        .brief-block { display: flex; flex-direction: column; gap: 6px; }
+        .brief-sub-title {
+            font-size: 14px; font-weight: 700; color: var(--text-main);
+            display: flex; align-items: center; gap: 6px;
+            padding: 4px 0 4px 10px; margin: 2px 0 8px;
+            border-left: 3px solid var(--primary-color); line-height: 1.4;
+        }
+        .brief-text { font-size: 13px; color: var(--text-main); line-height: 1.6; }
+        .brief-list { padding-left: 18px; font-size: 13px; color: var(--text-main); line-height: 1.6; }
+
+        .card-links-pane { width: 65%; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .links-sec-title { font-size: 13px; font-weight: bold; color: var(--text-secondary); margin-bottom: -4px; }
+        .links-group { display: flex; flex-direction: column; gap: 10px; }
+
+        .document-link-item {
+            border: 1px solid #f0f0f0; border-radius: 6px; padding: 12px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; color: var(--text-main); background-color: #ffffff; transition: all 0.2s;
+        }
+        .document-link-item:hover { border-color: var(--primary-color); background-color: #fcfdfe; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .doc-meta-left { display: flex; flex-direction: column; gap: 4px; }
+        .doc-title-text { font-size: 13px; font-weight: 600; color: #262626; transition: color 0.2s; }
+        .document-link-item:hover .doc-title-text { color: var(--primary-color); }
+        .doc-desc-sub { font-size: 12px; color: var(--text-secondary); }
+        .action-arrow { color: var(--text-disabled); font-size: 14px; transition: transform 0.2s; margin-left: 8px; }
+        .document-link-item:hover .action-arrow { color: var(--primary-color); transform: translateX(3px); }
+
+        .doc-tag {
+            display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 6px;
+            border-radius: 3px; margin-right: 6px; vertical-align: middle; line-height: 14px;
+        }
+        .tag-base { background: #e6fffb; color: #08979c; }
+        .tag-client { background: #e6f4ff; color: #1677ff; }
+        .tag-blueprint { background: #f0f5ff; color: #2b5aed; }
+
+        .pane-footer { text-align: center; padding: 16px 0 8px; font-size: 12px; color: #8f959e; }
+
+        .img-thumb {
+            max-width: 240px; max-height: 120px; width: auto; height: auto;
+            display: block; align-self: flex-start; object-fit: contain; background: #fafafa;
+            border-radius: 4px; border: 1px solid #f0f0f0; cursor: zoom-in; transition: opacity .2s;
+        }
+        .img-thumb:hover { opacity: .85; }
+        .lightbox-mask {
+            position: fixed; inset: 0; background: rgba(0,0,0,.5);
+            display: none; align-items: center; justify-content: center; z-index: 9999; cursor: zoom-out;
+        }
+        .lightbox-mask.open { display: flex; }
+        .lightbox-mask img { max-width: 78vw; max-height: 78vh; border-radius: 6px; box-shadow: 0 8px 30px rgba(0,0,0,.45); }
+        .lightbox-mask .lb-tip { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; color: #fff; font-size: 12px; opacity: .65; }
+    </style>
+  <link rel="icon" href="data:," />
+</head>
+<body data-platform="workbench" data-batch="202607">
+
+    <!-- 顶部平台导航（共用模块，由 ../assets/req-center/req-nav.js 注入） -->
+    <div id="req-header-placeholder"></div>
+
+    <main class="main-workspace">
+
+        <!-- 左侧需求版本批次导航（共用模块，由 ../assets/req-center/req-nav.js 注入） -->
+        <div id="req-sidebar-placeholder"></div>
+
+        <section class="content-display-pane">
+            <div class="pane-header">
+                <div class="breadcrumb-area">
+                    <h2>新一代首页 · 202607 待办工作台</h2>
+                    <div class="breadcrumb-sub">面向团队内部评审，点击对应文件即可预览</div>
+                </div>
+            </div>
+
+            <nav class="quick-anchor-nav">
+                <span style="font-size: 13px; color: var(--text-disabled); align-self: center; font-weight: bold; margin-right: 4px;">模块目录：</span>
+                <a href="#workbench-entry" class="anchor-btn">📋 一、待办工作台</a>
+            </nav>
+
+            <div class="flow-stack-container">
+
+                <!-- ============ 一、待办工作台 ============ -->
+                <div class="asset-category-card" id="workbench-entry">
+                    <div class="card-brief-pane" style="background-color: #f9f0ff;">
+                        <div class="brief-sec-title">
+                            <div class="brief-sec-icon" style="background-color: #722ed1;"></div>
+                            待办工作台
+                        </div>
+                        <div class="brief-text" style="margin-top: 4px;">新一代首页的待办工作台模块，展示当前需我办、我发起未办结的待办事项，支持分类配置、筛选、搜索和快捷处理。</div>
+                    </div>
+                    <div class="card-links-pane">
+                        <div class="links-sec-title">核心交付物</div>
+                        <div class="links-group">
+                            <div class="brief-text" style="color: var(--text-secondary);">PRD / 原型待补充，敬请期待。</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pane-footer">仅供创新研发中心团队评审查阅使用 · 涉及新一代保司核心架构请注意保密</div>
+        </section>
+    </main>
+
+    <!-- 图片点击放大灯箱（用到配图时生效） -->
+    <div class="lightbox-mask" id="lightboxMask" onclick="closeImageModal()">
+        <img id="lightboxImg" src="" alt="" />
+        <div class="lb-tip">点击任意处或按 Esc 关闭</div>
+    </div>
+    <script>
+        function openImageModal(src, alt) {
+            var img = document.getElementById("lightboxImg");
+            img.src = src; img.alt = alt || "";
+            document.getElementById("lightboxMask").classList.add("open");
+        }
+        function closeImageModal() {
+            document.getElementById("lightboxMask").classList.remove("open");
+        }
+        document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeImageModal(); });
+    </script>
+
+    <!-- 共用导航加载器：注入顶部 + 左侧，并按 body[data-platform/data-batch] 高亮 -->
+    <script src="../assets/req-center/req-nav.js"></script>
+
+</body></html>
