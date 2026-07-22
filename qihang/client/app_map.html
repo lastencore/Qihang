@@ -700,8 +700,10 @@
         container.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // ——— 纯积累+锁死：边界处页面完全不动，攒够量一次性滑完整屏 ———
+    // ——— 状态机+preventDefault+setTimeout：完全脱离浏览器 scrollTop 读值 ———
     container.style.overflow = 'hidden';
+    var state = 'banner';
+    var pos  = 0;
     var acc = 0;
     var moving = false;
     var TH_DOWN = 0.30;
@@ -710,25 +712,31 @@
     container.addEventListener('wheel', function(e) {
         e.preventDefault();
         var vh = window.innerHeight;
-        var st = container.scrollTop;
         var dir = e.deltaY;
         if (moving) return;
 
-        // 地图内部：自由滚动
-        if (st > vh || (st >= vh && dir > 0)) {
-            container.scrollTop = Math.max(vh, st + dir);
-            return;
-        }
-
-        // 边界区 (st < vh)：精确边界判断+方向过滤（±6px 容差覆盖小屏落点偏差）
-        if (st <= 6 && dir > 0) {
-            acc += dir;
-            if (acc >= vh * TH_DOWN) { acc = 0; moving = true; container.scrollTo({ top: vh, behavior: 'smooth' }); setTimeout(function() { moving = false; }, 500); }
-        } else if (Math.abs(st - vh) <= 6 && dir < 0) {
-            acc += Math.abs(dir);
-            if (acc >= vh * TH_UP) { acc = 0; moving = true; container.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(function() { moving = false; }, 500); }
+        if (state === 'banner') {
+            if (dir > 0) {
+                acc += dir;
+                if (acc >= vh * TH_DOWN) {
+                    acc = 0; moving = true; state = 'map'; pos = vh;
+                    setTimeout(function() { container.scrollTo({ top: vh, behavior: 'smooth' }); }, 40);
+                    setTimeout(function() { moving = false; }, 500);
+                }
+            } else { acc = 0; }
         } else {
-            acc = 0;
+            if (pos <= vh && dir < 0) {
+                acc += Math.abs(dir);
+                if (acc >= vh * TH_UP) {
+                    acc = 0; moving = true; state = 'banner'; pos = 0;
+                    setTimeout(function() { container.scrollTo({ top: 0, behavior: 'smooth' }); }, 40);
+                    setTimeout(function() { moving = false; }, 500);
+                }
+            } else {
+                acc = 0;
+                pos = Math.max(vh, pos + dir);
+                container.scrollTop = pos;
+            }
         }
     }, { passive: false });
 
