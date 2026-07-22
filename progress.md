@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-22 14:16:46
+> 最后更新：2026-07-22 17:27:12
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -181,6 +181,16 @@
 - [x] **删除侧滑导航抽屉**：`#fnFab`/`#fnBackdrop`/`#fnDrawer` 全部移除
 - [x] **`btnBackUp` 浮动按钮删除**：功能合并到顶部"应用地图"按钮
 - [x] **地图内滚动无干预**：滑动自由，地图顶向下滚正常进地图腹
+
+**2026-07-22（本次）— 页面重构 + 字体层级 + 详情返回优化**
+- [x] **去除 `html{font-size:125%}` 全局放大**：所有自定义 rem 等比上修 25%，基于标准 16px 基准
+- [x] **字体层级重排**：一级 `text-lg`(18px) → 二级 `text-sm`(14px) → 三级 `0.81rem`(13px)，卡片 `text-sm`(14px)
+- [x] **Banner 字号上调**：标题 5rem(80px)、副标题 1.5rem(24px)
+- [x] **搜索/筛选框字号**：`text-xs`→`text-sm`
+- [x] **小屏上滑修复**：去掉 scrollTop 读值，改用状态机（`state:'banner'|'map'` + `pos` 虚拟位置），`preventDefault` + `setTimeout(40ms)` → `scrollTo` 脱离 wheel 链
+- [x] **底部滚动冻结修复**：`pos` 加 `scrollHeight-vh` 上界，上限后向上滚立即响应
+- [x] **详情页返回跳过 Banner**：`app_detail` 返回带 `?from=detail`，`app_map` 检测后直接显示地图
+- [x] **回 Banner 按钮状态同步**：`state='banner'; pos=0; moving=true` 避免后续滚动闪跳
 
 ### ❌ 已废弃
 - [x] ~~`manual_workspace.html` 结构化模板~~：用户明确"这版本不做了"，不再推进
