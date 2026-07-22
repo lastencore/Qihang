@@ -14,7 +14,7 @@
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
         }
-        /* 标准扁平化作业卡片样式 */
+        /* 标准扁平化作业卡片样式（仅灰色 unclickable 卡片不可点，正常卡片保留点击） */
         .flat-card {
             background-color: #ffffff;
             border: 1px solid #cbd5e1;
@@ -26,13 +26,14 @@
             border-color: #2563eb;
             background-color: #f8fafc;
         }
-        /* 中台底座、报表类无法点击的静态灰度样式 */
+        /* 中台底座、报表类：存在但「不可点击跳转」（非「未上线」） */
         .unclickable-card {
-            background-color: #f1f5f9 !important;
-            border: 1px dashed #cbd5e1 !important;
-            color: #94a3b8 !important;
+            background-color: #f8fafc !important;        /* 浅底，保留存在感，不灰死 */
+            border: 1px solid #e2e8f0 !important;        /* 实线浅边，去除虚线「未完成」感 */
+            color: #475569 !important;                   /* slate-600，清晰可读 */
             cursor: not-allowed !important;
-            pointer-events: none !important;
+            pointer-events: none !important;              /* 真正不可点击 */
+            position: relative;
         }
         /* 智能检索过滤未命中时的置灰降噪样式 */
         .flat-card.filtered-out, .static-block.filtered-out {
@@ -54,9 +55,6 @@
             0% { background-color: #fef08a; border-color: #ca8a04; }
             100% { background-color: #ffffff; border-color: #cbd5e1; }
         }
-        .flash-target {
-            animation: flash-highlight 1.5s ease-out;
-        }
         /* 自定义下拉组件细腻滚动条 */
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
@@ -68,13 +66,88 @@
             background: #cbd5e1;
             border-radius: 3px;
         }
+        /* 左右并排的中台区：半宽列下卡片更紧凑，保证多列不拥挤 */
+        .midtier-wrap .flat-card {
+            padding: 0.45rem 0.6rem;
+            font-size: 0.7rem;
+            line-height: 1.25;
+        }
+        .midtier-wrap .flat-card strong {
+            font-size: 0.72rem;
+        }
+        /* 数据中台：平台级大卡片，与左列密集小卡形成「域 vs 平台」层级对比，行数接近自然对齐 */
+        .midtier-wrap .data-platform-card {
+            padding: 0.8rem 1rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .midtier-wrap .data-platform-card strong {
+            font-size: 0.9rem;
+        }
+        /* 高管驾驶舱保留「名称 + 大屏徽标」左右布局 */
+        .midtier-wrap .data-platform-card.data-card-row {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        /* ===== Banner ===== */
+        #banner {
+            position: relative;
+        }
+        #scrollContainer {
+            height: 100vh;
+            overflow-y: auto;
+        }
+        #banner .banner-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            line-height: 1.15;
+        }
+        #banner .banner-sub {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.75);
+            margin-top: 10px;
+            letter-spacing: 0.08em;
+        }
+        @keyframes bounce-down {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+        .arrow-bounce { animation: bounce-down 1.5s ease-in-out infinite; }
+        /* 回到 Banner 按钮 */
+        /* header 标题点击回到 Banner */
+        #scrollContainer .header-title-link {
+            cursor: pointer;
+            transition: color .12s;
+        }
+        #scrollContainer .header-title-link:hover { color: #2563eb; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-800">
+
+<!-- 一体滚动容器：Banner 与地图在同一个流中 -->
+<div id="scrollContainer" class="h-screen overflow-y-auto">
+
+    <!-- 首屏 Banner -->
+    <section id="banner" class="h-screen flex flex-col items-center justify-center px-6" style="background:linear-gradient(135deg,#1e3a5f,#2563eb,#7c3aed);color:#fff;">
+        <div class="text-center">
+            <div class="banner-title">启航平台</div>
+            <div class="banner-sub">新一代核心系统 · 应用地图</div>
+            <div class="mt-8 text-sm" style="color:rgba(255,255,255,0.45);">暂时内容占位</div>
+        </div>
+        <div class="banner-hint" id="scrollDownArrow" style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:#fff;">
+            <span class="text-xs tracking-widest" style="opacity:.7;">点击进入地图</span>
+            <i class="fa-solid fa-chevron-down text-xl arrow-bounce" style="opacity:.8;"></i>
+        </div>
+    </section>
 
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 px-8 py-2.5 flex justify-between items-center shadow-sm gap-4">
         <div class="flex items-center space-x-3 shrink-0">
-            <h1 class="text-base font-bold text-slate-900 tracking-wide">启航平台-新一代核心系统应用地图</h1>
+            <h1 class="header-title-link text-base font-bold text-slate-900 tracking-wide">启航平台-新一代核心系统应用地图</h1>
         </div>
 
         <div class="flex items-center flex-1 max-w-2xl gap-2 relative">
@@ -126,7 +199,7 @@
         </div>
 
         <div class="flex bg-slate-100 p-1 rounded border border-slate-200 text-xs shrink-0">
-            <button class="px-4 py-1.5 font-bold bg-white text-blue-600 rounded border border-slate-200/60 shadow-sm">
+            <button class="px-4 py-1.5 font-bold bg-white text-blue-600 rounded border border-slate-200/60 shadow-sm" id="btnGoBanner">
                 <i class="fa-solid fa-map-location-dot mr-1.5"></i>应用地图
             </button>
         </div>
@@ -144,11 +217,11 @@
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded flex flex-col justify-between">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1.5 border-b border-slate-200"><i class="fa-solid fa-user text-emerald-600 mr-2"></i>1. 个客销售/营销</div>
                     <div class="grid grid-cols-2 gap-2 flex-1 content-start">
-                        <div id="sys-智能一体化个客版" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能一体化个客版" data-dept="共享服务中心" data-category="个客销售/营销">智能一体化个客版</div>
-                        <div id="sys-AI中华APP" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华APP" data-dept="共享服务中心" data-category="个客销售/营销">AI中华APP</div>
-                        <div id="sys-线上运营平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="线上运营平台" data-dept="团体客户渠道部" data-category="个客销售/营销">线上运营平台</div>
-                        <div id="sys-中华保微信小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保微信小程序" data-dept="共享服务中心" data-category="个客销售/营销">中华保微信小程序</div>
-                        <div id="sys-共享保APP" class="flat-card rounded text-xs font-medium text-slate-700" data-name="共享保APP" data-dept="团体客户渠道部" data-category="个客销售/营销">共享保APP</div>
+                        <div id="sys-智能一体化个客版" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="智能一体化个客版" data-dept="共享服务中心" data-category="个客销售/营销">智能一体化个客版</div>
+                        <div id="sys-AI中华APP" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="AI中华APP" data-dept="共享服务中心" data-category="个客销售/营销">AI中华APP</div>
+                        <div id="sys-线上运营平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="线上运营平台" data-dept="团体客户渠道部" data-category="个客销售/营销">线上运营平台</div>
+                        <div id="sys-中华保微信小程序" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="中华保微信小程序" data-dept="共享服务中心" data-category="个客销售/营销">中华保微信小程序</div>
+                        <div id="sys-共享保APP" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="共享保APP" data-dept="团体客户渠道部" data-category="个客销售/营销">共享保APP</div>
                         <div id="sys-中华保APP" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="中华保APP" data-dept="共享服务中心" data-category="个客销售/营销">
                             <strong>中华保APP</strong>
                         </div>
@@ -157,18 +230,18 @@
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1.5 border-b border-slate-200"><i class="fa-solid fa-users text-emerald-600 mr-2"></i>2. 团客销售/营销</div>
                     <div class="space-y-2">
-                        <div id="sys-智能一体化团客版" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能一体化团客版" data-dept="团体客户渠道部" data-category="团客销售/营销">智能一体化团客版</div>
-                        <div id="sys-AI中华APP团客" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华APP团客" data-dept="团体客户渠道部" data-category="团客销售/营销">AI中华APP团客</div>
-                        <div id="sys-中华保支付宝小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保支付宝小程序" data-dept="团体客户渠道部" data-category="团客销售/营销">中华保支付宝小程序</div>
+                        <div id="sys-智能一体化团客版" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="智能一体化团客版" data-dept="团体客户渠道部" data-category="团客销售/营销">智能一体化团客版</div>
+                        <div id="sys-AI中华APP团客" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="AI中华APP团客" data-dept="团体客户渠道部" data-category="团客销售/营销">AI中华APP团客</div>
+                        <div id="sys-中华保支付宝小程序" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="中华保支付宝小程序" data-dept="团体客户渠道部" data-category="团客销售/营销">中华保支付宝小程序</div>
                     </div>
                 </div>
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded flex flex-col justify-between">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1.5 border-b border-slate-200"><i class="fa-solid fa-headset text-emerald-600 mr-2"></i>3. 客户服务</div>
                     <div class="grid grid-cols-2 gap-2 flex-1 content-start">
-                        <div id="sys-智能客服平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智能客服平台" data-dept="共享服务中心" data-category="客户服务">智能客服平台</div>
-                        <div id="sys-新话务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="新话务平台" data-dept="共享服务中心" data-category="客户服务">新话务平台</div>
-                        <div id="sys-在线客服平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="在线客服平台" data-dept="共享服务中心" data-category="客户服务">在线客服平台</div>
-                        <div id="sys-增值服务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="增值服务平台" data-dept="共享服务中心" data-category="客户服务">增值服务平台</div>
+                        <div id="sys-智能客服平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="智能客服平台" data-dept="共享服务中心" data-category="客户服务">智能客服平台</div>
+                        <div id="sys-新话务平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="新话务平台" data-dept="共享服务中心" data-category="客户服务">新话务平台</div>
+                        <div id="sys-在线客服平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="在线客服平台" data-dept="共享服务中心" data-category="客户服务">在线客服平台</div>
+                        <div id="sys-增值服务平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="增值服务平台" data-dept="共享服务中心" data-category="客户服务">增值服务平台</div>
                         <div id="sys-客户接触管理平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="客户接触管理平台" data-dept="共享服务中心" data-category="客户服务"><strong>客户接触管理</strong></div>
                         <div id="sys-服务品质管理平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="服务品质管理平台" data-dept="共享服务中心" data-category="客户服务"><strong>服务品质管理</strong></div>
                     </div>
@@ -176,10 +249,10 @@
                 <div class="bg-slate-100/70 p-3 border border-slate-200 rounded flex flex-col justify-between">
                     <div class="text-xs font-bold text-slate-700 mb-3 pb-1.5 border-b border-slate-200"><i class="fa-solid fa-handshake-angle text-emerald-600 mr-2"></i>4. 渠道合作</div>
                     <div class="grid grid-cols-2 gap-2 flex-1 content-start">
-                        <div id="sys-合作伙伴服务平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="合作伙伴服务平台" data-dept="团体客户渠道部" data-category="渠道合作">合作伙伴服务平台</div>
-                        <div id="sys-渠道适配平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="渠道适配平台" data-dept="团体客户渠道部" data-category="渠道合作">渠道适配平台</div>
-                        <div id="sys-互联网运营平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="互联网运营平台" data-dept="团体客户渠道部" data-category="渠道合作">互联网运营平台</div>
-                        <div id="sys-车商伙伴小程序" class="flat-card rounded text-xs font-medium text-slate-700" data-name="车商伙伴小程序" data-dept="团体客户渠道部" data-category="渠道合作">车商伙伴小程序</div>
+                        <div id="sys-合作伙伴服务平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="合作伙伴服务平台" data-dept="团体客户渠道部" data-category="渠道合作">合作伙伴服务平台</div>
+                        <div id="sys-渠道适配平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="渠道适配平台" data-dept="团体客户渠道部" data-category="渠道合作">渠道适配平台</div>
+                        <div id="sys-互联网运营平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="互联网运营平台" data-dept="团体客户渠道部" data-category="渠道合作">互联网运营平台</div>
+                        <div id="sys-车商伙伴小程序" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="车商伙伴小程序" data-dept="团体客户渠道部" data-category="渠道合作">车商伙伴小程序</div>
                         <div id="sys-生态合作开放平台" class="flat-card rounded text-xs font-bold text-slate-800 bg-blue-50/40 border-blue-300 flex items-center" data-name="生态合作开放平台" data-dept="团体客户渠道部" data-category="渠道合作"><strong>生态合作开放</strong></div>
                     </div>
                 </div>
@@ -201,20 +274,20 @@
                     
                     <div class="flex-1 flex flex-col justify-between space-y-3">
                         <div class="grid grid-cols-2 gap-2">
-                            <div id="sys-车险承保平台" class="flat-card rounded text-xs font-medium text-slate-700 border-l-4 border-l-sky-400" data-name="车险承保平台" data-dept="团体非车险部" data-category="承保作业平台">车险承承平台</div>
-                            <div id="sys-意健险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="意健险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">意健险承保平台</div>
-                            <div id="sys-农险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="农险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">农险承保平台</div>
-                            <div id="sys-财责险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="财责险承保平台" data-dept="团体非车险部" data-category="承保作业平台">财责险承保平台</div>
-                            <div id="sys-政健险承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="政健险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">政健险承保平台</div>
-                            <div id="sys-融资性信保承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="融资性信保承保平台" data-dept="团体非车险部" data-category="承保作业平台">融资性信保承保</div>
-                            <div id="sys-非融资性信保承保平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="非融资性信保承保平台" data-dept="团体非车险部" data-category="承保作业平台">非融资性信保承保</div>
+                            <div id="sys-车险承保平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card border-l-4 border-l-sky-400" data-name="车险承保平台" data-dept="团体非车险部" data-category="承保作业平台">车险承承平台</div>
+                            <div id="sys-意健险承保平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="意健险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">意健险承保平台</div>
+                            <div id="sys-农险承保平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="农险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">农险承保平台</div>
+                            <div id="sys-财责险承保平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="财责险承保平台" data-dept="团体非车险部" data-category="承保作业平台">财责险承保平台</div>
+                            <div id="sys-政健险承保平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="政健险承保平台" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">政健险承保平台</div>
+                            <div id="sys-融资性信保承保平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="融资性信保承保平台" data-dept="团体非车险部" data-category="承保作业平台">融资性信保承保</div>
+                            <div id="sys-非融资性信保承保平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="非融资性信保承保平台" data-dept="团体非车险部" data-category="承保作业平台">非融资性信保承保</div>
                         </div>
 
                         <div class="border-t border-dashed border-slate-300 my-1"></div>
 
                         <div class="grid grid-cols-2 gap-2">
-                            <div id="sys-兴农保" class="flat-card rounded text-xs font-medium text-slate-700" data-name="兴农保" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">兴农保</div>
-                            <div id="sys-扫码保" class="flat-card rounded text-xs font-medium text-slate-700" data-name="扫码保" data-dept="团体非车险部" data-category="承保作业平台">扫码保</div>
+                            <div id="sys-兴农保" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="兴农保" data-dept="普惠金融部/农村金融部" data-category="承保作业平台">兴农保</div>
+                            <div id="sys-扫码保" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="扫码保" data-dept="团体非车险部" data-category="承保作业平台">扫码保</div>
                         </div>
                     </div>
                 </div>
@@ -224,16 +297,16 @@
                             <i class="fa-solid fa-clipboard-check text-indigo-600 mr-2"></i>2. 核保作业平台
                         </div>
                         <div class="grid grid-cols-1 gap-2 flex-1 content-start">
-                            <div id="sys-车险核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="车险核保" data-dept="团体非车险部" data-category="核保作业平台">
+                            <div id="sys-车险核保" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card border-l-2 border-l-indigo-400 bg-white" data-name="车险核保" data-dept="团体非车险部" data-category="核保作业平台">
                                 <i class="fa-solid fa-car text-[10px] text-slate-400 mr-1"></i>车险核保
                             </div>
-                            <div id="sys-个非核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="个非核保" data-dept="团体非车险部" data-category="核保作业平台">
+                            <div id="sys-个非核保" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card border-l-2 border-l-indigo-400 bg-white" data-name="个非核保" data-dept="团体非车险部" data-category="核保作业平台">
                                 <i class="fa-solid fa-user-shield text-[10px] text-slate-400 mr-1"></i>个非核保
                             </div>
-                            <div id="sys-团非核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="团非核保" data-dept="团体非车险部" data-category="核保作业平台">
+                            <div id="sys-团非核保" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card border-l-2 border-l-indigo-400 bg-white" data-name="团非核保" data-dept="团体非车险部" data-category="核保作业平台">
                                 <i class="fa-solid fa-building text-[10px] text-slate-400 mr-1"></i>团非核保
                             </div>
-                            <div id="sys-农险核保" class="flat-card rounded text-xs font-medium text-slate-700 border-l-2 border-l-indigo-400 bg-white" data-name="农险核保" data-dept="普惠金融部/农村金融部" data-category="核保作业平台">
+                            <div id="sys-农险核保" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card border-l-2 border-l-indigo-400 bg-white" data-name="农险核保" data-dept="普惠金融部/农村金融部" data-category="核保作业平台">
                                 <i class="fa-solid fa-seedling text-[10px] text-slate-400 mr-1"></i>农险核保
                             </div>
                         </div>
@@ -244,16 +317,16 @@
                             <i class="fa-solid fa-truck-fast text-sky-600 mr-2"></i>3. 综合履约
                         </div>
                         <div class="grid grid-cols-2 gap-2 flex-1 content-start whitespace-nowrap">
-                        <div id="sys-综合履约作业平台-车意财" class="flat-card rounded text-xs font-medium text-slate-700 flex items-baseline gap-1" data-name="综合履约作业平台-车意财" data-dept="理赔部" data-category="综合履约">
+                        <div id="sys-综合履约作业平台-车意财" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card flex items-baseline gap-1" data-name="综合履约作业平台-车意财" data-dept="理赔部" data-category="综合履约">
                             <strong>综合履约作业平台-车意财</strong>
                         </div>
-                        <div id="sys-综合履约作业平台-农险" class="flat-card rounded text-xs font-medium text-slate-700" data-name="综合履约作业平台-农险" data-dept="理赔部" data-category="综合履约">综合履约作业平台-农险</div>
-                        <div id="sys-综合履约作业平台-政健险" class="flat-card rounded text-xs font-medium text-slate-700" data-name="综合履约作业平台-政健险" data-dept="理赔部" data-category="综合履约">综合履约作业平台-政健险</div>
-                            <div id="sys-在线理赔平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="在线理赔平台" data-dept="理赔部" data-category="综合履约">在线理赔平台</div>
-                            <div id="sys-AI中华-履约" class="flat-card rounded text-xs font-medium text-slate-700" data-name="AI中华-履约" data-dept="理赔部" data-category="综合履约">AI中华-履约</div>
-                            <div id="sys-中华保微信小程序-履约" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中华保微信小程序-履约" data-dept="理赔部" data-category="综合履约">中华保微信小程序-履约</div>
-                            <div id="sys-中易赔" class="flat-card rounded text-xs font-medium text-slate-700" data-name="中易赔" data-dept="理赔部" data-category="综合履约">中易赔</div>
-                            <div id="sys-车商OMS" class="flat-card rounded text-xs font-medium text-slate-700" data-name="车商OMS" data-dept="理赔部" data-category="综合履约">车商OMS</div>
+                        <div id="sys-综合履约作业平台-农险" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="综合履约作业平台-农险" data-dept="理赔部" data-category="综合履约">综合履约作业平台-农险</div>
+                        <div id="sys-综合履约作业平台-政健险" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="综合履约作业平台-政健险" data-dept="理赔部" data-category="综合履约">综合履约作业平台-政健险</div>
+                            <div id="sys-在线理赔平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="在线理赔平台" data-dept="理赔部" data-category="综合履约">在线理赔平台</div>
+                            <div id="sys-AI中华-履约" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="AI中华-履约" data-dept="理赔部" data-category="综合履约">AI中华-履约</div>
+                            <div id="sys-中华保微信小程序-履约" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="中华保微信小程序-履约" data-dept="理赔部" data-category="综合履约">中华保微信小程序-履约</div>
+                            <div id="sys-中易赔" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="中易赔" data-dept="理赔部" data-category="综合履约">中易赔</div>
+                            <div id="sys-车商OMS" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="车商OMS" data-dept="理赔部" data-category="综合履约">车商OMS</div>
                         </div>
                     </div>
 
@@ -356,15 +429,15 @@
                     <i class="fa-solid fa-screwdriver-wrench mr-2"></i>工具平台
                 </div>
                 <div class="p-4 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2 flex-1 content-center">
-                    <div id="sys-车型查询平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="车型查询平台" data-dept="共享服务中心" data-category="工具平台">车型查询平台</div>
-                    <div id="sys-监管接入平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="监管接入平台" data-dept="共享服务中心" data-category="工具平台">监管接入平台</div>
-                    <div id="sys-打印平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="打印平台" data-dept="共享服务中心" data-category="工具平台">打印平台</div>
-                    <div id="sys-OCR平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="OCR平台" data-dept="共享服务中心" data-category="工具平台">OCR平台</div>
-                    <div id="sys-鹊桥" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="鹊桥" data-dept="共享服务中心" data-category="工具平台">鹊桥</div>
-                    <div id="sys-影像助手" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="影像助手" data-dept="共享服务中心" data-category="工具平台">影像助手</div>
-                    <div id="sys-投保电子化平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="投保电子化平台" data-dept="共享服务中心" data-category="工具平台">投保电子化</div>
-                    <div id="sys-人脸验证系统" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="人脸验证系统" data-dept="共享服务中心" data-category="工具平台">人脸验证系统</div>
-                    <div id="sys-融合通讯平台" class="flat-card rounded text-xs font-medium text-slate-700 text-center flex items-center justify-center" data-name="融合通讯平台" data-dept="共享服务中心" data-category="工具平台">融合通讯平台</div>
+                    <div id="sys-车型查询平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="车型查询平台" data-dept="共享服务中心" data-category="工具平台">车型查询平台</div>
+                    <div id="sys-监管接入平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="监管接入平台" data-dept="共享服务中心" data-category="工具平台">监管接入平台</div>
+                    <div id="sys-打印平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="打印平台" data-dept="共享服务中心" data-category="工具平台">打印平台</div>
+                    <div id="sys-OCR平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="OCR平台" data-dept="共享服务中心" data-category="工具平台">OCR平台</div>
+                    <div id="sys-鹊桥" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="鹊桥" data-dept="共享服务中心" data-category="工具平台">鹊桥</div>
+                    <div id="sys-影像助手" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="影像助手" data-dept="共享服务中心" data-category="工具平台">影像助手</div>
+                    <div id="sys-投保电子化平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="投保电子化平台" data-dept="共享服务中心" data-category="工具平台">投保电子化</div>
+                    <div id="sys-人脸验证系统" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="人脸验证系统" data-dept="共享服务中心" data-category="工具平台">人脸验证系统</div>
+                    <div id="sys-融合通讯平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card text-center flex items-center justify-center" data-name="融合通讯平台" data-dept="共享服务中心" data-category="工具平台">融合通讯平台</div>
                 </div>
             </section>
 
@@ -386,11 +459,12 @@
             </section>
         </div>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-4 items-stretch midtier-wrap">
+        <section class="bg-white border border-slate-200 rounded shadow-sm flex flex-col">
             <div class="bg-indigo-50 border-b border-slate-200 px-5 py-3 text-sm font-bold text-indigo-800">
                 <i class="fa-solid fa-cubes mr-2"></i>业务中台 (原子化共享域)
             </div>
-            <div class="p-4 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+            <div class="p-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 flex-1 content-start">
                 <div id="sys-承保域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="承保域" data-dept="团体非车险部" data-category="业务中台">承保域</div>
                 <div id="sys-批改域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="批改域" data-dept="团体非车险部" data-category="业务中台">批改域</div>
                 <div id="sys-保单服务域" class="flat-card rounded text-xs text-slate-700 text-center font-bold bg-indigo-50/10" data-name="保单服务域" data-dept="团体非车险部" data-category="业务中台">保单服务域</div>
@@ -416,24 +490,25 @@
             </div>
         </section>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm flex flex-col">
             <div class="bg-purple-50 border-b border-slate-200 px-5 py-3 text-sm font-bold text-purple-800">
                 <i class="fa-solid fa-chart-pie mr-2"></i>数据中台
             </div>
-            <div class="p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                <div id="sys-经营分析平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="经营分析平台" data-dept="共享服务中心" data-category="数据中台">经营分析平台</div>
-                <div id="sys-智慧决策平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="智慧决策平台" data-dept="共享服务中心" data-category="数据中台">智慧决策平台</div>
-                <div id="sys-高管驾驶舱" class="flat-card rounded text-xs font-bold bg-blue-50/60 border-blue-300 text-blue-900 flex justify-between items-center" data-name="高管驾驶舱" data-dept="共享服务中心" data-category="数据中台"><span>高管驾驶舱</span><span class="text-[9px] bg-blue-200 text-blue-700 px-1 rounded">大屏</span></div>
-                <div id="sys-统一提数平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一提数平台" data-dept="共享服务中心" data-category="数据中台">统一提数平台</div>
-                <div id="sys-统一数据服务" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一数据服务" data-dept="共享服务中心" data-category="数据中台">统一数据服务</div>
-                <div id="sys-统一数据门户" class="flat-card rounded text-xs font-medium text-slate-700" data-name="统一数据门户" data-dept="共享服务中心" data-category="数据中台">统一数据门户</div>
-                <div id="sys-公共数据中心" class="flat-card rounded text-xs font-medium text-slate-700" data-name="公共数据中心" data-dept="共享服务中心" data-category="数据中台">公共数据中心</div>
-                <div id="sys-数据质量管理平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="数据质量管理平台" data-dept="共享服务中心" data-category="数据中台">数据质量管理平台</div>
-                <div id="sys-数据标准管理平台" class="flat-card rounded text-xs font-medium text-slate-700" data-name="数据标准管理平台" data-dept="共享服务中心" data-category="数据中台">数据标准管理平台</div>
-                <div id="sys-标签管理系统" class="flat-card rounded text-xs font-medium text-slate-700" data-name="标签管理系统" data-dept="共享服务中心" data-category="数据中台">标签管理系统</div>
-                <div id="sys-帆软报表" class="flat-card unclickable-card rounded text-xs text-center font-medium" data-name="帆软报表" data-category="数据中台">帆软报表</div>
+            <div class="p-3 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 flex-1 content-start">
+                <div id="sys-经营分析平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="经营分析平台" data-dept="共享服务中心" data-category="数据中台">经营分析平台</div>
+                <div id="sys-智慧决策平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="智慧决策平台" data-dept="共享服务中心" data-category="数据中台">智慧决策平台</div>
+                <div id="sys-高管驾驶舱" class="flat-card rounded text-xs font-bold bg-blue-50/60 border-blue-300 text-blue-900 flex justify-between items-center data-platform-card data-card-row" data-name="高管驾驶舱" data-dept="共享服务中心" data-category="数据中台"><span>高管驾驶舱</span><span class="text-[9px] bg-blue-200 text-blue-700 px-1 rounded">大屏</span></div>
+                <div id="sys-统一提数平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="统一提数平台" data-dept="共享服务中心" data-category="数据中台">统一提数平台</div>
+                <div id="sys-统一数据服务" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="统一数据服务" data-dept="共享服务中心" data-category="数据中台">统一数据服务</div>
+                <div id="sys-统一数据门户" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="统一数据门户" data-dept="共享服务中心" data-category="数据中台">统一数据门户</div>
+                <div id="sys-公共数据中心" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="公共数据中心" data-dept="共享服务中心" data-category="数据中台">公共数据中心</div>
+                <div id="sys-数据质量管理平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="数据质量管理平台" data-dept="共享服务中心" data-category="数据中台">数据质量管理平台</div>
+                <div id="sys-数据标准管理平台" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="数据标准管理平台" data-dept="共享服务中心" data-category="数据中台">数据标准管理平台</div>
+                <div id="sys-标签管理系统" class="flat-card rounded text-xs font-medium text-slate-700 data-platform-card" data-name="标签管理系统" data-dept="共享服务中心" data-category="数据中台">标签管理系统</div>
+                <div id="sys-帆软报表" class="flat-card unclickable-card rounded text-xs text-center font-medium data-platform-card" data-name="帆软报表" data-category="数据中台">帆软报表</div>
             </div>
         </section>
+        </div>
 
 
     </main>
@@ -523,9 +598,6 @@
                         if(targetId) {
                             const targetEl = document.getElementById(targetId);
                             targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            
-                            targetEl.classList.add('flash-target');
-                            setTimeout(() => targetEl.classList.remove('flash-target'), 1500);
                         }
                     };
                     // 点击检索结果项跳转至应用详情页（接回原型原有链路）
@@ -592,21 +664,82 @@
         });
     </script>
 
-    <!-- 接回原型原有链路：应用地图卡片点击跳转至应用详情页（不可点卡片 pointer-events:none 自动屏蔽） -->
+    <!-- 正常卡片点击跳转至应用详情页；灰色 unclickable 卡片 pointer-events:none，点击不会触发 -->
     <script>
     (function(){
         document.body.addEventListener("click", function(e) {
             var card = e.target.closest(".flat-card");
-            if (card) {
+            if (card && !card.classList.contains("unclickable-card")) {
                 var name = card.getAttribute("data-name");
                 if (name) {
                     window.location.href = "app_detail.html?name=" + encodeURIComponent(name);
-                    return;
                 }
             }
         });
     })();
     </script>
+
+</div><!-- /scrollContainer -->
+
+<script>
+(function(){
+    var container = document.getElementById('scrollContainer');
+    var banner = document.getElementById('banner');
+    var downArrow = document.getElementById('scrollDownArrow');
+    var btnBnr = document.getElementById('btnGoBanner');
+
+    // 下箭头 → 平滑滚动到地图区顶
+    downArrow.addEventListener('click', function() {
+        container.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    });
+
+    // 顶部「应用地图」按钮 → 回到 Banner
+    if (btnBnr) btnBnr.addEventListener('click', function() {
+        container.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 标题「应用地图」→ 回到 Banner
+    var titleLink = document.querySelector('.header-title-link');
+    if (titleLink) titleLink.addEventListener('click', function() {
+        container.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ——— 纯积累+锁死：边界处页面完全不动，攒够量一次性滑完整屏 ———
+    container.style.overflow = 'hidden';
+    var acc = 0;
+    var moving = false;
+    var TH_DOWN = 0.30;  // Banner→地图（较松）
+    var TH_UP   = 0.55;  // 地图→Banner（较严）
+
+    container.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        var vh = window.innerHeight;
+        var st = container.scrollTop;
+        var dir = e.deltaY;
+        if (moving) return;
+
+        // 地图内部：自由滚动，但向上滚动不得进入边界区
+        if (st > vh || (st >= vh && dir > 0)) {
+            container.scrollTop = Math.max(vh, st + dir);
+            return;
+        }
+
+        // 边界区 (st <= vh)：精确边界判断+方向过滤
+        if (st <= 2 && dir > 0) {
+            // 在 Banner 顶，向下滚 → 积累退出
+            acc += dir;
+            if (acc >= vh * TH_DOWN) { acc = 0; moving = true; container.scrollTo({ top: vh, behavior: 'smooth' }); setTimeout(function() { moving = false; }, 500); }
+        } else if (Math.abs(st - vh) <= 2 && dir < 0) {
+            // 在地图顶，向上滚 → 积累退出（更苛刻）
+            acc += Math.abs(dir);
+            if (acc >= vh * TH_UP) { acc = 0; moving = true; container.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(function() { moving = false; }, 500); }
+        } else {
+            acc = 0;
+        }
+    }, { passive: false });
+
+})();
+</script>
 
 </body>
 </html>

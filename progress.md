@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-21 17:50:47
+> 最后更新：2026-07-22 14:16:46
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -174,6 +174,14 @@
 - [x] **正常卡片恢复可点击跳转**：body click handler 恢复（排除 `unclickable-card`），搜索结果同理；`flat-card` 恢复 `cursor:pointer`
 - [x] **临时文件清理**：清理冗余 png 截图，prototype 仅留 `app_map_lr.html` 一个未跟踪文件
 
+**2026-07-22（本次）— app_map_lr 替换 app_map + 首屏 Banner + 边界积累过渡**
+- [x] **`app_map_lr.html` 替换 `app_map.html`**：全部改动合并入主文件，删除 lr 副本和备份
+- [x] **首屏全幅 Banner**：渐变背景+占位内容+下箭头，Banner 与地图一体化在 `scrollContainer` 中
+- [x] **纯积累+锁死边界过渡**：`overflow:hidden`+wheel 事件拦截，Banner 区滚轮不移动页面，纯数字积累至阈值（Banner→地图 30%，地图→Banner 55%）后 `scrollTo` 一次性平滑滑整屏；无露出量、无中间态
+- [x] **删除侧滑导航抽屉**：`#fnFab`/`#fnBackdrop`/`#fnDrawer` 全部移除
+- [x] **`btnBackUp` 浮动按钮删除**：功能合并到顶部"应用地图"按钮
+- [x] **地图内滚动无干预**：滑动自由，地图顶向下滚正常进地图腹
+
 ### ❌ 已废弃
 - [x] ~~`manual_workspace.html` 结构化模板~~：用户明确"这版本不做了"，不再推进
 
@@ -208,9 +216,8 @@ prototype/
 │   │   ├── manual_workspace.html
 │   │   ├── update_log_query.html
 │   │   └── update_log_modify.html
-│   ├── client/                # 客户端原型（4 页）
-│   │   ├── app_map.html
-│   │   ├── app_map_lr.html     # 应用地图对比页（左右非对称+侧滑抽屉）
+│   ├── client/                # 客户端原型（3 页）
+│   │   ├── app_map.html        # 应用地图（含首屏 Banner+左右非对称+边界积累过渡）
 │   │   ├── app_detail.html
 │   │   └── client.html
 │   └── assets/client/         # 启航客户端壳（header.tpl / client.css 预留，随上传补）
@@ -307,10 +314,10 @@ prototype/
 - **一级分类去编号**：7 个一级分类标题去掉「一、…七、」编号（二级保留）
 - **监管报送独立不合并**：保持独立一级分类，与工具平台并排同列（`grid-cols-[1fr_320px]`，左工具平台右监管报送），不合并标题、不合并 section
 
-### 4.9 app_map_lr 对比页布局方案 ✅ 已定
-- 业务中台（21 卡）与数据中台（11 卡）**左右非对称 + 语义差异化**：左侧业务中台占 1.4fr 宽列、密集 4 列小卡；右侧数据中台占 1fr 窄列、3 列平台级大卡（`min-height:58px` / 0.85rem 字）；两列高度自然对齐（365px vs 365px）
-- 侧滑覆盖导航抽屉（FAB 按钮→滑入 268px 面板+遮罩）优于浮层浮标
-- 正常卡片保留点击跳转 `app_detail.html`；灰色"不可点击"卡片用 `pointer-events:none + not-allowed` 光标明示非交互
+### 4.9 app_map 布局方案 ✅ 已定
+- 业务中台（21 卡）与数据中台（11 卡）**左右非对称 + 语义差异化**：左侧业务中台 1.4fr 宽列 + 4 列小卡，右侧数据中台 1fr 窄列 + 3 列平台级大卡
+- 灰色"不可点击"卡片用实线浅底 + `not-allowed` 光标，去除锁形图标
+- **首屏 Banner** + 纯积累边界过渡：Banner 区滚轮页面不动，积累达标后一次性平滑滑整屏
 
 ---
 
