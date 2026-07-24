@@ -594,7 +594,15 @@
                         const targetId = card.getAttribute('id');
                         if(targetId) {
                             const targetEl = document.getElementById(targetId);
-                            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            const container = document.getElementById('scrollContainer');
+                            const vh = window.innerHeight;  // Banner 占满首屏，不可露出
+                            // 手动计算目标滚动位置，钳制下界为地图顶部（vh），杜绝 Banner 露出
+                            const elTop = targetEl.offsetTop;
+                            const elHeight = targetEl.offsetHeight;
+                            const containerHeight = container.clientHeight;
+                            const targetScroll = elTop - (containerHeight / 2) + (elHeight / 2);
+                            const clampedScroll = Math.max(targetScroll, vh);
+                            container.scrollTo({ top: clampedScroll, behavior: 'smooth' });
                         }
                     };
                     // 点击检索结果项跳转至应用详情页（接回原型原有链路）
