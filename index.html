@@ -34,7 +34,9 @@
       var target = 'requirements/' + DESIGN_CENTER.system + '_' + DESIGN_CENTER.batch + '.html';
       document.title = '产品设计中心 - ' + label;
       document.getElementById('batchName').textContent = label;
-      window.location.replace(target);
+      //window.location.replace(target);
+      window.location.replace('/' + target);
+
     })();
   </script>
 </body>
