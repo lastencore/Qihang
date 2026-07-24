@@ -1,6 +1,6 @@
 # 启航平台项目 — 任务交接文档
 
-> 最后更新：2026-07-22 17:27:12
+> 最后更新：2026-07-24 10:44:35
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 
 ---
@@ -192,6 +192,14 @@
 - [x] **详情页返回跳过 Banner**：`app_detail` 返回带 `?from=detail`，`app_map` 检测后直接显示地图
 - [x] **回 Banner 按钮状态同步**：`state='banner'; pos=0; moving=true` 避免后续滚动闪跳
 
+**2026-07-24（本次）—— OSS + ECS 外网发布全链路打通**
+- [x] **OSS Bucket 创建与上传**：Bucket `cic-prototype-lastencore`（杭州），RAM 用户 `oss-deploy`(最小权限：Put/Get/List/Delete + ACL)，ossutil 配置完成
+- [x] **upload.bat 一键发布脚本**：本地 `D:\中华财险产品项目\原型\upload.bat`，robocopy 镜像排除 `.git/docs/progress.md` → ossutil sync → set-meta 修正 MIME
+- [x] **OSS 默认域名强制下载问题定位**：`x-oss-ec: 0048-00000001`——阿里云安全策略（2018年起杭州地域 Bucket，text/html 通过默认域名访问强制 `Content-Disposition: attachment`），无法关闭
+- [x] **ECS + Nginx 反代方案**：`114.55.130.110`（Alibaba Cloud Linux 3.2104），Nginx 1.24.0 安装，配置 `/etc/nginx/conf.d/prototype.conf`（proxy_pass OSS + proxy_hide_header 删 Content-Disposition/x-oss-force-download），安全组放行 80
+- [x] **OSS 静态托管 404 页清空**：曾填 index.html 导致相对路径 JS 跳转无限叠加 requirements/，清空后恢复正常
+- [x] **域名备案进行中**：备案通过后绑自定义域名 + 开 443/HTTPS
+
 ### ❌ 已废弃
 - [x] ~~`manual_workspace.html` 结构化模板~~：用户明确"这版本不做了"，不再推进
 
@@ -329,6 +337,12 @@ prototype/
 - 灰色"不可点击"卡片用实线浅底 + `not-allowed` 光标，去除锁形图标
 - **首屏 Banner** + 纯积累边界过渡：Banner 区滚轮页面不动，积累达标后一次性平滑滑整屏
 
+### 4.10 OSS + ECS 外网发布架构 ✅ 已定
+- **上传链路**：本地 `upload.bat`（robocopy 镜像排除敏感文件 → ossutil sync → set-meta 修正 MIME）→ OSS `cic-prototype-lastencore`（杭州、公共读）
+- **访问链路**：用户 → `http://114.55.130.110`（ECS Nginx）→ proxy_pass OSS → proxy_hide_header 删强制下载头 → 浏览器正常渲染
+- **为什么需要 ECS**：OSS 默认域名（`*.oss-cn-hangzhou.aliyuncs.com`）对 text/html 强制注入 `Content-Disposition: attachment`（阿里云安全策略，自 2018 年起，无法关闭），必须通过自定义域名或反向代理绕过
+- **域名备案通过后**：绑自定义域名 → 申请免费 SSL 证书 → Nginx 加 `listen 443 ssl` → 可去掉 ECS 或保留做 HTTPS 终止
+
 ---
 
 ## 5. 核心上下文
@@ -366,6 +380,17 @@ prototype/
 
 ---
 
+### 5.6 OSS / ECS 外网发布环境
+- **OSS Bucket**：`cic-prototype-lastencore`（杭州），公共读，静态托管（默认首页 index.html，404 页已清空）
+- **RAM 用户**：`oss-deploy`，策略含 ListBuckets + Put/Get/List/Delete + GetObjectAcl/PutObjectAcl，限单 Bucket
+- **ECS**：公网 IP `114.55.130.110`，Alibaba Cloud Linux 3.2104，安全组 80 放行（443 待备案）
+- **Nginx**：v1.24.0，配置 `/etc/nginx/conf.d/prototype.conf`（proxy_pass OSS + proxy_hide_header 删强制下载头），改后 `nginx -t && systemctl reload nginx`
+- **本地发布**：`D:\中华财险产品项目\原型\upload.bat`（robocopy 镜像排除 .git/docs/progress.md → ossutil sync --delete → set-meta），ossutil `D:\tools\ossutil64.exe`
+- **外网访问**：`http://114.55.130.110`；域名备案中（通过后绑自定义域名 + HTTPS）
+- **OSS 强制下载**：`x-oss-ec: 0048-00000001`，阿里云安全策略（2018 年起），默认域名 text/html 强制 attachment，无法关闭
+
+---
+
 ## 6. 下一步行动
 
 ### 新对话启动指令
@@ -390,3 +415,58 @@ prototype/
 - 待办工作台方案设计：用户上一轮补充了业务细节（运营支撑域需新建备份库、快捷入口复用应用导航管理、配置后台 JSON 载荷自动解析等），最终方案文档待输出
 - 能力地图/岗位场景地图的具体形式（待用户设计）
 - 产品设计中心目录上移：用户本地把 prototype 整体上移（启航平台/原型 → 中华财险产品项目/根）并 push 后，我侧 `git pull` 同步
+- 域名备案通过后：绑自定义域名到 OSS → 申请 SSL 证书 → Nginx 加 443 → 可选去掉 ECS 直连
+
+---
+
+## 7. 附录：upload.bat 发布脚本
+
+```bat
+@echo off
+chcp 65001 >nul
+set SRC=D:\中华财险产品项目\原型\prototype
+set PUB=D:\中华财险产品项目\原型\proto_publish
+set BUCKET=cic-prototype-lastencore
+set OSSUTIL="D:\tools\ossutil64.exe"
+
+echo [1/3] 生成镜像发布副本(自动删除旧文件)
+robocopy "%SRC%" "%PUB%" /MIR /XD .git docs /XF progress.md .gitignore .ossutilconfig
+if %errorlevel% gtr 7 (
+    echo ROBOCOPY 失败，请检查路径
+    pause
+    exit /b %errorlevel%
+)
+
+echo [2/3] 同步到 OSS(自动删除远端旧文件)
+%OSSUTIL% sync "%PUB%" oss://%BUCKET%/ --delete --force
+if errorlevel 1 (
+    echo 上传失败
+    pause
+    exit /b 1
+)
+
+echo [2.5/3] 修正 MIME 类型(防浏览器下载而非渲染)
+%OSSUTIL% set-meta oss://%BUCKET%/ Content-Type:text/html -r --include "*.html" -f
+%OSSUTIL% set-meta oss://%BUCKET%/ Content-Type:application/javascript -r --include "*.js" -f
+%OSSUTIL% set-meta oss://%BUCKET%/ Content-Type:text/css -r --include "*.css" -f
+
+echo [3/3] 验证
+%OSSUTIL% ls oss://%BUCKET%/
+pause
+```
+
+### Nginx 配置（ECS `/etc/nginx/conf.d/prototype.conf`）
+
+```nginx
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://cic-prototype-lastencore.oss-cn-hangzhou.aliyuncs.com;
+        proxy_set_header Host cic-prototype-lastencore.oss-cn-hangzhou.aliyuncs.com;
+        proxy_hide_header Content-Disposition;
+        proxy_hide_header x-oss-force-download;
+    }
+}
+```
