@@ -667,6 +667,11 @@
                 searchDropdown.classList.add('hidden');
             }
         });
+
+        // 鼠标在搜索结果下拉面板中时，滚轮只滚动面板内容，不透传到下层页面
+        document.getElementById('searchResultsList').addEventListener('wheel', function(e) {
+            e.stopPropagation();
+        });
     </script>
 
     <!-- 正常卡片点击跳转至应用详情页；灰色 unclickable 卡片 pointer-events:none，点击不会触发 -->
