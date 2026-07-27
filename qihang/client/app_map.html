@@ -93,38 +93,125 @@
             flex-direction: row;
             justify-content: space-between;
         }
-        /* ===== Banner ===== */
-        #banner {
-            position: relative;
+        /* ===== 新 Banner：自适应满屏布局 ===== */
+        :root {
+            --c-01: #059669; --c-02: #0ea5e9; --c-03: #d97706; --c-04: #dc2626;
+            --c-05: #6366f1; --c-06: #7c3aed; --c-07: #2563eb;
         }
-        #scrollContainer {
-            height: 100vh;
-            overflow-y: auto;
+        #scrollContainer { height: 100vh; overflow-y: auto; }
+        .hero-banner {
+            position: relative; width: 100%; height: 100vh; min-height: 100vh;
+            background: #ffffff;
+            padding: clamp(16px, 2.5vh, 40px) clamp(20px, 3.5vw, 60px);
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
         }
-        #banner .banner-title {
-            font-size: 5rem;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            line-height: 1.15;
+        .hero-banner::before {
+            content: ""; position: absolute; top: -20%; left: -10%;
+            width: 50vw; height: 140vh;
+            background: linear-gradient(135deg, rgba(241,245,249,0.95) 0%, rgba(226,232,240,0.35) 100%);
+            transform: rotate(-18deg); pointer-events: none; z-index: 0;
         }
-        #banner .banner-sub {
-            font-size: 1.5rem;
-            color: rgba(255,255,255,0.75);
-            margin-top: 10px;
-            letter-spacing: 0.08em;
+        .main-layout {
+            position: relative; z-index: 1; width: 100%; max-width: 1760px; height: 100%;
+            display: grid; grid-template-columns: minmax(280px,0.85fr) minmax(460px,1.15fr);
+            gap: clamp(20px,2.5vw,56px); align-items: center; min-width: 0;
+        }
+        .left-panel {
+            display: flex; flex-direction: column; justify-content: center;
+            gap: clamp(24px,3.8vh,52px); height: 100%; max-height: 760px; min-width: 0;
+        }
+        .title-group { display: flex; flex-direction: column; }
+        .title-group h1 {
+            font-size: clamp(28px,2.6vw,46px); font-weight: 900; line-height: 1.2;
+            color: #0f172a; margin-bottom: 10px; letter-spacing: -0.8px;
+        }
+        .title-group .subtitle {
+            font-size: clamp(13px,0.9vw,16px); color: #64748b; font-weight: 500; line-height: 1.5;
+        }
+        .metrics-row {
+            display: grid; grid-template-columns: repeat(4,1fr);
+            gap: clamp(6px,0.8vw,14px); width: 100%;
+        }
+        .metric-item {
+            display: flex; flex-direction: column; align-items: flex-start;
+            padding: clamp(8px,1vh,12px) clamp(8px,0.8vw,12px);
+            border-radius: 12px; background: rgba(248,250,252,0.6);
+            border: 1px solid rgba(241,245,249,1);
+            transition: all 0.25s ease; min-width: 0;
+        }
+        .metric-item:hover { background: #ffffff; box-shadow: 0 8px 20px rgba(15,23,42,0.05); transform: translateY(-2px); }
+        .metric-icon-box {
+            width: clamp(32px,2.4vw,42px); height: clamp(32px,2.4vw,42px);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 8px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(37,99,235,0.08);
+        }
+        .metric-value { font-size: clamp(22px,1.8vw,36px); font-weight: 900; color: #2563eb; line-height: 1; margin-bottom: 4px; }
+        .metric-label { font-size: clamp(11px,0.75vw,13px); font-weight: 700; color: #0f172a; margin-bottom: 2px; white-space: nowrap; }
+        .metric-desc { font-size: clamp(9px,0.65vw,11px); color: #94a3b8; white-space: nowrap; }
+        .right-ecosystem {
+            position: relative; display: grid;
+            grid-template-columns: minmax(200px,1.1fr) minmax(240px,1fr);
+            gap: clamp(12px,1.5vw,28px); align-items: center;
+            height: 100%; max-height: 760px; min-width: 0;
+        }
+        .pyramid-container {
+            width: 100%; height: 100%; display: flex; align-items: center;
+            justify-content: center; position: relative; min-width: 0;
+        }
+        .pyramid-container svg { width: 100%; height: 100%; overflow: visible; }
+        .system-list {
+            display: flex; flex-direction: column; justify-content: space-between;
+            height: 100%; gap: clamp(6px,1vh,12px); min-width: 0;
+        }
+        .system-card {
+            flex: 1; display: flex; align-items: center; gap: clamp(6px,0.8vw,12px);
+            background: #ffffff; padding: 0 clamp(8px,0.8vw,16px); border-radius: 10px;
+            border: 1px solid rgba(226,232,240,0.9);
+            box-shadow: 0 4px 12px rgba(15,23,42,0.03);
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+            position: relative; cursor: pointer; min-width: 0;
+        }
+        .system-card:hover {
+            transform: translateX(4px); background: #f8fafc;
+            border-color: rgba(203,213,225,1); box-shadow: 0 8px 20px rgba(15,23,42,0.06);
+        }
+        .card-icon {
+            width: clamp(26px,1.8vw,34px); height: clamp(26px,1.8vw,34px);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #ffffff; flex-shrink: 0; box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+        }
+        .card-content { flex-grow: 1; min-width: 0; overflow: hidden; }
+        .card-header { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; min-width: 0; }
+        .card-num { font-size: clamp(11px,0.75vw,13px); font-weight: 800; flex-shrink: 0; }
+        .card-title {
+            font-size: clamp(12px,0.85vw,14px); font-weight: 700; color: #0f172a;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .card-tag {
+            font-size: clamp(9px,0.6vw,11px); color: #64748b; background: #f1f5f9;
+            padding: 1px 6px; border-radius: 6px; font-weight: 500; flex-shrink: 0;
+        }
+        .card-desc { font-size: clamp(10px,0.7vw,12px); color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pyramid-layer { transition: transform 0.25s ease, opacity 0.25s ease; transform-origin: center center; }
+        .pyramid-layer.active { filter: drop-shadow(0 8px 16px rgba(0,0,0,0.18)); }
+        .scroll-hint {
+            position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            cursor: pointer; z-index: 10; color: #64748b;
         }
         @keyframes bounce-down {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(8px); }
         }
         .arrow-bounce { animation: bounce-down 1.5s ease-in-out infinite; }
-        /* 回到 Banner 按钮 */
-        /* header 标题点击回到 Banner */
-        #scrollContainer .header-title-link {
-            cursor: pointer;
-            transition: color .12s;
-        }
+        #scrollContainer .header-title-link { cursor: pointer; transition: color .12s; }
         #scrollContainer .header-title-link:hover { color: #2563eb; }
+        @media (max-width: 1024px) {
+            .hero-banner { height: auto; min-height: 100vh; padding: 32px 20px; }
+            .main-layout { grid-template-columns: 1fr; gap: 40px; }
+            .left-panel { max-height: none; }
+            .right-ecosystem { max-height: none; height: 580px; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -132,14 +219,57 @@
 <!-- 一体滚动容器：Banner 与地图在同一个流中 -->
 <div id="scrollContainer" class="h-screen overflow-y-auto">
 
-    <!-- 首屏 Banner -->
-    <section id="banner" class="h-screen flex flex-col items-center justify-center px-6" style="background:linear-gradient(135deg,#1e3a5f,#2563eb,#7c3aed);color:#fff;">
-        <div class="text-center">
-            <div class="banner-title">启航平台</div>
-            <div class="banner-sub">新一代核心系统 · 应用地图</div>
-            <div class="mt-8 text-sm" style="color:rgba(255,255,255,0.45);">暂时内容占位</div>
+    <!-- 首屏 Banner：自适应满屏布局 -->
+    <section id="banner" class="hero-banner">
+        <div class="main-layout">
+            <div class="left-panel">
+                <div class="title-group">
+                    <h1>启航平台<br>新一代核心系统 · 应用地图</h1>
+                    <p class="subtitle">一张地图看懂我们的数字化能力体系</p>
+                </div>
+                <div class="metrics-row">
+                    <div class="metric-item">
+                        <div class="metric-icon-box" style="background:linear-gradient(135deg,rgba(5,150,105,0.12),rgba(5,150,105,0.02));border:1px solid rgba(5,150,105,0.15);">
+                            <svg viewBox="0 0 36 36" fill="none"><path d="M18 3L31 9.5L18 16L5 9.5L18 3Z" fill="#059669"/><path d="M5 15L18 21.5L31 15L27.5 13.25L18 18L8.5 13.25L5 15Z" fill="#047857"/><path d="M5 21L18 27.5L31 21L27.5 19.25L18 24L8.5 19.25L5 21Z" fill="#065f46"/></svg>
+                        </div>
+                        <div class="metric-value">7</div>
+                        <div class="metric-label">大业务领域</div>
+                        <div class="metric-desc">覆盖全业务价值链</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-icon-box" style="background:linear-gradient(135deg,rgba(14,165,233,0.12),rgba(14,165,233,0.02));border:1px solid rgba(14,165,233,0.15);">
+                            <svg viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="12" height="12" rx="3.5" fill="#0ea5e9"/><rect x="20" y="4" width="12" height="12" rx="3.5" fill="#0284c7"/><rect x="4" y="20" width="12" height="12" rx="3.5" fill="#0284c7"/><rect x="20" y="20" width="12" height="12" rx="3.5" fill="#0369a1"/></svg>
+                        </div>
+                        <div class="metric-value">17</div>
+                        <div class="metric-label">二级分类</div>
+                        <div class="metric-desc">精细化业务分类</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-icon-box" style="background:linear-gradient(135deg,rgba(217,119,6,0.12),rgba(217,119,6,0.02));border:1px solid rgba(217,119,6,0.15);">
+                            <svg viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="9" rx="13" ry="5" fill="#f59e0b"/><path d="M5 14C5 16.76 10.82 19 18 19C25.18 19 31 16.76 31 14V11.5C31 14.26 25.18 16.5 18 16.5C10.82 16.5 5 14.26 5 11.5V14Z" fill="#d97706"/><path d="M5 21.5C5 24.26 10.82 26.5 18 26.5C25.18 26.5 31 24.26 31 21.5V19C31 21.76 25.18 24 18 24C10.82 24 5 21.76 5 19V21.5Z" fill="#b45309"/></svg>
+                        </div>
+                        <div class="metric-value">53</div>
+                        <div class="metric-label">核心应用系统</div>
+                        <div class="metric-desc">支撑业务高效运行</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-icon-box" style="background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(99,102,241,0.02));border:1px solid rgba(99,102,241,0.15);">
+                            <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="11" r="5" fill="#6366f1"/><path d="M9 27C9 22.03 13.03 18 18 18C22.97 18 27 22.03 27 27V29H9V27Z" fill="#6366f1"/></svg>
+                        </div>
+                        <div class="metric-value">32,870</div>
+                        <div class="metric-label">用户规模</div>
+                        <div class="metric-desc">全员数字化协同</div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-ecosystem" id="rightEcosystem">
+                <div class="pyramid-container" id="pyramidContainer">
+                    <svg id="pyramidSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+                </div>
+                <div class="system-list" id="systemList"></div>
+            </div>
         </div>
-        <div class="banner-hint" id="scrollDownArrow" style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:#fff;">
+        <div class="scroll-hint" id="scrollDownArrow">
             <span class="text-xs tracking-widest" style="opacity:.7;">点击进入地图</span>
             <i class="fa-solid fa-chevron-down text-xl arrow-bounce" style="opacity:.8;"></i>
         </div>
@@ -776,6 +906,116 @@
         }
     }, { passive: false });
 
+})();
+
+// ===== 金字塔可视化 =====
+(function() {
+    var SYSTEM_DATA = [
+        { num:"01", title:"前端系统", tag:"4个小类 / 26个系统", desc:"面向客户业务,支持销售管理与服务", color:"#059669", gradStart:"#34d399", gradEnd:"#047857", capStart:"#a7f3d0", capEnd:"#34d399" },
+        { num:"02", title:"中端系统", tag:"3个小类 / 14个系统", desc:"承保、履约一体化运营", color:"#0ea5e9", gradStart:"#38bdf8", gradEnd:"#0369a1", capStart:"#bae6fd", capEnd:"#38bdf8" },
+        { num:"03", title:"后端系统", tag:"10个小类 / 38个系统", desc:"产品、风控等经营管理", color:"#d97706", gradStart:"#fbbf24", gradEnd:"#92400e", capStart:"#fde68a", capEnd:"#f59e0b" },
+        { num:"04", title:"监管报送", tag:"统信/EAST/偿付能力等", desc:"满足监管合规要求", color:"#dc2626", gradStart:"#f87171", gradEnd:"#991b1b", capStart:"#fecaca", capEnd:"#ef4444" },
+        { num:"05", title:"业务中台", tag:"2个小类 / 6个系统", desc:"通用业务能力复用支撑", color:"#6366f1", gradStart:"#818cf8", gradEnd:"#4338ca", capStart:"#c7d2fe", capEnd:"#818cf8" },
+        { num:"06", title:"数据中台", tag:"3个小类 / 10个系统", desc:"数据能力与分析洞察", color:"#7c3aed", gradStart:"#a78bfa", gradEnd:"#5b21b6", capStart:"#ddd6fe", capEnd:"#a78bfa" },
+        { num:"07", title:"工具平台", tag:"8个工具/服务", desc:"技术与安全支撑保障", color:"#2563eb", gradStart:"#60a5fa", gradEnd:"#1d4ed8", capStart:"#bfdbfe", capEnd:"#60a5fa" }
+    ];
+    var systemListEl = document.getElementById('systemList');
+    var pyramidSvg = document.getElementById('pyramidSvg');
+    if (!systemListEl || !pyramidSvg) return;
+
+    // Render cards
+    systemListEl.innerHTML = SYSTEM_DATA.map(function(item, i) {
+        return '<div class="system-card" id="card-'+i+'">' +
+            '<div class="card-icon" style="background:'+item.color+';">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>' +
+            '</div>' +
+            '<div class="card-content">' +
+                '<div class="card-header">' +
+                    '<span class="card-num" style="color:'+item.color+';">'+item.num+'</span>' +
+                    '<span class="card-title">'+item.title+'</span>' +
+                    '<span class="card-tag">'+item.tag+'</span>' +
+                '</div>' +
+                '<div class="card-desc">'+item.desc+'</div>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+
+    function drawPyramid() {
+        var rect = pyramidSvg.getBoundingClientRect();
+        var w = rect.width, h = rect.height;
+        if (!w || !h) return;
+        pyramidSvg.setAttribute('viewBox','0 0 '+w+' '+h);
+        var cards = document.querySelectorAll('.system-card');
+        if (!cards.length) return;
+
+        var yPos = Array.from(cards).map(function(c) {
+            var r = c.getBoundingClientRect();
+            return r.top + r.height/2 - rect.top;
+        });
+
+        var N = SYSTEM_DATA.length;
+        var cx = w * 0.44, guideX = w * 0.98;
+        var topRx = 70, bottomRx = 185, ryRatio = 0.18;
+
+        var defs = '<defs>';
+        SYSTEM_DATA.forEach(function(item, i) {
+            defs += '<linearGradient id="bg-'+i+'" x1="0%" y1="0%" x2="100%" y2="0%">' +
+                '<stop offset="0%" stop-color="'+item.gradStart+'"/>' +
+                '<stop offset="50%" stop-color="'+item.color+'"/>' +
+                '<stop offset="100%" stop-color="'+item.gradEnd+'"/>' +
+                '</linearGradient>' +
+                '<linearGradient id="cp-'+i+'" x1="0%" y1="0%" x2="0%" y2="100%">' +
+                '<stop offset="0%" stop-color="'+item.capStart+'"/>' +
+                '<stop offset="100%" stop-color="'+item.capEnd+'"/>' +
+                '</linearGradient>';
+        });
+        defs += '</defs>';
+
+        var layers = '';
+        for (var i = N-1; i >= 0; i--) {
+            var item = SYSTEM_DATA[i];
+            var cardY = yPos[i];
+            var tTop = i/N, tBottom = (i+1)/N;
+            var rxTop = topRx + (bottomRx - topRx) * tTop;
+            var rxBottom = topRx + (bottomRx - topRx) * tBottom;
+            var ryTop = rxTop * ryRatio, ryBottom = rxBottom * ryRatio;
+            var lh = (h/N) * 0.72;
+            var yTop = cardY - lh/2, yBottom = cardY + lh/2;
+            var textY = (yTop + yBottom)/2 + (ryTop + ryBottom)/2;
+            var sidePath = 'M '+(cx-rxTop)+' '+yTop+
+                ' A '+rxTop+' '+ryTop+' 0 0 1 '+(cx+rxTop)+' '+yTop+
+                ' L '+(cx+rxBottom)+' '+yBottom+
+                ' A '+rxBottom+' '+ryBottom+' 0 0 1 '+(cx-rxBottom)+' '+yBottom+' Z';
+            var lineX = cx + rxTop + (rxBottom - rxTop)*0.5 + 8;
+
+            layers += '<g class="pyramid-layer" id="pyramid-layer-'+i+'">' +
+                '<path d="'+sidePath+'" fill="url(#bg-'+i+')" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>' +
+                '<ellipse cx="'+cx+'" cy="'+yTop+'" rx="'+rxTop+'" ry="'+ryTop+'" fill="url(#cp-'+i+')" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>' +
+                '<text x="'+cx+'" y="'+textY+'" fill="#ffffff" font-size="13" font-weight="900" text-anchor="middle" dominant-baseline="central" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));">'+item.num+'</text>' +
+                '<line x1="'+lineX+'" y1="'+cardY+'" x2="'+guideX+'" y2="'+cardY+'" stroke="'+item.color+'" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.75"/>' +
+                '<circle cx="'+guideX+'" cy="'+cardY+'" r="3.5" fill="'+item.color+'"/>' +
+                '</g>';
+        }
+        pyramidSvg.innerHTML = defs + layers;
+    }
+
+    // Card hover ↔ pyramid layer highlight
+    SYSTEM_DATA.forEach(function(_, i) {
+        var card = document.getElementById('card-'+i);
+        if (!card) return;
+        card.addEventListener('mouseenter', function() {
+            var l = document.getElementById('pyramid-layer-'+i);
+            if (l) { l.classList.add('active'); l.style.transform='scale(1.03)'; }
+        });
+        card.addEventListener('mouseleave', function() {
+            var l = document.getElementById('pyramid-layer-'+i);
+            if (l) { l.classList.remove('active'); l.style.transform='scale(1)'; }
+        });
+    });
+
+    requestAnimationFrame(drawPyramid);
+    window.addEventListener('resize', function() { requestAnimationFrame(drawPyramid); });
+    new ResizeObserver(function() { requestAnimationFrame(drawPyramid); }).observe(document.getElementById('rightEcosystem'));
 })();
 </script>
 
