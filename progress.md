@@ -54,7 +54,7 @@
 
 ## 2. 进度状态
 
-> 以下按时间倒序记录。历史条目中与平台相关的默认属于「产品设计」；OSS/ECS/Git/预览/导航模块化等基础设施类属于「中心建设」。
+> 以下按时间倒序记录。**未标注工作流标签的旧条目默认属于 [产品设计] [启航]**；已标注 [中心建设] 的为基础设施类。
 
 ### ✅ 已完成
 
@@ -65,20 +65,20 @@
 - [x] 管理端原型修复：去外链 404、去 AI 文案、去工作台管理入口
 - [x] 操作手册 PRD 初稿 → tdrive
 - [x] 6 个文档日期修正（2025→2026）
-- [x] 原型导航索引页（`index.html`）
-- [x] Git 仓库打通：GitHub `lastencore/Qihang`，main 分支，三端同步
-- [x] 原型目录重组：`client/` `admin/` `slides/` `blueprint/` `assets/`
-- [x] Logo 跳转 BUG 修复：管理端页面 logo `href="/"` → `href="../index.html"`
-- [x] progress-doc skill 创建
+- [x] **[中心建设] 原型导航索引页**（`index.html`）
+- [x] **[中心建设] Git 仓库打通**：GitHub `lastencore/Qihang`，main 分支，三端同步
+- [x] **[中心建设] 原型目录重组**：`client/` `admin/` `slides/` `blueprint/` `assets/`
+- [x] **[中心建设] Logo 跳转 BUG 修复**：管理端页面 logo `href="/"` → `href="../index.html"`
+- [x] **[中心建设] progress-doc skill 创建**
 - [x] 应用管理弹窗（嵌入前端同事完整版，绑定新建+编辑按钮）
 - [x] 应用分类管理页面（`admin/app_category_management.html`）
 - [x] 客户端应用地图（`client/app_map.html`）
-- [x] 导航组件化（sidebar/header 动态加载，`assets/nav-loader.js`）
-- [x] `manual_query.html` 列名修正：关联PMS → 关联PMS系统，未关联显示灰色"未关联"；关联PMS列左对齐
-- [x] `update_log_*` 原型扩展：增加发布窗口字段 + 关联PMS系统下拉选择器；发布窗口格式改为 "YYYY-MM-DD常规发布/项目发布"
+- [x] **[中心建设] 导航组件化**（sidebar/header 动态加载，`assets/nav-loader.js`）
+- [x] `manual_query.html` 列名修正
+- [x] `update_log_*` 原型扩展
 - [x] `update_log_modify.html` 应用管理/分类管理跳转白名单补全
-- [x] 全局布局修复：nav-loader.js 保留 Ant Design 原生 fixed 定位 + 空占位 div，解决侧边栏空白和遮挡
-- [x] progress-doc skill 纳入 Git 管理（`skills/progress-doc.md`）
+- [x] **[中心建设] 全局布局修复**：nav-loader.js 保留 Ant Design 原生 fixed 定位 + 空占位 div，解决侧边栏空白和遮挡
+- [x] **[中心建设] progress-doc skill 纳入 Git 管理**（`skills/progress-doc.md`）
 - [x] **PMS 系统关联全链路**：`app_management.html` 新增/编辑弹窗增加 PMS 关联下拉框（114 系统 datalist 可搜索选择），列表增加"关联PMS系统"列并填充数据
 - [x] **PMS 列数据补全**：`manual_query.html`、`update_log_query.html` 的 PMS 列全部填充实际系统数据，不再存在"未关联"
 - [x] **PMS 列表头/样式统一**：三页面 PMS 列去除灰色字体，列表头统一为"关联PMS系统"
@@ -102,14 +102,14 @@
 - [x] **`app_map.html` 跳转详情**：108 个 flat-card 模块点击 → `app_detail.html?name=XXX`；搜索下拉结果新增 click 跳转；"应用大厅"按钮链接修正
 - [x] **`index.html` 索引入口整理**：应用地图 → 应用详情（新增），全部链接验证通过
 - [x] **`manual_workspace.html` 目录树交互重构**：根目录仅建目录；文件夹新增子目录/创建文档/重命名/删除（非空拦截）；文档删除；⋯/＋ hover 菜单；拖拽调整顺序与所属目录
-- [x] **`manual_workspace.html` CDN 样式修复**：`umi.cssabe1862.css` → `umi.cabe1862.css`，消除 404 导致 ant-pro 基础样式塌陷
+- [x] **[中心建设] `manual_workspace.html` CDN 样式修复**
 - [x] **[中心建设] `index.html` 批次指针化**：降级为一行 meta refresh 跳转到批次页；新增 `requirement_202606.html` 作为 202606 批次专属导航页；未来切批次仅改 index 一行 url
 - [x] **本期迭代 PRD + 原型评审通过，开发已安排**（2026-07-14）：四模块（PMS 关联 / 应用地图 / 更新日志 / 操作手册）PRD 已评审、原型已评审，开发排期完成
-- [x] **需求设计中心共用导航模块化**：头部+侧栏抽为 `assets/req_*` 共用模块，支持多平台多批次统一增改（见 2026-07-14 本会话完成）
+- [x] **[中心建设] 需求设计中心共用导航模块化**
 
 **2026-07-21（本次，待推送 origin/main）—— 新一代首页平台 + app_map 布局 + 聆听页面精简**
-- [x] **新增「新一代首页」平台**：`req_header.tpl` 新增 workbench Tab（与启航/知行/聆听并列），`req_sidebar.tpl` 新增 workbench 202607 批次
-- [x] **[新一代首页] 待办工作台批次页**：`requirements/workbench_202607.html`（`data-platform="workbench" data-batch="202607"`），单卡片占位，UX 研究员需求分析已完成（三材料综合：方案文档 + 原型截图 + 业务流程图）
+- [x] **[中心建设] 新增「新一代首页」平台**：`req_header.tpl` 新增 workbench Tab，`req_sidebar.tpl` 新增 workbench 202607 批次
+- [x] **[产品设计] [新一代首页] 待办工作台批次页**
 - [x] **`lingting_202606.html` 文案精简**：去掉 ⚠️ PRD 警告文案及 `.brief-note` 样式；去掉「（本期原型仅此一页）」链接文案
 - [x] **`app_map.html` 一级分类去编号**：7 个一级分类标题全部去掉「一、二、…七、」编号，二级分类编号保留
 - [x] **`app_map.html` 监管报送与工具平台并排**：外层 `grid-cols-[1fr_320px]` 包裹两个独立 section（不合并，同标题》，`items-stretch` 拉齐高度，工具平台卡片网格 `flex-1 content-center` 上下居中
@@ -168,7 +168,7 @@
 - [x] **渲染验证**：playwright 加载 requirement_202606.html / requirement_TEMPLATE.html，断言头部+侧栏注入、占位符替换、启航高亮/知行聆听 disabled/仅显示本平台批次，零 console error，全部 PASS
 - [x] **聆听平台登记**：由脚手架派生 `requirement_lingting_202606.html`（data-platform=lingting / data-batch=202606）；`req_header.tpl` 启用聆听 Tab（移除 disabled、指向本页），`req_sidebar.tpl` 登记聆听 202606 批次；跨平台导航打通，启航/聆听互不干扰
 
-**2026-07-15（本次，待推送 origin/main）—— 原型目录重组 + 管理端导航参数化**
+**2026-07-15（本次，待推送 origin/main）—— [中心建设] 原型目录重组 + 管理端导航参数化**
 - [x] **目录按系统优先重组**：`admin/`→`qihang/admin/`、`client/`→`qihang/client/`、`lingting/lingting_statistic.html`→`lingting/admin/statistic.html`；批次页 `requirement_*.html`→`requirements/`（改名 `qihang_202606`/`lingting_202606`/`TEMPLATE`）；`启航平台_需求说明_202607.md`→`docs/`；`zhixing/`、`lingting/` 建空骨架（admin/client/assets/client）备用
 - [x] **导航资产归集 + 去冗余**：`assets/{nav-loader.js,sidebar.tpl,top_nav.tpl,common.css}`→`assets/admin/`（common.css 改名 admin.css）；`assets/req-*`→`assets/req-center/`；删除冗余副本 `sidebar.html`/`top_nav.html`
 - [x] **管理端导航参数化（仿 req-nav）**：`nav-loader.js` 从自身 `<script>` src 推导 base（去 `../` 硬编码），按 `<body data-system>` 只注入对应 `<aside data-system>`；`sidebar.tpl` 拆为 qihang/zhixing/lingting 三份侧栏（知行/聆听为占位骨架，上传即填）；`top_nav.tpl` logo→`../client/`（三系统通用）、新增 `#sysName` 由加载器填系统名
@@ -187,13 +187,13 @@
 - [x] **中端三栏并排收尾**：承保/核保/综合履约左中右三栏（`grid-cols-[1.25fr_0.8fr_1.55fr]`）；核保作业平台改单列；综合履约列最宽
 - [x] **综合履约标签缩写**：「综合履约作业平台-车险、意外险、财责险」→「综合履约作业平台-车意财」（id / data-name / 文字 三处一致）；去掉灰色提示「车损、物损、人伤」
 - [x] **笔记本适配**：容器 `max-w-[1760px]` + `lg` 三栏响应式；综合履约卡片 `whitespace-nowrap` 防折行
-- [x] **预览服务 live**：supervisord 托管 8080（`autorestart=true`），`notify 8080` 取链接已验证
+- [x] **[中心建设] 预览服务 live**：supervisord 托管 8080
 
 **2026-07-17（本次）**
-- [x] **index.html 批次指针配置化**：原写死的 title / 跳转 URL / 提示文案收拢为 `<head>` 顶部 `DESIGN_CENTER` 单一配置（`system` + `batch`），自动推导 `requirements/{system}_{batch}.html`、动态标题与提示；跳转改 `location.replace`；以后新批次只需改一处。改完待提交
-- [x] **知行考试页防切屏 bug 分析与修复**：用户上传 `gemini-code-*.html`（知行社考试原型）发现防切屏仅监听 `visibilitychange`，窗口化后点击浏览器外应用/另一浏览器（仅 blur 不失可见性）漏检；修复版加 `blur` 监听 + 三重防护（`modalOpen` 弹窗期间不扣次 / `hasLeft` 同段离开去重 / `isSubmitting` 交卷 confirm 误触保护）。修复页 `gemini-code-fixed.html` 放 `/workspace/zhixing_exam_preview/`（独立目录、不在 prototype 仓库），8081 预览。属知行社、未入库
-- [x] **预览服务扩展**：新增 8081（supervisord 托管，`/workspace/zhixing_exam_preview`），与 8080（prototype）并存；均为 `autorestart=true`
-- [x] **产品设计中心目录方案确认**：prototype 整体从「启航平台/原型/」上移至「中华财险产品项目/」根，与三平台平行（三平台共用）；本地三系统文件夹映射仓库 `qihang/zhixing/lingting/`；git 整体搬目录（含 .git）不致乱，待用户本地执行
+- [x] **[中心建设] index.html 批次指针配置化**
+- [x] **[产品设计] [知行] 考试页防切屏 bug 分析与修复**
+- [x] **[中心建设] 预览服务扩展**：新增 8081（supervisord 托管）
+- [x] **[中心建设] 产品设计中心目录方案确认**
 
 **2026-07-21（本次）— app_map_lr 左右布局 + 侧滑导航抽屉 + 灰色卡片修复**
 - [x] **`app_map_lr.html` 复制创建**：从 `app_map.html` 复制为布局对比页，不动原文件
