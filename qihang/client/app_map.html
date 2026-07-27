@@ -669,8 +669,9 @@
         });
 
         // 鼠标在搜索结果下拉面板中时，滚轮只滚动面板内容，不透传到下层页面
-        document.getElementById('searchResultsList').addEventListener('wheel', function(e) {
-            e.stopPropagation();
+        var searchResultsPanel = document.getElementById('searchResultsDropdown');
+        searchResultsPanel.addEventListener('wheel', function(e) {
+            e.stopImmediatePropagation();
         });
     </script>
 
@@ -735,6 +736,11 @@
     var TH_UP   = 0.55;
 
     container.addEventListener('wheel', function(e) {
+        // 鼠标在搜索结果下拉面板中时，滚轮仅滚动面板自身，不触发页面滚动
+        var searchPanel = document.getElementById('searchResultsDropdown');
+        if (searchPanel && !searchPanel.classList.contains('hidden') && searchPanel.contains(e.target)) {
+            return;
+        }
         e.preventDefault();
         var vh = window.innerHeight;
         var dir = e.deltaY;
