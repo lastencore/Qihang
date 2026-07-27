@@ -151,7 +151,7 @@
         .metric-desc { font-size: clamp(10px,0.72vw,13px); color: #94a3b8; white-space: nowrap; }
         .right-ecosystem {
             position: relative; display: grid;
-            grid-template-columns: minmax(200px,1.05fr) minmax(260px,0.95fr);
+            grid-template-columns: minmax(260px,1.2fr) minmax(200px,0.8fr);
             gap: clamp(10px,1.5vw,28px); align-items: center;
             height: 100%; max-height: 760px; min-width: 0;
         }
@@ -956,17 +956,20 @@
         });
 
         var N = SYSTEM_DATA.length;
-        var cx = w * 0.45, guideX = w * 0.97;
-        var topRx = 110, bottomRx = 280, ryRatio = 0.2;
+        var cx = w * 0.48;
+        // 更宽更扁的金字塔
+        var topRx = 60, bottomRx = 240, ryRatio = 0.1;
+        // 层间距
+        var gap = h * 0.01;
 
-        var defs = '<defs>';
+        var defs = '<defs><filter id="pyramid-shadow"><feDropShadow dx="0" dy="2" stdDeviation="6" flood-opacity="0.12"/></filter>';
         SYSTEM_DATA.forEach(function(item, i) {
-            defs += '<linearGradient id="bg-'+i+'" x1="0%" y1="0%" x2="100%" y2="0%">' +
+            defs += '<linearGradient id="bg-'+i+'" x1="0%" y1="0%" x2="0%" y2="100%">' +
                 '<stop offset="0%" stop-color="'+item.gradStart+'"/>' +
-                '<stop offset="50%" stop-color="'+item.color+'"/>' +
+                '<stop offset="60%" stop-color="'+item.color+'"/>' +
                 '<stop offset="100%" stop-color="'+item.gradEnd+'"/>' +
-                '</linearGradient>' +
-                '<linearGradient id="cp-'+i+'" x1="0%" y1="0%" x2="0%" y2="100%">' +
+                '</linearGradient>';
+            defs += '<linearGradient id="cp-'+i+'" x1="0%" y1="0%" x2="0%" y2="100%">' +
                 '<stop offset="0%" stop-color="'+item.capStart+'"/>' +
                 '<stop offset="100%" stop-color="'+item.capEnd+'"/>' +
                 '</linearGradient>';
@@ -981,21 +984,20 @@
             var rxTop = topRx + (bottomRx - topRx) * tTop;
             var rxBottom = topRx + (bottomRx - topRx) * tBottom;
             var ryTop = rxTop * ryRatio, ryBottom = rxBottom * ryRatio;
-            var lh = (h/N) * 0.78;
-            var yTop = cardY - lh/2, yBottom = cardY + lh/2;
-            var textY = (yTop + yBottom)/2 + (ryTop + ryBottom)/2;
+            // 每层高度由卡片间距决定，留 gap
+            var yTop = cardY - (h/N)*0.34;
+            var yBottom = cardY + (h/N)*0.34 - gap;
+
             var sidePath = 'M '+(cx-rxTop)+' '+yTop+
-                ' A '+rxTop+' '+ryTop+' 0 0 1 '+(cx+rxTop)+' '+yTop+
-                ' L '+(cx+rxBottom)+' '+yBottom+
-                ' A '+rxBottom+' '+ryBottom+' 0 0 1 '+(cx-rxBottom)+' '+yBottom+' Z';
-            var lineX = cx + rxTop + (rxBottom - rxTop)*0.5 + 8;
+                ' L '+(cx-rxBottom)+' '+yBottom+
+                ' A '+rxBottom+' '+ryBottom+' 0 0 1 '+(cx+rxBottom)+' '+yBottom+
+                ' L '+(cx+rxTop)+' '+yTop+
+                ' A '+rxTop+' '+ryTop+' 0 0 1 '+(cx-rxTop)+' '+yTop+' Z';
 
             layers += '<g class="pyramid-layer" id="pyramid-layer-'+i+'">' +
-                '<path d="'+sidePath+'" fill="url(#bg-'+i+')" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>' +
-                '<ellipse cx="'+cx+'" cy="'+yTop+'" rx="'+rxTop+'" ry="'+ryTop+'" fill="url(#cp-'+i+')" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>' +
-                '<text x="'+cx+'" y="'+textY+'" fill="#ffffff" font-size="15" font-weight="900" text-anchor="middle" dominant-baseline="central" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));">'+item.num+'</text>' +
-                '<line x1="'+lineX+'" y1="'+cardY+'" x2="'+guideX+'" y2="'+cardY+'" stroke="'+item.color+'" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.75"/>' +
-                '<circle cx="'+guideX+'" cy="'+cardY+'" r="3.5" fill="'+item.color+'"/>' +
+                '<path d="'+sidePath+'" fill="url(#bg-'+i+')" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>' +
+                '<ellipse cx="'+cx+'" cy="'+yTop+'" rx="'+rxTop+'" ry="'+ryTop+'" fill="url(#cp-'+i+')" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>' +
+                '<text x="'+cx+'" y="'+(yTop+(yBottom-yTop+ryBottom)/2)+'" fill="#fff" font-size="14" font-weight="900" text-anchor="middle" dominant-baseline="central" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.25));">'+item.num+'</text>' +
                 '</g>';
         }
         pyramidSvg.innerHTML = defs + layers;
