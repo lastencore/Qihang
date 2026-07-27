@@ -1,6 +1,6 @@
 # 产品设计中心 — 多平台任务交接文档
 
-> 最后更新：2026-07-24 11:15:00
+> 最后更新：2026-07-27 09:29:05
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 > ⚠️ 本文档覆盖四平台（启航/知行/聆听/新一代首页），各平台事项以 `[平台名]` 标签区分
 
@@ -208,6 +208,13 @@
 - [x] **域名备案进行中**：备案通过后绑自定义域名 + 开 443/HTTPS
 - [x] **产品设计中心目录上移**：prototype 已从「启航平台/原型/」整体上移至「中华财险产品项目/」根，与三平台平行；用户本地已执行完成
 
+**2026-07-27（本次）—— app_map 修复 + 新一代应用地图 PRD + OSS 防盗链**
+- [x] **[启航] app_map 搜索结果悬停下界钳制**：hover 结果时手动计算目标位置，下界 clamp 到地图顶部，杜绝 Banner 露出
+- [x] **[启航] 搜索结果下拉面板滚轮穿透修复**：行内 `overscroll-behavior:contain` + scrollContainer wheel 处理器 composedPath 遍历守卫 + stopImmediatePropagation，部分解决（Chrome 合成器滚轮链接仍有漏网）
+- [x] **[启航] 新一代应用地图 PRD**：`docs/启航平台_新一代应用地图_PRD.md`（297 行），去技术化纯需求描述，覆盖首屏 Banner/智能检索/分类分区/卡片布局/交互边界
+- [x] **OSS 防盗链 Referer 白名单**：ECS Nginx `proxy_set_header Referer "http://114.55.130.110"`，OSS 控制台白名单 + 不允许空 Referer，浏览器可正常访问
+- [x] **upload.bat 发布脚本检查**：逻辑自洽，无需修改
+
 ### ❌ 已废弃
 - [x] ~~`manual_workspace.html` 结构化模板~~：用户明确"这版本不做了"，不再推进
 
@@ -261,7 +268,8 @@ prototype/
 │   ├── app_catalog_proposal.html
 │   └── update_log_flow.html
 ├── docs/                       # 正式文档（中文名 OK）
-│   ├── 启航平台_产品需求说明书_202607.md
+│   ├── 启航平台_产品需求说明书_202607.md  # 本期迭代 PRD（四模块）
+│   ├── 启航平台_新一代应用地图_PRD.md      # 新一代应用地图独立 PRD（297 行，纯需求描述）
 │   └── 启航平台_需求说明_202607.md   # 迭代需求说明
 ├── images/                     # 共享图片（保持）
 │   ├── blueprint_202606.png
@@ -350,6 +358,11 @@ prototype/
 - **访问链路**：用户 → `http://114.55.130.110`（ECS Nginx）→ proxy_pass OSS → proxy_hide_header 删强制下载头 → 浏览器正常渲染
 - **为什么需要 ECS**：OSS 默认域名（`*.oss-cn-hangzhou.aliyuncs.com`）对 text/html 强制注入 `Content-Disposition: attachment`（阿里云安全策略，自 2018 年起，无法关闭），必须通过自定义域名或反向代理绕过
 - **域名备案通过后**：绑自定义域名 → 申请免费 SSL 证书 → Nginx 加 `listen 443 ssl` → 可去掉 ECS 或保留做 HTTPS 终止
+
+### 4.11 OSS 防盗链 Referer 白名单 ✅ 已定
+- ECS Nginx 加 `proxy_set_header Referer "http://114.55.130.110"`，OSS 防盗链白名单仅允许该 Referer
+- **不允许空 Referer**（否则白名单形同虚设）
+- 直接访问 OSS 域名（空 Referer） → 403；通过 ECS（带 Referer） → 正常
 
 ---
 
@@ -472,6 +485,7 @@ server {
     location / {
         proxy_pass http://cic-prototype-lastencore.oss-cn-hangzhou.aliyuncs.com;
         proxy_set_header Host cic-prototype-lastencore.oss-cn-hangzhou.aliyuncs.com;
+        proxy_set_header Referer "http://114.55.130.110";
         proxy_hide_header Content-Disposition;
         proxy_hide_header x-oss-force-download;
     }
