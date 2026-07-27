@@ -170,7 +170,7 @@
                         <input type="text" id="deptFilterSearch" oninput="filterDeptOptions()" placeholder="检索部门..." 
                                class="w-full bg-slate-50 border border-slate-200 rounded pl-7 pr-3 py-1 text-xs focus:outline-none focus:border-blue-400 focus:bg-white">
                     </div>
-                    <ul id="deptOptionsList" class="max-h-48 overflow-y-auto text-xs space-y-0.5 pr-1 custom-scrollbar">
+                    <ul id="deptOptionsList" class="max-h-48 overflow-y-auto text-xs space-y-0.5 pr-1 custom-scrollbar" style="overscroll-behavior: contain;">
                         <li onclick="selectDept('全部属主部门')" class="px-2.5 py-1.5 hover:bg-slate-100 rounded cursor-pointer font-bold text-blue-600">全部属主部门</li>
                         <li class="dept-item px-2.5 py-1.5 rounded text-slate-700 hover:bg-slate-50 cursor-pointer" onclick="selectDept('团体客户渠道部')">团体客户渠道部</li>
                         <li class="dept-item px-2.5 py-1.5 rounded text-slate-700 hover:bg-slate-50 cursor-pointer" onclick="selectDept('团体非车险部')">团体非车险部</li>
@@ -193,7 +193,7 @@
                     <span><i class="fa-solid fa-location-crosshairs mr-1"></i> 检索匹配结果 (鼠标悬停即自动精准定位)</span>
                     <span id="resultCountBadge" class="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono">0</span>
                 </div>
-                <ul id="searchResultsList" class="max-h-60 overflow-y-auto text-xs space-y-0.5 custom-scrollbar">
+                <ul id="searchResultsList" class="max-h-60 overflow-y-auto text-xs space-y-0.5 custom-scrollbar" style="overscroll-behavior: contain;">
                 </ul>
             </div>
         </div>
@@ -739,10 +739,12 @@
     var TH_UP   = 0.55;
 
     container.addEventListener('wheel', function(e) {
-        // 鼠标在搜索结果下拉面板中时，滚轮仅滚动面板自身，不触发页面滚动
-        var searchPanel = document.getElementById('searchResultsDropdown');
-        if (searchPanel && !searchPanel.classList.contains('hidden') && searchPanel.contains(e.target)) {
-            return;
+        // 鼠标在任意下拉面板中时，滚轮仅滚动面板自身，不触发页面滚动
+        var path = e.composedPath();
+        for (var i = 0; i < path.length; i++) {
+            var el = path[i];
+            if (el.id === 'searchResultsDropdown' && !el.classList.contains('hidden')) return;
+            if (el.id === 'deptDropdownMenu' && !el.classList.contains('hidden')) return;
         }
         e.preventDefault();
         var vh = window.innerHeight;
