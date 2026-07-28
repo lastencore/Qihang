@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>启航平台 · 应用地图 (金字塔方案三)</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#f0f4f8 0%,#f8fafc 40%,#fff 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;top:0;right:0;width:45vw;height:100%;background:radial-gradient(ellipse at 70% 40%,rgba(37,99,235,.04),transparent 60%);pointer-events:none;z-index:0}
+/* 标题 */
+.hero-label{position:absolute;top:3.5vh;left:50%;transform:translateX(-50%);z-index:5;text-align:center}
+.hero-label .badge{display:inline-block;padding:3px 14px;border-radius:14px;background:#e8f0fe;color:#2563eb;font-size:12px;font-weight:600;margin-bottom:10px;letter-spacing:.5px}
+.hero-label h1{font-size:clamp(24px,3vw,38px);font-weight:800;color:#0f172a;line-height:1.15}
+.hero-label h1 span{color:#2563eb}
+.hero-label p{font-size:12px;color:#94a3b8;margin-top:4px}
+
+/* 主容器 */
+.pyramid-wrap{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding-top:14vh;padding-bottom:6vh}
+#pyramidSvg{width:100%;height:100%;max-width:1000px}
+
+/* 浮动说明卡 */
+.info-card{position:absolute;background:#fff;border-radius:10px;padding:10px 14px;border:1px solid #e2e8f0;box-shadow:0 2px 12px rgba(0,0,0,.06);font-size:12px;pointer-events:none;z-index:3;max-width:220px;opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s}
+.info-card.show{opacity:1;transform:translateY(0)}
+.info-card .ic-title{font-weight:700;color:#0f172a;margin-bottom:4px}
+.info-card .ic-subs{color:#64748b;font-size:11px;line-height:1.5}
+.info-card .ic-desc{color:#94a3b8;font-size:10px;margin-top:4px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-label">
+    <div class="badge">新一代核心系统</div>
+    <h1>启航平台 <span>· 应用地图</span></h1>
+    <p>7 层架构 · 53 个核心系统</p>
+  </div>
+  <div class="pyramid-wrap">
+    <svg id="pyramidSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+</div>
+
+<script>
+// ============= 层级数据 =============
+var LAYERS = [
+  { id:"01", name:"客户层",         subs:"ToC · ToB",                  desc:"个人与团体客户全触点覆盖，多角色差异化入口",    color:"#e61c24", light:"#f87171", dark:"#991b1b" },
+  { id:"02", name:"接触渠道 / 端",  subs:"App · 小程序 · PC · API",    desc:"多终端统一管理，跨渠道一致体验",                color:"#f97316", light:"#fb923c", dark:"#c2410c" },
+  { id:"03", name:"销售 / 营销前台",subs:"智能一体化销售 · 线上运营平台",desc:"报价出单到活动营销一站式工具集",               color:"#0ea5e9", light:"#38bdf8", dark:"#0369a1" },
+  { id:"04", name:"承保履约前台",   subs:"专业承保核保 · 综合履约",     desc:"核保引擎驱动，保单全生命周期闭环",             color:"#059669", light:"#34d399", dark:"#047857" },
+  { id:"05", name:"运营中台",       subs:"流程调度 · 工单 · 服务编排",  desc:"跨线运营能力复用，统一调度与服务编排",          color:"#6366f1", light:"#818cf8", dark:"#4338ca" },
+  { id:"06", name:"经营管理平台",   subs:"产品 · 定价 · 风控 · 精算 · 再保", desc:"经营决策与管控支撑，驱动精细化业务管理",      color:"#d97706", light:"#fbbf24", dark:"#92400e" },
+  { id:"07", name:"通用中台",       subs:"业务中台 · 数据中台",         desc:"组织权限、数据能力等底层能力统一供给",          color:"#7c3aed", light:"#a78bfa", dark:"#5b21b6" }
+];
+
+var svg = document.getElementById('pyramidSvg');
+var container = document.querySelector('.pyramid-wrap');
+var N = LAYERS.length;
+
+// 创建浮动说明卡
+LAYERS.forEach(function(layer, i) {
+  var card = document.createElement('div');
+  card.className = 'info-card';
+  card.id = 'info-'+i;
+  card.innerHTML =
+    '<div class="ic-title">'+layer.id+' '+layer.name+'</div>'+
+    '<div class="ic-subs">'+layer.subs+'</div>'+
+    '<div class="ic-desc">'+layer.desc+'</div>';
+  container.appendChild(card);
+});
+
+function draw() {
+  var w = container.clientWidth;
+  var h = container.clientHeight;
+  if (!w || !h) return;
+  
+  // 金字塔几何
+  var topRx = 55, bottomRx = 250, pyTop = h*0.02, pyBottom = h*0.94;
+  var layerHeight = (pyBottom - pyTop) / N;
+  
+  // 构建渐变定义
+  var defs = '<defs>';
+  LAYERS.forEach(function(l, i) {
+    // 主身渐变 - 金属质感：亮→主色→暗→亮边
+    defs += '<linearGradient id="body-'+i+'" x1="0%" y1="0%" x2="100%" y2="0%">'+
+      '<stop offset="0%" stop-color="'+l.dark+'"/>'+
+      '<stop offset="18%" stop-color="'+l.color+'"/>'+
+      '<stop offset="40%" stop-color="'+l.light+'"/>'+
+      '<stop offset="60%" stop-color="'+l.color+'"/>'+
+      '<stop offset="85%" stop-color="'+l.dark+'"/>'+
+      '<stop offset="100%" stop-color="'+l.dark+'"/>'+
+      '</linearGradient>';
+    // 顶盖渐变
+    defs += '<linearGradient id="cap-'+i+'" x1="0%" y1="0%" x2="0%" y2="100%">'+
+      '<stop offset="0%" stop-color="'+l.light+'"/>'+
+      '<stop offset="100%" stop-color="'+l.color+'"/>'+
+      '</linearGradient>';
+    // 高光叠加
+    defs += '<linearGradient id="sheen-'+i+'" x1="0%" y1="0%" x2="100%" y2="100%">'+
+      '<stop offset="0%" stop-color="rgba(255,255,255,0.25)"/>'+
+      '<stop offset="30%" stop-color="rgba(255,255,255,0.05)"/>'+
+      '<stop offset="100%" stop-color="rgba(255,255,255,0)"/>'+
+      '</linearGradient>';
+    // 阴影滤镜
+    defs += '<filter id="shadow-'+i+'"><feDropShadow dx="0" dy="1.5" stdDeviation="3" flood-opacity="0.18"/></filter>';
+  });
+  defs += '<filter id="text-shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.4"/></filter>';
+  defs += '</defs>';
+  
+  var layers = '';
+  var cx = w/2;
+  
+  for (var i=N-1; i>=0; i--) {
+    var item = LAYERS[i];
+    var tTop = i/N, tBottom = (i+1)/N;
+    var rTop = topRx + (bottomRx - topRx) * tTop;
+    var rBot = topRx + (bottomRx - topRx) * tBottom;
+    var ryTop = rTop * 0.08, ryBot = rBot * 0.08;
+    var yT = pyTop + i * layerHeight;
+    var yB = yT + layerHeight * 0.94; // 留微缝
+    
+    // 柱体路径
+    var sidePath = 'M'+(cx-rTop)+' '+yT+
+      ' A'+rTop+' '+ryTop+' 0 0 1 '+(cx+rTop)+' '+yT+
+      ' L'+(cx+rBot)+' '+yB+
+      ' A'+rBot+' '+ryBot+' 0 0 1 '+(cx-rBot)+' '+yB+' Z';
+    
+    // 高光路径（上半部渐变覆盖）
+    var sheenPath = 'M'+(cx-rTop)+' '+yT+
+      ' A'+rTop+' '+ryTop+' 0 0 1 '+(cx+rTop)+' '+yT+
+      ' L'+(cx+rBot)+' '+yB+
+      ' L'+(cx-rBot)+' '+yB+' Z';
+    
+    var textY = yT + (yB-yT)*0.4;
+    
+    // 引导线方向交替
+    var toLeft = (i % 2 === 0);
+    
+    if (toLeft) {
+      var lx = cx - rTop - (rBot - rTop)*0.35 - 20;
+      var ly = (yT + yB)/2;
+      var cardW = Math.min(200, lx - 12);
+      var cardX = lx - cardW - 10;
+      var cardY = ly - 36;
+      
+      // 定位浮动卡片
+      var infoCard = document.getElementById('info-'+i);
+      if (infoCard) {
+        infoCard.style.left = (cardX/w*100)+'%';
+        infoCard.style.top = (cardY/h*100)+'%';
+        infoCard.style.width = Math.max(140, cardW)+'px';
+      }
+      
+      // 引导线
+      layers += '<line x1="'+(cx-rTop-(rBot-rTop)*0.3)+'" y1="'+ly+'" x2="'+lx+'" y2="'+ly+'" stroke="'+item.color+'" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.5"/>';
+      layers += '<circle cx="'+lx+'" cy="'+ly+'" r="3" fill="'+item.color+'" opacity="0.5"/>';
+      layers += '<line x1="'+lx+'" y1="'+ly+'" x2="'+(cardX+cardW)+'" y2="'+ly+'" stroke="'+item.color+'" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.5"/>';
+    } else {
+      var rx = cx + rTop + (rBot - rTop)*0.35 + 20;
+      var ry2 = (yT + yB)/2;
+      var cardW2 = Math.min(200, w - rx - 22);
+      var cardX2 = rx + 10;
+      var cardY2 = ry2 - 36;
+      
+      var infoCard = document.getElementById('info-'+i);
+      if (infoCard) {
+        infoCard.style.left = (cardX2/w*100)+'%';
+        infoCard.style.top = (cardY2/h*100)+'%';
+        infoCard.style.width = Math.max(140, cardW2)+'px';
+      }
+      
+      layers += '<line x1="'+(cx+rTop+(rBot-rTop)*0.3)+'" y1="'+ry2+'" x2="'+rx+'" y2="'+ry2+'" stroke="'+item.color+'" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.5"/>';
+      layers += '<circle cx="'+rx+'" cy="'+ry2+'" r="3" fill="'+item.color+'" opacity="0.5"/>';
+      layers += '<line x1="'+rx+'" y1="'+ry2+'" x2="'+cardX2+'" y2="'+ry2+'" stroke="'+item.color+'" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.5"/>';
+    }
+    
+    // 绘制层
+    layers += '<g class="pyramid-layer" id="layer-'+i+'" filter="url(#shadow-'+i+')">'+
+      // 柱身
+      '<path d="'+sidePath+'" fill="url(#body-'+i+')" stroke="rgba(255,255,255,0.3)" stroke-width="0.6"/>'+
+      // 高光
+      '<path d="'+sheenPath+'" fill="url(#sheen-'+i+')"/>'+
+      // 顶盖
+      '<ellipse cx="'+cx+'" cy="'+yT+'" rx="'+rTop+'" ry="'+ryTop+'" fill="url(#cap-'+i+')" stroke="rgba(255,255,255,0.5)" stroke-width="0.6"/>'+
+      // 编号
+      '<text x="'+cx+'" y="'+textY+'" fill="#fff" font-size="13" font-weight="900" text-anchor="middle" dominant-baseline="central" filter="url(#text-shadow)">'+item.id+'</text>'+
+      // 层名
+      '<text x="'+cx+'" y="'+(textY+16)+'" fill="rgba(255,255,255,0.9)" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="central">'+item.name+'</text>'+
+      '</g>';
+  }
+  
+  svg.innerHTML = defs + layers;
+  
+  // 显示所有浮动卡
+  LAYERS.forEach(function(_, i) {
+    var c = document.getElementById('info-'+i);
+    if (c) { c.classList.add('show'); }
+  });
+}
+
+window.addEventListener('resize', function() { requestAnimationFrame(draw); });
+new ResizeObserver(function() { requestAnimationFrame(draw); }).observe(container);
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
