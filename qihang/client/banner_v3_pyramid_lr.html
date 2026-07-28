@@ -3,33 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Æôº½Æ½Ì¨ ¡¤ Ó¦ÓÃµØÍ¼ (½ğ×ÖËş·½°¸Èı¡¤ĞŞÕı)</title>
+<title>å¯èˆªå¹³å° Â· åº”ç”¨åœ°å›¾ (é‡‘å­—å¡”æ–¹æ¡ˆä¸‰)</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
 .hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#eef2f7 0%,#f8fafc 50%,#fff 100%);overflow:hidden}
-/* ×°ÊÎ¹â°ß */
 .hero::after{content:"";position:absolute;top:0;right:0;width:50vw;height:100%;background:radial-gradient(ellipse at 75% 40%,rgba(37,99,235,.05),transparent 65%);pointer-events:none}
-
-/* ¶¥²¿±êÌâ */
 .hero-label{position:absolute;top:3.5vh;left:50%;transform:translateX(-50%);z-index:10;text-align:center;pointer-events:none}
 .hero-label .badge{display:inline-block;padding:4px 14px;border-radius:14px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:12px;font-weight:600;margin-bottom:8px;letter-spacing:.5px;box-shadow:0 4px 12px rgba(37,99,235,.25)}
 .hero-label h1{font-size:clamp(22px,2.6vw,34px);font-weight:800;color:#0f172a;line-height:1.15}
 .hero-label h1 span{color:#2563eb}
 .hero-label p{font-size:12px;color:#94a3b8;margin-top:6px}
-
-/* ½ğ×ÖËş + ¿¨Æ¬ÕûÌåÈİÆ÷ */
 .arch-stage{position:relative;width:100%;max-width:1300px;height:100%;display:flex;align-items:center;justify-content:center;padding:0 24px 6vh}
-/* ÖĞ¼ä½ğ×ÖËş */
 .pyramid-box{position:relative;flex:0 0 auto;width:46%;height:88%;max-width:540px}
 .pyramid-box svg{position:absolute;inset:0;width:100%;height:100%}
-
-/* ×óÓÒÁĞËµÃ÷¿¨ */
 .col{position:absolute;top:0;bottom:0;width:27%;max-width:320px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;padding:6vh 0}
 .col.left{left:0}
 .col.right{right:0}
-
-/* ËµÃ÷¿¨ */
 .info-card{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(15,23,42,.05);cursor:pointer;transition:all .2s}
 .info-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(15,23,42,.1);border-color:#cbd5e1}
 .info-card.right-card{flex-direction:row-reverse}
@@ -39,41 +29,35 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,Blink
 .ic-num{font-size:11px;font-weight:800;color:#94a3b8}
 .ic-subs{font-size:11px;color:#64748b;margin-bottom:3px;line-height:1.4}
 .ic-desc{font-size:10px;color:#94a3b8;line-height:1.45}
-
 @media(max-width:900px){.arch-stage{flex-direction:column;gap:10px}.pyramid-box{width:80%;height:50%}.col{position:static;width:100%;flex-direction:row;flex-wrap:wrap}}
 </style>
 </head>
 <body>
 <div class="hero">
   <div class="hero-label">
-    <div class="badge">ĞÂÒ»´úºËĞÄÏµÍ³</div>
-    <h1>Æôº½Æ½Ì¨ <span>¡¤ Ó¦ÓÃµØÍ¼</span></h1>
-    <p>7 ²ã¼Ü¹¹ ¡¤ 53 ¸öºËĞÄÏµÍ³</p>
+    <div class="badge">æ–°ä¸€ä»£æ ¸å¿ƒç³»ç»Ÿ</div>
+    <h1>å¯èˆªå¹³å° <span>Â· åº”ç”¨åœ°å›¾</span></h1>
+    <p>7 å±‚æ¶æ„ Â· 53 ä¸ªæ ¸å¿ƒç³»ç»Ÿ</p>
   </div>
   <div class="arch-stage">
-    <!-- ×óÁĞËµÃ÷¿¨ -->
     <div class="col left" id="colLeft"></div>
-    <!-- ÖĞ¼ä½ğ×ÖËş -->
     <div class="pyramid-box">
       <svg id="pyramidSvg" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
-    <!-- ÓÒÁĞËµÃ÷¿¨ -->
     <div class="col right" id="colRight"></div>
   </div>
 </div>
-
 <script>
 var LAYERS = [
-  { id:"01", name:"¿Í»§²ã",          subs:"ToC ¡¤ ToB",                  desc:"¸öÈËÓëÍÅÌå¿Í»§È«´¥µã¸²¸Ç£¬¶à½ÇÉ«²îÒì»¯Èë¿Ú",    color:"#e61c24", light:"#f87171", dark:"#991b1b" },
-  { id:"02", name:"½Ó´¥ÇşµÀ / ¶Ë",   subs:"App ¡¤ Ğ¡³ÌĞò ¡¤ PC ¡¤ API",    desc:"¶àÖÕ¶ËÍ³Ò»¹ÜÀí£¬¿çÇşµÀÒ»ÖÂÌåÑé",                color:"#f97316", light:"#fb923c", dark:"#c2410c" },
-  { id:"03", name:"ÏúÊÛ / ÓªÏúÇ°Ì¨", subs:"ÖÇÄÜÒ»Ìå»¯ÏúÊÛ ¡¤ ÏßÉÏÔËÓª",   desc:"±¨¼Û³öµ¥µ½»î¶¯ÓªÏúÒ»Õ¾Ê½¹¤¾ß¼¯",                color:"#0ea5e9", light:"#38bdf8", dark:"#0369a1" },
-  { id:"04", name:"³Ğ±£ÂÄÔ¼Ç°Ì¨",    subs:"×¨Òµ³Ğ±£ºË±£ ¡¤ ×ÛºÏÂÄÔ¼",     desc:"ºË±£ÒıÇæÇı¶¯£¬±£µ¥È«ÉúÃüÖÜÆÚ±Õ»·",             color:"#059669", light:"#34d399", dark:"#047857" },
-  { id:"05", name:"ÔËÓªÖĞÌ¨",        subs:"Á÷³Ìµ÷¶È ¡¤ ¹¤µ¥ ¡¤ ·şÎñ±àÅÅ",  desc:"¿çÏßÔËÓªÄÜÁ¦¸´ÓÃ£¬Í³Ò»µ÷¶ÈÓë·şÎñ±àÅÅ",          color:"#6366f1", light:"#818cf8", dark:"#4338ca" },
-  { id:"06", name:"¾­Óª¹ÜÀíÆ½Ì¨",    subs:"²úÆ· ¡¤ ¶¨¼Û ¡¤ ·ç¿Ø ¡¤ ¾«Ëã ¡¤ ÔÙ±£", desc:"¾­Óª¾ö²ßÓë¹Ü¿ØÖ§³Å£¬Çı¶¯¾«Ï¸»¯ÒµÎñ¹ÜÀí",     color:"#d97706", light:"#fbbf24", dark:"#92400e" },
-  { id:"07", name:"Í¨ÓÃÖĞÌ¨",        subs:"ÒµÎñÖĞÌ¨ ¡¤ Êı¾İÖĞÌ¨",         desc:"×éÖ¯È¨ÏŞ¡¢Êı¾İÄÜÁ¦µÈµ×²ãÄÜÁ¦Í³Ò»¹©¸ø",          color:"#7c3aed", light:"#a78bfa", dark:"#5b21b6" }
+  { id:"01", name:"å®¢æˆ·å±‚",          subs:"ToC / ToB",                  desc:"ä¸ªäººä¸å›¢ä½“å®¢æˆ·å…¨è§¦ç‚¹è¦†ç›–ï¼Œå¤šè§’è‰²å·®å¼‚åŒ–å…¥å£",    color:"#e61c24", light:"#f87171", dark:"#991b1b" },
+  { id:"02", name:"æ¥è§¦æ¸ é“ / ç«¯",   subs:"App / å°ç¨‹åº / PC / API",    desc:"å¤šç»ˆç«¯ç»Ÿä¸€ç®¡ç†ï¼Œè·¨æ¸ é“ä¸€è‡´ä½“éªŒ",                color:"#f97316", light:"#fb923c", dark:"#c2410c" },
+  { id:"03", name:"é”€å”® / è¥é”€å‰å°", subs:"æ™ºèƒ½ä¸€ä½“åŒ–é”€å”® / çº¿ä¸Šè¿è¥",   desc:"æŠ¥ä»·å‡ºå•åˆ°æ´»åŠ¨è¥é”€ä¸€ç«™å¼å·¥å…·é›†",                color:"#0ea5e9", light:"#38bdf8", dark:"#0369a1" },
+  { id:"04", name:"æ‰¿ä¿å±¥çº¦å‰å°",    subs:"ä¸“ä¸šæ‰¿ä¿æ ¸ä¿ / ç»¼åˆå±¥çº¦",     desc:"æ ¸ä¿å¼•æ“é©±åŠ¨ï¼Œä¿å•å…¨ç”Ÿå‘½å‘¨æœŸé—­ç¯",             color:"#059669", light:"#34d399", dark:"#047857" },
+  { id:"05", name:"è¿è¥ä¸­å°",        subs:"æµç¨‹è°ƒåº¦ / å·¥å• / æœåŠ¡ç¼–æ’",  desc:"è·¨çº¿è¿è¥èƒ½åŠ›å¤ç”¨ï¼Œç»Ÿä¸€è°ƒåº¦ä¸æœåŠ¡ç¼–æ’",          color:"#6366f1", light:"#818cf8", dark:"#4338ca" },
+  { id:"06", name:"ç»è¥ç®¡ç†å¹³å°",    subs:"äº§å“ / å®šä»· / é£æ§ / ç²¾ç®— / å†ä¿", desc:"ç»è¥å†³ç­–ä¸ç®¡æ§æ”¯æ’‘ï¼Œé©±åŠ¨ç²¾ç»†åŒ–ä¸šåŠ¡ç®¡ç†",     color:"#d97706", light:"#fbbf24", dark:"#92400e" },
+  { id:"07", name:"é€šç”¨ä¸­å°",        subs:"ä¸šåŠ¡ä¸­å° / æ•°æ®ä¸­å°",         desc:"ç»„ç»‡æƒé™ã€æ•°æ®èƒ½åŠ›ç­‰åº•å±‚èƒ½åŠ›ç»Ÿä¸€ä¾›ç»™",          color:"#7c3aed", light:"#a78bfa", dark:"#5b21b6" }
 ];
 
-// äÖÈ¾ËµÃ÷¿¨µ½×óÓÒÁ½ÁĞ£¨×ó±ßÆæÊı²ã£¬ÓÒ±ßÅ¼Êı²ã£©
 function renderCards() {
   var colL = document.getElementById('colLeft');
   var colR = document.getElementById('colRight');
@@ -81,7 +65,7 @@ function renderCards() {
   colR.innerHTML = '';
   LAYERS.forEach(function(layer, i) {
     var html =
-      '<div class="info-card '+(i % 2 === 0 ? '' : 'right-card')+'">'+
+      '<div class="info-card '+((i%2===0)?'':'right-card')+'">'+
         '<div class="ic-stripe" style="background:'+layer.color+'"></div>'+
         '<div class="ic-body">'+
           '<div class="ic-title"><span class="ic-num">'+layer.id+'</span> '+layer.name+'</div>'+
@@ -89,8 +73,8 @@ function renderCards() {
           '<div class="ic-desc">'+layer.desc+'</div>'+
         '</div>'+
       '</div>';
-    if (i % 2 === 0) colL.innerHTML += html;
-    else colR.innerHTML += html;
+    if (i%2===0) { colL.innerHTML += html; }
+    else { colR.innerHTML += html; }
   });
 }
 
@@ -100,16 +84,13 @@ var box = document.querySelector('.pyramid-box');
 function draw() {
   var w = box.clientWidth, h = box.clientHeight;
   if (!w || !h) return;
-
   var N = LAYERS.length;
   var topRx = 22, bottomRx = Math.min(w*0.36, 240), ryRatio = 0.1;
   var pyTop = h*0.04, pyBottom = h*0.96;
   var layerH = (pyBottom - pyTop) / N;
   var cx = w / 2;
-
   var defs = '<defs>';
   LAYERS.forEach(function(l, i) {
-    // ½ğÊôÖÊ¸Ğ£º°µ¡úÖ÷¡úÁÁ¡úÖ÷¡ú°µ
     defs += '<linearGradient id="body-'+i+'" x1="0%" y1="0%" x2="100%" y2="0%">'+
       '<stop offset="0%" stop-color="'+l.dark+'"/>'+
       '<stop offset="20%" stop-color="'+l.color+'"/>'+
@@ -130,7 +111,6 @@ function draw() {
   });
   defs += '<filter id="text-shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.4"/></filter>';
   defs += '</defs>';
-
   var layers = '';
   for (var i=N-1; i>=0; i--) {
     var item = LAYERS[i];
@@ -140,7 +120,6 @@ function draw() {
     var ryTop = rTop * ryRatio, ryBot = rBot * ryRatio;
     var yT = pyTop + i * layerH;
     var yB = yT + layerH * 0.95;
-
     var sidePath = 'M'+(cx-rTop)+' '+yT+
       ' A'+rTop+' '+ryTop+' 0 0 1 '+(cx+rTop)+' '+yT+
       ' L'+(cx+rBot)+' '+yB+
@@ -151,7 +130,6 @@ function draw() {
       ' L'+(cx-rBot)+' '+yB+' Z';
     var numY = yT + layerH*0.36;
     var nameY = yT + layerH*0.58;
-
     layers += '<g class="pyramid-layer" id="layer-'+i+'" filter="url(#shadow-'+i+')">'+
       '<path d="'+sidePath+'" fill="url(#body-'+i+')" stroke="rgba(255,255,255,0.35)" stroke-width="0.7"/>'+
       '<path d="'+sheenPath+'" fill="url(#sheen-'+i+')"/>'+
