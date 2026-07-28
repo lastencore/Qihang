@@ -151,8 +151,8 @@
         .metric-desc { font-size: clamp(10px,0.72vw,13px); color: #94a3b8; white-space: nowrap; }
         .right-ecosystem {
             position: relative; display: grid;
-            grid-template-columns: minmax(260px,1.2fr) minmax(200px,0.8fr);
-            gap: clamp(10px,1.5vw,28px); align-items: center;
+            grid-template-columns: minmax(280px,1.35fr) minmax(180px,0.65fr);
+            gap: clamp(8px,1.2vw,22px); align-items: center;
             height: 100%; max-height: 760px; min-width: 0;
         }
         .pyramid-container {
@@ -162,37 +162,33 @@
         .pyramid-container svg { width: 100%; height: 100%; overflow: visible; }
         .system-list {
             display: flex; flex-direction: column; justify-content: space-between;
-            height: 100%; gap: clamp(6px,1vh,12px); min-width: 0;
+            height: 100%; gap: clamp(4px,0.8vh,8px); min-width: 0;
         }
         .system-card {
-            flex: 1; display: flex; align-items: center; gap: clamp(6px,0.8vw,12px);
-            background: #ffffff; padding: 0 clamp(8px,0.8vw,16px); border-radius: 10px;
-            border: 1px solid rgba(226,232,240,0.9);
-            box-shadow: 0 4px 12px rgba(15,23,42,0.03);
-            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-            position: relative; cursor: pointer; min-width: 0;
+            flex: 1; display: flex; align-items: center;
+            background: #fff; padding: clamp(6px,0.8vh,14px) clamp(8px,0.7vw,14px);
+            border-radius: 8px; border: 1px solid #e2e8f0;
+            border-left: 4px solid #ccc;
+            box-shadow: 0 1px 4px rgba(15,23,42,0.03);
+            transition: all 0.2s ease; cursor: pointer; min-width: 0;
         }
         .system-card:hover {
-            transform: translateX(4px); background: #f8fafc;
-            border-color: rgba(203,213,225,1); box-shadow: 0 8px 20px rgba(15,23,42,0.06);
+            transform: translateX(3px); background: #f8fafc;
+            box-shadow: 0 4px 14px rgba(15,23,42,0.06);
         }
-        .card-icon {
-            width: clamp(28px,2vw,38px); height: clamp(28px,2vw,38px);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: #ffffff; flex-shrink: 0; box-shadow: 0 3px 8px rgba(0,0,0,0.12);
-        }
+        .system-card .card-left { display:flex; flex-direction:column; align-items:center; margin-right:10px; flex-shrink:0; }
+        .system-card .card-num { font-size:15px; font-weight:900; line-height:1; }
         .card-content { flex-grow: 1; min-width: 0; overflow: hidden; }
-        .card-header { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; min-width: 0; }
-        .card-num { font-size: clamp(12px,0.85vw,14px); font-weight: 800; flex-shrink: 0; }
+        .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 1px; min-width: 0; }
         .card-title {
-            font-size: clamp(13px,0.95vw,16px); font-weight: 700; color: #0f172a;
+            font-size: clamp(12px,0.82vw,14px); font-weight: 700; color: #0f172a;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .card-tag {
-            font-size: clamp(10px,0.68vw,12px); color: #64748b; background: #f1f5f9;
-            padding: 2px 7px; border-radius: 6px; font-weight: 500; flex-shrink: 0;
+            font-size: 10px; color: #64748b; background: #f1f5f9;
+            padding: 1px 5px; border-radius: 4px; font-weight: 500; flex-shrink: 0;
         }
-        .card-desc { font-size: clamp(11px,0.78vw,13px); color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-desc { font-size: clamp(10px,0.68vw,11px); color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .pyramid-layer { transition: transform 0.25s ease, opacity 0.25s ease; transform-origin: center center; }
         .pyramid-layer.active { filter: drop-shadow(0 8px 16px rgba(0,0,0,0.18)); }
         .scroll-hint {
@@ -925,15 +921,12 @@
     var pyramidSvg = document.getElementById('pyramidSvg');
     if (!systemListEl || !pyramidSvg) return;
 
-    // Render cards
+    // Render cards - 左侧彩色竖条 + 数字
     systemListEl.innerHTML = SYSTEM_DATA.map(function(item, i) {
-        return '<div class="system-card" id="card-'+i+'">' +
-            '<div class="card-icon" style="background:'+item.color+';">' +
-                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>' +
-            '</div>' +
+        return '<div class="system-card" id="card-'+i+'" style="border-left-color:'+item.color+';">' +
+            '<div class="card-left"><span class="card-num" style="color:'+item.color+';">'+item.num+'</span></div>' +
             '<div class="card-content">' +
                 '<div class="card-header">' +
-                    '<span class="card-num" style="color:'+item.color+';">'+item.num+'</span>' +
                     '<span class="card-title">'+item.title+'</span>' +
                     '<span class="card-tag">'+item.tag+'</span>' +
                 '</div>' +
@@ -956,8 +949,8 @@
         });
 
         var N = SYSTEM_DATA.length;
-        var cx = w * 0.46, guideX = w * 0.96;
-        var topRx = 70, bottomRx = 260, ryRatio = 0.12;
+        var cx = w * 0.44, guideX = w * 0.96;
+        var topRx = 75, bottomRx = 280, ryRatio = 0.1;
 
         var defs = '<defs>';
         SYSTEM_DATA.forEach(function(item, i) {
@@ -973,7 +966,7 @@
         });
         defs += '</defs>';
 
-        var lh = (h/N) * 0.55;  // 层间间距更大
+        var lh = (h/N) * 0.70;  // 配合新卡片间距
         var layers = '';
         for (var i = N-1; i >= 0; i--) {
             var item = SYSTEM_DATA[i];
