@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>启航平台 · 应用地图 (方案一)</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f8fafc}
+.hero{position:relative;width:100%;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:3vh 4vw;background:linear-gradient(180deg,#f0f4f8 0%,#f8fafc 100%)}
+.hero::before{content:"";position:absolute;top:0;right:0;width:35vw;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(37,99,235,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero-inner{position:relative;z-index:1;display:flex;align-items:center;gap:3vw;max-width:1600px;width:100%;margin:0 auto}
+/* 左侧 */
+.hero-left{flex:0 0 auto;width:320px}
+.hero-left .badge{display:inline-block;padding:3px 12px;border-radius:12px;background:#e8f0fe;color:#2563eb;font-size:12px;font-weight:600;margin-bottom:16px}
+.hero-left h1{font-size:clamp(28px,3.5vw,48px);font-weight:800;line-height:1.15;color:#0f172a;margin-bottom:8px}
+.hero-left h1 span{color:#2563eb}
+.hero-left p{font-size:14px;color:#64748b;line-height:1.5}
+/* 右侧分层 */
+.hero-right{flex:1;display:flex;flex-direction:column;gap:6px}
+.layer{display:flex;align-items:center;gap:14px;padding:8px 16px;border-radius:8px;transition:all .2s;cursor:default}
+.layer:hover{transform:translateX(4px);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.layer-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+.layer-body{flex:1;min-width:0}
+.layer-header{display:flex;align-items:center;gap:10px;margin-bottom:2px}
+.layer-name{font-size:14px;font-weight:700;color:#0f172a;white-space:nowrap}
+.layer-subs{font-size:11px;color:#94a3b8}
+.layer-desc{font-size:11px;color:#64748b;line-height:1.4}
+.layer-stripe{flex-shrink:0;width:3px;height:24px;border-radius:2px}
+/* 缩进 */
+.l2 .layer-body{margin-left:0}.l3 .layer-body{margin-left:8px}.l4 .layer-body{margin-left:16px}
+.l5 .layer-body{margin-left:8px}.l6 .layer-body{margin-left:0}.l7 .layer-body{margin-left:8px}
+
+@media(max-width:900px){.hero-inner{flex-direction:column;gap:20px}.hero-left{width:100%}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="badge">新一代核心系统</div>
+      <h1>启航平台<br><span>应用地图</span></h1>
+      <p>7 层架构 · 53 个核心系统<br>一张图看懂新一代能力全貌</p>
+    </div>
+    <div class="hero-right">
+      <!-- L1 客户层 -->
+      <div class="layer" style="background:linear-gradient(90deg,rgba(230,28,36,.04),transparent)">
+        <div class="layer-stripe" style="background:#e61c24"></div>
+        <div class="layer-num" style="background:#e61c24">01</div>
+        <div class="layer-body">
+          <div class="layer-header"><span class="layer-name">客户层</span><span class="layer-subs">ToC / ToB</span></div>
+          <div class="layer-desc">个人客户与团体客户的全触点覆盖，支持多角色差异化服务入口</div>
+        </div>
+      </div>
+      <!-- L2 接触渠道 -->
+      <div class="layer l2" style="background:linear-gradient(90deg,rgba(249,115,22,.04),transparent)">
+        <div class="layer-stripe" style="background:#f97316"></div>
+        <div class="layer-num" style="background:#f97316">02</div>
+        <div class="layer-body">
+          <div class="layer-header"><span class="layer-name">接触渠道 / 端</span></div>
+          <div class="layer-desc">App、小程序、PC端、API等多终端触达，统一入口管理，保障一致体验</div>
+        </div>
+      </div>
+      <!-- L3 销售/营销前台 -->
+      <div class="layer l3" style="background:linear-gradient(90deg,rgba(14,165,233,.04),transparent)">
+        <div class="layer-stripe" style="background:#0ea5e9"></div>
+        <div class="layer-num" style="background:#0ea5e9">03</div>
+        <div class="layer-body">
+          <div class="layer-header"><span class="layer-name">销售 / 营销前台</span><span class="layer-subs">智能一体化销售平台 · 线上运营平台</span></div>
+          <div class="layer-desc">销售全流程线上化支撑，从报价出单到活动运营的一站式销售工具集</div>
+        </div>
+      </div>
+      <!-- L4 承保履约前台 -->
+      <div class="layer l4" style="background:linear-gradient(90deg,rgba(5,150,105,.04),transparent)">
+        <div class="layer-stripe" style="background:#059669"></div>
+        <div class="layer-num" style="background:#059669">04</div>
+        <div class="layer-body">
+          <div class="layer-header"><span class="layer-name">承保履约前台</span><span class="layer-subs">专业承保核保 · 综合履约</span></div>
+          <div class="layer-desc">核保规则引擎驱动，履约全流程线上闭环，覆盖保单全生命周期</div>
+        </div>
+      </div>
+      <!-- L5 运营中台 -->
+      <div class="layer l5" style="background:linear-gradient(90deg,rgba(99,102,241,.04),transparent)">
+        <div class="layer-stripe" style="background:#6366f1"></div>
+        <div class="layer-num" style="background:#6366f1">05</div>
+        <div class="layer-body">
+          <div class="layer-header"><span class="layer-name">运营中台</span></div>
+          <div class="layer-desc">跨业务线的运营能力复用，统一流程调度、工单管理与服务编排</div>
+        </div>
+      </div>
+      <!-- L6 经营管理平台 -->
+      <div class="layer l6" style="background:linear-gradient(90deg,rgba(217,119,6,.04),transparent)">
+        <div class="layer-stripe" style="background:#d97706"></div>
+        <div class="layer-num" style="background:#d97706">06</div>
+        <div class="layer-body">
+          <div class="layer-header"><span class="layer-name">经营管理平台</span></div>
+          <div class="layer-desc">产品管理、定价、风控、精算、再保等经营决策与管控支撑</div>
+        </div>
+      </div>
+      <!-- L7 通用中台 -->
+      <div class="layer l7" style="background:linear-gradient(90deg,rgba(124,58,237,.04),transparent)">
+        <div class="layer-stripe" style="background:#7c3aed"></div>
+        <div class="layer-num" style="background:#7c3aed">07</div>
+        <div class="layer-body">
+          <div class="layer-header"><span class="layer-name">通用中台</span><span class="layer-subs">业务中台 · 数据中台</span></div>
+          <div class="layer-desc">组织权限、消息通知、数据能力、通用技术组件等底层能力统一供给</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
