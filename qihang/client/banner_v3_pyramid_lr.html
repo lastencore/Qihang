@@ -3,202 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>å¯èˆªå¹³å° Â· åº”ç”¨åœ°å›¾ (é‡‘å­—å¡”æ–¹æ¡ˆä¸‰)</title>
+<title>Æôº½Æ½Ì¨ ¡¤ Ó¦ÓÃµØÍ¼ (½ğ×ÖËş·½°¸Èı¡¤ĞŞÕı)</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#f0f4f8 0%,#f8fafc 40%,#fff 100%);overflow:hidden}
-.hero::after{content:"";position:absolute;top:0;right:0;width:45vw;height:100%;background:radial-gradient(ellipse at 70% 40%,rgba(37,99,235,.04),transparent 60%);pointer-events:none;z-index:0}
-/* æ ‡é¢˜ */
-.hero-label{position:absolute;top:3.5vh;left:50%;transform:translateX(-50%);z-index:5;text-align:center}
-.hero-label .badge{display:inline-block;padding:3px 14px;border-radius:14px;background:#e8f0fe;color:#2563eb;font-size:12px;font-weight:600;margin-bottom:10px;letter-spacing:.5px}
-.hero-label h1{font-size:clamp(24px,3vw,38px);font-weight:800;color:#0f172a;line-height:1.15}
+.hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#eef2f7 0%,#f8fafc 50%,#fff 100%);overflow:hidden}
+/* ×°ÊÎ¹â°ß */
+.hero::after{content:"";position:absolute;top:0;right:0;width:50vw;height:100%;background:radial-gradient(ellipse at 75% 40%,rgba(37,99,235,.05),transparent 65%);pointer-events:none}
+
+/* ¶¥²¿±êÌâ */
+.hero-label{position:absolute;top:3.5vh;left:50%;transform:translateX(-50%);z-index:10;text-align:center;pointer-events:none}
+.hero-label .badge{display:inline-block;padding:4px 14px;border-radius:14px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:12px;font-weight:600;margin-bottom:8px;letter-spacing:.5px;box-shadow:0 4px 12px rgba(37,99,235,.25)}
+.hero-label h1{font-size:clamp(22px,2.6vw,34px);font-weight:800;color:#0f172a;line-height:1.15}
 .hero-label h1 span{color:#2563eb}
-.hero-label p{font-size:12px;color:#94a3b8;margin-top:4px}
+.hero-label p{font-size:12px;color:#94a3b8;margin-top:6px}
 
-/* ä¸»å®¹å™¨ */
-.pyramid-wrap{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding-top:14vh;padding-bottom:6vh}
-#pyramidSvg{width:100%;height:100%;max-width:1000px}
+/* ½ğ×ÖËş + ¿¨Æ¬ÕûÌåÈİÆ÷ */
+.arch-stage{position:relative;width:100%;max-width:1300px;height:100%;display:flex;align-items:center;justify-content:center;padding:0 24px 6vh}
+/* ÖĞ¼ä½ğ×ÖËş */
+.pyramid-box{position:relative;flex:0 0 auto;width:46%;height:88%;max-width:540px}
+.pyramid-box svg{position:absolute;inset:0;width:100%;height:100%}
 
-/* æµ®åŠ¨è¯´æ˜å¡ */
-.info-card{position:absolute;background:#fff;border-radius:10px;padding:10px 14px;border:1px solid #e2e8f0;box-shadow:0 2px 12px rgba(0,0,0,.06);font-size:12px;pointer-events:none;z-index:3;max-width:220px;opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s}
-.info-card.show{opacity:1;transform:translateY(0)}
-.info-card .ic-title{font-weight:700;color:#0f172a;margin-bottom:4px}
-.info-card .ic-subs{color:#64748b;font-size:11px;line-height:1.5}
-.info-card .ic-desc{color:#94a3b8;font-size:10px;margin-top:4px;line-height:1.4}
+/* ×óÓÒÁĞËµÃ÷¿¨ */
+.col{position:absolute;top:0;bottom:0;width:27%;max-width:320px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;padding:6vh 0}
+.col.left{left:0}
+.col.right{right:0}
+
+/* ËµÃ÷¿¨ */
+.info-card{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(15,23,42,.05);cursor:pointer;transition:all .2s}
+.info-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(15,23,42,.1);border-color:#cbd5e1}
+.info-card.right-card{flex-direction:row-reverse}
+.ic-stripe{flex-shrink:0;width:4px;align-self:stretch;border-radius:2px}
+.ic-body{flex:1;min-width:0}
+.ic-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:2px;display:flex;align-items:center;gap:6px}
+.ic-num{font-size:11px;font-weight:800;color:#94a3b8}
+.ic-subs{font-size:11px;color:#64748b;margin-bottom:3px;line-height:1.4}
+.ic-desc{font-size:10px;color:#94a3b8;line-height:1.45}
+
+@media(max-width:900px){.arch-stage{flex-direction:column;gap:10px}.pyramid-box{width:80%;height:50%}.col{position:static;width:100%;flex-direction:row;flex-wrap:wrap}}
 </style>
 </head>
 <body>
 <div class="hero">
   <div class="hero-label">
-    <div class="badge">æ–°ä¸€ä»£æ ¸å¿ƒç³»ç»Ÿ</div>
-    <h1>å¯èˆªå¹³å° <span>Â· åº”ç”¨åœ°å›¾</span></h1>
-    <p>7 å±‚æ¶æ„ Â· 53 ä¸ªæ ¸å¿ƒç³»ç»Ÿ</p>
+    <div class="badge">ĞÂÒ»´úºËĞÄÏµÍ³</div>
+    <h1>Æôº½Æ½Ì¨ <span>¡¤ Ó¦ÓÃµØÍ¼</span></h1>
+    <p>7 ²ã¼Ü¹¹ ¡¤ 53 ¸öºËĞÄÏµÍ³</p>
   </div>
-  <div class="pyramid-wrap">
-    <svg id="pyramidSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="arch-stage">
+    <!-- ×óÁĞËµÃ÷¿¨ -->
+    <div class="col left" id="colLeft"></div>
+    <!-- ÖĞ¼ä½ğ×ÖËş -->
+    <div class="pyramid-box">
+      <svg id="pyramidSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <!-- ÓÒÁĞËµÃ÷¿¨ -->
+    <div class="col right" id="colRight"></div>
   </div>
 </div>
 
 <script>
-// ============= å±‚çº§æ•°æ® =============
 var LAYERS = [
-  { id:"01", name:"å®¢æˆ·å±‚",         subs:"ToC Â· ToB",                  desc:"ä¸ªäººä¸å›¢ä½“å®¢æˆ·å…¨è§¦ç‚¹è¦†ç›–ï¼Œå¤šè§’è‰²å·®å¼‚åŒ–å…¥å£",    color:"#e61c24", light:"#f87171", dark:"#991b1b" },
-  { id:"02", name:"æ¥è§¦æ¸ é“ / ç«¯",  subs:"App Â· å°ç¨‹åº Â· PC Â· API",    desc:"å¤šç»ˆç«¯ç»Ÿä¸€ç®¡ç†ï¼Œè·¨æ¸ é“ä¸€è‡´ä½“éªŒ",                color:"#f97316", light:"#fb923c", dark:"#c2410c" },
-  { id:"03", name:"é”€å”® / è¥é”€å‰å°",subs:"æ™ºèƒ½ä¸€ä½“åŒ–é”€å”® Â· çº¿ä¸Šè¿è¥å¹³å°",desc:"æŠ¥ä»·å‡ºå•åˆ°æ´»åŠ¨è¥é”€ä¸€ç«™å¼å·¥å…·é›†",               color:"#0ea5e9", light:"#38bdf8", dark:"#0369a1" },
-  { id:"04", name:"æ‰¿ä¿å±¥çº¦å‰å°",   subs:"ä¸“ä¸šæ‰¿ä¿æ ¸ä¿ Â· ç»¼åˆå±¥çº¦",     desc:"æ ¸ä¿å¼•æ“é©±åŠ¨ï¼Œä¿å•å…¨ç”Ÿå‘½å‘¨æœŸé—­ç¯",             color:"#059669", light:"#34d399", dark:"#047857" },
-  { id:"05", name:"è¿è¥ä¸­å°",       subs:"æµç¨‹è°ƒåº¦ Â· å·¥å• Â· æœåŠ¡ç¼–æ’",  desc:"è·¨çº¿è¿è¥èƒ½åŠ›å¤ç”¨ï¼Œç»Ÿä¸€è°ƒåº¦ä¸æœåŠ¡ç¼–æ’",          color:"#6366f1", light:"#818cf8", dark:"#4338ca" },
-  { id:"06", name:"ç»è¥ç®¡ç†å¹³å°",   subs:"äº§å“ Â· å®šä»· Â· é£æ§ Â· ç²¾ç®— Â· å†ä¿", desc:"ç»è¥å†³ç­–ä¸ç®¡æ§æ”¯æ’‘ï¼Œé©±åŠ¨ç²¾ç»†åŒ–ä¸šåŠ¡ç®¡ç†",      color:"#d97706", light:"#fbbf24", dark:"#92400e" },
-  { id:"07", name:"é€šç”¨ä¸­å°",       subs:"ä¸šåŠ¡ä¸­å° Â· æ•°æ®ä¸­å°",         desc:"ç»„ç»‡æƒé™ã€æ•°æ®èƒ½åŠ›ç­‰åº•å±‚èƒ½åŠ›ç»Ÿä¸€ä¾›ç»™",          color:"#7c3aed", light:"#a78bfa", dark:"#5b21b6" }
+  { id:"01", name:"¿Í»§²ã",          subs:"ToC ¡¤ ToB",                  desc:"¸öÈËÓëÍÅÌå¿Í»§È«´¥µã¸²¸Ç£¬¶à½ÇÉ«²îÒì»¯Èë¿Ú",    color:"#e61c24", light:"#f87171", dark:"#991b1b" },
+  { id:"02", name:"½Ó´¥ÇşµÀ / ¶Ë",   subs:"App ¡¤ Ğ¡³ÌĞò ¡¤ PC ¡¤ API",    desc:"¶àÖÕ¶ËÍ³Ò»¹ÜÀí£¬¿çÇşµÀÒ»ÖÂÌåÑé",                color:"#f97316", light:"#fb923c", dark:"#c2410c" },
+  { id:"03", name:"ÏúÊÛ / ÓªÏúÇ°Ì¨", subs:"ÖÇÄÜÒ»Ìå»¯ÏúÊÛ ¡¤ ÏßÉÏÔËÓª",   desc:"±¨¼Û³öµ¥µ½»î¶¯ÓªÏúÒ»Õ¾Ê½¹¤¾ß¼¯",                color:"#0ea5e9", light:"#38bdf8", dark:"#0369a1" },
+  { id:"04", name:"³Ğ±£ÂÄÔ¼Ç°Ì¨",    subs:"×¨Òµ³Ğ±£ºË±£ ¡¤ ×ÛºÏÂÄÔ¼",     desc:"ºË±£ÒıÇæÇı¶¯£¬±£µ¥È«ÉúÃüÖÜÆÚ±Õ»·",             color:"#059669", light:"#34d399", dark:"#047857" },
+  { id:"05", name:"ÔËÓªÖĞÌ¨",        subs:"Á÷³Ìµ÷¶È ¡¤ ¹¤µ¥ ¡¤ ·şÎñ±àÅÅ",  desc:"¿çÏßÔËÓªÄÜÁ¦¸´ÓÃ£¬Í³Ò»µ÷¶ÈÓë·şÎñ±àÅÅ",          color:"#6366f1", light:"#818cf8", dark:"#4338ca" },
+  { id:"06", name:"¾­Óª¹ÜÀíÆ½Ì¨",    subs:"²úÆ· ¡¤ ¶¨¼Û ¡¤ ·ç¿Ø ¡¤ ¾«Ëã ¡¤ ÔÙ±£", desc:"¾­Óª¾ö²ßÓë¹Ü¿ØÖ§³Å£¬Çı¶¯¾«Ï¸»¯ÒµÎñ¹ÜÀí",     color:"#d97706", light:"#fbbf24", dark:"#92400e" },
+  { id:"07", name:"Í¨ÓÃÖĞÌ¨",        subs:"ÒµÎñÖĞÌ¨ ¡¤ Êı¾İÖĞÌ¨",         desc:"×éÖ¯È¨ÏŞ¡¢Êı¾İÄÜÁ¦µÈµ×²ãÄÜÁ¦Í³Ò»¹©¸ø",          color:"#7c3aed", light:"#a78bfa", dark:"#5b21b6" }
 ];
 
-var svg = document.getElementById('pyramidSvg');
-var container = document.querySelector('.pyramid-wrap');
-var N = LAYERS.length;
+// äÖÈ¾ËµÃ÷¿¨µ½×óÓÒÁ½ÁĞ£¨×ó±ßÆæÊı²ã£¬ÓÒ±ßÅ¼Êı²ã£©
+function renderCards() {
+  var colL = document.getElementById('colLeft');
+  var colR = document.getElementById('colRight');
+  colL.innerHTML = '';
+  colR.innerHTML = '';
+  LAYERS.forEach(function(layer, i) {
+    var html =
+      '<div class="info-card '+(i % 2 === 0 ? '' : 'right-card')+'">'+
+        '<div class="ic-stripe" style="background:'+layer.color+'"></div>'+
+        '<div class="ic-body">'+
+          '<div class="ic-title"><span class="ic-num">'+layer.id+'</span> '+layer.name+'</div>'+
+          '<div class="ic-subs">'+layer.subs+'</div>'+
+          '<div class="ic-desc">'+layer.desc+'</div>'+
+        '</div>'+
+      '</div>';
+    if (i % 2 === 0) colL.innerHTML += html;
+    else colR.innerHTML += html;
+  });
+}
 
-// åˆ›å»ºæµ®åŠ¨è¯´æ˜å¡
-LAYERS.forEach(function(layer, i) {
-  var card = document.createElement('div');
-  card.className = 'info-card';
-  card.id = 'info-'+i;
-  card.innerHTML =
-    '<div class="ic-title">'+layer.id+' '+layer.name+'</div>'+
-    '<div class="ic-subs">'+layer.subs+'</div>'+
-    '<div class="ic-desc">'+layer.desc+'</div>';
-  container.appendChild(card);
-});
+var svg = document.getElementById('pyramidSvg');
+var box = document.querySelector('.pyramid-box');
 
 function draw() {
-  var w = container.clientWidth;
-  var h = container.clientHeight;
+  var w = box.clientWidth, h = box.clientHeight;
   if (!w || !h) return;
-  
-  // é‡‘å­—å¡”å‡ ä½•
-  var topRx = 55, bottomRx = 250, pyTop = h*0.02, pyBottom = h*0.94;
-  var layerHeight = (pyBottom - pyTop) / N;
-  
-  // æ„å»ºæ¸å˜å®šä¹‰
+
+  var N = LAYERS.length;
+  var topRx = 22, bottomRx = Math.min(w*0.36, 240), ryRatio = 0.1;
+  var pyTop = h*0.04, pyBottom = h*0.96;
+  var layerH = (pyBottom - pyTop) / N;
+  var cx = w / 2;
+
   var defs = '<defs>';
   LAYERS.forEach(function(l, i) {
-    // ä¸»èº«æ¸å˜ - é‡‘å±è´¨æ„Ÿï¼šäº®â†’ä¸»è‰²â†’æš—â†’äº®è¾¹
+    // ½ğÊôÖÊ¸Ğ£º°µ¡úÖ÷¡úÁÁ¡úÖ÷¡ú°µ
     defs += '<linearGradient id="body-'+i+'" x1="0%" y1="0%" x2="100%" y2="0%">'+
       '<stop offset="0%" stop-color="'+l.dark+'"/>'+
-      '<stop offset="18%" stop-color="'+l.color+'"/>'+
-      '<stop offset="40%" stop-color="'+l.light+'"/>'+
-      '<stop offset="60%" stop-color="'+l.color+'"/>'+
-      '<stop offset="85%" stop-color="'+l.dark+'"/>'+
+      '<stop offset="20%" stop-color="'+l.color+'"/>'+
+      '<stop offset="45%" stop-color="'+l.light+'"/>'+
+      '<stop offset="65%" stop-color="'+l.color+'"/>'+
       '<stop offset="100%" stop-color="'+l.dark+'"/>'+
       '</linearGradient>';
-    // é¡¶ç›–æ¸å˜
     defs += '<linearGradient id="cap-'+i+'" x1="0%" y1="0%" x2="0%" y2="100%">'+
       '<stop offset="0%" stop-color="'+l.light+'"/>'+
       '<stop offset="100%" stop-color="'+l.color+'"/>'+
       '</linearGradient>';
-    // é«˜å…‰å åŠ 
     defs += '<linearGradient id="sheen-'+i+'" x1="0%" y1="0%" x2="100%" y2="100%">'+
-      '<stop offset="0%" stop-color="rgba(255,255,255,0.25)"/>'+
-      '<stop offset="30%" stop-color="rgba(255,255,255,0.05)"/>'+
+      '<stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>'+
+      '<stop offset="40%" stop-color="rgba(255,255,255,0.08)"/>'+
       '<stop offset="100%" stop-color="rgba(255,255,255,0)"/>'+
       '</linearGradient>';
-    // é˜´å½±æ»¤é•œ
     defs += '<filter id="shadow-'+i+'"><feDropShadow dx="0" dy="1.5" stdDeviation="3" flood-opacity="0.18"/></filter>';
   });
   defs += '<filter id="text-shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.4"/></filter>';
   defs += '</defs>';
-  
+
   var layers = '';
-  var cx = w/2;
-  
   for (var i=N-1; i>=0; i--) {
     var item = LAYERS[i];
     var tTop = i/N, tBottom = (i+1)/N;
     var rTop = topRx + (bottomRx - topRx) * tTop;
     var rBot = topRx + (bottomRx - topRx) * tBottom;
-    var ryTop = rTop * 0.08, ryBot = rBot * 0.08;
-    var yT = pyTop + i * layerHeight;
-    var yB = yT + layerHeight * 0.94; // ç•™å¾®ç¼
-    
-    // æŸ±ä½“è·¯å¾„
+    var ryTop = rTop * ryRatio, ryBot = rBot * ryRatio;
+    var yT = pyTop + i * layerH;
+    var yB = yT + layerH * 0.95;
+
     var sidePath = 'M'+(cx-rTop)+' '+yT+
       ' A'+rTop+' '+ryTop+' 0 0 1 '+(cx+rTop)+' '+yT+
       ' L'+(cx+rBot)+' '+yB+
       ' A'+rBot+' '+ryBot+' 0 0 1 '+(cx-rBot)+' '+yB+' Z';
-    
-    // é«˜å…‰è·¯å¾„ï¼ˆä¸ŠåŠéƒ¨æ¸å˜è¦†ç›–ï¼‰
     var sheenPath = 'M'+(cx-rTop)+' '+yT+
       ' A'+rTop+' '+ryTop+' 0 0 1 '+(cx+rTop)+' '+yT+
       ' L'+(cx+rBot)+' '+yB+
       ' L'+(cx-rBot)+' '+yB+' Z';
-    
-    var textY = yT + (yB-yT)*0.4;
-    
-    // å¼•å¯¼çº¿æ–¹å‘äº¤æ›¿
-    var toLeft = (i % 2 === 0);
-    
-    if (toLeft) {
-      var lx = cx - rTop - (rBot - rTop)*0.35 - 20;
-      var ly = (yT + yB)/2;
-      var cardW = Math.min(200, lx - 12);
-      var cardX = lx - cardW - 10;
-      var cardY = ly - 36;
-      
-      // å®šä½æµ®åŠ¨å¡ç‰‡
-      var infoCard = document.getElementById('info-'+i);
-      if (infoCard) {
-        infoCard.style.left = (cardX/w*100)+'%';
-        infoCard.style.top = (cardY/h*100)+'%';
-        infoCard.style.width = Math.max(140, cardW)+'px';
-      }
-      
-      // å¼•å¯¼çº¿
-      layers += '<line x1="'+(cx-rTop-(rBot-rTop)*0.3)+'" y1="'+ly+'" x2="'+lx+'" y2="'+ly+'" stroke="'+item.color+'" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.5"/>';
-      layers += '<circle cx="'+lx+'" cy="'+ly+'" r="3" fill="'+item.color+'" opacity="0.5"/>';
-      layers += '<line x1="'+lx+'" y1="'+ly+'" x2="'+(cardX+cardW)+'" y2="'+ly+'" stroke="'+item.color+'" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.5"/>';
-    } else {
-      var rx = cx + rTop + (rBot - rTop)*0.35 + 20;
-      var ry2 = (yT + yB)/2;
-      var cardW2 = Math.min(200, w - rx - 22);
-      var cardX2 = rx + 10;
-      var cardY2 = ry2 - 36;
-      
-      var infoCard = document.getElementById('info-'+i);
-      if (infoCard) {
-        infoCard.style.left = (cardX2/w*100)+'%';
-        infoCard.style.top = (cardY2/h*100)+'%';
-        infoCard.style.width = Math.max(140, cardW2)+'px';
-      }
-      
-      layers += '<line x1="'+(cx+rTop+(rBot-rTop)*0.3)+'" y1="'+ry2+'" x2="'+rx+'" y2="'+ry2+'" stroke="'+item.color+'" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.5"/>';
-      layers += '<circle cx="'+rx+'" cy="'+ry2+'" r="3" fill="'+item.color+'" opacity="0.5"/>';
-      layers += '<line x1="'+rx+'" y1="'+ry2+'" x2="'+cardX2+'" y2="'+ry2+'" stroke="'+item.color+'" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.5"/>';
-    }
-    
-    // ç»˜åˆ¶å±‚
+    var numY = yT + layerH*0.36;
+    var nameY = yT + layerH*0.58;
+
     layers += '<g class="pyramid-layer" id="layer-'+i+'" filter="url(#shadow-'+i+')">'+
-      // æŸ±èº«
-      '<path d="'+sidePath+'" fill="url(#body-'+i+')" stroke="rgba(255,255,255,0.3)" stroke-width="0.6"/>'+
-      // é«˜å…‰
+      '<path d="'+sidePath+'" fill="url(#body-'+i+')" stroke="rgba(255,255,255,0.35)" stroke-width="0.7"/>'+
       '<path d="'+sheenPath+'" fill="url(#sheen-'+i+')"/>'+
-      // é¡¶ç›–
-      '<ellipse cx="'+cx+'" cy="'+yT+'" rx="'+rTop+'" ry="'+ryTop+'" fill="url(#cap-'+i+')" stroke="rgba(255,255,255,0.5)" stroke-width="0.6"/>'+
-      // ç¼–å·
-      '<text x="'+cx+'" y="'+textY+'" fill="#fff" font-size="13" font-weight="900" text-anchor="middle" dominant-baseline="central" filter="url(#text-shadow)">'+item.id+'</text>'+
-      // å±‚å
-      '<text x="'+cx+'" y="'+(textY+16)+'" fill="rgba(255,255,255,0.9)" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="central">'+item.name+'</text>'+
+      '<ellipse cx="'+cx+'" cy="'+yT+'" rx="'+rTop+'" ry="'+ryTop+'" fill="url(#cap-'+i+')" stroke="rgba(255,255,255,0.6)" stroke-width="0.7"/>'+
+      '<text x="'+cx+'" y="'+numY+'" fill="#fff" font-size="14" font-weight="900" text-anchor="middle" dominant-baseline="central" filter="url(#text-shadow)">'+item.id+'</text>'+
+      '<text x="'+cx+'" y="'+nameY+'" fill="rgba(255,255,255,0.95)" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="central">'+item.name+'</text>'+
       '</g>';
   }
-  
   svg.innerHTML = defs + layers;
-  
-  // æ˜¾ç¤ºæ‰€æœ‰æµ®åŠ¨å¡
-  LAYERS.forEach(function(_, i) {
-    var c = document.getElementById('info-'+i);
-    if (c) { c.classList.add('show'); }
-  });
 }
 
+renderCards();
 window.addEventListener('resize', function() { requestAnimationFrame(draw); });
-new ResizeObserver(function() { requestAnimationFrame(draw); }).observe(container);
+new ResizeObserver(function() { requestAnimationFrame(draw); }).observe(box);
 requestAnimationFrame(draw);
 </script>
 </body>
