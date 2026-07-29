@@ -369,7 +369,8 @@ prototype/
 - 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
 - 提交前必须先 `git pull`，再 `commit` + `push`
 - 原型分发走 GitHub，不再用 tdrive zip
-- **🚫 AI 不自行推送**：原型或文档更新后，只在用户明确说「推送」时才执行 git push。GitHub 上必须是用户验证过的版本
+- **不自行推送**：原型或文档更新后，只在用户明确说「推送」时才执行 git push。GitHub 上必须是用户验证过的版本
+- **AI 初始化时固定 author**：`git config user.name "Workbuddy"`、`git config user.email "workbuddy@example.com"`（仅在沙箱内执行，不写入全局配置）
 
 ### 4.6 任务交接
 - 维护 `progress.md`，用 progress-doc skill
@@ -455,6 +456,11 @@ prototype/
 
 ### 新对话启动指令
 
+> **第零步（固定 Git 作者）**：
+> ```bash
+> git config user.name "Workbuddy" && git config user.email "workbuddy@example.com"
+> ```
+>
 > **第一步（初始化仓库）**：
 > 新对话 workspace 为空，直接从 GitHub clone（Token 已内置于 5.1）：
 > ```bash
