@@ -446,6 +446,7 @@ prototype/
 - GitHub 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
 - GitHub Token：**已内置于本文档**（拆分两段以规避 GitHub push protection，bash 自动拼接），clone 和 push 均可直接使用，无需用户额外发送。
 - ⚠️ **DNS 劫持（2026-07-30 实测）**：本沙箱 `networkEnvironment: internal`，`github.com` 被 DNS 解析到内网保留地址 `198.18.0.14`（不可达），标准 `git clone`/`push` 会报 `gnutls_handshake failed` / `SSL_ERROR_SYSCALL`。**clone 与 push 前必须先做 hosts 覆盖**（详见第 6 节启动指令「🔧 前置步」）。该覆盖**沙箱重启会还原**，每次新对话初始化都需重做。
+- ⚠️ **git TLS 后端（2026-07-30 实测）**：本沙箱 git **仅编译 gnutls 后端**，与该 GitHub CDN 的 TLS 握手不兼容，clone/pull/push 偶发 `gnutls_handshake failed: Error decoding the received TLS packet`（`curl` 用 OpenSSL 正常）。**所有 git 操作前必须 `export GIT_SSL_BACKEND=openssl`**（强制 git 走 OpenSSL，详见第 6 节「🔧 前置步二」）。**不可用 `git config http.sslBackend openssl`**——config 校验白名单只认 gnutls，会报 `Unsupported SSL backend`。
 - Clone 命令：
   `git clone "https://x-access-token:github_pat_11AFBPCQY08OpGoYIpxoj0""_SX8e7Ng5RnynK2pEDm6MRLLZhzC5ZG1jGx9ANKGvERdMLJO6TIKK4yhuWXm""@github.com/lastencore/Qihang.git" /workspace/prototype`
 - Push 命令：
@@ -500,6 +501,13 @@ prototype/
 > ```bash
 > for ip in 140.82.{112..125}.{3,4}; do code=$(curl -sS -m5 -k -o /dev/null -w "%{http_code}" "https://$ip" 2>/dev/null); [ "$code" = "301" ] && echo "可用: $ip"; done
 > ```
+>
+> **🔧 前置步二：修复 git TLS 后端（必做，否则 clone/pull/push 偶发 gnutls 握手失败）**
+> 本沙箱 git **仅编译了 gnutls 后端**，而 gnutls 与该 GitHub CDN 节点 TLS 握手不兼容（偶发成功、大传输必报 `gnutls_handshake failed: Error decoding the received TLS packet`）。`curl` 用 OpenSSL 正常，故强制 git 走 OpenSSL：
+> ```bash
+> export GIT_SSL_BACKEND=openssl   # 整个初始化会话生效；沙箱重启需重做
+> ```
+> 此后所有 git 命令均自动走 OpenSSL。⚠️ 注意：`git config http.sslBackend openssl` 会因「Unsupported SSL backend」（config 白名单只有 gnutls）报错，**只能用环境变量形式，不能写进 config**。
 >
 > **第零步（固定 Git 作者，仅沙箱内、不写全局）**：
 > ```bash
