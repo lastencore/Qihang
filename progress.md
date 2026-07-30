@@ -1,6 +1,6 @@
 # 产品设计中心 — 多平台任务交接文档
 
-> 最后更新：2026-07-30 14:48:27
+> 最后更新：2026-07-30 16:20:00
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 > ⚠️ 本文档覆盖两条并行工作流：
 >   **A. 产品设计** — 启航/知行/聆听/新一代首页四平台的需求、原型、PRD
@@ -117,12 +117,16 @@
 
 ### 🔄 进行中
 
-- [ ] **[产品设计] [启航]** 应用地图 `app_map.html` 按新分类体系重构：
-  - 7 大一级分类（客户端/接触渠道端/销售营销前台/承保履约前台/运营中台/经营管理平台/通用中台）+ 二级分组 + 应用卡片
-  - 左侧 Anchor 导航更新为新分类
-  - 卡片按新分类重新归类排列
-  - 保持现有布局风格（grid、卡片样式、不可点击状态），不动 Banner（已废弃）
-  - 参考数据：`app_category_management.html` 和 `app_management.html` 已改造完成，分类和状态数据可复用
+- [x] **[产品设计] [启航] app_map.html 按新分类体系重构完成**（2026-07-30）：
+  - 7 大一级分类（客户端/接触渠道端/销售营销前台/承保履约前台/运营中台/经营管理平台/通用中台）+ 工具平台，共 8 个 section
+  - 109 张卡片全部按语义重新归类，左侧 Anchor 导航同步更新为新分类（data-cat + JS scrollToCat/catMap 映射全改）
+  - 4 个一级分类保留二级分组（客户端 ToB/ToC、销售 销售平台/线上运营/客户运营、承保 承保/核保/履约、通用中台 业务中台/数据中台）；其余 4 个单层平铺
+  - 业务中台(21卡) + 数据中台(11卡) 合并为「通用中台（双中台）」一级分类，左右非对称结构 `lg:grid-cols-[1.4fr_1fr]`
+  - 补回缺失卡片：资金管理系统、统一监管报送平台（原正则未匹配到 data-dept 导致丢卡）
+  - 卡片尺寸统一：同一二级分类内统一 min-h/px/py，不同分类可不同；带二级的 min-h-[48px]，单层 min-h-[56px]
+  - 留白修复：单层模块最大列数从 xl:grid-cols-8 降到 xl:grid-cols-6；带二级模块二级块等宽铺满（md:grid-cols-2/3）；中台真正左右 1.4fr:1fr
+  - JS IntersectionObserver 选择器加 text-blue（通用中台用蓝色标题，否则滚动不高亮）
+  - 原生 CSS/Tailwind/交互逻辑一线未动，仅重排卡片归属与网格列数
 - [ ] **[产品设计] [新一代首页]** 待办工作台方案设计：方案脑图+原型截图已发领导，等待反馈修改意见
 - [ ] **[中心建设]** 域名备案：备案通过后绑自定义域名 + 申请 SSL 证书 + Nginx 加 443
 
@@ -410,12 +414,15 @@ prototype/
 
 ### 4.8 app_map 应用地图布局 ✅ 已定
 - **去首屏 Banner**：移除 hero-banner（含金字塔/指标卡/系统卡联动/滚动过渡），页面直接展示分类地图
-- **左侧可收起导航**：224px Anchor 风格侧栏，7 大分类带 Font Awesome 图标 + 换行描述 + 二级分类子链接，IntersectionObserver 自动高亮，支持收起
+- **左侧可收起导航**：224px Anchor 风格侧栏，8 大分类带 Font Awesome 图标 + 换行描述 + 二级分类子链接，IntersectionObserver 自动高亮，支持收起
 - **右侧全景抽屉占位**：竖排触发按钮 + Drawer 滑入面板，内容待定
-- **一级分类去编号**：7 个一级分类标题去掉「一、…七、」编号（二级保留）；监管报送独立不合并
+- **一级分类去编号**：一级分类标题去掉「一、…七、」编号（二级保留）
+- **分类体系**（2026-07-30 定稿）：8 个一级分类——客户端/接触渠道端/销售营销前台/承保履约前台/运营中台/经营管理平台/通用中台（双中台）/工具平台；4 个保留二级分组，4 个单层平铺
 
 ### 4.9 app_map 卡片与中台布局 ✅ 已定
-- 业务中台（21 卡）与数据中台（11 卡）左右非对称（1.4fr / 1fr）；不可点击卡片用实线浅底 + `not-allowed` 光标
+- 业务中台（21 卡）与数据中台（11 卡）合并为「通用中台（双中台）」一级分类，左右非对称 `lg:grid-cols-[1.4fr_1fr]`；不可点击卡片用实线浅底 + `not-allowed` 光标
+- 卡片尺寸：同一二级分类内统一 min-h/px/py；带二级分组的 min-h-[48px]，单层平铺的 min-h-[56px]
+- 单层模块最大列数 xl:grid-cols-6；带二级模块二级块等宽铺满（md:grid-cols-2/3），内部列数按卡片数自适应
 - 搜索筛选、部门下拉保留不动；卡片点击跳转 `app_detail.html?name=`
 
 ### 4.10 OSS + ECS 外网发布架构 ✅ 已定
@@ -462,7 +469,7 @@ prototype/
 - **服务托管（不要 nohup）**：nohup 进程在沙箱休眠/恢复后会死，表现为"服务挂了"。本沙箱 supervisord 由 PID 1 系统进程托管，其 `supervisord-conf/supervisord.conf` 路径不可写、**无 `supervisorctl` 工具**，原 supervisord 托管写法无法直接执行。改用等价方案：**`setsid python3 -m http.server <port> --bind 0.0.0.0 --directory /workspace/prototype > /tmp/preview-<port>.log 2>&1 & disown`**——独立会话脱离终端，沙箱休眠不受终端退出影响（等效 supervisord 的 autorestart 意图）。`notify <port>` 生成链接不变。
 - 约定端口 **8080**（prototype 原型）；**8081** 为知行修复预览（`/workspace/zhixing_exam_preview`，独立目录）。两者均用 `setsid` 后台托管。
 - 当前线上预览（**以 `notify` 输出为准，沙箱区/标识每次会变**）：
-  - 8080（2026-07-30 实测）：`https://webview.e2b.sh4.sandbox.cloudstudio.club/?x-cs-sandbox-id=4fdf669df42b45f387e97a4fd7157f4e&x-cs-sandbox-port=8080`
+  - 8080（2026-07-30 实测）：`https://webview.e2b.bj7.sandbox.cloudstudio.club/?x-cs-sandbox-id=da0e66a9c61645b5a58288f86d755c9a&x-cs-sandbox-port=8080`
   - 8081：知行修复预览（`/workspace/zhixing_exam_preview`，独立目录，独立 `notify 8081`）
 
 ---
