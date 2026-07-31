@@ -1249,7 +1249,29 @@ html body {
                 </div>
               </div>
             </div>
-            <div class="ant-form-item">
+            <div class="ant-form-item" id="appStatusFormItem">
+              <div class="ant-row ant-form-item-row">
+                <div class="ant-col ant-col-4 ant-form-item-label">
+                  <label class="ant-form-item-required" for="appStatus" title="应用可见属性">
+                    应用可见属性
+                  </label>
+                </div>
+                <div class="ant-col ant-form-item-control">
+                  <div class="ant-form-item-control-input">
+                    <div class="ant-form-item-control-input-content">
+                      <select id="appStatus" onchange="onAppStatusChange()" style="width:100%;height:32px;border:1px solid #d9d9d9;border-radius:2px;font-size:14px;padding:0 8px;outline:none;background:#fff;">
+                        <option value="">请选择</option>
+                        <option value="visible_selectable">可见可跳转</option>
+                        <option value="visible_unselectable">可见不可跳转</option>
+                        <option value="invisible">不可见</option>
+                        <option value="external">非PMS应用</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ant-form-item" id="appUrlFormItem">
               <div class="ant-row ant-form-item-row">
                 <div class="ant-col ant-col-4 ant-form-item-label">
                   <label class="ant-form-item-required" for="appUrl" title="URL地址">
@@ -1260,28 +1282,6 @@ html body {
                   <div class="ant-form-item-control-input">
                     <div class="ant-form-item-control-input-content">
                       <input class="ant-input" id="appUrl" type="text" placeholder="请输入相对地址或绝对地址"/>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="ant-form-item">
-              <div class="ant-row ant-form-item-row">
-                <div class="ant-col ant-col-4 ant-form-item-label">
-                  <label class="ant-form-item-required" for="appStatus" title="应用可见属性">
-                    应用可见属性
-                  </label>
-                </div>
-                <div class="ant-col ant-form-item-control">
-                  <div class="ant-form-item-control-input">
-                    <div class="ant-form-item-control-input-content">
-                      <select id="appStatus" style="width:100%;height:32px;border:1px solid #d9d9d9;border-radius:2px;font-size:14px;padding:0 8px;outline:none;background:#fff;">
-                        <option value="">请选择</option>
-                        <option value="visible_selectable">可见可跳转</option>
-                        <option value="visible_unselectable">可见不可跳转</option>
-                        <option value="invisible">不可见</option>
-                        <option value="external">非PMS应用</option>
-                      </select>
                     </div>
                   </div>
                 </div>
@@ -1321,7 +1321,7 @@ html body {
                 </div>
               </div>
             </div>
-            <div class="ant-form-item" style="margin-bottom:20px;">
+            <div class="ant-form-item" id="pmsSystemFormItem" style="margin-bottom:20px;">
               <div class="ant-row ant-form-item-row" style="flex-flow:row nowrap;">
                 <div class="ant-col ant-col-4 ant-form-item-label">
                   <label class="ant-form-item-required" title="关联PMS系统">
@@ -1661,6 +1661,80 @@ html body {
     var w=document.getElementById('catWrap'),p=document.getElementById('catPanel');
     if(p&&p.style.display==='block'&&w&&!w.contains(e.target))p.style.display='none'
   });
+})();
+</script>
+<script>
+// 应用可见属性联动：必填规则 + 关联PMS字段禁用/重置
+// 规则：
+//  - 可见可跳转：除"应用简介"外，其余字段均为必填
+//  - 可见不可跳转 / 不可见："URL地址"非必填，其余必填规则不变
+//  - 非PMS应用："关联PMS系统"与"PMS系统属主"禁用且非必填；"URL地址"非必填
+(function(){
+  function setRequired(formItemId, required){
+    var item=document.getElementById(formItemId);
+    if(!item) return;
+    var label=item.querySelector('.ant-form-item-label label');
+    if(!label) return;
+    if(required) label.classList.add('ant-form-item-required');
+    else label.classList.remove('ant-form-item-required');
+  }
+  function setPmsDisabled(disabled){
+    var btn=document.getElementById('pmsSelectBtn');
+    var ownerSel=document.getElementById('pmsOwnerSelector');
+    var ownerActions=document.getElementById('pmsOwnerActions');
+    var ownerCand=document.getElementById('pmsOwnerCandidates');
+    var ownerLabel=document.getElementById('pmsOwnerLabel');
+    if(btn){
+      btn.disabled=disabled;
+      btn.style.background=disabled?'#f5f5f5':'#fff';
+      btn.style.color=disabled?'rgba(0,0,0,.25)':'rgba(0,0,0,.85)';
+      btn.style.cursor=disabled?'not-allowed':'pointer';
+    }
+    [ownerSel,ownerActions,ownerCand,ownerLabel].forEach(function(el){
+      if(!el) return;
+      el.style.pointerEvents=disabled?'none':'';
+      el.style.opacity=disabled?'0.5':'';
+    });
+    if(disabled){
+      // 清空已选关联PMS系统
+      var hidden=document.getElementById('pmsSystem');
+      if(hidden) hidden.value='';
+      var txt=document.getElementById('pmsSelectText');
+      if(txt) txt.textContent='请选择';
+      var dd=document.getElementById('pmsDropdown');
+      if(dd) dd.style.display='none';
+      // 清空已选PMS系统属主（保留占位提示）
+      if(ownerSel){
+        ownerSel.querySelectorAll('span.tag-owner').forEach(function(t){t.remove()});
+        var ph=document.getElementById('pmsOwnerPlaceholder');
+        if(ph) ph.style.display='';
+      }
+      if(ownerActions) ownerActions.style.display='none';
+      if(ownerCand) ownerCand.style.display='none';
+      if(ownerLabel) ownerLabel.style.display='none';
+    }
+  }
+  window.onAppStatusChange=function(){
+    var status=(document.getElementById('appStatus')||{}).value||'';
+    // URL地址：仅"可见可跳转"必填；其余状态（含未选择）均非必填
+    var urlNonRequired=(status==='visible_unselectable'||status==='invisible'||status==='external');
+    setRequired('appUrlFormItem', !urlNonRequired);
+    // 关联PMS系统 / PMS系统属主：仅"非PMS应用"禁用且非必填，其余状态必填
+    var pmsDisabled=(status==='external');
+    setRequired('pmsSystemFormItem', !pmsDisabled);
+    setRequired('pmsOwnerFormItem', !pmsDisabled);
+    setPmsDisabled(pmsDisabled);
+  };
+  // 新建/编辑弹窗（同一弹窗）打开时触发联动，确保两种场景均生效
+  var modal=document.getElementById('modal-new-app');
+  if(modal){
+    new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        if(m.attributeName==='style' && modal.style.display==='block') window.onAppStatusChange();
+      });
+    }).observe(modal,{attributes:true});
+  }
+  if(modal && modal.style.display==='block') window.onAppStatusChange();
 })();
 </script>
 
