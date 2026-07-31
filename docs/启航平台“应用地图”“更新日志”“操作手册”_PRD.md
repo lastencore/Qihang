@@ -95,7 +95,7 @@
 | 序号 | 业务场景描述 | 场景所需功能 | 产品功能优先级 |
 | --- | --- | --- | --- |
 | 1 | 应用管理需与 PMS 对齐 | 新增/编辑应用关联 PMS 系统、标记 PMS 系统属主；列表增加关联 PMS 系统列与搜索 | P0 |
-| 2 | 发布动态要回流到门户 | 发布类更新日志绑定 PMS 发布窗口与所属 PMS 系统，T+1 中午 12:00 自动公开 | P0 |
+| 2 | 发布类更新日志要回流到门户 | 发布类更新日志绑定 PMS 发布窗口与所属 PMS 系统；<br/>日志发布与维护在运营支撑域管理，PMS需能够进行查询；<br/>T+1 中午 12:00 自动公开 | P0 |
 | 3 | 员工需要统一操作指引 | 新增操作手册：每应用独立目录，左树右文最多 3 层，富文本支持markdown | P0 |
 | 4 | 员工/管理人员需要应用全景视图 | 新增新一代应用地图，支持名称/属主/分类筛选；应用详情页四 Tab 聚合 | P0 |
 | 5 | 内容需被外部系统消费 | 更新日志、操作手册提供对外查询接口 | P1 |
@@ -107,25 +107,73 @@
 ## 3.1 应用管理（管理端）— PMS 关联
 ### <!-- 这是一张图片，ocr 内容为： -->
 ![](https://cdn.nlark.com/yuque/0/2026/png/159868/1783559013912-f2c69ef3-ed5b-4c9e-a112-68b9674d081b.png)
-### 3.1.1 新增/编辑应用弹窗
-<!-- 这是一张图片，ocr 内容为： -->
-![](https://cdn.nlark.com/yuque/0/2026/png/159868/1783501681325-69c0fc6b-a8ae-4163-a0fc-420e3dd720f6.png)
-
-在【应用管理】页面的【新增/编辑应用】弹窗中增加4个字段：
+### <font style="background-color:#E8F7CF;">3.1.1 应用分类管理，支持二级分类</font>
+<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">应用分类管理从当前单层结构升级为两层结构</font>
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](https://cdn.nlark.com/yuque/0/2026/png/159868/1783501747673-8c2b89c2-196f-490b-9a9a-c0e4561e718a.png)
+![](https://cdn.nlark.com/yuque/0/2026/png/159868/1785407393978-7e36d115-2ad1-480a-9b2b-daee37d81424.png)
+
+#### <font style="background-color:#C1E77E;">3.1.1.1 创建一级分类</font>
+<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">当用户在分类管理页点击"新增一级分类"时，系统应弹出一级分类创建表单（分类名称必填），创建后该分类出现在列表顶层</font>
+
+#### <font style="background-color:#C1E77E;">3.1.1.2 新增子分类</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">当用户在某一级分类行点击"新增子分类"时，基于该父级创建子分类，并自动建立父子归属关系</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">若用户提交的分类名称为空或与同级已有分类重名，则系统应拦截提交并提示"分类名称不可为空/不可重复"</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">当某一级分类下存在子分类时，系统应在列表中以层级缩进/可折叠方式展示其子分类，并随父级展开或收起</font>
+
+#### <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">3.1.1.3 分类顺序调整</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">子分类同样支持鼠标拖动改变顺序，子分类的顺序仅可在当前父分类内部进行调整</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">调整父分类顺序时，连带内部子分类一起进行调整</font>
+
+#### <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">3.1.1.4 删除分类</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">可以删除父分类和子分类</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">若删除的一级分类下存在子分类或已挂载应用，则系统应禁止删除并提示"请先迁移或解绑下属子分类与应用"</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">若删除的二级分类下已挂载应用，则系统应禁止删除并提示"请先迁移或解绑下属应用"</font>
+
+### 3.1.2 应用管理
+<!-- 这是一张图片，ocr 内容为： -->
+![](https://cdn.nlark.com/yuque/0/2026/png/159868/1785408080132-893a4acd-8e2b-430f-934e-66bf8de98817.png)
+
+#### <font style="background-color:#C1E77E;">3.1.2.1 应用列表</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">列表新增</font>`<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">应用可见属性</font>`<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">列</font>
+
+| <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">字段名</font> | <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">列表显示说明</font> | <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">功能逻辑说明</font> | <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">交互说明</font> |
+| --- | --- | --- | --- |
+| <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">应用可见属性</font> | <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">枚举值：取值固定为：</font>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">可见可跳转 / 可见不可跳转 / 不可见 / 非PMS应用</font>** | <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">对应应用的四种不同的可见状态：</font><br/>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">可见可跳转：</font>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">应用可以在启航应用地图显示和点击，可以查看详情，并支持跳转</font><br/>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">可见不可调转：</font>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">应用可以在启航应用地图显示，不可点击查看详情页，不可跳转</font><br/>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">不可见：</font>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">应用不在启航应用地图首页显示</font><br/>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">非PMS应用：</font>**<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">应用可以在启航首页显示，但不可点击</font> | <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">不同属性以差异化标签色呈现（可见可跳转=绿、可见不可跳转=黄、非PMS应用=蓝）</font> |
+
+
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">列表</font>`<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">应用分类</font>`<font style="color:rgb(0, 0, 0);background-color:#C1E77E;">列增加“二级分类”的显示</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">列表筛选区，新增“应用可见属性”筛选项</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">列表筛选区，新增“应用分类”筛选项，支持级联选择</font>
+
+#### 3.1.2.2 编辑/新建应用
+<!-- 这是一张图片，ocr 内容为： -->
+![](https://cdn.nlark.com/yuque/0/2026/png/159868/1785480651287-9c07243e-c1af-4cf4-94d4-57be612636e8.png)
+
+在【应用管理】页面的【新增/编辑应用】弹窗中增加6个字段：
+
+
 
 **新增字段：**
 
 | 字段名 | 控件类型 | 是否必填 | 交互说明 |
 | --- | --- | --- | --- |
+| <font style="background-color:#C1E77E;">应用可见属性</font> | <font style="background-color:#C1E77E;">下拉单选</font> | <font style="background-color:#C1E77E;">是</font> | <font style="background-color:#C1E77E;">单选，可选项：</font><br/><font style="color:rgb(0, 0, 0);background-color:#C1E77E;">可见可跳转 / 可见不可跳转 / 不可见 / 非PMS应用</font><br/>该字段的选择影响其他字段是否必填和是否启用，具体规则见附表 |
+| <font style="background-color:#C1E77E;">应用分类</font> | <font style="background-color:#C1E77E;">二级级联选择单选</font> | <font style="background-color:#C1E77E;">是</font> | <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">选择一级分类后，如果当前分类下包含二级分类，则额外提供二级分类的选项</font><br/><font style="color:rgb(0, 0, 0);background-color:#C1E77E;">可选项 数据来源为“应用分类管理”</font> |
 | URL地址 | 文本输入 | 是 |  新增必填字段，placeholder"请输入相对地址或绝对地址"；用于应用详情页「进入系统」跳转 |
 | 关联PMS系统 | 按钮触发 + 搜索下拉面板 | 是 | 点击按钮展开搜索面板，输入关键字过滤 PMS 系统列表，选中后关闭面板；列表数据源为 PMS 系统清单（编码-名称格式） |
 | PMS系统属主 | Tag 选择器 | 是 | 选中 PMS 系统后展示该系统的可选属主列表；点击候选标签添加已选，点击已选标签 × 移除；提供「全部填入」「全部清空」快捷操作 |
 | 应用简介 | 多行文本 | 否 | placeholder"请输入应用简介"，用于应用地图和详情页展示 |
 
 
+<font style="background-color:#C1E77E;">附：“应用可见属性”各选项与其他字段是否必填的关联</font>
+
+| **<font style="color:rgb(0, 0, 0);">应用可见属性取值</font>** | **<font style="color:rgb(0, 0, 0);">URL地址</font>** | **<font style="color:rgb(0, 0, 0);">关联PMS系统 / PMS系统属主</font>** | **<font style="color:rgb(0, 0, 0);">其余字段</font>** |
+| --- | --- | --- | --- |
+| <font style="color:rgb(0, 0, 0);">未选择（默认）</font> | <font style="color:rgb(0, 0, 0);">必填</font> | <font style="color:rgb(0, 0, 0);">必填 + 启用</font> | <font style="color:rgb(0, 0, 0);">必填（除应用简介）</font> |
+| <font style="color:rgb(0, 0, 0);">可见可跳转</font> | <font style="color:rgb(0, 0, 0);">必填</font> | <font style="color:rgb(0, 0, 0);">必填 + 启用</font> | <font style="color:rgb(0, 0, 0);">必填（除应用简介）</font> |
+| <font style="color:rgb(0, 0, 0);">可见不可跳转 / 不可见</font> | **<font style="color:rgb(0, 0, 0);">非必填</font>** | <font style="color:rgb(0, 0, 0);">必填 + 启用</font> | <font style="color:rgb(0, 0, 0);">必填（除应用简介）</font> |
+| <font style="color:rgb(0, 0, 0);">非PMS应用</font> | **<font style="color:rgb(0, 0, 0);">非必填</font>** | **<font style="color:rgb(0, 0, 0);">禁用 + 非必填</font>** | <font style="color:rgb(0, 0, 0);">必填（除应用简介）</font> |
 
 
 **业务规则：**
@@ -140,7 +188,7 @@
 
 **列表调整：**
 
-+ 新增「关联PMS系统」列，展示该应用关联的 PMS 系统名称，格式为`[sysCode]-[productName]`（未关联显示 `—`）
++ 新增「关联PMS系统」列，展示该应用关联的 PMS 系统名称，格式为`[sysCode]-[productName]`（未关联时显示 `—`）
 
 **筛选区调整：**
 
@@ -153,7 +201,7 @@
 
 ### 3.2.1 应用地图
 ### <!-- 这是一张图片，ocr 内容为： -->
-![](https://cdn.nlark.com/yuque/0/2026/png/159868/1783499935037-7b0a4b26-f26d-4569-aa39-55da2c8b1041.png)
+![](https://cdn.nlark.com/yuque/0/2026/png/159868/1785409560972-352fd5e6-d875-47c5-ab34-1339bdd68745.png)
 新增「启航：新一代应用地图」功能，提供应用检索与全景视图：
 
 **搜索功能：**
@@ -168,14 +216,29 @@
 
 **卡片展示：**
 
-+ 按业务分类分区排列，排列顺序固定
-    - `一、前端系统`
-    - `二、中端系统`
-    - `三、后端系统`
-    - `四、工具平台`
-    - `五、业务中台`
-    - `六、数据中台`
-    - `七、监管报送`
++ 按业务分类分区排列，排列顺序固定<font style="background-color:#C1E77E;">（7大类）</font>
+
+> + <font style="background-color:#C1E77E;">客户端</font>
+>     - <font style="background-color:#C1E77E;">ToB</font>
+>     - <font style="background-color:#C1E77E;">ToC</font>
+> + <font style="background-color:#C1E77E;">接触渠道/端</font>
+> + <font style="background-color:#C1E77E;">销售/营销前台</font>
+>     - <font style="background-color:#C1E77E;">销售平台</font>
+>     - <font style="background-color:#C1E77E;">线上运营平台</font>
+> + <font style="background-color:#C1E77E;">承保履约前台</font>
+>     - <font style="background-color:#C1E77E;">承保</font>
+>     - <font style="background-color:#C1E77E;">核保</font>
+>     - <font style="background-color:#C1E77E;">履约</font>
+> + <font style="background-color:#C1E77E;">运营中台</font>
+> + <font style="background-color:#C1E77E;">经营管理平台</font>
+> + <font style="background-color:#C1E77E;">通用中台（双中台）</font>
+>     - <font style="background-color:#C1E77E;">业务中台</font>
+>     - <font style="background-color:#C1E77E;">数据中台</font>
+>
+
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">在应用地图页常驻左侧导航栏，用于分类/视图的快速切换</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">导航栏支持收起与展开，收起/展开时，右侧主区域自适应放大/缩小</font>
++ <font style="color:rgb(0, 0, 0);background-color:#C1E77E;">当点击左侧导航的某分类入口时，切换右侧主区域展示该范围下的系统/应用卡片</font>
 + 可点击卡片跳转应用详情页；不可点击卡片（如中台底座/报表类）使用灰色虚线和禁用指针区分
 
 **业务规则：**
@@ -186,7 +249,7 @@
 
 ### 3.2.2 应用详情页
 <!-- 这是一张图片，ocr 内容为： -->
-![](https://cdn.nlark.com/yuque/0/2026/png/159868/1783506834071-a524db6e-bfc8-499d-aab3-16864cdeaeca.png)
+![](https://cdn.nlark.com/yuque/0/2026/png/159868/1785409826071-41be68fe-ab2d-4ec4-b2a0-b88d4db41033.png)
 
 从应用地图点击任一应用卡片进入独立详情页，聚合该应用相关信息：
 
@@ -195,6 +258,8 @@
 **应用简介**
 
 **所属业务分类**
+
+**<font style="background-color:#C1E77E;">所属应用属主</font>**
 
 **四 Tab 结构：**
 
@@ -290,9 +355,11 @@
 操作手册是本期全新模块，为每个应用提供独立的结构化操作指引管理能力。面向三类展示端口：应用内查看（接口/组件）、管能力地图应用详情页查看、PMS 侧（接口消费）。
 
 ### 3.4.1 模块说明
-每个应用各自维护一套独立的操作手册目录树，应用间互不干扰。目录结构采用**左树右文**编辑界面，最多支持 **3 层**（2 层目录 + 1 层文档），文档内容通过富文本编辑器编写。
+新一代系统的应用清单中的每一个应用都各自维护一套独立的操作手册目录树，应用间操作手册目录树互相独立（操作手册的大盘列表和应用目录清单一一对应）
 
-本期不涉及版本控制，操作手册修改后直接覆盖发布。
+操作手册配置工作台采用**左树右文**编辑界面，最多支持 **3 层**（2 层目录 + 1 层文档），文档内容通过富文本编辑器编写
+
+本期不涉及版本控制，操作手册修改后直接覆盖发布
 
 ### 3.4.2 大盘列表
 管理端新增「操作手册管理 > 手册大盘清单」页面，汇总展示所有应用的操作手册概况。
@@ -321,9 +388,9 @@
 从大盘列表点击某应用的「配置」按钮进入该应用的专属工作台页面
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](https://cdn.nlark.com/yuque/0/2026/png/159868/1783506804863-6ba6613b-917b-4a05-a671-4c3c3ee71ab5.png)
+![](https://cdn.nlark.com/yuque/0/2026/png/159868/1784880339601-97eb87cc-f081-4523-b832-f7138c0839f0.png)
 
-#### 页面头部
+#### 3.4.3.1 页面头部
 展示当前编辑的应用名称及编码（如「车险承保平台 [CB001]」），提供「← 返回」按钮回到大盘列表。右侧操作按钮：
 
 | 按钮 | 说明 |
@@ -333,17 +400,31 @@
 | Switch 开关 | 控制该文档的对外可见性，开关内显示「公开/不公开」；新建文档默认「不公开」 |
 
 
-#### 左侧目录树
-| 功能 | 交互说明 |
-| --- | --- |
-| 新建目录 | 点击「+ 目录」图标按钮，弹出输入框填写目录名称，在选中节点下新增一级或二级目录 |
-| 新建文档 | 点击「+ 文档」图标按钮，弹出输入框填写文档名称，在选中目录下新增文档（叶子节点） |
-| 折叠/展开 | 目录节点左侧箭头图标控制子树展开/收起 |
-| 选中 | 点击目录或文档节点，右侧编辑器加载对应标题和内容 |
-| 删除 | 点击节点右侧删除图标，弹窗二次确认后删除<br/>删除文档：<br/>`确认删除文档？删除后无法恢复！`<br/>删除目录：<br/>`确认删除目录？`<br/>目录下有文档时，阻断并提示<br/>`目录不为空，请先移出或删除目录内文档` |
-| 排序 | 一级目录支持上移/下移按钮调整顺序 |
-| 层级约束 | 最多 3 层（2 层目录 + 1 层文档），超出时拦截并提示 |
+#### 3.4.3.2 左侧目录树
+<!-- 这是一张图片，ocr 内容为： -->
+![](https://cdn.nlark.com/yuque/0/2026/png/159868/1783589946615-b6d3651c-a2e0-4886-84d7-0d481eecac85.png)
 
++ **<font style="color:rgba(0, 0, 0, 0.9);">目录与文档的创建</font>**
+    - <font style="color:rgba(0, 0, 0, 0.9);">根目录下</font>**<font style="color:rgba(0, 0, 0, 0.9);">仅允许创建目录</font>**<font style="color:rgba(0, 0, 0, 0.9);">，不允许直接创建文件。目录树顶部提供</font>`<font style="color:rgba(0, 0, 0, 0.9);">新建目录</font>`<font style="color:rgba(0, 0, 0, 0.9);">按钮，点击按钮弹框提示</font>`<font style="color:rgba(0, 0, 0, 0.9);">请输入目录名称</font>`<font style="color:rgba(0, 0, 0, 0.9);">，名称不能为空，最大20个字符，确认后创建一级目录</font>
+    - <font style="color:rgba(0, 0, 0, 0.9);">在任意目录节点下，可通过「＋」菜单创建子节点：</font>
+        * **<font style="color:rgba(0, 0, 0, 0.9);">一级目录</font>**<font style="color:rgba(0, 0, 0, 0.9);">的「＋」菜单含</font>`<font style="color:rgba(0, 0, 0, 0.9);">新增子目录</font>``<font style="color:rgba(0, 0, 0, 0.9);">创建文档</font>`<font style="color:rgba(0, 0, 0, 0.9);">两项</font>
+        * **<font style="color:rgba(0, 0, 0, 0.9);">二级目录</font>**<font style="color:rgba(0, 0, 0, 0.9);">的「＋」菜单</font>**<font style="color:rgba(0, 0, 0, 0.9);">仅含</font>**`**<font style="color:rgba(0, 0, 0, 0.9);">创建文档</font>**`<font style="color:rgba(0, 0, 0, 0.9);">，不显示</font>`<font style="color:rgba(0, 0, 0, 0.9);">新增子目录</font>`
+        * **<font style="color:rgba(0, 0, 0, 0.9);">「新增子目录」</font>**<font style="color:rgba(0, 0, 0, 0.9);">点击按钮弹框提示</font>`<font style="color:rgba(0, 0, 0, 0.9);">请输入目录名称</font>`<font style="color:rgba(0, 0, 0, 0.9);">，名称不能为空，最大20个字符，确认后创建2级目录</font>
+        * **<font style="color:rgba(0, 0, 0, 0.9);">「创建文档」</font>**<font style="color:rgba(0, 0, 0, 0.9);">在该目录下直接生成一篇命名为</font>`<font style="color:rgba(0, 0, 0, 0.9);">新建文档</font>`<font style="color:rgba(0, 0, 0, 0.9);">的空白文档</font>
++ **<font style="color:rgba(0, 0, 0, 0.9);">重命名</font>**
+    - <font style="color:rgba(0, 0, 0, 0.9);">目录支持重命名：节点「⋯」菜单提供</font>`<font style="color:rgba(0, 0, 0, 0.9);">重命名</font>`<font style="color:rgba(0, 0, 0, 0.9);">选项，点击弹出对话框输入新名称，确认后生效</font>
++ **<font style="color:rgba(0, 0, 0, 0.9);">删除</font>**
+    - **<font style="color:rgba(0, 0, 0, 0.9);">目录删除</font>**<font style="color:rgba(0, 0, 0, 0.9);">：节点「⋯」菜单提供</font>`<font style="color:rgba(0, 0, 0, 0.9);">删除</font>`<font style="color:rgba(0, 0, 0, 0.9);">选项</font>
+        * <font style="color:rgba(0, 0, 0, 0.9);">目录为空（不含子目录与子文档）时，提示</font>`<font style="color:rgba(0, 0, 0, 0.9);">确认删除目录？</font>`<font style="color:rgba(0, 0, 0, 0.9);">，用户确认后删除</font>
+        * <font style="color:rgba(0, 0, 0, 0.9);">目录非空时，禁止删除并提示</font>`<font style="color:rgba(0, 0, 0, 0.9);">目录不为空，请先移出或删除目录内文档</font>`
+    - **<font style="color:rgba(0, 0, 0, 0.9);">文档删除</font>**<font style="color:rgba(0, 0, 0, 0.9);">：文档节点「⋯」菜单仅提供</font>`<font style="color:rgba(0, 0, 0, 0.9);">删除</font>`<font style="color:rgba(0, 0, 0, 0.9);">一项，点击提示</font>`<font style="color:rgba(0, 0, 0, 0.9);">确认删除文档？删除后无法恢复！</font>`<font style="color:rgba(0, 0, 0, 0.9);">，确认后删除</font>
++ **<font style="color:rgba(0, 0, 0, 0.9);">排序与归属调整（拖拽）</font>**
+    - <font style="color:rgba(0, 0, 0, 0.9);">支持对目录与文档进行拖拽操作：</font>
+        * <font style="color:rgba(0, 0, 0, 0.9);">拖拽至同级节点之间，调整排序顺序</font>
+        * <font style="color:rgba(0, 0, 0, 0.9);">拖拽至某目录节点内，变更其所属父目录（即调整文件/目录的归属）</font>
+        * <font style="color:rgba(0, 0, 0, 0.9);">调整目录归属和顺序时，同步调整所有子目录/子文件</font>
++ **<font style="color:rgba(0, 0, 0, 0.9);">交互样式</font>**
+    - <font style="color:rgba(0, 0, 0, 0.9);">默认情况下不显示「＋」和「⋯」按钮，鼠标划过目录/文档时显示当前目录/文档的按钮</font>
 
 #### 右侧编辑器
 **章节标题：** 文本输入框，展示并编辑当前选中节点的标题。
