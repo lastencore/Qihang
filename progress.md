@@ -1,6 +1,6 @@
 # 产品设计中心 — 多平台任务交接文档
 
-> 最后更新：2026-07-30 19:30:00
+> 最后更新：2026-08-03 11:31:00
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 > ⚠️ 本文档覆盖两条并行工作流：
 >   **A. 产品设计** — 启航/知行/聆听/新一代首页四平台的需求、原型、PRD
@@ -106,6 +106,12 @@
 - [x] **[中心建设] `index.html` 批次指针化**：降级为一行 meta refresh 跳转到批次页；新增 `requirement_202606.html` 作为 202606 批次专属导航页；未来切批次仅改 index 一行 url
 - [x] **本期迭代 PRD + 原型评审通过，开发已安排**（2026-07-14）：四模块（PMS 关联 / 应用地图 / 更新日志 / 操作手册）PRD 已评审、原型已评审，开发排期完成
 - [x] **[中心建设] 需求设计中心共用导航模块化**
+
+**2026-08-03（本次，待推送 origin/main）—— 预览机制环境差异适配**
+- [x] **[中心建设] 预览链接重新生成**：`/root/.codebuddy/skills/preview/notify` 脚本在当前沙箱**已不存在**（preview skill 未安装，与文档 2026-07-30 记录的环境有差异：region bj7→bj2）；定位到等效机制——**sandbox-id = 环境变量 `X_IDE_SPACE_KEY`**（32位 hex，与旧 sandbox-id 格式一致），域名 `webview.e2b.bj2.sandbox.cloudstudio.club`，拼接 `?x-cs-sandbox-id=<key>&x-cs-sandbox-port=<port>` 即预览链接
+- [x] **[中心建设] 网关路由验证通过**：带参请求 302 + Set-Cookie → 带 cookie 访问干净路径 200，内容与本地 `index.html` 逐字节一致；子页面（requirements/qihang_202606、qihang/client/app_map）全部 200。⚠️ 经验：网关对任意 id 均回 302，验证必须带 cookie 跟到干净路径（错误 id 返回 Cloud Studio 404 页）
+- [x] **[中心建设] progress.md 同步**：5.1/5.5/第6节启动指令三处更新为 `X_IDE_SPACE_KEY` 机制；**清理失效内容**——`notify` 脚本引用全删、bj7 旧域名链接替换为 bj2、8081 知行预览（`/workspace/zhixing_exam_preview` 目录已不存在）标记 ❌ 失效
+- [x] **初始化流程再次验证**：DNS hosts 覆盖（本次 140.82.121.3 失效 → 探测改用 140.82.112.3）→ clone（git TLS 走 openssl）→ 固定 author → 读取 → setsid 起 8080 → 生成链接，全链路通过
 
 **2026-07-21（本次，待推送 origin/main）—— 新一代首页平台 + app_map 布局 + 聆听页面精简**
 - [x] **[中心建设] 新增「新一代首页」平台**：`req_header.tpl` 新增 workbench Tab，`req_sidebar.tpl` 新增 workbench 202607 批次
@@ -485,7 +491,7 @@ prototype/
 
 ### 5.1 关键路径与认证
 - 原型根目录：`/workspace/prototype/`
-- 预览：链接**必须**由 `notify <port>` 生成（机制见 5.5），严禁手拼 URL
+- 预览：链接按 5.5 机制生成——`https://webview.e2b.<region>.sandbox.cloudstudio.club/?x-cs-sandbox-id=$X_IDE_SPACE_KEY&x-cs-sandbox-port=<port>`（2026-08-03 起实测生效，替代已失效的 `notify <port>` 脚本）
 - GitHub 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
 - GitHub Token：**已内置于本文档**（拆分两段以规避 GitHub push protection，bash 自动拼接），clone 和 push 均可直接使用，无需用户额外发送。
 - ⚠️ **DNS 劫持（2026-07-30 实测）**：本沙箱 `networkEnvironment: internal`，`github.com` 被 DNS 解析到内网保留地址 `198.18.0.14`（不可达），标准 `git clone`/`push` 会报 `gnutls_handshake failed` / `SSL_ERROR_SYSCALL`。**clone 与 push 前必须先做 hosts 覆盖**（详见第 6 节启动指令「🔧 前置步」）。该覆盖**沙箱重启会还原**，每次新对话初始化都需重做。
@@ -508,13 +514,17 @@ prototype/
 - 产品经理：中华财险创新研发中心业务中台部
 
 ### 5.5 预览服务（Preview）运行机制 ⚠️ 跨会话复用
-- **取链接唯一正确方式**：服务起来后运行 `notify <port>`（脚本 `/root/.codebuddy/skills/preview/notify`），输出即预览地址。**绝不要自己拼 URL**——手拼缺 `?x-cs-sandbox-id=...&x-cs-sandbox-port=<port>` 路由参数，网关直接 404。
-- **网关路由原理**：带参请求 → 网关 `Set-Cookie(x-cs-sandbox-id/port)` + `302` 跳干净路径；浏览器带 cookie 即正常渲染（首次会跳一次，正常现象）。`curl` 自检必须带 cookie jar（`-c/-b`），否则 302 后 404。
-- **服务托管（不要 nohup）**：nohup 进程在沙箱休眠/恢复后会死，表现为"服务挂了"。本沙箱 supervisord 由 PID 1 系统进程托管，其 `supervisord-conf/supervisord.conf` 路径不可写、**无 `supervisorctl` 工具**，原 supervisord 托管写法无法直接执行。改用等价方案：**`setsid python3 -m http.server <port> --bind 0.0.0.0 --directory /workspace/prototype > /tmp/preview-<port>.log 2>&1 & disown`**——独立会话脱离终端，沙箱休眠不受终端退出影响（等效 supervisord 的 autorestart 意图）。`notify <port>` 生成链接不变。
-- 约定端口 **8080**（prototype 原型）；**8081** 为知行修复预览（`/workspace/zhixing_exam_preview`，独立目录）。两者均用 `setsid` 后台托管。
-- 当前线上预览（**以 `notify` 输出为准，沙箱区/标识每次会变**）：
-  - 8080（2026-07-30 实测）：`https://webview.e2b.bj7.sandbox.cloudstudio.club/?x-cs-sandbox-id=da0e66a9c61645b5a58288f86d755c9a&x-cs-sandbox-port=8080`
-  - 8081：知行修复预览（`/workspace/zhixing_exam_preview`，独立目录，独立 `notify 8081`）
+- **取链接唯一正确方式（2026-08-03 实测，替代已失效的 `notify <port>` 脚本）**：本沙箱已无 `/root/.codebuddy/skills/preview/notify`，改用环境变量直接拼接：
+  ```bash
+  # sandbox-id = $X_IDE_SPACE_KEY（32位hex，即网关 x-cs-sandbox-id）
+  echo "https://webview.e2b.bj2.sandbox.cloudstudio.club/?x-cs-sandbox-id=${X_IDE_SPACE_KEY}&x-cs-sandbox-port=8080"
+  ```
+  域名 region 以 `X_IDE_PREVIEW_DOMAIN` 为准（当前 `bj2.sandbox.cloudstudio.club`，文档早期记录为 bj7 已过期）。**沙箱休眠/重启后 `X_IDE_SPACE_KEY` 会变**，需重新读取生成。链接直接给用户浏览器打开即可（首次自动跳一次）。
+- **网关路由原理**：带参请求 → 网关 `Set-Cookie(x-cs-sandbox-id/port)` + `302` 跳干净路径；浏览器带 cookie 即正常渲染（首次会跳一次，正常现象）。`curl` 自检必须带 cookie jar（`-c/-b`），否则 302 后 404。⚠️ 网关对**任意 id 都回 302**，仅当 id 正确时带 cookie 访问干净路径才 200（错误 id 返回 Cloud Studio 404 页），**验证时必须带 cookie 跟到干净路径**。
+- **服务托管（不要 nohup）**：nohup 进程在沙箱休眠/恢复后会死，表现为"服务挂了"。本沙箱 supervisord 由 PID 1 系统进程托管，其 `supervisord-conf/supervisord.conf` 路径不可写、**无 `supervisorctl` 工具**，原 supervisord 托管写法无法直接执行。改用等价方案：**`setsid python3 -m http.server <port> --bind 0.0.0.0 --directory /workspace/prototype > /tmp/preview-<port>.log 2>&1 & disown`**——独立会话脱离终端，沙箱休眠不受终端退出影响（等效 supervisord 的 autorestart 意图）。
+- 约定端口 **8080**（prototype 原型，`/workspace/prototype/`），用 `setsid` 后台托管。~~8081 知行修复预览（`/workspace/zhixing_exam_preview`）~~ ❌ 已失效：该目录当前不存在，不再维护。
+- 当前线上预览（2026-08-03 实测，沙箱区/标识每次会变）：
+  - 8080：`https://webview.e2b.bj2.sandbox.cloudstudio.club/?x-cs-sandbox-id=a18afccaf8334886b61cb6e3374e973c&x-cs-sandbox-port=8080`
 
 ---
 
@@ -572,13 +582,14 @@ prototype/
 > cat /workspace/prototype/progress.md
 > ```
 >
-> **第三步（启动预览，每次都做）**：Clone 完成后用 **`setsid` 后台**起 8080（本沙箱无可用 supervisord 控制，改用 setsid 独立会话，详见 5.5），再 `notify 8080` 出链接：
+> **第三步（启动预览，每次都做）**：Clone 完成后用 **`setsid` 后台**起 8080（本沙箱无可用 supervisord 控制，改用 setsid 独立会话，详见 5.5），再用 `X_IDE_SPACE_KEY` 拼接出预览链接：
 > ```bash
 > cd /workspace/prototype && setsid python3 -m http.server 8080 --bind 0.0.0.0 --directory /workspace/prototype > /tmp/preview-8080.log 2>&1 & disown
 > sleep 2
-> cd /root/.codebuddy/skills/preview && ./notify 8080
+> curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/index.html   # 自检 200
+> echo "https://webview.e2b.bj2.sandbox.cloudstudio.club/?x-cs-sandbox-id=${X_IDE_SPACE_KEY}&x-cs-sandbox-port=8080"
 > ```
-> 链接由 `notify` 生成，**严禁手拼 URL**（缺路由参数网关直接 404）。沙箱 id 每次会变，以 `notify` 输出为准。
+> 链接生成规则见 5.5（`notify` 脚本已失效删除）：sandbox-id = `$X_IDE_SPACE_KEY`，域名 region 以 `X_IDE_PREVIEW_DOMAIN` 为准；沙箱休眠/重启后 key 会变需重取。给用户前可用 `curl -c/-b` 带 cookie 验证干净路径返回 200。
 >
 > **说明**：用户上传 `progress.md` → 修复 DNS → clone → 固定 author → 读取 → 起预览出链接，所有原型文件、Git 历史、PRD 文档都在。
 
