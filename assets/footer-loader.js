@@ -31,5 +31,19 @@
     '<div>' + parts.join(' &nbsp;|&nbsp; ') + '</div>' +
     '</footer>';
 
-  document.body.insertAdjacentHTML("beforeend", html);
+  /* 智能定位插入点:
+   * - 管理端(ant-layout-has-sider):插入到 section > div.ant-layout 末尾(原 ant-layout-footer 位置)
+   *   保证 footer 在 main 之后、footer-bar 之前,跟随内容流
+   * - 需求中心(.content-display-pane):插入到滚动容器内部末尾
+   *   避免 body {height:100vh;overflow:hidden} 把 footer 挤到视口底部吸底
+   * - 普通页面:body 末尾(正常文档流) */
+  var container = null;
+  var antLayout = document.querySelector("section.ant-layout-has-sider > div.ant-layout");
+  if (antLayout) {
+    container = antLayout;
+  } else {
+    var pane = document.querySelector(".content-display-pane");
+    if (pane) container = pane;
+  }
+  (container || document.body).insertAdjacentHTML("beforeend", html);
 })();
