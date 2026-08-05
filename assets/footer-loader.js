@@ -9,7 +9,7 @@
   var ICP_LINK = "https://beian.miit.gov.cn";
   var POLICE_NO = ""; // 公安备案号,通过后填写,如 "浙公网安备33000000000000号"
   var POLICE_LINK = "https://beian.mps.gov.cn";
-  var COPYRIGHT = "2026 创新研发中心技术部出品";
+  var COPYRIGHT = "2026 创新研发中心 业务中台部 陈俊帆";
   /* ↑↑↑ 配置结束 ↑↑↑ */
 
   /* 移除管理端旧 footer(版权信息并入公共 footer,避免页面出现两行页脚) */
