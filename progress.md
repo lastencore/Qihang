@@ -1,11 +1,12 @@
 # 产品设计中心 — 多平台任务交接文档
 
-> 最后更新：2026-08-03 11:31:00
+> 最后更新：2026-08-06 15:48:02
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 > ⚠️ 本文档覆盖两条并行工作流：
 >   **A. 产品设计** — 启航/知行/聆听/新一代首页四平台的需求、原型、PRD
 >   **B. 需求设计中心建设** — PM 个人项目集合页，含 OSS/ECS/预览/Git/文档站点等基础设施
 >   两条线的事项以 `[产品设计]` / `[中心建设]` 标签区分
+> ⚠️ 工作目录架构（2026-08-04 起）：`prototype/` 为纯净只读仓库（用户维护，AI 不写），AI 工作在 `workspace_WB/`（沙箱），双向经 GitHub 同步
 
 ---
 
@@ -24,7 +25,7 @@
 |------|------|------|----------|
 | **启航** | 应用地图 / 员工作业门户 | 🟢 开发中 | 53应用10分类重规划+UI设计推进中 |
 | **知行** | 学习赋能（课程/考试/培训） | ⚪ 待启动 | — |
-| **聆听** | 建议反馈（缺陷/建议/想法） | 🟢 需求设计已完成 | 新增"开发中"状态 / 建议导出 / 统计大盘 |
+| **聆听** | 建议反馈（缺陷/建议/想法） | ✅ 已上线验收 | 新增"开发中"状态 / 建议导出 / 统计大盘（已完成上线） |
 | **新一代首页** | 待办工作台 / 快捷入口 | 🔴 需求规划 | 方案等领导反馈 |
 
 **当前优先级**：
@@ -32,9 +33,9 @@
 | 优先级 | 平台 | 事项 | 状态 |
 |--------|------|------|------|
 | 🔴 P0 | 新一代首页 | 待办工作台需求规划设计 | 方案脑图+原型截图已发领导，等待反馈 |
-| 🔵 P1 | 启航 | 53应用/10大分类重新规划 + UI设计 | 正在推进中 |
-| 🟢 P2 | 聆听 | 状态增加 / 建议导出 / 统计大盘 | PRD+原型已完成，已录入设计中心 |
-| 🟡 P3 | 启航 | 应用地图重构（去 Banner + 左导航 + 全景图） | 原型已完成，右侧全景图待定 |
+| 🔵 P1 | 启航 | 53应用/10大分类重新规划 + UI设计 | 等终版清单（下周一），备用降级方案已备 |
+| ✅ P2 | 聆听 | 状态增加 / 建议导出 / 统计大盘 | **已走完推进开发流程并上线验收** |
+| 🟡 P3 | 启航 | 应用地图右侧全景图 | 并入 P1，由 UI 设计师产出 |
 
 ### B. 需求设计中心建设
 
@@ -44,10 +45,11 @@
 
 | 优先级 | 事项 | 状态 |
 |--------|------|------|
-| 🔵 进行中 | 域名备案 | 备案通过后绑自定义域名 + HTTPS |
+| 🔵 进行中 | 域名绑定与 HTTPS | 自定义域名 lastencore.cn 已可 http 访问；SSL 证书 + 443 配置暂缓（用户先做备案） |
+| ✅ 完成 | ICP + 公安备案 | ICP 备案号 `浙ICP备2026059325号-1`、公安备案号 `浙公网安备33011002020242号` 已落地全站 footer |
 | 🟡 低优 | OSS 防盗链加固 | Referer 白名单已加，空 Referer 已禁 |
 | ✅ 完成 | OSS + ECS 外网发布全链路 | 上传→同步→Nginx 反代→浏览器渲染 |
-| ✅ 完成 | GitHub 仓库 + 原型预览服务 | main 分支、supervisord 托管 8080 |
+| ✅ 完成 | GitHub 仓库 + 原型预览服务 | main 分支、8080 预览 |
 | ✅ 完成 | 产品设计中心目录上移 | prototype 提至「中华财险产品项目/」根 |
 
 ---
@@ -134,7 +136,7 @@
   - JS IntersectionObserver 选择器加 text-blue（通用中台用蓝色标题，否则滚动不高亮）
   - 原生 CSS/Tailwind/交互逻辑一线未动，仅重排卡片归属与网格列数
 - [ ] **[产品设计] [新一代首页]** 待办工作台方案设计：方案脑图+原型截图已发领导，等待反馈修改意见
-- [ ] **[中心建设] 域名备案已完成**：待绑自定义域名（DNS A 记录 → 114.55.130.110，直连 ECS 无需 CNAME）+ 申请 SSL 证书 + Nginx 加 443 + 网站底部挂 ICP 备案号
+- [ ] **[中心建设] 域名绑定与 HTTPS**：lastencore.cn 已 http 可访问；待申请 SSL 证书 + Nginx 加 443 + HTTP 跳转 HTTPS（用户暂缓，先完成备案）
 
 ### ⏳ 待办 / 已决议项
 
@@ -143,6 +145,17 @@
 - [x] PRD 评审排期 → ✅ 已完成：PRD + 原型评审通过，开发已安排
 
 ### ✅ 本会话完成
+
+**2026-08-06（本次）— 公安备案落地 + 全站公共 Footer 完成**
+
+- [x] **[中心建设] ICP 备案号全站落地**：新建 `assets/footer-loader.js` 公共页脚加载器，备案信息集中配置（ICP_NO/ICP_LINK/POLICE_NO/COPYRIGHT 常量），20 个 HTML 页面统一注入引用
+- [x] **[中心建设] 版权文案**：footer 显示「2026 创新研发中心 业务中台部 陈俊帆」
+- [x] **[中心建设] 公安备案落地**：`浙公网安备33011002020242号` + 盾牌图标（`assets/police_icon.png`），链接公安部查询页；图标 src 由加载器自身 src 推导 base，适配不同目录深度
+- [x] **[中心建设] footer 定位修复**：管理端 → `div.ant-layout` 内末尾（修复 update_log_modify 不渲染）；需求中心 → `.content-display-pane` 滚动容器内（修复吸底）；普通页面 → body 末尾；无 fixed/sticky
+- [x] **[中心建设] 验证机制升级**：playwright 全量渲染 20/20 页面，检查 footer 位置/滚动可见性而非仅 DOM 存在；`html-prototype-guide` skill 补充「全站/批量改动专项检查」4 条规则
+- [x] **工作目录隔离架构**（2026-08-04 用户明确）：`prototype/` 纯净只读；`workspace_WB/` 为 AI 沙箱（git init + PAT 认证），双向经 GitHub 同步；`.gitignore` 增加 `.workbuddy/ .slidep/ .cache/ ppt_ai_prototype/`
+- [x] **[产品设计] [启航] P1 推进节奏确认**：等终版清单（下周一）→ 约 UI 设计；降级方案 = 本周 AI 梳理应用清单 + 去全景图
+- [x] **[产品设计] [聆听] 状态更正**：已走完推进开发流程并上线验收（progress.md 旧描述「已录入设计中心」已过时，本节已修正）
 
 **2026-07-08（本次，待推送 origin/main）**
 
@@ -490,8 +503,13 @@ prototype/
 ## 5. 核心上下文
 
 ### 5.1 关键路径与认证
-- 原型根目录：`/workspace/prototype/`
-- 预览：链接按 5.5 机制生成——`https://webview.e2b.<region>.sandbox.cloudstudio.club/?x-cs-sandbox-id=$X_IDE_SPACE_KEY&x-cs-sandbox-port=<port>`（2026-08-03 起实测生效，替代已失效的 `notify <port>` 脚本）
+- ⚠️ **工作目录隔离架构（2026-08-04 起，最高优先级约定）**：
+  - `D:\中华财险产品项目\原型\prototype` = **纯净只读仓库**（用户维护，AI 一律不写，只读/pull 对齐可以）
+  - `D:\中华财险产品项目\原型\workspace_WB` = **AI 沙箱项目根**（git init + remote origin，所有 AI 创建/修改在此完成）
+  - 同步：AI 在 workspace_WB commit + push → 用户 prototype git pull；用户 push → AI pull，双向经 GitHub
+  - workspace_WB 认证**必须 PAT**（禁止 SSH），push 命令见下方；预览服务从 workspace_WB 起（8080）
+- 原型根目录：`/workspace/prototype/`（云端沙箱视角）≈ `D:\中华财险产品项目\原型\workspace_WB\`（本地 AI 工作区）
+- 预览：链接按 5.5 机制生成——`https://webview.e2b.<region>.sandbox.cloudstudio.club/?x-cs-sandbox-id=$X_IDE_SPACE_KEY&x-cs-sandbox-port=<port>`（2026-08-03 起实测生效，替代已失效的 `notify <port>` 脚本）；本地 Windows 环境直接 `python -m http.server 8080` 托管 workspace_WB
 - GitHub 仓库：`https://github.com/lastencore/Qihang.git`，main 分支
 - GitHub Token：**已内置于本文档**（拆分两段以规避 GitHub push protection，bash 自动拼接），clone 和 push 均可直接使用，无需用户额外发送。
 - ⚠️ **DNS 劫持（2026-07-30 实测）**：本沙箱 `networkEnvironment: internal`，`github.com` 被 DNS 解析到内网保留地址 `198.18.0.14`（不可达），标准 `git clone`/`push` 会报 `gnutls_handshake failed` / `SSL_ERROR_SYSCALL`。**clone 与 push 前必须先做 hosts 覆盖**（详见第 6 节启动指令「🔧 前置步」）。该覆盖**沙箱重启会还原**，每次新对话初始化都需重做。
@@ -534,8 +552,10 @@ prototype/
 - **ECS**：公网 IP `114.55.130.110`，Alibaba Cloud Linux 3.2104，安全组 80 放行（443 待备案）
 - **Nginx**：v1.24.0，配置 `/etc/nginx/conf.d/prototype.conf`（proxy_pass OSS + proxy_hide_header 删强制下载头），改后 `nginx -t && systemctl reload nginx`
 - **本地发布**：`D:\中华财险产品项目\原型\upload.bat`（robocopy 镜像排除 .git/docs/progress.md → ossutil sync --delete → set-meta），ossutil `D:\tools\ossutil64.exe`
-- **外网访问**：`http://114.55.130.110`；域名备案中（通过后绑自定义域名 + HTTPS）
+- **外网访问**：`http://114.55.130.110` / `http://lastencore.cn`（自定义域名已可 http 访问）；HTTPS 待配（SSL 证书 + 443）
 - **OSS 强制下载**：`x-oss-ec: 0048-00000001`，阿里云安全策略（2018 年起），默认域名 text/html 强制 attachment，无法关闭
+- **网站备案（已完成）**：ICP 备案号 `浙ICP备2026059325号-1`（链 beian.miit.gov.cn）、公安备案号 `浙公网安备33011002020242号`（链 beian.mps.gov.cn 查询页）；全站 footer 已展示（`assets/footer-loader.js` 集中配置，`assets/police_icon.png` 图标）
+- **域名绑定待办**：DNS A 记录 → 114.55.130.110（直连 ECS 无需 CNAME）→ 申请 SSL 证书 → Nginx 加 443 + HTTP 跳转 HTTPS + 底部挂备案号（备案号已挂）
 
 ---
 
@@ -597,10 +617,11 @@ prototype/
 
 **产品设计**：
 - [启航] 能力地图/岗位场景地图的具体形式（待用户设计）
+- [启航] 应用分类/应用清单终版：等**其他部门下周一**给终版清单；拿不到则走降级方案（本周 AI 梳理清单 + 去全景图）
 - [新一代首页] 接入范围与数据标准（待确认）
 
 **中心建设**：
-- 域名备案已完成：绑自定义域名（DNS A 记录指向 114.55.130.110，直连 ECS 无需 CNAME；若套 CDN 才用 CNAME）→ 申请 SSL 证书 → Nginx 加 443 + HTTP 跳转 HTTPS + 网站底部挂 ICP 备案号
+- 域名绑定与 HTTPS：lastencore.cn 已 http 可访问；待申请 SSL 证书 → Nginx 加 443 + HTTP 跳转 HTTPS（备案号已挂 footer，ICP/公安备案均已完成）
 
 ---
 
