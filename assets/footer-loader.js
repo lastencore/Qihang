@@ -7,8 +7,8 @@
   /* ↓↓↓ 备案信息配置(唯一需要修改的地方)↓↓↓ */
   var ICP_NO = "浙ICP备2026059325号-1";
   var ICP_LINK = "https://beian.miit.gov.cn";
-  var POLICE_NO = ""; // 公安备案号,通过后填写,如 "浙公网安备33000000000000号"
-  var POLICE_LINK = "https://beian.mps.gov.cn";
+  var POLICE_NO = "浙公网安备33011002020242号"; // 公安备案号,通过后填写,留空则不显示
+  var POLICE_LINK = "https://beian.mps.gov.cn/#/query/webSearch?code=33011002020242";
   var COPYRIGHT = "2026 创新研发中心 业务中台部 陈俊帆";
   /* ↑↑↑ 配置结束 ↑↑↑ */
 
@@ -18,11 +18,23 @@
     oldFooter.parentNode.removeChild(oldFooter);
   }
 
+  /* 从自身 script src 推导 base,使图标 src 在不同目录深度的页面都能正确解析 */
+  var scripts = document.getElementsByTagName("script");
+  var scriptSrc = scripts[scripts.length - 1].src || "";
+  var base = scriptSrc.substring(0, scriptSrc.lastIndexOf("/"));
+  var POLICE_ICON = base + "/police_icon.png";
+
   /* 构建备案行 */
   var parts = [];
   parts.push('<a href="' + ICP_LINK + '" target="_blank" rel="noopener">' + ICP_NO + '</a>');
   if (POLICE_NO) {
-    parts.push('<a href="' + POLICE_LINK + '" target="_blank" rel="noopener">' + POLICE_NO + '</a>');
+    parts.push(
+      '<a href="' + POLICE_LINK + '" target="_blank" rel="noopener" ' +
+        'style="display:inline-flex;align-items:center;gap:5px;line-height:1;vertical-align:middle;">' +
+        '<img src="' + POLICE_ICON + '" alt="" style="height:14px;width:14px;display:inline-block;">' +
+        POLICE_NO +
+      '</a>'
+    );
   }
 
   var html =

@@ -21,3 +21,8 @@ temp/
 # WorkBuddy 工作区记忆（AI 沙箱专用，不入库）
 .workbuddy/
 
+# PPT 生成工具产物（slidep 运行时缓存，不入库）
+.slidep/
+.cache/
+ppt_ai_prototype/
+
