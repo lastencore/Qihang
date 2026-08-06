@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport"/>
+  <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/favicon.ico" rel="shortcut icon"/>
+  <title>新一代应用清单 - 中华财险-基础运营</title>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/umi.cabe1862.css" rel="stylesheet"/>
+  <link as="style" data-rspack="cic-pc-support-operation:2354" href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/t__plugin-layout__Layout.30bb7fb0.async.css" rel="preload"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/t__plugin-layout__Layout.30bb7fb0.async.css" rel="stylesheet" type="text/css"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/3898.77564be6.async.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/admin/admin.css" rel="stylesheet"/>
+  <style>
+    /* ========== 查询区：自包含 CSS（内联，不依赖外部样式文件） ========== */
+    .app-filter-card { background:#fff; border-radius:2px; padding:24px; margin-bottom:16px; box-sizing:border-box; }
+    .app-filter-row { display:flex; flex-wrap:wrap; align-items:flex-start; gap:16px 24px; }
+    .app-filter-item { display:flex; align-items:center; min-height:32px; }
+    .app-filter-item-grow { flex:1 1 280px; min-width:240px; }
+    .app-filter-label { color:rgba(0,0,0,.85); font-size:14px; white-space:nowrap; padding-right:8px; min-width:72px; text-align:right; line-height:32px; }
+    .app-filter-input,
+    .app-filter-select { height:32px; padding:0 11px; font-size:14px; color:rgba(0,0,0,.85); background:#fff; border:1px solid #d9d9d9; border-radius:2px; outline:none; transition:border-color .2s, box-shadow .2s; box-sizing:border-box; }
+    .app-filter-input:focus,
+    .app-filter-select:focus { border-color:#4096ff; box-shadow:0 0 0 2px rgba(5,145,255,.1); }
+    .app-filter-input { flex:1; min-width:200px; }
+    .app-filter-select { min-width:200px; }
+    .app-filter-actions { margin-left:auto; display:flex; gap:8px; padding-top:4px; }
+    .app-btn { height:32px; padding:0 15px; font-size:14px; border-radius:2px; cursor:pointer; border:1px solid #d9d9d9; background:#fff; color:rgba(0,0,0,.85); transition:all .2s; }
+    .app-btn:hover { border-color:#4096ff; color:#4096ff; }
+    .app-btn-primary { background:#cc0000; border-color:#cc0000; color:#fff; }
+    .app-btn-primary:hover { background:#b30000; border-color:#b30000; color:#fff; }
+    @media (max-width: 1100px) { .app-filter-actions { margin-left:0; padding-top:0; } }
+
+    /* ========== 属主 tag 单元格：放不下的整体隐藏 + 省略标识 ========== */
+    .owner-cell { display:inline-block; max-width:100%; overflow:hidden; white-space:nowrap; vertical-align:middle; }
+    .owner-tag { margin:2px 4px 2px 0 !important; display:inline-block; }
+    .owner-ellipsis { color:#94a3b8; font-weight:600; }
+  </style>
+ </head>
+ <body data-system="qihang">
+  <div id="root">
+   <div class="ant-design-pro ant-pro-basicLayout screen-xxl ant-pro-basicLayout-fix-siderbar ant-pro-basicLayout-mix">
+    <section class="ant-layout ant-layout-has-sider" style="min-height: 100%;">
+     <div style="width: 208px; overflow: hidden; flex: 0 0 208px; max-width: 208px; min-width: 208px; transition: background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);">
+     </div>
+
+     <div id="nav-sidebar-placeholder" style="width:208px;flex-shrink:0;"></div>
+     <div class="ant-layout" style="position: relative;">
+      <header class="ant-layout-header" style="height: 48px; line-height: 48px; background: transparent;">
+      </header>
+
+      <div id="nav-header-placeholder" style="height:48px;"></div>
+
+      <main class="ant-layout-content ant-pro-basicLayout-content ant-pro-basicLayout-has-header ant-pro-basicLayout-content-disable-margin">
+       <div class="ant-pro-page-container">
+        <div class="ant-pro-page-container-warp">
+         <div class="ant-page-header has-breadcrumb">
+          <nav class="ant-breadcrumb">
+           <ol>
+            <li>
+             <span class="ant-breadcrumb-link">
+              <a href="app_list.html">新一代应用清单</a>
+             </span>
+             <span class="ant-breadcrumb-separator">/</span>
+            </li>
+            <li>
+             <span class="ant-breadcrumb-link"><span>应用清单列表</span></span>
+             <span class="ant-breadcrumb-separator">/</span>
+            </li>
+           </ol>
+          </nav>
+          <div class="ant-page-header-heading">
+           <div class="ant-page-header-heading-left">
+            <span class="ant-page-header-heading-title" title="新一代应用清单">新一代应用清单</span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="ant-pro-grid-content">
+         <div class="ant-pro-grid-content-children">
+          <div class="ant-pro-page-container-children-content">
+           <div class="ant-pro-table">
+
+            <!-- 查询区：自包含 CSS，不依赖 antd 类，视觉对齐 manual_query -->
+            <div class="app-filter-card">
+             <div class="app-filter-row">
+              <div class="app-filter-item app-filter-item-grow">
+               <label class="app-filter-label" for="appKeyword">关键字</label>
+               <input class="app-filter-input" id="appKeyword" placeholder="请输入应用名称、属主部门关键字" type="text" oninput="applyFilter()"/>
+              </div>
+              <div class="app-filter-item">
+               <label class="app-filter-label" for="deptFilter">属主部门</label>
+               <select class="app-filter-select" id="deptFilter" onchange="applyFilter()">
+                <option value="">全部属主部门</option>
+               </select>
+              </div>
+              <div class="app-filter-actions">
+               <button class="app-btn" type="button" onclick="resetFilters()">重 置</button>
+               <button class="app-btn app-btn-primary" type="button" onclick="applyFilter()">查 询</button>
+              </div>
+             </div>
+            </div>
+
+            <!-- 应用清单表格 -->
+            <div class="ant-pro-card">
+             <div class="ant-pro-card-body" style="padding-top: 16px;">
+
+              <div class="ant-table-wrapper">
+               <div class="ant-spin-nested-loading">
+                <div class="ant-spin-container">
+                 <div class="ant-table ant-table-middle">
+                  <div class="ant-table-container">
+                   <div class="ant-table-content">
+                    <table style="table-layout: fixed;">
+                     <colgroup>
+                      <col style="width: 220px;"/>
+                      <col/>
+                      <col style="width: 240px;"/>
+                      <col style="width: 130px;"/>
+                     </colgroup>
+                     <thead class="ant-table-thead">
+                      <tr>
+                       <th class="ant-table-cell">应用名称</th>
+                       <th class="ant-table-cell">应用简介</th>
+                       <th class="ant-table-cell">属主</th>
+                       <th class="ant-table-cell">操作</th>
+                      </tr>
+                     </thead>
+                     <tbody class="ant-table-tbody" id="appListBody">
+                     </tbody>
+                    </table>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+              </div>
+
+             </div>
+            </div>
+
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </main>
+     </div>
+    </section>
+   </div>
+  </div>
+
+  <script src="../../assets/admin/nav-loader.js"></script>
+
+  <script>
+    // 应用清单数据：53 个应用（与 app_detail.html appsData 一致）
+    var APP_LIST = [
+      {name:"车险承保平台", owner:["普惠金融部", "农村金融部"], desc:"提供车险全流程投保、费率计算、保单生成及电子签章的一站式承保作业能力。"},
+      {name:"意健险承保平台", owner:"团体非车险部", desc:"支持个人及团体意外险、健康险的在线快速投保、契约信息自动录入与初审流水线。"},
+      {name:"财责险承保平台", owner:"再保险部", desc:"面向财产险、责任险等企业级业务，提供复杂的承保风险要素登记与合同排版分发。"},
+      {name:"农险承保平台", owner:"人力资源部（党委组织部）/教育培训部", desc:"针对农业保险特点设计的承保系统，全面支持地块信息关联、农户清单导入及政策性补贴核算。"},
+      {name:"扫码保", owner:"共享服务中心", desc:"极简便携式前端投保应用，支持客户或代理人通过二维码实现现场极速出单与扫码收付。"},
+      {name:"政策性健康险平台", owner:"纪委办公室", desc:"专用于大病保险、长期护理保险等政策性业务的精准承保记录、待遇资格库比对及多级结算对接。"},
+      {name:"信用保证险承保平台", owner:"团体客户渠道部", desc:"提供信保业务的线上投保通道，涵盖核心履约保证、借贷信用保证等风险评级出单。"},
+      {name:"非融资信保平台", owner:"理赔部", desc:"针对非融资类信用保证险提供的特定线上出单台账，支持企业贸易信用险规则配置。"},
+      {name:"农险GIS平台", owner:["普惠金融部", "农村金融部"], desc:"融合地理信息系统（GIS），提供农险承保地块的空间矢量化测绘、承保分布热力图及验标存证。"},
+      {name:"车险核保", owner:"团体非车险部", desc:"车险规则自动化校验网格与人工核保作业台，集成车型风险库、历史理赔安全因子拦截。"},
+      {name:"个非核保", owner:"再保险部", desc:"个人非车险（意健险、个财险）的人工多级核保流转、风险系数裁决与批注管理工作流。"},
+      {name:"团非核保", owner:"人力资源部（党委组织部）/教育培训部", desc:"团体非车险复杂业务的专家集中式会审平台，支持大型法人方案的特殊费率特批与分层授权。"},
+      {name:"再保平台", owner:"共享服务中心", desc:"提供原保险合同的自动分出评估、临时再保分保批处理、账单勾稽及结算清算台账。"},
+      {name:"综合履约平台", owner:"纪委办公室", desc:"覆盖承保后合同效力追踪、重要单证合规检查及客户权益履约节点的自动化状态监控。"},
+      {name:"送修平台", owner:"团体客户渠道部", desc:"联动线下合作车商与维修网络，提供理赔定损后的智能送修派单、维修进度实时跟踪。"},
+      {name:"AI中华（理赔）", owner:["理赔部", "运营管理部"], desc:"理赔全功能智能化中台，支持理赔发票智能OCR结构化拆解、损失照片自动测损及极速小额直赔。"},
+      {name:"农险履约平台", owner:"普惠金融部/农村金融部", desc:"专门用于农业保险灾后查勘时效监控、无赔款优待核定及大面积灾情快速群体赔付的合规公示底座。"},
+      {name:"经营分析平台", owner:"团体非车险部", desc:"数据域统一展现中心，提供多维度满期赔付率、保费达成率及续保率的时序趋势与经营分析。"},
+      {name:"自助 analysis 平台", owner:"再保险部", desc:"为各分公司业务骨干提供免代码拖拽式宽表自助检索、拖拽式漏斗图看板配置器。"},
+      {name:"智慧决策平台", owner:"人力资源部（党委组织部）/教育培训部", desc:"深度整合管理层决策模型，对渠道产能、机构费用效益进行智能化综合评估与风险预警。"},
+      {name:"统一数据服务平台", owner:["共享服务中心", "信息技术部", "数据管理部"], desc:"统一对外分发标准数据API，为前端各展业应用、核心中台提供高并发的实时数据查询服务。"},
+      {name:"标签运营管理平台", owner:"纪委办公室", desc:"构建全景客群与渠道的标签画像，支持精细化客户分群、精准触达策略及活动效果追踪。"},
+      {name:"数据大学", owner:"团体客户渠道部", desc:"面向内部提供数据资产字典查询、数据标准规范学习以及指标口径溯源的在线知识社区。"},
+      {name:"数据标准平台", owner:"理赔部", desc:"统筹全集团核心业务对象的数据元 definition 代码数据、集规范，保障全流程底层数据口径的一致性。"},
+      {name:"统一算法平台", owner:"普惠金融部/农村金融部", desc:"集中托管核保风控模型、反欺诈评分、客户流失预测等各类核心AI算法的训练与部署。"},
+      {name:"统一提数平台", owner:"团体非车险部", desc:"为合规审计、专项课题提供高隔离度的历史大明细数据安全提取与脱敏下载审批通道。"},
+      {name:"运营支撑域", owner:"再保险部", desc:"提供全系统基础工单流转、跨部门任务协同调度以及日常运营资源作业效能的量化监控。"},
+      {name:"智能一体化平台", owner:["团体客户渠道部", "客户服务部"], desc:"集成全渠道综合展业工具，支持多险种交叉销售、一站式客户开户与全生命周期运营。"},
+      {name:"智能一体化团客", owner:"共享服务中心", desc:"聚焦团体客户、法人机构的统一关系维护，支持大客户承保方案在线定制与历史贡献度盘点。"},
+      {name:"线上运营平台", owner:"纪委办公室", desc:"承载自营App、官方小程序等线上私域流量的日常活动运营、用户活跃度及互动路径打磨。"},
+      {name:"增值服务平台", owner:"团体客户渠道部", desc:"VIP客户权益卡券分发、线上线下健康管理及道路救援等增值服务供应链的闭环管理。"},
+      {name:"AI中华（销售）", owner:"理赔部", desc:"销售侧智能化AI助手，提供精准产品话术推荐、客户购买意向雷达及智能建议书诊断。"},
+      {name:"共享保", owner:"普惠金融部/农村金融部", desc:"创新型场景化共创销售工具，支持跨渠道协同作业、利益共享核算及联合展业动线。"},
+      {name:"非车险定价决策系统", owner:"团体非车险部", desc:"利用精算模型进行复杂非车险大单的自适应风险概率测算与最低盈亏底线控价。"},
+      {name:"车险定价决策", owner:"再保险部", desc:"紧跟 market 车险自主定价系数变化，提供多因子报价测算、机构费率竞争策略动态调配。"},
+      {name:"标的域", owner:"人力资源部（党委组织部）/教育培训部", desc:"统一维护全险种底层物理标的（房屋、船舶、企业资产、特定人群）的基础主数据与历史档案。"},
+      {name:"风控平台", owner:["共享服务中心", "风险管理部"], desc:"全流程内控合规审计、反洗钱涉恐风控异常拦截及高频操作行为的实时合规监控。"},
+      {name:"调言平台", owner:"纪委办公室", desc:"收集并规整全系统前线展业人员、后援作业人员的业务优化提议，提供流转评估反馈机制。"},
+      {name:"回溯平台", owner:"团体客户渠道部", desc:"严格匹配监管要求，对线上销售及承保关键节点、双录影像留痕进行合规回溯与真伪质检。"},
+      {name:"新销管平台", owner:"理赔部", desc:"全面重构的销售组织架构管理、业务员基本法利益结算及考核评级自动化计算流水线。"},
+      {name:"合作伙伴平台", owner:"普惠金融部/农村金融部", desc:"集中管理外部合作渠道（车商、兼代、中介机构）的准入资格、协议合同及佣金配置。"},
+      {name:"单证域", owner:"团体非车险部", desc:"全公司纸质与电子发票、保单、照会件等重要凭证单证的生命周期状态跟踪、领用与核销。"},
+      {name:"产品运营平台", owner:"再保险部", desc:"实现全险种产品条款、责任配置、费率表的配置化极速上架工作台，降低条款维护门槛。"},
+      {name:"销售业绩管理系统", owner:"人力资源部（党委组织部）/教育培训部", desc:"实时汇总各业务条线保费规模，提供日/周/月度业绩快报、竞赛排名及达成看板。"},
+      {name:"高管驾驶舱平台", owner:"共享服务中心", desc:"专为中高层管理者定制，一屏呈现核心保费规模、大类理赔时效、资金流向等核心宏观指标。"},
+      {name:"资金系统", owner:"纪委办公室", desc:"全公司银行账户资金流水归集、大额资金调拨划转及收付结算基础台账管理。"},
+      {name:"综合对账平台", owner:["团体客户渠道部", "财务管理部"], desc:"实现全渠道支付流水、核心业务应收流水、银行实际到账单的三位一体每日自动清算勾稽。"},
+      {name:"增值税平台", owner:"理赔部", desc:"对接国家税务总局接口，实现销项发票自动开具、红字发票管控及进项发票查验认证。"},
+      {name:"服务计费", owner:"普惠金融部/农村金融部", desc:"针对内部共享服务、外部技术接口调用进行精准的计费测算、成本摊销内部结算核算。"},
+      {name:"支付结算域", owner:"团体非车险部", desc:"统一集成微信、支付宝、银联等主流第三方支付网关，提供高并发的首期及续期保费扣收服务。"},
+      {name:"交易域", owner:"再保险部", desc:"核心收付指令的并发调度中台，保障大批量理赔付费、退保给付事务的资金安全与安全校验。"},
+      {name:"账务域", owner:"人力资源部（党委组织部）/教育培训部", desc:"将承保、保全、理赔等业务交易流水实时编译为会计分录，实现凭证的自动化应收应付生成。"},
+      {name:"费用中心", owner:"共享服务中心", desc:"集中管控各分公司、各渠道的日常行政报销、展业费提拨及手续费佣金的出账风控审查。"}
+    ];
+
+    // 统一取属主列表（兼容字符串 / 数组）
+    function ownerList(a) {
+      return Array.isArray(a.owner) ? a.owner : [a.owner];
+    }
+
+    // 属主部门下拉：从数据动态提取（多属主展开），去重注入 select
+    function initDeptFilter() {
+      var sel = document.getElementById("deptFilter");
+      var seen = {};
+      APP_LIST.forEach(function (a) {
+        ownerList(a).forEach(function (d) {
+          if (!seen[d]) {
+            seen[d] = true;
+            var opt = document.createElement("option");
+            opt.value = d;
+            opt.textContent = d;
+            sel.appendChild(opt);
+          }
+        });
+      });
+    }
+
+    // 搜索（应用名称 + 属主）与部门筛选叠加，直接重渲染表格
+    function applyFilter() {
+      var kw = (document.getElementById("appKeyword").value || "").trim().toLowerCase();
+      var dept = document.getElementById("deptFilter").value;
+      var rows = APP_LIST.filter(function (a) {
+        var hitKw = kw === "" ||
+          a.name.toLowerCase().indexOf(kw) >= 0 ||
+          ownerList(a).some(function (d) { return d.toLowerCase().indexOf(kw) >= 0; });
+        var hitDept = dept === "" || ownerList(a).indexOf(dept) >= 0;
+        return hitKw && hitDept;
+      });
+      renderRows(rows);
+    }
+
+    function renderRows(rows) {
+      var tbody = document.getElementById("appListBody");
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td class="ant-table-cell" colspan="4" style="text-align:center;color:#94a3b8;padding:40px 0;">暂未检索到符合条件的应用，请更换关键字或筛选条件重试。</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rows.map(function (a) {
+        var owners = ownerList(a).map(function (d) {
+          return '<span class="ant-tag owner-tag">' + d + '</span>';
+        }).join('');
+        var link = '../client/app_detail.html?name=' + encodeURIComponent(a.name);
+        return '<tr>' +
+          '<td class="ant-table-cell" style="font-weight:600;color:#1e293b;">' + a.name + '</td>' +
+          '<td class="ant-table-cell" style="color:#64748b;">' + a.desc + '</td>' +
+          '<td class="ant-table-cell"><div class="owner-cell">' + owners + '<span class="owner-ellipsis" style="display:none;">…</span></div></td>' +
+          '<td class="ant-table-cell"><a href="' + link + '" style="color:#2563eb;">查看应用详情</a></td>' +
+        '</tr>';
+      }).join('');
+      // 属主溢出：逐个 tag 检测是否完整可见，超出容器右边界的整体 display:none，有隐藏显示尾部省略号 + title
+      tbody.querySelectorAll(".owner-cell").forEach(function (cell) {
+        var tags = Array.prototype.slice.call(cell.querySelectorAll(".owner-tag"));
+        var ell = cell.querySelector(".owner-ellipsis");
+        tags.forEach(function (t) { t.style.display = "inline-block"; });
+        ell.style.display = "none";
+        var cellRight = cell.getBoundingClientRect().right;
+        var hidden = 0;
+        tags.forEach(function (t) {
+          if (t.getBoundingClientRect().right > cellRight + 1) {
+            t.style.display = "none";
+            hidden++;
+          }
+        });
+        if (hidden > 0) {
+          ell.style.display = "inline";
+          cell.title = tags.map(function (t) { return t.textContent; }).join("、");
+        } else {
+          ell.style.display = "none";
+          cell.removeAttribute("title");
+        }
+      });
+    }
+
+    function resetFilters() {
+      document.getElementById("appKeyword").value = "";
+      document.getElementById("deptFilter").value = "";
+      applyFilter();
+    }
+
+    initDeptFilter();
+    applyFilter();
+  </script>
+
+  <script src="../../assets/footer-loader.js"></script>
+ </body>
+</html>

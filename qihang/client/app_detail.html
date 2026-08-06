@@ -205,7 +205,7 @@
             <div class="detail-header">
                 <div class="detail-title-info">
                     <div style="margin-bottom: 12px;">
-                        <button class="btn-secondary" style="padding: 5px 16px; font-size: 13px; width: auto; cursor: pointer; background: #fff;" onclick="returnToLobby()">← 返回大厅</button>
+                        <button class="btn-secondary" style="padding: 5px 16px; font-size: 13px; width: auto; cursor: pointer; background: #fff;" onclick="returnToLobby()">← 返回应用清单</button>
                     </div>
                     <h1 id="det_appName">车险承保平台</h1>
                     <div class="detail-app-intro-p" id="det_appDesc">提供车险全流程投保、费率计算、保单生成及电子签章的一站式承保作业能力。</div>
@@ -651,9 +651,9 @@
             window.scrollTo(0, 0);
         }
 
-        // 反向控制：安全退回大厅
+        // 反向控制：安全退回应用清单（应用清单位于管理端目录）
         function returnToLobby() {
-            window.location.href = "app_map.html?from=detail";
+            window.location.href = "../admin/app_list.html";
         }
 
         function switchTab(panelIndex, btnElement) {

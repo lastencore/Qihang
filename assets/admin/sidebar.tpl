@@ -7,6 +7,21 @@
        <div style="flex:1 1 0%; overflow: hidden auto;">
         <ul class="ant-menu ant-menu-root ant-menu-inline ant-menu-light ant-pro-sider-menu" data-menu-list="true" dir="ltr" role="menu" style="width: 100%;" tabindex="0">
 
+         <li class="ant-menu-item ant-menu-item-only-child" data-menu-id="rc-menu-uuid-85005-3-/appList" role="menuitem" style="padding-left: 16px;" tabindex="-1" title="新一代应用清单">
+          <span class="ant-menu-title-content">
+           <a href="app_list.html">
+            <span class="ant-pro-menu-item">
+             <span aria-label="appstore" class="anticon anticon-appstore" role="img">
+              <svg aria-hidden="true" data-icon="appstore" fill="currentColor" focusable="false" height="1em" viewBox="64 64 896 896" width="1em">
+               <path d="M464 144H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H212V212h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H612V212h200v200zM464 544H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H212V612h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H612V612h200v200z"></path>
+              </svg>
+             </span>
+             <span class="ant-pro-menu-item-title">新一代应用清单</span>
+            </span>
+           </a>
+          </span>
+         </li>
+
          <li class="ant-menu-item ant-menu-item-only-child" data-menu-id="rc-menu-uuid-85005-3-/manual" role="menuitem" style="padding-left: 16px;" tabindex="-1" title="操作手册管理">
           <span class="ant-menu-title-content">
            <a href="manual_query.html">
