@@ -196,12 +196,12 @@
 </div>
 
 <a class="si-item" data-cat="tools" onclick="scrollToCat('tools')"><i class="fa-solid fa-screwdriver-wrench si-icon" style="color:#64748b"></i>工具平台<span class="si-desc">技术与安全支撑</span></a>
-</nav></aside><button class="sidebar-expand-trigger" id="sidebarExpandTrigger" onclick="toggleSidebar()">▶</button><div style="flex:1;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth" id="mainScroll">
+</nav></aside><button class="sidebar-expand-trigger" id="sidebarExpandTrigger" onclick="toggleSidebar()">▶</button><div style="flex:1;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;padding-bottom:120px;box-sizing:border-box" id="mainScroll">
 
 
                 <main class="max-w-[1760px] w-full mx-auto p-6 space-y-6 flex-1">
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm" data-cat="client">
             <div class="bg-emerald-50 border-b border-slate-200 px-5 py-3 flex items-center">
                 <span class="text-base font-bold text-emerald-800 uppercase tracking-wider">
                     <i class="fa-solid fa-display mr-2"></i>客户端（ToB / ToC）
@@ -232,7 +232,7 @@
             </div>
         </section>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm" data-cat="channel">
             <div class="bg-sky-50 border-b border-slate-200 px-5 py-3 flex items-center">
                 <span class="text-base font-bold text-sky-800 uppercase tracking-wider">
                     <i class="fa-solid fa-satellite-dish mr-2"></i>接触渠道/端
@@ -248,7 +248,7 @@
             </div>
         </section>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm" data-cat="sales">
             <div class="bg-amber-50 border-b border-slate-200 px-5 py-3 flex items-center">
                 <span class="text-base font-bold text-amber-800 uppercase tracking-wider">
                     <i class="fa-solid fa-bullhorn mr-2"></i>销售/营销前台
@@ -283,7 +283,7 @@
             </div>
         </section>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm" data-cat="uw">
             <div class="bg-red-50 border-b border-slate-200 px-5 py-3 flex items-center">
                 <span class="text-base font-bold text-red-800 uppercase tracking-wider">
                     <i class="fa-solid fa-bolt mr-2"></i>承保履约前台
@@ -326,7 +326,7 @@
             </div>
         </section>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm" data-cat="ops">
             <div class="bg-indigo-50 border-b border-slate-200 px-5 py-3 flex items-center">
                 <span class="text-base font-bold text-indigo-800 uppercase tracking-wider">
                     <i class="fa-solid fa-gears mr-2"></i>运营中台
@@ -349,7 +349,7 @@
             </div>
         </section>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm" data-cat="mgmt">
             <div class="bg-violet-50 border-b border-slate-200 px-5 py-3 flex items-center">
                 <span class="text-base font-bold text-violet-800 uppercase tracking-wider">
                     <i class="fa-solid fa-chart-line mr-2"></i>经营管理平台
@@ -369,7 +369,7 @@
             </div>
         </section>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm" data-cat="mid">
             <div class="bg-blue-50 border-b border-slate-200 px-5 py-3 flex items-center">
                 <span class="text-base font-bold text-blue-800 uppercase tracking-wider">
                     <i class="fa-solid fa-cubes mr-2"></i>通用中台（双中台）
@@ -421,7 +421,7 @@
             </div>
         </section>
 
-        <section class="bg-white border border-slate-200 rounded shadow-sm">
+        <section class="bg-white border border-slate-200 rounded shadow-sm" data-cat="tools">
             <div class="bg-slate-100 border-b border-slate-200 px-5 py-3 flex items-center">
                 <span class="text-base font-bold text-slate-700 uppercase tracking-wider">
                     <i class="fa-solid fa-screwdriver-wrench mr-2"></i>工具平台
@@ -606,7 +606,8 @@
     <script>
     document.body.addEventListener("click", function(e) {
         var card = e.target.closest(".flat-card");
-        if (card) {
+        // JS 显式排除不可点卡片（不依赖 CSS pointer-events 兜底）
+        if (card && !card.classList.contains("unclickable-card")) {
             var name = card.getAttribute("data-name");
             if (name) {
                 window.location.href = "app_detail.html?name=" + encodeURIComponent(name);
@@ -623,21 +624,10 @@
         document.getElementById("appSidebar").classList.toggle("collapsed", sidebarCollapsed);
     }
     function scrollToCat(catId) {
-        var targetNames = {
-            client: "客户端", channel: "接触渠道", sales: "销售", uw: "承保履约",
-            ops: "运营中台", mgmt: "经营管理", mid: "通用中台", tools: "工具平台"
-        };
-        var target = targetNames[catId];
+        // 按 data-cat 属性精确匹配分类 section，替代原文本匹配（改分类名/样式不再失效）
+        var target = document.getElementById("mainScroll").querySelector('section[data-cat="' + catId + '"]');
         if (!target) return;
-        var all = document.getElementById("mainScroll").querySelectorAll(
-            "h2, [class*='text-emerald'], [class*='text-sky'], [class*='text-amber'], [class*='text-slate-700'], [class*='text-violet'], [class*='text-indigo'], [class*='text-blue']"
-        );
-        for (var i = 0; i < all.length; i++) {
-            if (all[i].textContent.indexOf(target) !== -1) {
-                all[i].scrollIntoView({ behavior: "smooth", block: "start" });
-                break;
-            }
-        }
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
         if (sidebarCollapsed) toggleSidebar();
         var items = document.querySelectorAll("#sidebarNav .si-item");
         for (var j = 0; j < items.length; j++) items[j].classList.remove("active");
@@ -648,29 +638,24 @@
         var first = document.querySelector("#sidebarNav .si-item[data-cat='client']");
         if (first) first.classList.add("active");
     });
-    // IntersectionObserver — 滚动时自动高亮侧栏
+    // IntersectionObserver — 滚动时自动高亮侧栏（按 data-cat 属性匹配）
     setTimeout(function() {
         var scrollEl = document.getElementById("mainScroll");
         if (!scrollEl) return;
-        var catMap = { client: "客户端", channel: "接触渠道", sales: "销售", uw: "承保履约", ops: "运营中台", mgmt: "经营管理", mid: "通用中台", tools: "工具平台" };
-        var headings = scrollEl.querySelectorAll("h2, [class*='text-emerald'], [class*='text-sky'], [class*='text-amber'], [class*='text-slate-700'], [class*='text-violet'], [class*='text-indigo'], [class*='text-blue']");
-        for (var i = 0; i < headings.length; i++) {
-            (function(h) {
+        var sections = scrollEl.querySelectorAll("section[data-cat]");
+        for (var i = 0; i < sections.length; i++) {
+            (function(s) {
+                var catId = s.getAttribute("data-cat");
                 var obs = new IntersectionObserver(function(entries) {
                     if (entries[0].isIntersecting) {
-                        var txt = entries[0].target.textContent || "";
-                        for (var catId in catMap) {
-                            if (txt.indexOf(catMap[catId]) !== -1) {
-                                var links = document.querySelectorAll("#sidebarNav .si-item");
-                                for (var j = 0; j < links.length; j++) links[j].classList.remove("active");
-                                var a = document.querySelector("#sidebarNav .si-item[data-cat='" + catId + "']");
-                                if (a) a.classList.add("active");
-                            }
-                        }
+                        var links = document.querySelectorAll("#sidebarNav .si-item");
+                        for (var j = 0; j < links.length; j++) links[j].classList.remove("active");
+                        var a = document.querySelector("#sidebarNav .si-item[data-cat='" + catId + "']");
+                        if (a) a.classList.add("active");
                     }
                 }, { root: scrollEl, rootMargin: "-60px 0px -50% 0px" });
-                obs.observe(h);
-            })(headings[i]);
+                obs.observe(s);
+            })(sections[i]);
         }
     }, 500);
     </script>

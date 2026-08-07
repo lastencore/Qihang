@@ -147,60 +147,6 @@
 
     <div class="container">
         
-        <div id="lobby-view-wrapper" class="hidden-layout" style="display: none;">
-            <div class="search-wrapper">
-                <input type="text" id="globalSearch" class="search-input" placeholder="请输入应用名称、业务关键字查找核心系统功能...">
-                <button class="search-btn" onclick="triggerSearch()">搜索功能</button>
-            </div>
-
-            <div class="page-title">
-                <span>新一代核心系统应用目录</span>
-                <span id="currentCategoryTitle" style="font-size: 14px; color:#64748b; font-weight: normal;">当前分类：承保业务</span>
-            </div>
-
-            <div class="main-layout">
-                <div class="sidebar" id="categorySidebar">
-                    <a href="javascript:void(0)" class="category-item" data-cat="all" onclick="switchCategory('all', this)">
-                        <span>全部应用清单</span><span class="category-count" id="count-all">53</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item active" data-cat="承保业务" onclick="switchCategory('承保业务', this)">
-                        <span>承保业务</span><span class="category-count">9</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="核保业务" onclick="switchCategory('核保业务', this)">
-                        <span>核保业务</span><span class="category-count">3</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="后台支持" onclick="switchCategory('后台支持', this)">
-                        <span>后台支持</span><span class="category-count">1</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="履约业务" onclick="switchCategory('履约业务', this)">
-                        <span>履约业务</span><span class="category-count">4</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="数据中台" onclick="switchCategory('数据中台', this)">
-                        <span>数据中台</span><span class="category-count">9</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="通用板块" onclick="switchCategory('通用板块', this)">
-                        <span>通用板块</span><span class="category-count">1</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="销售营销" onclick="switchCategory('销售营销', this)">
-                        <span>销售营销</span><span class="category-count">6</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="运营管理" onclick="switchCategory('运营管理', this)">
-                        <span>运营管理</span><span class="category-count">11</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="战略企划" onclick="switchCategory('战略企划', this)">
-                        <span>战略企划</span><span class="category-count">1</span>
-                    </a>
-                    <a href="javascript:void(0)" class="category-item" data-cat="资金财务" onclick="switchCategory('资金财务', this)">
-                        <span>资金财务</span><span class="category-count">8</span>
-                    </a>
-                </div>
-
-                <div class="content-container">
-                    <div class="content-grid" id="lobby-apps-grid"></div>
-                </div>
-            </div>
-        </div>
-
         <div class="detail-section block-layout" id="detailSection" style="display: block;">
             <div class="detail-header">
                 <div class="detail-title-info">
@@ -405,15 +351,6 @@
             ]
         };
 
-        // 执行原厂自动化清洗合并，注入"全部应用清单"
-        let allApps = [];
-        Object.keys(appsData).forEach(cat => {
-            if (cat !== "全部应用清单") allApps = allApps.concat(appsData[cat]);
-        });
-        appsData["全部应用清单"] = allApps;
-
-        let currentActiveCategory = "全部应用清单";
-
         // SOP 静态指南
         const mockDetailContent = {
             manualTree: [
@@ -431,35 +368,8 @@
             ]
         };
 
-        // 统一图标计算渲染函数（彻底修复 ReferenceError 卡死缺陷）
-        function getCategoryIconSvg(category) {
-            let color = "#3b82f6";
-            let path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />`;
-            
-            if (category === "承保业务" || category === "核保业务" || category === "履约业务") {
-                color = "#2563eb";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />`;
-            } else if (category === "资金财务") {
-                color = "#d97706";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`;
-            } else if (category === "数据中台" || category === "战略企划") {
-                color = "#6d28d9";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />`;
-            } else if (category === "销售营销") {
-                color = "#db2777";
-                path = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />`;
-            }
-
-            return `<div class="app-icon-box" style="background-color: ${color}15; color: ${color};">
-                <svg xmlns="http://www.w3.org/2000/svg" style="width:20px; height:20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">${path}</svg>
-            </div>`;
-        }
-
-        // 详情页模式：直接显示详情，从 URL 加载应用
+        // 详情页模式：从 URL 加载应用
         window.onload = function() {
-            document.getElementById("lobby-view-wrapper").style.display = "none";
-            document.getElementById("detailSection").className = "detail-section";
-            document.getElementById("detailSection").style.display = "block";
             var params = new URLSearchParams(window.location.search);
             var name = params.get("name");
             var target = null;
@@ -485,83 +395,6 @@
             }
         };
 
-        // 核心网格看板绘制
-        function renderAppGrid(categoryKey, filterKeyword = "") {
-            const gridContainer = document.getElementById("lobby-apps-grid");
-            if (!gridContainer) return;
-            gridContainer.innerHTML = "";
-            
-            let list = appsData[categoryKey] || [];
-            
-            if (filterKeyword !== "") {
-                const kw = filterKeyword.toLowerCase().trim();
-                list = list.filter(app => 
-                    app.name.toLowerCase().includes(kw) || 
-                    app.desc.toLowerCase().includes(kw)
-                );
-            }
-
-            if(list.length === 0) {
-                gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8; background: #fff; border-radius:8px;">暂未检索到符合条件的系统应用，请更换关键字重试。</div>`;
-                return;
-            }
-
-            list.forEach(app => {
-                const card = document.createElement("div");
-                card.className = "app-card";
-                card.onclick = () => loadAppDetail(app.id, 0);
-                
-                let badgeHtml = "";
-                if (app.updateCount > 0) {
-                    badgeHtml += `<span class="badge badge-update" style="cursor: pointer; position: absolute; top: 16px; right: 16px;" onclick="loadAppDetail('${app.id}', 1); event.stopPropagation();">近一周更新 (${app.updateCount})</span>`;
-                }
-
-                card.innerHTML = `
-                    <div>
-                        <div class="app-card-top-header">
-                            ${getCategoryIconSvg(app.cat)}
-                            <div class="app-name-wrapper">
-                                <div class="app-name">${app.name}</div>
-                            </div>
-                        </div>
-                        <div class="app-desc">${app.desc}</div>
-                        <div class="app-badges">${badgeHtml}</div>
-                    </div>
-                    <div class="app-actions">
-                        <a href="javascript:void(0)" class="btn-secondary" onclick="loadAppDetail('${app.id}', 0); event.stopPropagation();">查看详情</a>
-                        <a href="javascript:void(0)" class="btn-primary" onclick="alert('已进入系统'); event.stopPropagation();">进入系统</a>
-                    </div>
-                `;
-                gridContainer.appendChild(card);
-            });
-        }
-
-        // 侧边栏品类洗牌
-        function switchCategory(catId, element) {
-            document.querySelectorAll(".category-item").forEach(item => item.classList.remove("active"));
-            element.classList.add("active");
-            
-            const titleText = element.querySelector("span").innerText;
-            document.getElementById("currentCategoryTitle").innerText = "当前分类：" + titleText;
-            document.getElementById("globalSearch").value = "";
-            
-            currentActiveCategory = catId === 'all' ? '全部应用清单' : catId;
-            renderAppGrid(currentActiveCategory);
-        }
-
-        // 大厅核心全局搜索
-        function triggerSearch() {
-            const kw = document.getElementById("globalSearch").value;
-            document.querySelectorAll(".category-item").forEach(item => item.classList.remove("active"));
-            document.querySelector('[data-cat="all"]').classList.add("active");
-            document.getElementById("currentCategoryTitle").innerText = "搜索结果";
-            renderAppGrid("全部应用清单", kw);
-        }
-
-        document.getElementById("globalSearch").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") { triggerSearch(); }
-        });
-
         // SPA 纯净视图切流流控控制核心
         function loadAppDetail(appId, defaultTab = 0) {
             let targetApp = null;
@@ -576,8 +409,7 @@
 
             if (!targetApp) return;
 
-            // 1. 原子化类名控制：彻底隐藏大厅、显化详情面
-            document.getElementById("lobby-view-wrapper").className = "hidden-layout";
+            // 显化详情面
             document.getElementById("detailSection").className = "detail-section block-layout";
 
             document.getElementById("det_appName").innerText = targetApp.name;
