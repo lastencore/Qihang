@@ -34,8 +34,8 @@
       var target = 'requirements/' + DESIGN_CENTER.system + '_' + DESIGN_CENTER.batch + '.html';
       document.title = '产品设计中心 - ' + label;
       document.getElementById('batchName').textContent = label;
-      //window.location.replace(target);
-      window.location.replace('/' + target);
+      // 相对路径跳转（兼容子路径部署，如 http://host/prototype/ 下也能正确进入批次页）
+      window.location.replace(target);
 
     })();
   </script>
