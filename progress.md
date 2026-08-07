@@ -1,6 +1,6 @@
 # 产品设计中心 — 多平台任务交接文档
 
-> 最后更新：2026-08-06 18:10:00
+> 最后更新：2026-08-07 10:15:00
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 > ⚠️ 本文档覆盖两条并行工作流：
 >   **A. 产品设计** — 启航/知行/聆听/新一代首页四平台的需求、原型、PRD
@@ -145,6 +145,13 @@
 - [x] PRD 评审排期 → ✅ 已完成：PRD + 原型评审通过，开发已安排
 
 ### ✅ 本会话完成
+
+**2026-08-07（本次）— 废弃页面清理（省 token）**
+
+- [x] **[中心建设] 删除 4 个废弃页面**（用户确认 1235 删 / 46 留）：`banner_v1_layered.html` `banner_v2_cards.html` `banner_v3_pyramid_lr.html`（早期 Banner 探索方案，零引用）+ `slides/update_log_flow.html`（早期会议材料，零页面引用）；保留 `client.html`（旧版应用大厅，需求页仍引用）与 `app_catalog_proposal.html`（会议材料）
+- [x] **引用检查先行**：4 个文件均零页面引用（update_log_flow 被引用的仅为同名图片 `images/update_log_flow.jpg`，保留），删除无断链；删除后全站验证：保留页 200、删除页 404
+- [x] **progress.md 目录树同步**：slides 段移除 update_log_flow；client 段标注 banner 探索页已删并修正过时注释（Banner 描述 → 7 大分类+左侧导航+全景抽屉）
+- ⚠️ **教训**：`git rm` 在 Git Bash/Windows 下疑似连带删除同目录其他文件（app_map/app_detail/client.html/app_catalog_proposal 工作区文件消失）——已用 `git checkout HEAD -- <files>` 恢复并验证与 HEAD 无差异；**今后删除操作后必须立即 `git status` + 抽查同目录文件**，怀疑与 MSYS 路径转换或 git 版本行为有关，进一步观察
 
 **2026-08-06（本次）— 新一代应用清单页（app_list）落地（P1 降级方案）**
 
@@ -381,8 +388,8 @@ prototype/
 │   │   ├── manual_workspace.html
 │   │   ├── update_log_query.html
 │   │   └── update_log_modify.html
-│   ├── client/                # 客户端原型（3 页）
-│   │   ├── app_map.html        # 应用地图（含首屏 Banner+左右非对称+边界积累过渡）
+│   ├── client/                # 客户端原型（3 页，banner_v1/v2/v3 探索页已于 2026-08-07 删除）
+│   │   ├── app_map.html        # 应用地图（7 大分类 + 左侧可收起导航 + 右侧全景抽屉占位）
 │   │   ├── app_detail.html
 │   │   └── client.html
 │   └── assets/client/         # 启航客户端壳（header.tpl / client.css 预留，随上传补）
@@ -396,9 +403,8 @@ prototype/
 │   ├── lingting_202606.html     # 202606 批次页（聆听需求中心入口）
 │   ├── workbench_202607.html    # 202607 批次页（新一代首页需求中心入口）
 │   └── TEMPLATE.html            # 批次页脚手架模板
-├── slides/                     # 演示/汇报页（保持）
-│   ├── app_catalog_proposal.html
-│   └── update_log_flow.html
+├── slides/                     # 演示/汇报页
+│   └── app_catalog_proposal.html   # 应用目录来源方案对比（会议材料）
 ├── docs/                       # 正式文档（中文名 OK）
 │   ├── 启航平台_“应用管理”“应用地图”“更新日志”“操作手册”_PRD.md  # 本期迭代 PRD（四模块合并，含应用可见属性联动；由「产品需求说明书_202607」重命名）
 │   └── 启航平台_需求说明_202607.md   # 迭代需求说明
