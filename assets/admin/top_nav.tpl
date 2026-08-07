@@ -5,8 +5,8 @@
         <div class="cic-layout-header-nav-header-main">
          <div class="cic-layout-header-nav-header-left">
           <div class="cic-layout-header-nav-header-logo">
-           <!-- logo 跳当前系统的客户端首页：从 {system}/admin/ 起 ../client/ 对任意系统通用 -->
-           <a href="../client/">
+           <!-- logo 跳根目录 index.html（批次指针页，全站统一入口；管理端页均在 {system}/admin/ 两级深度） -->
+           <a href="../../index.html">
             <img alt="logo" height="24" src="https://static.property.cic.cn/prod-platform-lamp/common/image/cic-logo.svg" width="auto"/>
            </a>
           </div>

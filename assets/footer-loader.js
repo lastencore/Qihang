@@ -18,9 +18,12 @@
     oldFooter.parentNode.removeChild(oldFooter);
   }
 
-  /* 从自身 script src 推导 base,使图标 src 在不同目录深度的页面都能正确解析 */
-  var scripts = document.getElementsByTagName("script");
-  var scriptSrc = scripts[scripts.length - 1].src || "";
+  /* 从自身 script src 推导 base，使图标 src 在不同目录深度的页面都能正确解析
+   * 优先用 currentScript（与 nav-loader.js 同款写法），避免依赖"最后一个 script 是自己"的脆弱假设 */
+  var scriptSrc = (document.currentScript && document.currentScript.src) || (function () {
+    var s = document.getElementsByTagName("script");
+    return (s[s.length - 1] && s[s.length - 1].src) || "";
+  })();
   var base = scriptSrc.substring(0, scriptSrc.lastIndexOf("/"));
   var POLICE_ICON = base + "/police_icon.png";
 
