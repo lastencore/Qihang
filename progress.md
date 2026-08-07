@@ -1,6 +1,6 @@
 # 产品设计中心 — 多平台任务交接文档
 
-> 最后更新：2026-08-07 10:15:00
+> 最后更新：2026-08-07 15:20:00
 > 维护约定：阶段性产出完成后更新；新对话开始时先读取本文档
 > ⚠️ 本文档覆盖两条并行工作流：
 >   **A. 产品设计** — 启航/知行/聆听/新一代首页四平台的需求、原型、PRD
@@ -145,6 +145,16 @@
 - [x] PRD 评审排期 → ✅ 已完成：PRD + 原型评审通过，开发已安排
 
 ### ✅ 本会话完成
+
+**2026-08-07（本次）— 全仓前端代码审查 M1–M6（17 页 + 10 资产）**
+
+- [x] **[中心建设] 全仓代码审查六模块全部完成**：M1 依赖健康（17 页 playwright 全量扫描）/ M2 共享资产（loader/tpl/css）/ M3 自建客户端页（app_map/app_detail/app_list/client）/ M4 需求中心+演示页 / M5 生产复制页只查 / M6 跨页一致性；审查结论：无 P0，修复 4 项 P1
+- [x] **修复项**：① app_management 面包屑失效链接 `/support-operation/setting` 删除；② footer-loader base 推导改 `document.currentScript`（去掉"最后一个 script"脆弱假设）；③ 管理端顶栏 LOGO 跳转指向根 `index.html`；④ index.html 批次指针绝对路径改相对路径（兼容子路径部署）
+- [x] **M3 改造**：app_map 分类定位从"class+文本匹配"改为 **data-cat 属性精确匹配**（8 个 section，扩展性↑）+ 不可点卡片 JS 显式排除 + 滚动容器底部留白；**app_detail 删除 ~210 行大厅死代码**瘦身为纯详情页（四 Tab/返回链路验证正常）
+- [x] **M6 产出：管理端新页面骨架模板** `assets/templates/admin_page_template.html`——body data-system + nav 占位 + 查询区 .app-filter-* 自包含 CSS 全套 + nav-loader/footer-loader 注入，复制改 3 处即用（用户已回滚其防误用警示条，模板不含）
+- [x] **M1/M2 误判澄清**：yuque "403" 是外链文档非图片依赖；cic 生产域为公网 CDN（阿里云实测正常），均非风险
+- [x] **新页面方法论（用户咨询沉淀）**：90% 场景用自建骨架（轻量可维护），仅"像素级复刻生产真实功能"才复制生产页；决策图已输出
+- [x] **5 个审查 commit + 1 revert 已推送**（7a77d79/a56a945/1afb3ca/1a9553d/73a80d9/3e01e8f）
 
 **2026-08-07（本次）— 废弃页面清理（省 token）**
 
@@ -371,9 +381,11 @@ prototype/
 │   ├── admin/                 # ★管理端共用导航（参数化，按 data-system 复用）
 │   │   ├── nav-loader.js         # 从自身 src 推导 base；按 <body data-system> 注入
 │   │   ├── sidebar.tpl           # 侧栏模板（按 data-system 分三份 <aside>：qihang/zhixing/lingting）
-│   │   ├── top_nav.tpl          # 顶栏模板（logo → ../client/；含 #sysName 由加载器填系统名）
+│   │   ├── top_nav.tpl          # 顶栏模板（logo → ../../index.html；含 #sysName 由加载器填系统名）
 │   │   ├── admin.css            # 管理端全局样式
 │   │   └── marked.umd.js        # marked 本地自托管（消除 CDN 超时 ERR_TIMED_OUT）
+│   ├── templates/             # 页面骨架模板（2026-08-07 审查 M6 产出）
+│   │   └── admin_page_template.html  # 管理端新页面模板：复制到 {system}/admin/ 改 3 处即用（勿直接预览）
 │   └── req-center/            # 需求设计中心共用导航（data-platform 参数化）
 │       ├── req-nav.js            # 从自身 src 推导 base
 │       ├── req-nav.css
@@ -520,6 +532,12 @@ prototype/
 - **属主多值**：`ant-tag` 标签，放不下的 tag **整体隐藏**（display:none）+ 尾部 `…` + 容器 `title` 悬浮显示全部
 - **数据**：53 应用（与 `app_detail.html` appsData 一致）；属主为展示数据（三端口径不必一致，见 4.13）
 - **踩坑教训（2026-08-06）**：① CSS 抽公共文件后旧浏览器缓存会导致样式崩，**内联样式是原型缓存安全层**；② 改样式前先 playwright 截图对比实际渲染，别靠猜；③ 删除区块后检查相邻元素间距依赖（toolbar 删后需补表格卡 padding-top:16px）
+
+### 4.15 新页面创建方法论（2026-08-07 用户咨询沉淀）✅
+- **90% 场景：自建骨架**（app_list 方式）——复制 `assets/templates/admin_page_template.html` 到 `{system}/admin/` 改名，改 3 处（title/页面名/面包屑链接）即用；轻量（~300 行 vs 生产页 1700 行）、不依赖生产 CDN、可维护
+- **仅"像素级复刻生产真实功能"时：复制生产页改**（app_management 等，真实结构/交互/样式）
+- **模板勿直接预览**：assets/templates/ 下侧栏相对链接会 404，复制到 {system}/admin/ 后正常（用户自管挪文件夹，警示条已回滚）
+- 共享资产统一引用：管理端页用 nav-loader/footer-loader/admin.css；需求中心页用 req-nav；查询区统一 .app-filter-* 自包含 CSS
 
 ---
 
