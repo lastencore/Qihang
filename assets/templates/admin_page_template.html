@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!-- ============================================================
+  ★ 管理端新页面骨架模板（2026-08-07 沉淀，审查 M6 产物）
+  用法：复制本文件到 {system}/admin/ 下改名（如 qihang/admin/xxx.html），改 3 处即可：
+    ① <title> 和右侧 <div class="ant-page-header..."> 里的「页面名」（2 处）
+    ② <body data-system="qihang"> 保持（zhixing/lingting 就改成对应值）
+    ③ 面包屑 <a href="此处填页面自身文件名"> 链接
+  路径约定：本模板按「最终页面位于 {system}/admin/ 两级深度」写 ../../assets/...；
+            若页面放其他深度，按相对层级调整（如 qihang/client/ 用 ../../assets/... 同样适用）
+  交互约定：
+    - 查询区用下方自包含 .app-filter-* CSS（不依赖 antd 表单类，避免样式不可控）
+    - 多值字段（属主等）用 .owner-tag + JS 溢出隐藏（放不下整体隐藏 + 尾部 … + title 悬浮）
+    - 侧栏/顶栏由 nav-loader 自动注入（sidebar.tpl 加菜单项即全站互通）
+    - 页脚由 footer-loader 注入（备案信息集中配置）
+  ============================================================ -->
+<html lang="zh-CN">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport"/>
+  <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/favicon.ico" rel="shortcut icon"/>
+  <title>页面标题 - 中华财险-基础运营</title>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/umi.cabe1862.css" rel="stylesheet"/>
+  <link as="style" data-rspack="cic-pc-support-operation:2354" href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/t__plugin-layout__Layout.30bb7fb0.async.css" rel="preload"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/t__plugin-layout__Layout.30bb7fb0.async.css" rel="stylesheet" type="text/css"/>
+  <link href="https://static.property.cic.cn/prod-platform-lamp/static/lamp/testprojectstable/support-operation/2.0.54_202606171402/3898.77564be6.async.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/admin/admin.css" rel="stylesheet"/>
+  <style>
+    /* ========== 查询区：自包含 CSS（不依赖 antd 表单类，视觉对齐管理端） ========== */
+    .app-filter-card { background:#fff; border-radius:2px; padding:24px; margin-bottom:16px; box-sizing:border-box; }
+    .app-filter-row { display:flex; flex-wrap:wrap; align-items:flex-start; gap:16px 24px; }
+    .app-filter-item { display:flex; align-items:center; min-height:32px; }
+    .app-filter-item-grow { flex:1 1 280px; min-width:240px; }
+    .app-filter-label { color:rgba(0,0,0,.85); font-size:14px; white-space:nowrap; padding-right:8px; min-width:72px; text-align:right; line-height:32px; }
+    .app-filter-input,
+    .app-filter-select { height:32px; padding:0 11px; font-size:14px; color:rgba(0,0,0,.85); background:#fff; border:1px solid #d9d9d9; border-radius:2px; outline:none; transition:border-color .2s, box-shadow .2s; box-sizing:border-box; }
+    .app-filter-input:focus,
+    .app-filter-select:focus { border-color:#4096ff; box-shadow:0 0 0 2px rgba(5,145,255,.1); }
+    .app-filter-input { flex:1; min-width:200px; }
+    .app-filter-select { min-width:200px; }
+    .app-filter-actions { margin-left:auto; display:flex; gap:8px; padding-top:4px; }
+    .app-btn { height:32px; padding:0 15px; font-size:14px; border-radius:2px; cursor:pointer; border:1px solid #d9d9d9; background:#fff; color:rgba(0,0,0,.85); transition:all .2s; }
+    .app-btn:hover { border-color:#4096ff; color:#4096ff; }
+    .app-btn-primary { background:#cc0000; border-color:#cc0000; color:#fff; }
+    .app-btn-primary:hover { background:#b30000; border-color:#b30000; color:#fff; }
+    @media (max-width: 1100px) { .app-filter-actions { margin-left:0; padding-top:0; } }
+
+    /* ========== 属主 tag 单元格：放不下的整体隐藏 + 省略标识 ========== */
+    .owner-cell { display:inline-block; max-width:100%; overflow:hidden; white-space:nowrap; vertical-align:middle; }
+    .owner-tag { margin:2px 4px 2px 0 !important; display:inline-block; }
+    .owner-ellipsis { color:#94a3b8; font-weight:600; }
+  </style>
+ </head>
+ <body data-system="qihang">
+  <div id="root">
+   <div class="ant-design-pro ant-pro-basicLayout screen-xxl ant-pro-basicLayout-fix-siderbar ant-pro-basicLayout-mix">
+    <section class="ant-layout ant-layout-has-sider" style="min-height: 100%;">
+     <div style="width: 208px; overflow: hidden; flex: 0 0 208px; max-width: 208px; min-width: 208px; transition: background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);">
+     </div>
+
+     <div id="nav-sidebar-placeholder" style="width:208px;flex-shrink:0;"></div>
+     <div class="ant-layout" style="position: relative;">
+      <header class="ant-layout-header" style="height: 48px; line-height: 48px; background: transparent;">
+      </header>
+
+      <div id="nav-header-placeholder" style="height:48px;"></div>
+
+      <main class="ant-layout-content ant-pro-basicLayout-content ant-pro-basicLayout-has-header ant-pro-basicLayout-content-disable-margin">
+       <div class="ant-pro-page-container">
+        <div class="ant-pro-page-container-warp">
+         <div class="ant-page-header has-breadcrumb">
+          <nav class="ant-breadcrumb">
+           <ol>
+            <li>
+             <span class="ant-breadcrumb-link">
+              <a href="此处填页面自身文件名">页面名</a>
+             </span>
+             <span class="ant-breadcrumb-separator">/</span>
+            </li>
+            <li>
+             <span class="ant-breadcrumb-link"><span>子页签</span></span>
+             <span class="ant-breadcrumb-separator">/</span>
+            </li>
+           </ol>
+          </nav>
+          <div class="ant-page-header-heading">
+           <div class="ant-page-header-heading-left">
+            <span class="ant-page-header-heading-title" title="页面名">页面名</span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="ant-pro-grid-content">
+         <div class="ant-pro-grid-content-children">
+          <div class="ant-pro-page-container-children-content">
+           <div class="ant-pro-table">
+
+            <!-- 查询区（示例：关键字 + 下拉 + 按钮；按需增删字段） -->
+            <div class="app-filter-card">
+             <div class="app-filter-row">
+              <div class="app-filter-item app-filter-item-grow">
+               <label class="app-filter-label" for="appKeyword">关键字</label>
+               <input class="app-filter-input" id="appKeyword" placeholder="请输入关键字" type="text" oninput="applyFilter()"/>
+              </div>
+              <div class="app-filter-item">
+               <label class="app-filter-label" for="deptFilter">筛选字段</label>
+               <select class="app-filter-select" id="deptFilter" onchange="applyFilter()">
+                <option value="">全部</option>
+               </select>
+              </div>
+              <div class="app-filter-actions">
+               <button class="app-btn" type="button" onclick="resetFilters()">重 置</button>
+               <button class="app-btn app-btn-primary" type="button" onclick="applyFilter()">查 询</button>
+              </div>
+             </div>
+            </div>
+
+            <!-- 内容区（表格 / 表单，参照 app_list.html / app_management.html 结构） -->
+            <div class="ant-pro-card">
+             <div class="ant-pro-card-body" style="padding-top: 16px;">
+              内容区
+             </div>
+            </div>
+
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </main>
+     </div>
+    </section>
+   </div>
+  </div>
+
+  <script src="../../assets/admin/nav-loader.js"></script>
+
+  <script>
+    // ========== 页面逻辑（按需填写；示例为查询区过滤骨架） ==========
+    var APP_LIST = []; // 数据数组
+
+    function applyFilter() {
+      // 过滤逻辑：关键字 + 下拉条件，结果重渲染列表
+    }
+    function resetFilters() {
+      document.getElementById("appKeyword").value = "";
+      document.getElementById("deptFilter").value = "";
+      applyFilter();
+    }
+  </script>
+
+  <script src="../../assets/footer-loader.js"></script>
+ </body>
+</html>
